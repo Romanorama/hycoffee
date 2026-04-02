@@ -1,0 +1,209 @@
+/* ===== Fonts ===== */
+@font-face {
+  font-family: 'DGM Sprinter';
+  src: url('/fonts/DGMSprinter-Regular.woff2') format('woff2'),
+       url('/fonts/DGMSprinter-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HAL Timezone';
+  src: url('/fonts/HALTimezone-Regular.woff2') format('woff2'),
+       url('/fonts/HALTimezone-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===== Design Tokens ===== */
+:root {
+  /* Colors */
+  --warm-grey-light: #fbf8f2;
+  --warm-dark-grey: #242119;
+  --black: #242119;
+  --white: #ffffff;
+  --yellow: #fae34c;
+  --green: #3a563b;
+  --violet: #ab9ff2;
+  --light-grey: #e3e2e0;
+  --grey-10: #1a1a1a;
+
+  /* Fonts */
+  --font-heading: 'HAL Timezone', sans-serif;
+  --font-ui: 'DGM Sprinter', sans-serif;
+
+  /* Spacing */
+  --section-padding: 80px 120px;
+  --container-max: 1728px;
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-heading);
+  color: var(--warm-dark-grey);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  background: none;
+}
+
+/* ===== Typography ===== */
+.h1 {
+  font-family: var(--font-heading);
+  font-size: 81.6px;
+  line-height: 70.2px;
+  letter-spacing: -1.15px;
+  font-weight: 400;
+}
+
+.h2 {
+  font-family: var(--font-heading);
+  font-size: 75px;
+  line-height: 70.3px;
+  letter-spacing: -2px;
+  font-weight: 400;
+}
+
+.h2-large {
+  font-family: var(--font-heading);
+  font-size: 76.6px;
+  line-height: 78px;
+  letter-spacing: -3px;
+  font-weight: 400;
+}
+
+.h3 {
+  font-family: var(--font-heading);
+  font-size: 50px;
+  line-height: 45.76px;
+  font-weight: 400;
+}
+
+.p-xl {
+  font-family: var(--font-heading);
+  font-size: 45px;
+  line-height: 51px;
+  font-weight: 400;
+}
+
+.p-l {
+  font-family: var(--font-heading);
+  font-size: 36px;
+  line-height: 36px;
+  font-weight: 400;
+}
+
+.p-s {
+  font-family: var(--font-heading);
+  font-size: 23px;
+  line-height: 26px;
+  font-weight: 400;
+}
+
+.caption {
+  font-family: var(--font-heading);
+  font-size: 20.9px;
+  line-height: 16.32px;
+  letter-spacing: 1.96px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.btn-text-primary {
+  font-family: var(--font-ui);
+  font-size: 34px;
+  font-weight: 400;
+}
+
+.btn-text-secondary {
+  font-family: var(--font-ui);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn-primary {
+  background: var(--warm-dark-grey);
+  color: var(--white);
+  padding: 10px 28px;
+  font-family: var(--font-ui);
+  font-size: 34px;
+}
+
+.btn-secondary {
+  background: var(--warm-dark-grey);
+  color: var(--white);
+  padding: 10px 24px;
+  font-family: var(--font-ui);
+  font-size: 20px;
+}
+
+.btn-tertiary {
+  background: var(--yellow);
+  color: var(--warm-dark-grey);
+  padding: 10px 24px;
+  font-family: var(--font-ui);
+  font-size: 20px;
+}
+
+.btn-tertiary-dark {
+  background: var(--warm-dark-grey);
+  color: var(--white);
+  padding: 10px 24px;
+  font-family: var(--font-ui);
+  font-size: 20px;
+}
+
+.btn .arrow {
+  width: 14px;
+  height: 10px;
+  transform: rotate(-45deg);
+}

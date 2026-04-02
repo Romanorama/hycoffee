@@ -1,0 +1,256 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+---
+
+<BaseLayout title="Kaffee kaufen – HyCoffee">
+  <Navigation />
+  <main class="shop">
+    <!-- Hero -->
+    <section class="shop-hero">
+      <p class="caption">UNSER ROHKAFFEE ANGEBOT</p>
+      <p class="shop-intro">
+        Die Zukunft des Kaffees beginnt mit neuen Arten, Sorten und klimaresilienten
+        Anbau. Wir fokussieren uns auf den Anbau von und Handel mit klimaresilientem
+        Kaffee. Dazu gehören zum Beispiel Arabica aus klimaresilienten Anbausystemen
+        wie Agroforst, aber auch Excelsa (Coffea dewevrei) – eine seltene Kaffeeart,
+        die deutlich widerstandsfähiger gegenüber Hitze, Trockenheit und Klimastress
+        ist. Für Röstereien eröffnen sich so neue Geschmacksprofile und eine
+        klimaresiliente Lieferkette – für Landwirt:innen eine langfristige Perspektive.
+      </p>
+    </section>
+
+    <!-- Table -->
+    <section class="shop-table">
+      <div class="table-header">
+        <span class="col col-name">NAME</span>
+        <span class="col col-species">SPECIES</span>
+        <span class="col col-country">COUNTRY</span>
+        <span class="col col-score">SCORE</span>
+        <span class="col col-process">PROCESS</span>
+        <span class="col col-action"></span>
+      </div>
+
+      <div class="table-row">
+        <span class="col col-name cell">
+          <span class="row-arrow">›</span> Excelsa Natural
+        </span>
+        <span class="col col-species cell">Arabica</span>
+        <span class="col col-country cell">Uganda</span>
+        <span class="col col-score cell">86.75</span>
+        <span class="col col-process cell">Anaerobic</span>
+        <span class="col col-action cell">
+          <button class="btn-sample">
+            <span class="sample-plus">+</span>
+            <span>Add Sample</span>
+          </button>
+        </span>
+      </div>
+
+      <div class="table-row">
+        <span class="col col-name cell">
+          <span class="row-arrow">›</span> Disco 3
+        </span>
+        <span class="col col-species cell">Arabica</span>
+        <span class="col col-country cell">Uganda</span>
+        <span class="col col-score cell">86.75</span>
+        <span class="col col-process cell">Anaerobic</span>
+        <span class="col col-action cell">
+          <button class="btn-sample">
+            <span class="sample-plus">+</span>
+            <span>Add Sample</span>
+          </button>
+        </span>
+      </div>
+
+      <div class="table-row">
+        <span class="col col-name cell">
+          <span class="row-arrow">›</span> Amizi Rock
+        </span>
+        <span class="col col-species cell">Arabica</span>
+        <span class="col col-country cell">Uganda</span>
+        <span class="col col-score cell">86.75</span>
+        <span class="col col-process cell">Anaerobic</span>
+        <span class="col col-action cell">
+          <button class="btn-sample">
+            <span class="sample-plus">+</span>
+            <span>Add Sample</span>
+          </button>
+        </span>
+      </div>
+
+      <div class="table-row">
+        <a href="#" class="col col-name cell">
+          <span class="row-arrow">›</span> Ambe Anaerobic
+        </a>
+        <span class="col col-species cell">Arabica</span>
+        <span class="col col-country cell">Uganda</span>
+        <span class="col col-score cell">86.75</span>
+        <span class="col col-process cell">Anaerobic</span>
+        <span class="col col-action cell">
+          <button class="btn-sample">
+            <span class="sample-plus">+</span>
+            <span>Add Sample</span>
+          </button>
+        </span>
+      </div>
+    </section>
+
+    <!-- Checkout Bar -->
+    <section class="checkout-bar">
+      <div class="checkout-inner">
+        <p class="checkout-count">0 Samples Added</p>
+        <a href="#" class="btn-checkout">
+          <span>Check out</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .shop-hero {
+    background: var(--warm-dark-grey);
+    padding: 24px 60px 60px;
+    border-top: 1px solid #f5f5f5;
+  }
+
+  .caption {
+    font-family: var(--font-heading);
+    font-size: 20.9px;
+    line-height: 16.32px;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #f5f5f5;
+    margin-bottom: 32px;
+  }
+
+  .shop-intro {
+    font-family: var(--font-heading);
+    font-size: 45px;
+    line-height: 51px;
+    font-weight: 400;
+    color: #f5f5f5;
+  }
+
+  /* Table */
+  .shop-table {
+    width: 100%;
+  }
+
+  .table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    padding: 16px 30px 16px 50px;
+    background: var(--warm-dark-grey);
+  }
+
+  .table-header .col {
+    font-family: var(--font-ui);
+    font-size: 18px;
+    letter-spacing: 1.8px;
+    color: #f5f5f5;
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    padding: 20px 30px 20px 30px;
+    border-top: 1px solid var(--warm-dark-grey);
+    background: var(--white);
+    align-items: center;
+  }
+
+  .table-row:hover {
+    background: var(--warm-grey-light);
+  }
+
+  .cell {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    line-height: 36px;
+    color: var(--warm-dark-grey);
+  }
+
+  .col-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .row-arrow {
+    font-size: 30px;
+    margin-right: 4px;
+  }
+
+  .btn-sample {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--black);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    letter-spacing: 0.42px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-sample:hover {
+    opacity: 0.85;
+  }
+
+  .sample-plus {
+    font-size: 20px;
+    letter-spacing: 0.6px;
+  }
+
+  /* Checkout */
+  .checkout-bar {
+    border-top: 1px solid var(--warm-dark-grey);
+    border-bottom: 1px solid var(--warm-dark-grey);
+    padding: 32px 60px;
+  }
+
+  .checkout-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .checkout-count {
+    font-family: var(--font-ui);
+    font-size: 25.77px;
+    letter-spacing: 1.03px;
+    color: var(--warm-dark-grey);
+  }
+
+  .btn-checkout {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--black);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: var(--font-ui);
+    font-size: 20px;
+    transition: opacity 0.2s;
+  }
+
+  .btn-checkout:hover {
+    opacity: 0.85;
+  }
+
+  .arrow {
+    width: 14px;
+    height: 11px;
+  }
+</style>

@@ -1,0 +1,297 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Über Uns – HyCoffee">
+  <Navigation />
+  <main class="about">
+    <!-- Photo Strip -->
+    <div class="photo-strip">
+      <div class="photo-strip-track">
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+        <img src="/images/about-strip.jpg" alt="Team" />
+      </div>
+    </div>
+
+    <!-- Hero: Image + Text -->
+    <section class="about-hero">
+      <div class="about-hero-left">
+        <img src="/images/about-hero.jpg" alt="Sophie und Charlotte" class="about-hero-image" />
+        <div class="about-hero-overlay">
+          <p class="about-hero-text">
+            Wir sind Sophie und Charlotte.
+            Wir haben HyCoffee gegründet, weil der Kaffeesektor vor einer der größten
+            Herausforderungen seiner Zeit steht: dem Klimawandel. Steigende
+            Temperaturen, Dürren und neue Pflanzenkrankheiten setzen den Kaffeeanbau
+            weltweit unter Druck.
+          </p>
+        </div>
+      </div>
+      <div class="about-hero-right">
+        <p class="about-body">
+          Wir arbeiten zwischen Ostafrika und Deutschland. Unser Fokus liegt auf
+          Klimaresilienz als konkrete Antwort auf die Frage, wie Kaffeeanbau
+          langfristig funktionieren kann. Gemeinsam mit Produzent:innen vor Ort
+          fördern wir widerstandsfähige Anbausysteme wie Agroforst und regenerative
+          Landwirtschaft. Gleichzeitig erschließen wir das Potenzial alternativer
+          Kaffeearten wie Excelsa – bisher kaum auf dem Markt, obwohl seit
+          Generationen angebaut.
+        </p>
+        <p class="about-body">
+          HyCoffee ist die Brücke zwischen Forschung und Praxis: wissenschaftliche
+          Erkenntnisse direkt auf die Farm, in die Lieferkette und in die Tasse.
+        </p>
+        <p class="about-body">
+          Sophie hat bei den Vereinten Nationen gearbeitet, bevor sie sich auf
+          Forschung zu Kaffee und Klimawandel spezialisierte. Die Entdeckung, dass
+          es längst klimaresiliente Kaffeearten gibt – kaum bekannt, kaum vermarktet
+          – ließ sie nicht mehr los. Forschen allein reichte ihr nicht.
+        </p>
+        <p class="about-body">
+          Charlotte hat in der internationalen Entwicklungszusammenarbeit gearbeitet
+          und berät internationale Organisationen und Stiftungen zu Strategie und
+          Partnerschaften. Sie kennt aus eigener Erfahrung, wie Privatsektor
+          Partnerschaften echten Wandel bewirken können. Ihr Antrieb: Trade instead
+          of Aid – faire Handelspartnerschaften statt Hilfe von außen.
+        </p>
+      </div>
+    </section>
+
+    <!-- Origins Banner -->
+    <section class="origins-banner">
+      <p class="origins-banner-text">More Info about the Places we work with</p>
+      <a href="/origins" class="btn-origins">
+        <span>Origins</span>
+        <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- Say Hy / Contact -->
+    <section class="say-hy">
+      <h2 class="say-hy-heading">Say Hy</h2>
+      <a href="mailto:info@hycoffee.de" class="btn-email">info@hycoffee.de</a>
+    </section>
+
+    <!-- Contact Cards -->
+    <section class="contact-cards">
+      <div class="contact-card contact-card-yellow">
+        <p class="contact-name">Charlotte Schmidt</p>
+        <p class="contact-detail">charlotte@hycoffee.de</p>
+        <p class="contact-detail">0157123456</p>
+      </div>
+      <div class="contact-card contact-card-violet">
+        <p class="contact-name">Sophie von Loeben</p>
+        <p class="contact-detail">sophie@hycoffee.de</p>
+        <p class="contact-detail">0157123456</p>
+      </div>
+    </section>
+
+    <!-- Social Links -->
+    <a href="#" class="social-link">Instagram</a>
+    <a href="#" class="social-link">Linked In</a>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .photo-strip {
+    width: 100%;
+    height: 188px;
+    overflow: hidden;
+    filter: grayscale(100%);
+  }
+
+  .photo-strip-track {
+    display: flex;
+    height: 100%;
+    gap: 0;
+  }
+
+  .photo-strip-track img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .about-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-hero-left {
+    position: relative;
+    min-height: 743px;
+  }
+
+  .about-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 48px;
+  }
+
+  .about-hero-text {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 36px;
+    color: #f5f5f5;
+    text-align: center;
+  }
+
+  .about-hero-right {
+    padding: 60px 48px;
+  }
+
+  .about-body {
+    font-family: var(--font-heading);
+    font-size: 23px;
+    line-height: 26px;
+    color: var(--warm-dark-grey);
+    margin-bottom: 20px;
+  }
+
+  .origins-banner {
+    background: var(--yellow);
+    border-top: 1px solid var(--warm-dark-grey);
+    border-bottom: 1px solid var(--warm-dark-grey);
+    padding: 40px 69px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .origins-banner-text {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 36px;
+    color: var(--warm-dark-grey);
+    text-align: center;
+  }
+
+  .btn-origins {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: var(--font-ui);
+    font-size: 20px;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+
+  .btn-origins:hover {
+    opacity: 0.85;
+  }
+
+  .arrow {
+    width: 14px;
+    height: 11px;
+  }
+
+  .say-hy {
+    background: var(--green);
+    padding: 100px 69px;
+    text-align: center;
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .say-hy-heading {
+    font-family: var(--font-heading);
+    font-size: 161.6px;
+    line-height: 70.2px;
+    letter-spacing: -1.15px;
+    font-weight: 400;
+    color: var(--warm-grey-light);
+    margin-bottom: 80px;
+  }
+
+  .btn-email {
+    display: inline-block;
+    background: var(--warm-dark-grey);
+    color: var(--warm-grey-light);
+    padding: 12px 32px;
+    border-radius: 3px;
+    font-family: var(--font-ui);
+    font-size: 34px;
+    transition: opacity 0.2s;
+  }
+
+  .btn-email:hover {
+    opacity: 0.85;
+  }
+
+  .contact-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact-card {
+    padding: 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .contact-card-yellow {
+    background: var(--yellow);
+    border-right: 1px solid var(--warm-dark-grey);
+  }
+
+  .contact-card-violet {
+    background: var(--violet);
+  }
+
+  .contact-name {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 36px;
+    color: var(--warm-dark-grey);
+    margin-bottom: 4px;
+  }
+
+  .contact-detail {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 36px;
+    color: var(--warm-dark-grey);
+  }
+
+  .social-link {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 36px;
+    color: var(--warm-dark-grey);
+    text-align: center;
+    padding: 40px;
+    border-bottom: 1px solid var(--warm-dark-grey);
+    transition: opacity 0.2s;
+  }
+
+  .social-link:hover {
+    opacity: 0.6;
+  }
+</style>

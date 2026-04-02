@@ -1,0 +1,167 @@
+---
+
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-nav">
+        <a href="/" class="footer-link">Home</a>
+        <a href="/kaffee" class="footer-link">Kaffee kaufen</a>
+        <a href="/wissen" class="footer-link">Wissen</a>
+        <a href="/ueber-uns" class="footer-link">Über uns</a>
+        <a href="/kontakt" class="footer-link">Kontakt</a>
+        <div class="footer-service">
+          <a href="/service" class="footer-link">Service</a>
+          <a href="/agb" class="footer-sublink">AGB</a>
+          <a href="/impressum" class="footer-sublink">Impressum</a>
+        </div>
+      </div>
+      <div class="footer-brand">
+        <img src="/images/logo-light.svg" alt="HyCoffee" class="footer-logo" />
+        <p class="footer-tagline">Klimaresiliente Kaffeebohnen</p>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <p class="newsletter-label">Signup for our Newsletter and join the growing community.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Enter your email" class="newsletter-input" />
+        <button class="btn btn-newsletter">
+          <span>Tertiary Button</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    padding: 80px 120px;
+  }
+
+  .footer-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 40px;
+  }
+
+  .footer-link {
+    font-family: var(--font-ui);
+    font-size: 24.4px;
+    line-height: 28px;
+    color: var(--white);
+    transition: opacity 0.2s;
+  }
+
+  .footer-link:hover {
+    opacity: 0.7;
+  }
+
+  .footer-service {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-sublink {
+    font-family: var(--font-ui);
+    font-size: 20px;
+    line-height: 28px;
+    color: #d9d9d9;
+    transition: opacity 0.2s;
+  }
+
+  .footer-sublink:hover {
+    opacity: 0.7;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .footer-logo {
+    height: 60px;
+    width: auto;
+  }
+
+  .footer-tagline {
+    font-family: var(--font-ui);
+    font-size: 24.4px;
+    line-height: 28px;
+  }
+
+  .footer-newsletter {
+    background: rgba(217, 217, 217, 0.2);
+    border-radius: 8px;
+    padding: 24px 32px;
+  }
+
+  .newsletter-label {
+    font-family: var(--font-ui);
+    font-size: 20px;
+    line-height: 17.28px;
+    margin-bottom: 16px;
+  }
+
+  .newsletter-form {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-heading);
+    font-size: 38.4px;
+    color: var(--white);
+    padding: 8px 0;
+  }
+
+  .newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-newsletter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--black);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: 3px;
+    font-family: var(--font-ui);
+    font-size: 20px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-newsletter:hover {
+    opacity: 0.85;
+  }
+
+  .arrow {
+    width: 14px;
+    height: 11px;
+  }
+</style>

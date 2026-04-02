@@ -1,0 +1,73 @@
+---
+
+---
+
+<section class="hero">
+  <div class="hero-image">
+    <img src="/images/hero.jpg" alt="Klimaresilienter Kaffeeanbau" />
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-heading">
+      Wir erforschen, entwickeln und liefern klimareslienten Rohkaffee.
+    </h1>
+    <a href="/kaffee" class="btn btn-primary">
+      Jetzt Kaffee Kaufen
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .hero-image {
+    overflow: hidden;
+    border-right: 1px solid var(--warm-dark-grey);
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 60px;
+    text-align: center;
+    gap: 48px;
+  }
+
+  .hero-heading {
+    font-family: var(--font-heading);
+    font-size: 81.6px;
+    line-height: 70.2px;
+    letter-spacing: -1.15px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    padding: 12px 32px;
+    border-radius: 3px;
+    font-family: var(--font-ui);
+    font-size: 34px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.85;
+  }
+</style>

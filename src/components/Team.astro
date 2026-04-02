@@ -1,0 +1,125 @@
+---
+
+---
+
+<section class="team">
+  <div class="team-photos">
+    <div class="team-photos-track">
+      <img src="/images/team-5.jpg" alt="Team" />
+      <img src="/images/team-1.jpg" alt="Team" />
+      <img src="/images/team-8.jpg" alt="Team" />
+      <img src="/images/team-3.jpg" alt="Team" />
+      <img src="/images/team-6.jpg" alt="Team" />
+      <img src="/images/team-4.jpg" alt="Team" />
+      <img src="/images/team-7.jpg" alt="Team" />
+      <img src="/images/team-2.jpg" alt="Team" />
+    </div>
+  </div>
+  <div class="team-content">
+    <div class="team-text">
+      <p class="team-description">
+        Wir sind Sophie und Charlotte, die Gründerinnen von HyCoffee. Zwischen
+        Ostafrika und Deutschland arbeiten wir mit Produzent:innen, Röstereien und
+        der Wissenschaft zusammen, um klimaresiliente Anbausysteme zu fördern und
+        außergewöhnliche Kaffees auf den Markt zu bringen. Unser Ziel: eine faire
+        Kaffeebranche, die auch im Klimawandel bestehen kann.
+      </p>
+    </div>
+    <div class="team-right">
+      <h2 class="team-heading">Wer wir sind</h2>
+      <a href="/ueber-uns" class="btn btn-secondary">
+        <span>Secondary Button</span>
+        <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .team {
+    background: var(--warm-grey-light);
+    border: 1px solid var(--warm-dark-grey);
+  }
+
+  .team-photos {
+    width: 100%;
+    height: 181px;
+    overflow: hidden;
+    filter: grayscale(100%);
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .team-photos-track {
+    display: flex;
+    height: 100%;
+    gap: 0;
+  }
+
+  .team-photos-track img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .team-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 80px 60px;
+    gap: 60px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .team-text {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .team-description {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 36px;
+    color: var(--warm-dark-grey);
+  }
+
+  .team-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .team-heading {
+    font-family: var(--font-heading);
+    font-size: 75px;
+    line-height: 70.3px;
+    letter-spacing: -1.5px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: 3px;
+    font-family: var(--font-ui);
+    font-size: 20px;
+    transition: opacity 0.2s;
+  }
+
+  .btn-secondary:hover {
+    opacity: 0.85;
+  }
+
+  .arrow {
+    width: 14px;
+    height: 11px;
+  }
+</style>

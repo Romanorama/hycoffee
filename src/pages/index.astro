@@ -1,17 +1,28 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Hero from '../components/Hero.astro';
+import Tiles from '../components/Tiles.astro';
+import Values from '../components/Values.astro';
+import Team from '../components/Team.astro';
+import SpeciesDiscovery from '../components/SpeciesDiscovery.astro';
+import Science from '../components/Science.astro';
+import Banner from '../components/Banner.astro';
+import Press from '../components/Press.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="HyCoffee – Klimaresilienter Rohkaffee">
+  <Navigation />
+  <main>
+    <Hero />
+    <Tiles />
+    <Values />
+    <Team />
+    <SpeciesDiscovery />
+    <Science />
+    <Banner />
+    <Press />
+  </main>
+  <Footer />
+</BaseLayout>

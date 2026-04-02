@@ -1,0 +1,225 @@
+---
+
+---
+
+<section class="science">
+  <div class="science-header">
+    <span class="caption">WISSEN</span>
+    <h2 class="science-heading">Zwischen Forschung und Markt</h2>
+    <p class="science-text">
+      Wir verbinden wissenschaftliche Erkenntnisse mit der Praxis des
+      Kaffeeanbaus. In unseren Artikeln teilen wir neue Erkenntnisse und
+      Perspektiven aus unserer Arbeit.
+    </p>
+    <a href="/wissen" class="science-link">Zu den Artikeln ›</a>
+  </div>
+  <div class="science-cards">
+    <article class="science-card">
+      <span class="caption">Knowledge & Science</span>
+      <div class="card-image"></div>
+      <h4 class="card-title">Article Headline</h4>
+      <p class="card-subtitle">Article Subline</p>
+      <div class="card-footer">
+        <a href="#" class="btn btn-tertiary">
+          <span>Tertiary Button</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <div class="card-meta">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10" stroke="#e3e2e0" stroke-width="1"/>
+            <path d="M11 6v5l3 3" stroke="#e3e2e0" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+          <span>6 Min</span>
+        </div>
+      </div>
+    </article>
+    <article class="science-card">
+      <span class="caption">Knowledge & Science</span>
+      <div class="card-image"></div>
+      <h4 class="card-title">Article Headline</h4>
+      <p class="card-subtitle">Article Subline</p>
+      <div class="card-footer">
+        <a href="#" class="btn btn-tertiary">
+          <span>Tertiary Button</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <div class="card-meta">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10" stroke="#e3e2e0" stroke-width="1"/>
+            <path d="M11 6v5l3 3" stroke="#e3e2e0" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+          <span>6 Min</span>
+        </div>
+      </div>
+    </article>
+    <article class="science-card">
+      <span class="caption">Knowledge & Science</span>
+      <div class="card-image"></div>
+      <h4 class="card-title">Article Headline</h4>
+      <p class="card-subtitle">Article Subline</p>
+      <div class="card-footer">
+        <a href="#" class="btn btn-tertiary">
+          <span>Tertiary Button</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <div class="card-meta">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10" stroke="#e3e2e0" stroke-width="1"/>
+            <path d="M11 6v5l3 3" stroke="#e3e2e0" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+          <span>6 Min</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .science {
+    padding: 80px 60px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .science-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .caption {
+    font-family: var(--font-heading);
+    font-size: 20.9px;
+    line-height: 16.32px;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  .science-heading {
+    font-family: var(--font-heading);
+    font-size: 76.6px;
+    line-height: 78px;
+    letter-spacing: -3px;
+    font-weight: 400;
+    color: var(--grey-10);
+    margin-bottom: 32px;
+    max-width: 682px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .science-text {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 36px;
+    color: var(--warm-dark-grey);
+    max-width: 1000px;
+    margin: 0 auto 24px;
+  }
+
+  .science-link {
+    font-family: var(--font-ui);
+    font-size: 27px;
+    color: var(--violet);
+    display: inline-block;
+  }
+
+  .science-link:hover {
+    opacity: 0.7;
+  }
+
+  .science-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .science-card {
+    background: var(--warm-dark-grey);
+    border-radius: 10px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    min-height: 655px;
+    border-right: 1px solid #3a3a3a;
+  }
+
+  .science-card:last-child {
+    border-right: none;
+  }
+
+  .science-card .caption {
+    color: var(--light-grey);
+    margin-bottom: 16px;
+  }
+
+  .card-image {
+    background: #d9d9d9;
+    border-radius: 4px;
+    flex: 1;
+    min-height: 260px;
+    margin-bottom: 24px;
+  }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    line-height: 45.76px;
+    font-weight: 400;
+    color: var(--light-grey);
+    margin-bottom: 8px;
+  }
+
+  .card-subtitle {
+    font-family: var(--font-heading);
+    font-size: 23px;
+    line-height: 26px;
+    color: var(--light-grey);
+    margin-bottom: 24px;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .btn-tertiary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--yellow);
+    color: var(--warm-dark-grey);
+    padding: 10px 24px;
+    border-radius: 3px;
+    font-family: var(--font-ui);
+    font-size: 20px;
+    transition: opacity 0.2s;
+  }
+
+  .btn-tertiary:hover {
+    opacity: 0.85;
+  }
+
+  .arrow {
+    width: 14px;
+    height: 11px;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--light-grey);
+    font-family: var(--font-heading);
+    font-size: 23px;
+  }
+</style>

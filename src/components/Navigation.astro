@@ -1,0 +1,106 @@
+---
+
+---
+
+<nav class="nav">
+  <div class="nav-top">
+    <div class="nav-top-inner">
+      <a href="/" class="nav-logo">
+        <img src="/images/logo-light.svg" alt="HyCoffee" />
+      </a>
+      <div class="nav-lang">
+        <span class="nav-lang-active">DE</span>
+        <span class="nav-lang-inactive">EN</span>
+      </div>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <div class="nav-links">
+      <a href="/kaffee" class="nav-link">Kaffee kaufen</a>
+      <span class="nav-divider"></span>
+      <a href="/wissen" class="nav-link">Wissen</a>
+      <span class="nav-divider"></span>
+      <a href="/origins" class="nav-link">Origins</a>
+      <span class="nav-divider"></span>
+      <a href="/ueber-uns" class="nav-link">Über Uns</a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-top {
+    background: var(--warm-dark-grey);
+    padding: 24px 0;
+  }
+
+  .nav-top-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .nav-logo img {
+    height: 48px;
+    width: auto;
+  }
+
+  .nav-lang {
+    position: absolute;
+    right: 48px;
+    display: flex;
+    gap: 12px;
+    font-family: var(--font-ui);
+    font-size: 18px;
+  }
+
+  .nav-lang-active {
+    color: var(--white);
+  }
+
+  .nav-lang-inactive {
+    color: #a1a1a1;
+    cursor: pointer;
+  }
+
+  .nav-bottom {
+    background: var(--warm-grey-light);
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 16px 0;
+  }
+
+  .nav-link {
+    font-family: var(--font-ui);
+    font-size: 24px;
+    color: var(--warm-dark-grey);
+    padding: 0 28px;
+    transition: opacity 0.2s;
+  }
+
+  .nav-link:hover {
+    opacity: 0.6;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--warm-dark-grey);
+  }
+</style>

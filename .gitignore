@@ -22,3 +22,16 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# editor config
+.cursor/
+.claude/
+
+# images (hosted separately)
+public/images/
+
+# design assets / working files
+Guide Image*/
+Images/
+Logo/
+Typography/

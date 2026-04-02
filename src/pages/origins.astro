@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Origins – HyCoffee">
+  <Navigation />
+  <main class="origins">
+    <section class="origins-header">
+      <p class="caption">UNSERE ORIGINS</p>
+      <h2 class="origins-title">Aktuell arbeiten wir viel in Uganda und der West Nile Region</h2>
+    </section>
+
+    <div class="country-bar">
+      <button class="country-selector">
+        Uganda
+        <span class="chevron">›</span>
+      </button>
+    </div>
+
+    <section class="origins-content">
+      <div class="origin-item">
+        <a href="#" class="origin-link">
+          Arabica aus der West Nile Region
+          <span class="origin-arrow">›</span>
+        </a>
+      </div>
+
+      <div class="origin-item origin-expanded">
+        <button class="origin-link active">
+          Excelsa aus Zentral Uganda
+          <span class="origin-arrow rotated">›</span>
+        </button>
+
+        <div class="origin-body">
+          <p>
+            Die Kaffeeart Excelsa (Coffea dewevrei) ist in Uganda heimisch. Aufgrund
+            ihrer hohen Produktivität sowie ihrer Widerstandsfähigkeit gegenüber
+            Dürre, Schädlingen und Krankheiten wird Excelsa bereits von vielen
+            Kaffeebäuerinnen und -bauern im Land angebaut.
+          </p>
+          <p>
+            Die geernteten Kirschen werden jedoch häufig zu niedrigen Preisen verkauft
+            und mit Robusta-Kaffee geringerer Qualität vermischt. Damit bleibt ein
+            großes Potenzial ungenutzt: Richtig geerntet und verarbeitet besitzt
+            Excelsa ein beeindruckendes Cupping-Profil.
+          </p>
+
+          <figure class="origin-figure">
+            <div class="origin-image-placeholder"></div>
+            <figcaption>Excelsa aus Zentral Uganda</figcaption>
+          </figure>
+
+          <p>
+            Über bestehende Kooperativenstrukturen arbeitet HyCoffee mit
+            Excelsa-Farmern zusammen, um Anbau, Ernte, Verarbeitung, Lagerung und
+            Vermarktung von Excelsa zu verbessern. Ziel ist es, hochwertige
+            Kaffeebohnen für den Export zu produzieren.
+          </p>
+          <p>
+            Damit sich die zusätzlichen Anstrengungen der Farmer auch auszahlen, hat
+            sich HyCoffee verpflichtet, den Kaffee zu importieren und den Marktzugang
+            in der Europäischen Union zu ermöglichen. Dadurch können Farmer nicht nur
+            ihr Einkommen steigern, sondern auch ihre Kaffeeproduktion
+            diversifizieren und so widerstandsfähiger gegenüber Klimaschocks werden.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .origins-header {
+    padding: 60px 69px 40px;
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .caption {
+    font-family: var(--font-heading);
+    font-size: 20.9px;
+    line-height: 16.32px;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 20px;
+  }
+
+  .origins-title {
+    font-family: var(--font-heading);
+    font-size: 45px;
+    line-height: 51px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+  }
+
+  .country-bar {
+    background: var(--green);
+    padding: 40px 69px;
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .country-selector {
+    font-family: var(--font-heading);
+    font-size: 50.9px;
+    line-height: 16.32px;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .chevron {
+    font-size: 50.9px;
+    transform: rotate(90deg);
+    display: inline-block;
+  }
+
+  .origins-content {
+    padding: 0 69px 80px;
+  }
+
+  .origin-item {
+    padding: 24px 0;
+  }
+
+  .origin-link {
+    font-family: var(--font-heading);
+    font-size: 50px;
+    line-height: 45.76px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .origin-arrow {
+    font-size: 50.9px;
+    transition: transform 0.2s;
+  }
+
+  .origin-arrow.rotated {
+    transform: rotate(90deg);
+  }
+
+  .origin-body {
+    padding-top: 24px;
+    max-width: 956px;
+  }
+
+  .origin-body p {
+    font-family: var(--font-heading);
+    font-size: 23px;
+    line-height: 26px;
+    color: var(--warm-dark-grey);
+    margin-bottom: 20px;
+  }
+
+  .origin-figure {
+    margin: 32px 0;
+  }
+
+  .origin-image-placeholder {
+    width: 100%;
+    max-width: 942px;
+    height: 402px;
+    background: #d9d9d9;
+  }
+
+  .origin-figure figcaption {
+    font-family: var(--font-ui);
+    font-size: 16px;
+    line-height: 16.32px;
+    letter-spacing: 0.1px;
+    color: var(--warm-dark-grey);
+    margin-top: 12px;
+  }
+</style>

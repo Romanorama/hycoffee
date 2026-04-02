@@ -1,0 +1,291 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+import speciesPhoto01 from '../../Images/DSC_5289.jpeg';
+import speciesPhoto02 from '../../Images/DSC_5300.jpeg';
+import speciesPhoto03 from '../../Images/IMG_1692.jpeg';
+import speciesPhoto04 from '../../Images/IMG_1694.jpeg';
+import speciesPhoto05 from '../../Images/DSC_5182.jpeg';
+import speciesPhoto06 from '../../Images/DSC_5184.jpeg';
+import speciesPhoto07 from '../../Images/DSC_5292.jpeg';
+import speciesPhoto08 from '../../Images/IMG_1645.jpeg';
+
+interface SpeciesCard {
+  name: string;
+  alt: string;
+  credit: string;
+  image: ImageMetadata;
+}
+
+const speciesCards: SpeciesCard[] = [
+  {
+    name: 'coffea stenophylla',
+    alt: 'Young coffee plants in nursery beds',
+    credit: 'photograph by the HyCoffee team',
+    image: speciesPhoto01
+  },
+  {
+    name: 'coffea dewevrei (excelsa)',
+    alt: 'Coffee cherries growing on a branch',
+    credit: 'photograph by the HyCoffee team',
+    image: speciesPhoto02
+  },
+  {
+    name: 'hibrido de timor',
+    alt: 'Dense branch with developing coffee cherries',
+    credit: 'photograph by the HyCoffee team',
+    image: speciesPhoto03
+  },
+  {
+    name: 'coffea racemosa',
+    alt: 'Close-up of ripening cherries on coffee branches',
+    credit: 'photograph by the HyCoffee team',
+    image: speciesPhoto04
+  },
+  {
+    name: 'unidentified c. arabica variety',
+    alt: 'Sun-drying coffee beans on raised beds',
+    credit: 'photograph by the HyCoffee team',
+    image: speciesPhoto05
+  },
+  {
+    name: 'wild coffee variety',
+    alt: 'Parchment coffee drying inside a tunnel',
+    credit: 'photograph by the HyCoffee team',
+    image: speciesPhoto06
+  },
+  {
+    name: 'coffea canephora hybrid',
+    alt: 'Natural coffee cherries drying on a raised bed',
+    credit: 'photograph by the HyCoffee team',
+    image: speciesPhoto07
+  },
+  {
+    name: 'unidentified coffee tree',
+    alt: 'Harvested coffee cherries spread for sorting',
+    credit: 'photograph by the HyCoffee team',
+    image: speciesPhoto08
+  }
+];
+---
+
+<section class="species-discovery" aria-labelledby="species-headline">
+  <div class="species-inner">
+    <details class="species-panel">
+      <summary class="species-summary">
+        <span id="species-headline" class="species-heading">
+          There are 130 known coffee species, many of which are not commercially
+          used. Yet.
+        </span>
+        <span class="species-toggle" aria-hidden="true">
+          <span class="species-toggle-label">discover</span>
+          <span class="species-toggle-icon">+</span>
+        </span>
+      </summary>
+
+      <div class="species-content">
+        <p class="species-intro">
+          To prepare for climate change we must tap into the genetic riches of wild
+          coffee. By choosing wild and hybrid coffees, we can support a fairer, more
+          diverse and more resilient coffee sector.
+        </p>
+
+        <p class="species-lead">Discover promising coffee species and varieties:</p>
+
+        <ul class="species-grid">
+          {speciesCards.map((card) => (
+            <li class="species-card">
+              <figure class="species-figure">
+                <div class="species-image-wrap">
+                  <Image src={card.image} alt={card.alt} class="species-image" />
+                </div>
+                <figcaption class="species-caption">
+                  <p class="species-name">{card.name}</p>
+                  <p class="species-credit">{card.credit}</p>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+  </div>
+</section>
+
+<style>
+  .species-discovery {
+    background: var(--warm-grey-light);
+    border-top: 1px solid var(--warm-dark-grey);
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .species-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 52px 60px 72px;
+  }
+
+  .species-panel {
+    width: 100%;
+  }
+
+  .species-summary {
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+    cursor: pointer;
+  }
+
+  .species-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .species-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(40px, 5.3vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -1.8px;
+    color: var(--green);
+    max-width: 980px;
+  }
+
+  .species-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--green);
+    border: 1px solid var(--green);
+    border-radius: 999px;
+    padding: 7px 14px;
+    margin-top: 10px;
+    flex-shrink: 0;
+  }
+
+  .species-toggle-label {
+    font-family: var(--font-ui);
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .species-toggle-icon {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+
+  .species-panel[open] .species-toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .species-content {
+    padding-top: 26px;
+  }
+
+  .species-intro {
+    max-width: 1140px;
+    font-family: var(--font-heading);
+    font-size: 36px;
+    line-height: 1.05;
+    color: var(--green);
+    margin-bottom: 24px;
+  }
+
+  .species-lead {
+    font-family: var(--font-ui);
+    font-size: 24px;
+    letter-spacing: 0.2px;
+    color: var(--green);
+    margin-bottom: 32px;
+  }
+
+  .species-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px 32px;
+  }
+
+  .species-figure {
+    width: 100%;
+  }
+
+  .species-image-wrap {
+    overflow: hidden;
+    border-radius: 0;
+    aspect-ratio: 4 / 5;
+    border: 1px solid color-mix(in srgb, var(--green) 40%, var(--warm-grey-light));
+    background: #d6d5d1;
+  }
+
+  .species-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .species-caption {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .species-name {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    line-height: 1.15;
+    color: var(--green);
+    text-transform: lowercase;
+  }
+
+  .species-credit {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    line-height: 1.1;
+    color: color-mix(in srgb, var(--green) 78%, var(--warm-grey-light));
+  }
+
+  @media (max-width: 1200px) {
+    .species-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+  @media (max-width: 900px) {
+    .species-inner {
+      padding: 40px 24px 48px;
+    }
+
+    .species-summary {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .species-toggle {
+      margin-top: 0;
+    }
+
+    .species-intro {
+      font-size: 28px;
+      line-height: 1.05;
+    }
+
+    .species-lead {
+      font-size: 20px;
+    }
+
+    .species-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .species-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
