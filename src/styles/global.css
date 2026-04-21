@@ -1,8 +1,7 @@
 /* ===== Fonts ===== */
 @font-face {
   font-family: 'DGM Sprinter';
-  src: url('/fonts/DGMSprinter-Regular.woff2') format('woff2'),
-       url('/fonts/DGMSprinter-Regular.woff') format('woff');
+  src: url('/fonts/DGMSprinter-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -10,8 +9,7 @@
 
 @font-face {
   font-family: 'HAL Timezone';
-  src: url('/fonts/HALTimezone-Regular.woff2') format('woff2'),
-       url('/fonts/HALTimezone-Regular.woff') format('woff');
+  src: url('/fonts/HALTimezone-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
