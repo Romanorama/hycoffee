@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="de"> <head><meta charset="utf-8"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v5.18.1"><title>Origins – HyCoffee</title><link rel="stylesheet" href="/_astro/agb.BpNnNJlx.css">
+<link rel="stylesheet" href="/_astro/agb.Cb77x_sH.css">
+<link rel="stylesheet" href="/_astro/origins.Dl5SEQtt.css"></head> <body>  <nav class="nav" data-astro-cid-pux6a34n> <div class="nav-top" data-astro-cid-pux6a34n> <div class="nav-top-inner" data-astro-cid-pux6a34n> <a href="/" class="nav-logo" data-astro-cid-pux6a34n> <img src="/images/logo-light.svg" alt="HyCoffee" data-astro-cid-pux6a34n> </a> </div> <div class="nav-lang" role="group" aria-label="Sprache wählen" data-astro-cid-pux6a34n> <button type="button" class="nav-lang-option nav-lang-active" data-lang="de" aria-pressed="true" data-astro-cid-pux6a34n> <span class="nav-lang-label" data-astro-cid-pux6a34n>DE</span> </button> <button type="button" class="nav-lang-option nav-lang-inactive" data-lang="en" aria-pressed="false" data-astro-cid-pux6a34n> <span class="nav-lang-label" data-astro-cid-pux6a34n>EN</span> </button> </div> </div> <div class="nav-contact-wrap" data-astro-cid-pux6a34n> <button type="button" class="nav-contact-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="nav-contact-popover" data-astro-cid-pux6a34n> <span class="nav-contact-label" data-astro-cid-pux6a34n>KONTAKT</span> </button> <div id="nav-contact-popover" class="nav-contact-popover" role="dialog" aria-label="Kontakt" data-astro-cid-pux6a34n> <a href="mailto:info@hycoffee.de" class="nav-contact-item" data-astro-cid-pux6a34n>info@hycoffee.de</a> <a href="tel:+490157123456" class="nav-contact-item" data-astro-cid-pux6a34n>0157 123456</a> </div> </div> <div class="nav-burger-wrap" data-astro-cid-pux6a34n> <button class="nav-burger" aria-label="Menü öffnen" aria-expanded="false" data-astro-cid-pux6a34n> <span class="nav-burger-label" data-astro-cid-pux6a34n>MENU</span> </button> </div> <div class="nav-bottom" data-astro-cid-pux6a34n> <div class="nav-links" data-astro-cid-pux6a34n> <a href="/" class="nav-link" data-astro-cid-pux6a34n>
+Home
+</a> <span class="nav-divider" data-astro-cid-pux6a34n></span> <a href="/kaffee" class="nav-link" data-astro-cid-pux6a34n>
+Kaffee kaufen
+</a> <span class="nav-divider" data-astro-cid-pux6a34n></span> <a href="/wissen" class="nav-link" data-astro-cid-pux6a34n>
+Wissen
+</a> <span class="nav-divider" data-astro-cid-pux6a34n></span> <a href="/origins" class="nav-link nav-link-active" aria-current="page" data-astro-cid-pux6a34n>
+Origins
+</a> <span class="nav-divider" data-astro-cid-pux6a34n></span> <a href="/ueber-uns" class="nav-link" data-astro-cid-pux6a34n>
+Über Uns
+</a> </div> </div> <div class="nav-mobile-overlay" data-astro-cid-pux6a34n> <div class="nav-mobile-links" data-astro-cid-pux6a34n> <a href="/" class="nav-mobile-link" data-astro-cid-pux6a34n>
+Home
+</a> <a href="/kaffee" class="nav-mobile-link" data-astro-cid-pux6a34n>
+Kaffee kaufen
+</a> <a href="/wissen" class="nav-mobile-link" data-astro-cid-pux6a34n>
+Wissen
+</a> <a href="/origins" class="nav-mobile-link nav-mobile-link-active" data-astro-cid-pux6a34n>
+Origins
+</a> <a href="/ueber-uns" class="nav-mobile-link" data-astro-cid-pux6a34n>
+Über Uns
+</a> <div class="nav-mobile-contact" data-astro-cid-pux6a34n> <a href="mailto:info@hycoffee.de" class="nav-mobile-contact-item" data-astro-cid-pux6a34n>info@hycoffee.de</a> <a href="tel:+490157123456" class="nav-mobile-contact-item" data-astro-cid-pux6a34n>0157 123456</a> </div> <div class="nav-mobile-lang" role="group" aria-label="Sprache wählen" data-astro-cid-pux6a34n> <button type="button" class="nav-mobile-lang-option nav-mobile-lang-active" data-lang="de" aria-pressed="true" data-astro-cid-pux6a34n><span class="nav-lang-label" data-astro-cid-pux6a34n>DE</span></button> <button type="button" class="nav-mobile-lang-option nav-mobile-lang-inactive" data-lang="en" aria-pressed="false" data-astro-cid-pux6a34n><span class="nav-lang-label" data-astro-cid-pux6a34n>EN</span></button> </div> </div> </div>  </nav>  <script>
+  document.querySelectorAll('.nav-filter-pill').forEach(pill => {
+    pill.addEventListener('click', e => {
+      const target = e.target;
+      const close = target instanceof Element ? target.closest('.pill-close') : null;
+      if (close) {
+        pill.classList.remove('active');
+      } else {
+        pill.classList.toggle('active');
+      }
+    });
+  });
+
+  const navRoot = document.querySelector('.nav');
+
+  function syncNavHeight() {
+    if (!navRoot) return;
+    const navHeight = Math.max(50, Math.round(navRoot.getBoundingClientRect().height));
+    document.body.classList.add('has-fixed-nav');
+    document.body.style.setProperty('--nav-height', `${navHeight}px`);
+  }
+
+  if (navRoot) {
+    syncNavHeight();
+    window.addEventListener('load', syncNavHeight);
+    window.addEventListener('resize', syncNavHeight);
+
+    if ('ResizeObserver' in window) {
+      const navResizeObserver = new ResizeObserver(() => {
+        syncNavHeight();
+      });
+      navResizeObserver.observe(navRoot);
+    }
+  }
+
+  // Nav animation toggle — set to true to re-enable the home page expand/collapse animation
+  const ENABLE_NAV_ANIMATION = false;
+
+  const nav = document.querySelector('.nav-home');
+  if (nav) {
+    if (ENABLE_NAV_ANIMATION) {
+      // Ensure we start at top on homepage
+      if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+
+      // Once collapsed, stay collapsed permanently
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (window.scrollY > 10) {
+            nav.classList.add('nav-scrolled');
+          }
+        },
+        { passive: true }
+      );
+    } else {
+      // Static final form: apply scrolled state immediately, skip transitions
+      nav.classList.add('nav-no-transition', 'nav-scrolled');
+    }
+  }
+
+  const burger = document.querySelector('.nav-burger');
+  const burgerLabel = document.querySelector('.nav-burger-label');
+  const mobileOverlay = document.querySelector('.nav-mobile-overlay');
+  if (burger && mobileOverlay) {
+    function setMobileMenuOpen(isOpen) {
+      burger.classList.toggle('is-open', isOpen);
+      mobileOverlay.classList.toggle('is-open', isOpen);
+      if (navRoot) navRoot.classList.toggle('nav-menu-open', isOpen);
+      burger.setAttribute('aria-expanded', String(isOpen));
+      burger.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+      if (burgerLabel) {
+        burgerLabel.textContent = isOpen ? 'CLOSE' : 'MENU';
+      }
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    burger.addEventListener('click', () => {
+      setMobileMenuOpen(!burger.classList.contains('is-open'));
+    });
+
+    mobileOverlay.querySelectorAll('.nav-mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        setMobileMenuOpen(false);
+      });
+    });
+  }
+
+  // Desktop lang switcher
+  const navLang = document.querySelector('.nav-lang');
+  const mobileLang = document.querySelector('.nav-mobile-lang');
+
+  function syncLang(isEnglish) {
+    // Sync desktop
+    if (navLang) {
+      navLang.classList.toggle('is-en', isEnglish);
+      navLang.querySelectorAll('.nav-lang-option').forEach(btn => {
+        const isActive = (btn.dataset.lang === 'en') === isEnglish;
+        btn.classList.toggle('nav-lang-active', isActive);
+        btn.classList.toggle('nav-lang-inactive', !isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+      });
+    }
+    // Sync mobile
+    if (mobileLang) {
+      mobileLang.classList.toggle('is-en', isEnglish);
+      mobileLang.querySelectorAll('.nav-mobile-lang-option').forEach(btn => {
+        const isActive = (btn.dataset.lang === 'en') === isEnglish;
+        btn.classList.toggle('nav-mobile-lang-active', isActive);
+        btn.classList.toggle('nav-mobile-lang-inactive', !isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+      });
+    }
+  }
+
+  if (navLang) {
+    navLang.querySelectorAll('.nav-lang-option').forEach(option => {
+      option.addEventListener('click', () => syncLang(option.dataset.lang === 'en'));
+    });
+  }
+
+  if (mobileLang) {
+    mobileLang.querySelectorAll('.nav-mobile-lang-option').forEach(option => {
+      option.addEventListener('click', () => syncLang(option.dataset.lang === 'en'));
+    });
+  }
+
+  // Desktop Kontakt popover
+  const contactBtn = document.querySelector('.nav-contact-btn');
+  const contactPopover = document.getElementById('nav-contact-popover');
+  const contactWrap = document.querySelector('.nav-contact-wrap');
+  if (contactBtn && contactPopover && contactWrap) {
+    function setContactOpen(isOpen) {
+      contactBtn.setAttribute('aria-expanded', String(isOpen));
+      contactPopover.classList.toggle('is-open', isOpen);
+    }
+
+    contactBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = contactBtn.getAttribute('aria-expanded') === 'true';
+      setContactOpen(!isOpen);
+    });
+
+    document.addEventListener('click', e => {
+      if (!contactWrap.contains(e.target)) {
+        setContactOpen(false);
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        setContactOpen(false);
+      }
+    });
+  }
+</script> <main class="origins" data-astro-cid-37h2jmiz> <!-- Uganda --> <div class="country-section" id="uganda" data-astro-cid-37h2jmiz> <div class="country-header" data-astro-cid-37h2jmiz> <span class="country-name" data-astro-cid-37h2jmiz>Uganda</span> </div> <section class="origins-content" data-astro-cid-37h2jmiz> <div class="editorial-origin" data-astro-cid-37h2jmiz> <div class="editorial-left" data-astro-cid-37h2jmiz> <h2 class="editorial-heading" data-astro-cid-37h2jmiz>Arabica</h2> <p class="editorial-location" data-astro-cid-37h2jmiz>West Nile Region, Uganda</p> </div> <div class="editorial-right" data-astro-cid-37h2jmiz> <p data-astro-cid-37h2jmiz>
+In Uganda beziehen wir Spezialitäten-Arabica, die in klimaresilienten
+              Anbausystemen in der Region West Nile wachsen.
+</p> <p data-astro-cid-37h2jmiz>
+Diese Gegend gehört zu den am wenigsten investierten Regionen des
+              Landes, und die dortigen Kaffeeanbau-Gemeinschaften werden
+              voraussichtlich zu denjenigen gehören, die besonders stark vom
+              Klimawandel betroffen sein werden.
+</p> <p data-astro-cid-37h2jmiz>
+Diese Herausforderungen setzen die Lebensgrundlagen der Landwirte
+              ernsthaft unter Druck und zeigen, wie dringend Investitionen in
+              Anpassungsmaßnahmen an den Klimawandel sind.
+</p> <p data-astro-cid-37h2jmiz>
+Deshalb arbeitet HyCoffee unter anderem mit Zombo Coffee Partners
+              zusammen, die eng mit der Produzent:innengemeinschaft in der Region
+              zusammenarbeiten. Gemeinsam unterstützen wir Produzent:innen beim
+              Übergang zu regenerativen Anbausystemen.
+</p> <p data-astro-cid-37h2jmiz>
+Die Produzent:innen bauen ihren Kaffee in regenerativen Anbausystemen
+              an, die die Bodengesundheit verbessern, die Wasserspeicherung erhöhen
+              und Schatten für die Pflanzen schaffen.
+</p> <p data-astro-cid-37h2jmiz>
+In einer der klimatisch exponiertesten Regionen Ugandas ist
+              regenerative Landwirtschaft keine Option, sondern eine Notwendigkeit.
+</p> <div class="editorial-images" data-astro-cid-37h2jmiz> <figure class="editorial-figure" data-astro-cid-37h2jmiz> <img src="/images/origins-arabica-1.jpeg" alt="Trocknungsbetten in der West Nile Region" data-astro-cid-37h2jmiz> </figure> <figure class="editorial-figure" data-astro-cid-37h2jmiz> <img src="/images/origins-arabica-2.jpeg" alt="Kaffeekirschen aus der West Nile Region" data-astro-cid-37h2jmiz> </figure> </div> </div> </div> <div class="editorial-origin" data-astro-cid-37h2jmiz> <div class="editorial-left" data-astro-cid-37h2jmiz> <h2 class="editorial-heading" data-astro-cid-37h2jmiz>Excelsa</h2> <p class="editorial-location" data-astro-cid-37h2jmiz>Zentral Uganda</p> </div> <div class="editorial-right" data-astro-cid-37h2jmiz> <p data-astro-cid-37h2jmiz>
+Die Kaffeeart Excelsa (Coffea dewevrei) ist in Uganda heimisch. Aufgrund
+              ihrer hohen Produktivität sowie ihrer Widerstandsfähigkeit gegenüber
+              Dürre, Schädlingen und Krankheiten wird Excelsa bereits von vielen
+              Kaffeebäuerinnen und -bauern im Land angebaut.
+</p> <p data-astro-cid-37h2jmiz>
+Die geernteten Kirschen werden jedoch häufig zu niedrigen Preisen verkauft
+              und mit Robusta-Kaffee geringerer Qualität vermischt. Damit bleibt ein
+              großes Potenzial ungenutzt: Richtig geerntet und verarbeitet besitzt
+              Excelsa ein beeindruckendes Cupping-Profil.
+</p> <p data-astro-cid-37h2jmiz>
+Über bestehende Kooperativenstrukturen arbeitet HyCoffee mit
+              Excelsa-Farmern zusammen, um Anbau, Ernte, Verarbeitung, Lagerung und
+              Vermarktung von Excelsa zu verbessern. Ziel ist es, hochwertige
+              Kaffeebohnen für den Export zu produzieren.
+</p> <p data-astro-cid-37h2jmiz>
+Damit sich die zusätzlichen Anstrengungen der Farmer auch auszahlen, hat
+              sich HyCoffee verpflichtet, den Kaffee zu importieren und den Marktzugang
+              in der Europäischen Union zu ermöglichen.
+</p> <div class="editorial-images" data-astro-cid-37h2jmiz> <figure class="editorial-figure" data-astro-cid-37h2jmiz> <img src="/images/origins-excelsa-1.jpeg" alt="Excelsa-Produzentin in Zentral Uganda" data-astro-cid-37h2jmiz> </figure> <figure class="editorial-figure" data-astro-cid-37h2jmiz> <img src="/images/origins-excelsa-2.jpeg" alt="Sortieren von Excelsa-Kirschen" data-astro-cid-37h2jmiz> </figure> </div> </div> </div> </section> </div> <!-- Kenia --> <div class="country-section" id="kenia" data-astro-cid-37h2jmiz> <div class="country-header" data-astro-cid-37h2jmiz> <span class="country-name" data-astro-cid-37h2jmiz>Kenia</span> </div> <section class="origins-content" data-astro-cid-37h2jmiz> <div class="editorial-origin" data-astro-cid-37h2jmiz> <div class="editorial-left" data-astro-cid-37h2jmiz> <h2 class="editorial-heading" data-astro-cid-37h2jmiz>Arabica</h2> <p class="editorial-location" data-astro-cid-37h2jmiz>Hochland,<br data-astro-cid-37h2jmiz>Kenia</p> </div> <div class="editorial-right" data-astro-cid-37h2jmiz> <p data-astro-cid-37h2jmiz>
+Kenia zählt zu den renommiertesten Kaffeeanbauländern der Welt.
+              Die Hochlagen rund um den Mount Kenya und die Aberdare-Berge bieten
+              ideale Bedingungen für den Anbau von Spezialitäten-Arabica.
+</p> <p data-astro-cid-37h2jmiz>
+Die intensiven Niederschläge, die fruchtbaren, vulkanischen Böden
+              und die kühlen Temperaturen in Höhen zwischen 1.400 und 2.000 Metern
+              schaffen ein einzigartiges Terroir, das Kenia-Kaffees ihre
+              charakteristische Komplexität verleiht.
+</p> <p data-astro-cid-37h2jmiz>
+HyCoffee arbeitet mit ausgewählten Kleinbauernkooperativen zusammen,
+              die nach nachhaltigen und klimaresilienten Methoden wirtschaften und
+              damit sowohl die Qualität als auch die Zukunftsfähigkeit ihres
+              Kaffees sichern.
+</p> </div> </div> </section> </div> </main> <footer class="footer" data-astro-cid-sz7xmlte> <div class="footer-inner" data-astro-cid-sz7xmlte> <!-- Top: Logo + Newsletter + Contact --> <div class="footer-top" data-astro-cid-sz7xmlte> <div class="footer-brand" data-astro-cid-sz7xmlte> <img src="/images/logo-light.svg" alt="HyCoffee" class="footer-logo" data-astro-cid-sz7xmlte> <p class="footer-tagline" data-astro-cid-sz7xmlte>Klimaresiliente Kaffeebohnen</p> </div> <div class="footer-newsletter" data-astro-cid-sz7xmlte> <p class="newsletter-label" data-astro-cid-sz7xmlte>Signup for our Newsletter and join the growing community.</p> <div class="newsletter-form" data-astro-cid-sz7xmlte> <input type="email" placeholder="Enter your email" class="newsletter-input" data-astro-cid-sz7xmlte> <button class="btn-newsletter" data-astro-cid-sz7xmlte> <span data-astro-cid-sz7xmlte>Anmelden</span> <svg width="14" height="11" viewBox="0 0 14 11" fill="none" data-astro-cid-sz7xmlte> <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-sz7xmlte></path> </svg> </button> </div> </div> <div class="footer-contact" data-astro-cid-sz7xmlte> <a href="tel:+41000000000" class="footer-contact-link" data-astro-cid-sz7xmlte>+41 00 000 00 00</a> <a href="mailto:info@hycoffee.com" class="footer-contact-link" data-astro-cid-sz7xmlte>info@hycoffee.com</a> </div> </div> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- Middle: 4 columns --> <div class="footer-columns" data-astro-cid-sz7xmlte> <div class="footer-col" data-astro-cid-sz7xmlte> <h4 class="footer-col-title" data-astro-cid-sz7xmlte>About us</h4> <p class="footer-col-text" data-astro-cid-sz7xmlte>Wir erforschen, entwickeln und liefern klimaresilienten Rohkaffee für eine nachhaltige Zukunft.</p> </div> <div class="footer-col" data-astro-cid-sz7xmlte> <h4 class="footer-col-title" data-astro-cid-sz7xmlte>Navigation</h4> <a href="/" class="footer-col-link" data-astro-cid-sz7xmlte>Home</a> <a href="/kaffee" class="footer-col-link" data-astro-cid-sz7xmlte>Kaffee kaufen</a> <a href="/wissen" class="footer-col-link" data-astro-cid-sz7xmlte>Wissen</a> <a href="/ueber-uns" class="footer-col-link" data-astro-cid-sz7xmlte>Über Uns</a> </div> <div class="footer-col" data-astro-cid-sz7xmlte> <h4 class="footer-col-title" data-astro-cid-sz7xmlte>Adresse</h4> <p class="footer-col-text" data-astro-cid-sz7xmlte>HyCoffee UG (haftungsbeschränkt)</p> <p class="footer-col-text" data-astro-cid-sz7xmlte>Tassilostraße 15</p> <p class="footer-col-text" data-astro-cid-sz7xmlte>82166 Gräfelfing</p> <p class="footer-col-text" data-astro-cid-sz7xmlte>Deutschland</p> </div> <div class="footer-col" data-astro-cid-sz7xmlte> <h4 class="footer-col-title" data-astro-cid-sz7xmlte>Follow Us</h4> <a href="https://www.instagram.com/hycoffeeco/" target="_blank" rel="noopener noreferrer" class="footer-col-link" data-astro-cid-sz7xmlte>Instagram</a> <a href="https://de.linkedin.com/company/hycoffee" target="_blank" rel="noopener noreferrer" class="footer-col-link" data-astro-cid-sz7xmlte>LinkedIn</a> </div> </div> <div class="footer-divider" data-astro-cid-sz7xmlte></div> <!-- Bottom: Copyright + Legal --> <div class="footer-bottom" data-astro-cid-sz7xmlte> <p class="footer-copyright" data-astro-cid-sz7xmlte>© 2026 HyCoffee. All rights reserved.</p> <div class="footer-legal" data-astro-cid-sz7xmlte> <a href="/impressum" class="footer-legal-link" data-astro-cid-sz7xmlte>Impressum</a> <a href="/datenschutz" class="footer-legal-link" data-astro-cid-sz7xmlte>Datenschutz</a> <a href="/agb" class="footer-legal-link" data-astro-cid-sz7xmlte>AGB</a> </div> </div> </div> </footer> <footer class="footer-alt" aria-label="Alternative Footer" data-astro-cid-sz7xmlte> <section class="footer-alt-newsletter" aria-label="Newsletter" data-astro-cid-sz7xmlte> <h2 class="footer-alt-newsletter-title" data-astro-cid-sz7xmlte>HyC monthly Newsletter</h2> <form class="footer-alt-form" data-astro-cid-sz7xmlte> <input type="email" placeholder="Email" class="footer-alt-input" aria-label="Email" data-astro-cid-sz7xmlte> <button type="submit" class="footer-alt-submit" aria-label="Newsletter abonnieren" data-astro-cid-sz7xmlte> <span data-astro-cid-sz7xmlte>Anmelden</span> </button> </form> <p class="footer-alt-newsletter-copy" data-astro-cid-sz7xmlte>Join the growing community</p> </section> <section class="footer-alt-main" data-astro-cid-sz7xmlte> <div class="footer-alt-brand" aria-hidden="true" data-astro-cid-sz7xmlte> <img src="/images/inv-Hy-mono.svg" alt="" class="footer-alt-logo" data-astro-cid-sz7xmlte> </div> <p class="footer-alt-tagline" data-astro-cid-sz7xmlte>Klimaresiliente Kaffeebohnen</p> <div class="footer-alt-content" data-astro-cid-sz7xmlte> <div class="footer-alt-col footer-alt-contact" data-astro-cid-sz7xmlte> <h3 class="footer-alt-label" data-astro-cid-sz7xmlte>Kontakt</h3> <a href="mailto:info@hycoffee.com" class="footer-alt-link footer-alt-mono" data-astro-cid-sz7xmlte>info@hycoffee.com</a> <a href="tel:+4901571234556" class="footer-alt-link footer-alt-mono" data-astro-cid-sz7xmlte>0049 (0) 157123 45 56</a> <address class="footer-alt-address" data-astro-cid-sz7xmlte>
+HyCoffee UG<br data-astro-cid-sz7xmlte>
+(haftungsbeschränkt)<br data-astro-cid-sz7xmlte>
+Tassilostraße 15<br data-astro-cid-sz7xmlte>
+82166 Gräfelfing<br data-astro-cid-sz7xmlte>
+Deutschland
+</address> </div> <nav class="footer-alt-col" aria-label="Footer Navigation" data-astro-cid-sz7xmlte> <h3 class="footer-alt-label" data-astro-cid-sz7xmlte>Navigation</h3> <a href="/" class="footer-alt-link" data-astro-cid-sz7xmlte>Home</a> <a href="/kaffee" class="footer-alt-link" data-astro-cid-sz7xmlte>Kaffee kaufen</a> <a href="/wissen" class="footer-alt-link" data-astro-cid-sz7xmlte>Wissen</a> <a href="/ueber-uns" class="footer-alt-link" data-astro-cid-sz7xmlte>Über Uns</a> <div class="footer-alt-nav-legal" data-astro-cid-sz7xmlte> <a href="/agb" class="footer-alt-legal-link" data-astro-cid-sz7xmlte>AGB</a> <a href="/datenschutz" class="footer-alt-legal-link" data-astro-cid-sz7xmlte>Datenschutz</a> <a href="/impressum" class="footer-alt-legal-link" data-astro-cid-sz7xmlte>Impressum</a> </div> </nav> <div class="footer-alt-col" data-astro-cid-sz7xmlte> <h3 class="footer-alt-label" data-astro-cid-sz7xmlte>Folge uns</h3> <a href="https://www.instagram.com/hycoffeeco/" target="_blank" rel="noopener noreferrer" class="footer-alt-link" data-astro-cid-sz7xmlte>Instagram</a> <a href="https://de.linkedin.com/company/hycoffee" target="_blank" rel="noopener noreferrer" class="footer-alt-link" data-astro-cid-sz7xmlte>LinkedIn</a> </div> </div> <p class="footer-alt-copyright" data-astro-cid-sz7xmlte>© 2026 HyCoffee. All rights reserved.</p> </section> </footer> <div id="footer-version-switcher" class="footer-version-switcher" aria-label="Footer-Version wechseln" data-astro-cid-sz7xmlte> <button type="button" class="footer-version-option" data-footer-version="classic" data-astro-cid-sz7xmlte>Footer A</button> <button type="button" class="footer-version-option" data-footer-version="alt" data-astro-cid-sz7xmlte>Footer B</button> </div>  <script>
+  (function () {
+    const switcher = document.getElementById('footer-version-switcher');
+    if (!switcher) return;
+    const options = Array.from(switcher.querySelectorAll('[data-footer-version]'));
+    const STORAGE_KEY = 'hycoffee-footer-version';
+    const versions = ['classic', 'alt'];
+
+    function apply(version) {
+      const next = versions.includes(version) ? version : 'classic';
+      document.body.classList.toggle('footer-alt-active', next === 'alt');
+      options.forEach((option) => {
+        const active = option.dataset.footerVersion === next;
+        option.classList.toggle('is-active', active);
+        option.setAttribute('aria-pressed', String(active));
+      });
+    }
+
+    apply(localStorage.getItem(STORAGE_KEY));
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        const next = option.dataset.footerVersion;
+        if (!versions.includes(next)) return;
+        localStorage.setItem(STORAGE_KEY, next);
+        apply(next);
+      });
+    });
+  })();
+</script>  <script>
+      (() => {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const sectionSelector = 'main section, main article';
+
+        function getRevealItems() {
+          return Array.from(document.querySelectorAll(sectionSelector)).filter((item) => {
+            const parentSection = item.parentElement?.closest(sectionSelector);
+            return !parentSection;
+          });
+        }
+
+        function revealNow(item) {
+          item.classList.add('is-visible');
+        }
+
+        function initSectionReveals() {
+          const items = getRevealItems();
+          if (!items.length) return;
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            items.forEach((item) => {
+              item.classList.add('scroll-reveal', 'is-visible');
+            });
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                revealNow(entry.target);
+                observer.unobserve(entry.target);
+              });
+            },
+            {
+              rootMargin: '0px 0px -12% 0px',
+              threshold: 0.08,
+            }
+          );
+
+          items.forEach((item, index) => {
+            if (item.dataset.scrollRevealReady === 'true') return;
+            item.dataset.scrollRevealReady = 'true';
+            item.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
+            item.classList.add('scroll-reveal');
+
+            const rect = item.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.92) {
+              revealNow(item);
+            } else {
+              observer.observe(item);
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initSectionReveals, { once: true });
+        } else {
+          initSectionReveals();
+        }
+      })();
+    </script> </body> </html>  
