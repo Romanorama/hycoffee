@@ -1,6 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import pressImage from '../assets/images/press-arte.webp';
+import logoArte from '../assets/images/media-arte.webp';
+import logoZdf from '../assets/images/media-zdf.webp';
+import logoFocus from '../assets/images/media-focus.webp';
+import logoBrandeins from '../assets/images/media-brandeins.webp';
 ---
 
 <section class="press">
@@ -16,7 +20,7 @@ import pressImage from '../assets/images/press-arte.webp';
         </div>
         <div class="press-meta">
           <div class="press-source">
-            <img src="/images/media-arte.png" alt="arte" class="press-logo" width="1800" height="1800" loading="lazy" decoding="async" />
+            <Image src={logoArte} alt="arte" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
           </div>
           <div class="press-time">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -47,7 +51,7 @@ import pressImage from '../assets/images/press-arte.webp';
         </div>
         <div class="press-meta">
           <div class="press-source">
-            <img src="/images/media-zdf.png" alt="ZDF" class="press-logo" width="1800" height="1800" loading="lazy" decoding="async" />
+            <Image src={logoZdf} alt="ZDF" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
           </div>
           <div class="press-time">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -78,7 +82,7 @@ import pressImage from '../assets/images/press-arte.webp';
         </div>
         <div class="press-meta">
           <div class="press-source">
-            <img src="/images/media-focus.png" alt="Focus" class="press-logo" width="1800" height="1800" loading="lazy" decoding="async" />
+            <Image src={logoFocus} alt="Focus" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
           </div>
           <div class="press-time">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -109,7 +113,7 @@ import pressImage from '../assets/images/press-arte.webp';
         </div>
         <div class="press-meta">
           <div class="press-source">
-            <img src="/images/media-brandeins.png" alt="Brand Eins" class="press-logo" width="1800" height="1800" loading="lazy" decoding="async" />
+            <Image src={logoBrandeins} alt="Brand Eins" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
           </div>
           <div class="press-time">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">

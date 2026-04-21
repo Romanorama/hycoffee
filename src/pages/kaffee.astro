@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
+import { Image } from 'astro:assets';
+import shopStrip from '../assets/images/DSC_5180.webp';
+import ambeAnaerobic from '../assets/images/ambe-anaerobic.webp';
+import amiziRock from '../assets/images/amizi-rock.webp';
+import disco3 from '../assets/images/disco3.webp';
+import excelsa from '../assets/images/excelsa.webp';
 ---
 
 <BaseLayout title="Kaffee kaufen – HyCoffee">
@@ -8,7 +14,7 @@ import Navigation from '../components/Navigation.astro';
   <main class="shop">
     <!-- Image Strip -->
     <div class="shop-strip">
-      <img src="/images/DSC_5180.jpeg" alt="Kaffeeanbau Detail" />
+      <Image src={shopStrip} alt="Kaffeeanbau Detail" widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={72} loading="lazy" decoding="async" />
     </div>
     <!-- Hero v1 (legacy — toggle via bottom-left pill to re-enable) -->
     <section class="shop-hero shop-hero-v1">
@@ -91,7 +97,7 @@ import Navigation from '../components/Navigation.astro';
               <p class="detail-text">Die West-Nil-Region ist historisch stark unterinvestiert. Das Mikrostationssystem hält die Wertschöpfung bei den Bäuerinnen und Bauern – jede Station wird von einem gewählten Komitee betrieben. Die Landwirt:innen verkaufen ihre Kirschen zwei Drittel über dem Living-Income-Referenzpreis für Ugandan Arabica. So entstehen stabile, bezahlte Arbeitsplätze in ländlichen Dörfern, in denen Erwerbsmöglichkeiten rar sind.</p>
             </div>
             <figure class="row-hero">
-              <img src="/images/ambe-anaerobic.jpeg" alt="Ambe Anaerobic – Trocknung auf Raised Beds in Ugandas West-Nil-Region" />
+              <Image src={ambeAnaerobic} alt="Ambe Anaerobic – Trocknung auf Raised Beds in Ugandas West-Nil-Region" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
             </figure>
           </div>
           <div class="row-details-actions">
@@ -151,7 +157,7 @@ import Navigation from '../components/Navigation.astro';
               <p class="detail-text">Die West-Nil-Region ist historisch stark unterinvestiert. Das Mikrostationssystem hält die Wertschöpfung bei den Bäuerinnen und Bauern – jede Station wird von einem gewählten Komitee betrieben. Die Landwirt:innen verkaufen ihre Kirschen zwei Drittel über dem Living-Income-Referenzpreis für Ugandan Arabica. So entstehen stabile, bezahlte Arbeitsplätze in ländlichen Dörfern, in denen Erwerbsmöglichkeiten rar sind.</p>
             </div>
             <figure class="row-hero">
-              <img src="/images/amizi-rock.jpeg" alt="Amizi Rock – markante Felsformation nahe der Mikrostation in West Nile, Uganda" />
+              <Image src={amiziRock} alt="Amizi Rock – markante Felsformation nahe der Mikrostation in West Nile, Uganda" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
             </figure>
           </div>
           <div class="row-details-actions">
@@ -211,7 +217,7 @@ import Navigation from '../components/Navigation.astro';
               <p class="detail-text">Die West-Nil-Region ist historisch stark unterinvestiert. Das Mikrostationssystem hält die Wertschöpfung bei den Bäuerinnen und Bauern – jede Station wird von einem gewählten Komitee betrieben. Die Landwirt:innen verkaufen ihre Kirschen zwei Drittel über dem Living-Income-Referenzpreis für Ugandan Arabica. So entstehen stabile, bezahlte Arbeitsplätze in ländlichen Dörfern, in denen Erwerbsmöglichkeiten rar sind.</p>
             </div>
             <figure class="row-hero">
-              <img src="/images/disco3.jpeg" alt="Disco 3 – fermentierte Kaffeekirschen nach 72-stündiger anaerober Fermentation" />
+              <Image src={disco3} alt="Disco 3 – fermentierte Kaffeekirschen nach 72-stündiger anaerober Fermentation" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
             </figure>
           </div>
           <div class="row-details-actions">
@@ -271,7 +277,7 @@ import Navigation from '../components/Navigation.astro';
               <p class="detail-text">Unser Excelsa stammt aus einem Kooperativen-Netzwerk in Zentraluganda. Gemeinsam mit den Produzent:innen verbessern wir Qualität und erproben neue, experimentelle Verarbeitungsmethoden. Wir schaffen einen direkten Marktzugang nach Europa, wo Excelsa traditionell kaum eine Rolle gespielt hat. HyCoffee zahlt Produzent:innen 200 % des Preises, den sie bislang für Excelsa erhalten haben – für höhere Einkommen, eine diversifiziertere Produktion und eine resilientere Zukunft.</p>
             </div>
             <figure class="row-hero">
-              <img src="/images/excelsa.jpeg" alt="Excelsa (Coffea dewevrei) – Kaffeeblüten der klimaresilienten Art aus Zirobwe, Uganda" />
+              <Image src={excelsa} alt="Excelsa (Coffea dewevrei) – Kaffeeblüten der klimaresilienten Art aus Zirobwe, Uganda" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
             </figure>
           </div>
           <div class="row-details-actions">

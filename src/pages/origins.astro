@@ -2,6 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import originsArabica1 from '../assets/images/origins-arabica-1.webp';
+import originsArabica2 from '../assets/images/origins-arabica-2.webp';
+import originsExcelsa1 from '../assets/images/origins-excelsa-1.webp';
+import originsExcelsa2 from '../assets/images/origins-excelsa-2.webp';
 ---
 
 <BaseLayout title="Origins – HyCoffee">
@@ -53,10 +58,10 @@ import Footer from '../components/Footer.astro';
             </p>
             <div class="editorial-images">
               <figure class="editorial-figure">
-                <img src="/images/origins-arabica-1.jpeg" alt="Trocknungsbetten in der West Nile Region" />
+                <Image src={originsArabica1} alt="Trocknungsbetten in der West Nile Region" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
               </figure>
               <figure class="editorial-figure">
-                <img src="/images/origins-arabica-2.jpeg" alt="Kaffeekirschen aus der West Nile Region" />
+                <Image src={originsArabica2} alt="Kaffeekirschen aus der West Nile Region" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
               </figure>
             </div>
           </div>
@@ -93,10 +98,10 @@ import Footer from '../components/Footer.astro';
             </p>
             <div class="editorial-images">
               <figure class="editorial-figure">
-                <img src="/images/origins-excelsa-1.jpeg" alt="Excelsa-Produzentin in Zentral Uganda" />
+                <Image src={originsExcelsa1} alt="Excelsa-Produzentin in Zentral Uganda" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
               </figure>
               <figure class="editorial-figure">
-                <img src="/images/origins-excelsa-2.jpeg" alt="Sortieren von Excelsa-Kirschen" />
+                <Image src={originsExcelsa2} alt="Sortieren von Excelsa-Kirschen" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
               </figure>
             </div>
           </div>

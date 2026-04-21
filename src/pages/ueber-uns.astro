@@ -2,6 +2,43 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import strip1 from '../assets/images/strip-1.webp';
+import strip2 from '../assets/images/strip-2.webp';
+import strip3 from '../assets/images/strip-3.webp';
+import strip4 from '../assets/images/strip-4.webp';
+import strip5 from '../assets/images/strip-5.webp';
+import strip6 from '../assets/images/strip-6.webp';
+import strip7 from '../assets/images/strip-7.webp';
+import strip8 from '../assets/images/strip-8.webp';
+import wissen1 from '../assets/images/wissen-1.webp';
+import wissen2 from '../assets/images/wissen-2.webp';
+import wissen3 from '../assets/images/wissen-3.webp';
+import wissen4 from '../assets/images/wissen-4.webp';
+import wissen5 from '../assets/images/wissen-5.webp';
+import wissen6 from '../assets/images/wissen-6.webp';
+import dsc5180 from '../assets/images/DSC_5180.webp';
+import dsc5182 from '../assets/images/DSC_5182.webp';
+import aboutGreenHero from '../assets/images/about-green-hero.webp';
+
+const stripItems = [
+  { src: strip1, alt: 'Kaffeeanbau' },
+  { src: strip2, alt: 'Ernte' },
+  { src: strip3, alt: 'Verarbeitung' },
+  { src: strip4, alt: 'Pflanzen' },
+  { src: strip5, alt: 'Landschaft' },
+  { src: strip6, alt: 'Team' },
+  { src: strip7, alt: 'Farm' },
+  { src: strip8, alt: 'Bohnen' },
+  { src: wissen1, alt: 'Kaffee' },
+  { src: dsc5180, alt: 'Ernte' },
+  { src: wissen3, alt: 'Excelsa' },
+  { src: dsc5182, alt: 'Farm' },
+  { src: wissen5, alt: 'Sorten' },
+  { src: wissen2, alt: 'Agroforst' },
+  { src: wissen4, alt: 'Ostafrika' },
+  { src: wissen6, alt: 'Roestung' },
+];
 ---
 
 <BaseLayout title="Über Uns – HyCoffee">
@@ -10,46 +47,16 @@ import Footer from '../components/Footer.astro';
     <!-- Photo Strip -->
     <div class="photo-strip">
       <div class="photo-strip-track">
-        <img src="/images/strip-1.jpeg" alt="Kaffeeanbau" class="strip-img" />
-        <img src="/images/strip-2.jpeg" alt="Ernte" class="strip-img" />
-        <img src="/images/strip-3.jpeg" alt="Verarbeitung" class="strip-img" />
-        <img src="/images/strip-4.jpeg" alt="Pflanzen" class="strip-img" />
-        <img src="/images/strip-5.jpeg" alt="Landschaft" class="strip-img" />
-        <img src="/images/strip-6.jpeg" alt="Team" class="strip-img" />
-        <img src="/images/strip-7.jpeg" alt="Farm" class="strip-img" />
-        <img src="/images/strip-8.jpeg" alt="Bohnen" class="strip-img" />
-        <img src="/images/wissen-1.jpeg" alt="Kaffee" class="strip-img" />
-        <img src="/images/DSC_5180.jpeg" alt="Ernte" class="strip-img" />
-        <img src="/images/wissen-3.jpeg" alt="Excelsa" class="strip-img" />
-        <img src="/images/DSC_5182.jpeg" alt="Farm" class="strip-img" />
-        <img src="/images/wissen-5.jpeg" alt="Sorten" class="strip-img" />
-        <img src="/images/wissen-2.jpeg" alt="Agroforst" class="strip-img" />
-        <img src="/images/wissen-4.jpeg" alt="Ostafrika" class="strip-img" />
-        <img src="/images/wissen-6.jpeg" alt="Roestung" class="strip-img" />
-        <!-- Duplicate for seamless loop -->
-        <img src="/images/strip-1.jpeg" alt="Kaffeeanbau" class="strip-img" />
-        <img src="/images/strip-2.jpeg" alt="Ernte" class="strip-img" />
-        <img src="/images/strip-3.jpeg" alt="Verarbeitung" class="strip-img" />
-        <img src="/images/strip-4.jpeg" alt="Pflanzen" class="strip-img" />
-        <img src="/images/strip-5.jpeg" alt="Landschaft" class="strip-img" />
-        <img src="/images/strip-6.jpeg" alt="Team" class="strip-img" />
-        <img src="/images/strip-7.jpeg" alt="Farm" class="strip-img" />
-        <img src="/images/strip-8.jpeg" alt="Bohnen" class="strip-img" />
-        <img src="/images/wissen-1.jpeg" alt="Kaffee" class="strip-img" />
-        <img src="/images/DSC_5180.jpeg" alt="Ernte" class="strip-img" />
-        <img src="/images/wissen-3.jpeg" alt="Excelsa" class="strip-img" />
-        <img src="/images/DSC_5182.jpeg" alt="Farm" class="strip-img" />
-        <img src="/images/wissen-5.jpeg" alt="Sorten" class="strip-img" />
-        <img src="/images/wissen-2.jpeg" alt="Agroforst" class="strip-img" />
-        <img src="/images/wissen-4.jpeg" alt="Ostafrika" class="strip-img" />
-        <img src="/images/wissen-6.jpeg" alt="Roestung" class="strip-img" />
+        {[...stripItems, ...stripItems].map((item) => (
+          <Image src={item.src} alt={item.alt} class="strip-img" widths={[200, 400]} sizes="200px" format="webp" quality={72} loading="lazy" decoding="async" />
+        ))}
       </div>
     </div>
 
     <!-- Split: sticky green left + scrollable right -->
     <div class="about-split">
       <aside class="about-split-left">
-        <img src="/images/about-green-hero.jpg" alt="Sophie und Charlotte" class="about-hero-img" />
+        <Image src={aboutGreenHero} alt="Sophie und Charlotte" class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
         <div class="about-hero-left-inner">
           <p class="about-hero-text">
             Wir sind Sophie und Charlotte.
