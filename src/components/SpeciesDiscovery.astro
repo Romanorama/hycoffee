@@ -1,291 +1,261 @@
 ---
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 
-import speciesPhoto01 from '../../Images/DSC_5289.jpeg';
-import speciesPhoto02 from '../../Images/DSC_5300.jpeg';
-import speciesPhoto03 from '../../Images/IMG_1692.jpeg';
-import speciesPhoto04 from '../../Images/IMG_1694.jpeg';
-import speciesPhoto05 from '../../Images/DSC_5182.jpeg';
-import speciesPhoto06 from '../../Images/DSC_5184.jpeg';
-import speciesPhoto07 from '../../Images/DSC_5292.jpeg';
-import speciesPhoto08 from '../../Images/IMG_1645.jpeg';
-
-interface SpeciesCard {
-  name: string;
-  alt: string;
-  credit: string;
-  image: ImageMetadata;
-}
-
-const speciesCards: SpeciesCard[] = [
-  {
-    name: 'coffea stenophylla',
-    alt: 'Young coffee plants in nursery beds',
-    credit: 'photograph by the HyCoffee team',
-    image: speciesPhoto01
-  },
-  {
-    name: 'coffea dewevrei (excelsa)',
-    alt: 'Coffee cherries growing on a branch',
-    credit: 'photograph by the HyCoffee team',
-    image: speciesPhoto02
-  },
-  {
-    name: 'hibrido de timor',
-    alt: 'Dense branch with developing coffee cherries',
-    credit: 'photograph by the HyCoffee team',
-    image: speciesPhoto03
-  },
-  {
-    name: 'coffea racemosa',
-    alt: 'Close-up of ripening cherries on coffee branches',
-    credit: 'photograph by the HyCoffee team',
-    image: speciesPhoto04
-  },
-  {
-    name: 'unidentified c. arabica variety',
-    alt: 'Sun-drying coffee beans on raised beds',
-    credit: 'photograph by the HyCoffee team',
-    image: speciesPhoto05
-  },
-  {
-    name: 'wild coffee variety',
-    alt: 'Parchment coffee drying inside a tunnel',
-    credit: 'photograph by the HyCoffee team',
-    image: speciesPhoto06
-  },
-  {
-    name: 'coffea canephora hybrid',
-    alt: 'Natural coffee cherries drying on a raised bed',
-    credit: 'photograph by the HyCoffee team',
-    image: speciesPhoto07
-  },
-  {
-    name: 'unidentified coffee tree',
-    alt: 'Harvested coffee cherries spread for sorting',
-    credit: 'photograph by the HyCoffee team',
-    image: speciesPhoto08
-  }
-];
+import speciesPhoto01 from '../../Images/IMG_9052.jpeg';
 ---
 
-<section class="species-discovery" aria-labelledby="species-headline">
-  <div class="species-inner">
-    <details class="species-panel">
-      <summary class="species-summary">
-        <span id="species-headline" class="species-heading">
-          There are 130 known coffee species, many of which are not commercially
-          used. Yet.
-        </span>
-        <span class="species-toggle" aria-hidden="true">
-          <span class="species-toggle-label">discover</span>
-          <span class="species-toggle-icon">+</span>
-        </span>
-      </summary>
+<section class="species-train" data-species-train aria-labelledby="species-train-heading">
+  <details class="species-train-panel">
+    <summary class="species-locomotive">
+      <h2 id="species-train-heading" class="species-locomotive-heading">
+        Es gibt 130 bekannte Kaffeearten, viele davon werden nicht kommerziell genutzt. Noch nicht.
+        <span class="species-locomotive-arrow" aria-hidden="true">›</span>
+      </h2>
+    </summary>
 
-      <div class="species-content">
-        <p class="species-intro">
-          To prepare for climate change we must tap into the genetic riches of wild
-          coffee. By choosing wild and hybrid coffees, we can support a fairer, more
-          diverse and more resilient coffee sector.
-        </p>
-
-        <p class="species-lead">Discover promising coffee species and varieties:</p>
-
-        <ul class="species-grid">
-          {speciesCards.map((card) => (
-            <li class="species-card">
-              <figure class="species-figure">
-                <div class="species-image-wrap">
-                  <Image src={card.image} alt={card.alt} class="species-image" />
+    <div class="species-coupling">
+      <div class="species-wagons-shell">
+        <div class="species-wagons-motion">
+          <article class="species-wagon">
+            <div class="species-wagon-layout">
+              <div class="species-main-wrap">
+                <div class="species-wagon-photo">
+                  <Image
+                    src={speciesPhoto01}
+                    alt="Young coffee plants in nursery beds"
+                    class="species-wagon-image"
+                  />
                 </div>
-                <figcaption class="species-caption">
-                  <p class="species-name">{card.name}</p>
-                  <p class="species-credit">{card.credit}</p>
-                </figcaption>
-              </figure>
-            </li>
-          ))}
-        </ul>
+                <p class="species-wagon-text">
+                  Von über 130 bekannten Coffea-Arten werden heute nur wenige kommerziell genutzt.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
-    </details>
-  </div>
+    </div>
+  </details>
 </section>
 
+<script>
+  const initSpeciesTrain = () => {
+    const section = document.querySelector('[data-species-train]');
+    if (!section || section.dataset.trainReady === 'true') return;
+    section.dataset.trainReady = 'true';
+
+    const panel = section.querySelector('.species-train-panel');
+    if (!panel) return;
+
+    const syncOpenState = () => {
+      section.classList.toggle('is-open', panel.open);
+    };
+
+    panel.addEventListener('toggle', syncOpenState);
+    syncOpenState();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSpeciesTrain, { once: true });
+  } else {
+    initSpeciesTrain();
+  }
+</script>
+
 <style>
-  .species-discovery {
-    background: var(--warm-grey-light);
-    border-top: 1px solid var(--warm-dark-grey);
-    border-bottom: 1px solid var(--warm-dark-grey);
+  .species-train {
+    background: var(--white);
+    color: var(--warm-dark-grey);
+    overflow-x: clip;
+    --species-train-shift: 0;
+    --species-loco-duration: 2.5s;
+    --species-reveal-duration: 2.5s;
   }
 
-  .species-inner {
+  .species-train.is-open {
+    --species-train-shift: -42%;
+  }
+
+  .species-train-panel {
+    width: 100%;
+    position: relative;
+    padding-bottom: 0;
+    transition: padding-bottom var(--species-reveal-duration) cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: padding-bottom;
+  }
+
+  .species-locomotive {
+    list-style: none;
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: 52px 60px 72px;
-  }
-
-  .species-panel {
-    width: 100%;
-  }
-
-  .species-summary {
-    list-style: none;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 40px;
+    padding: 84px 60px 56px;
     cursor: pointer;
+    background: var(--white);
+    transform: translateX(var(--species-train-shift));
+    transition: transform var(--species-loco-duration) cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .species-summary::-webkit-details-marker {
+  .species-locomotive::-webkit-details-marker {
     display: none;
   }
 
-  .species-heading {
+  .species-coupling {
+    transform: translateX(var(--species-train-shift));
+    transition: transform var(--species-loco-duration) cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .species-locomotive-heading {
     font-family: var(--font-heading);
-    font-size: clamp(40px, 5.3vw, 76px);
+    font-size: var(--type-display);
     line-height: 0.98;
-    letter-spacing: -1.8px;
-    color: var(--green);
-    max-width: 980px;
+    letter-spacing: -1.35px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
   }
 
-  .species-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--green);
-    border: 1px solid var(--green);
-    border-radius: 999px;
-    padding: 7px 14px;
-    margin-top: 10px;
-    flex-shrink: 0;
+  .species-locomotive-arrow {
+    display: inline-block;
+    transition: transform 0.45s ease;
   }
 
-  .species-toggle-label {
-    font-family: var(--font-ui);
-    font-size: 16px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+  .species-train-panel[open] .species-locomotive-arrow {
+    transform: rotate(90deg);
   }
 
-  .species-toggle-icon {
-    font-family: var(--font-heading);
-    font-size: 24px;
-    line-height: 1;
-    transition: transform 0.2s ease;
+  .species-wagons-shell {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      max-height var(--species-reveal-duration) ease,
+      opacity calc(var(--species-reveal-duration) * 0.8) ease;
   }
 
-  .species-panel[open] .species-toggle-icon {
-    transform: rotate(45deg);
+  .species-train-panel[open] > .species-coupling > .species-wagons-shell {
+    max-height: 2200px;
+    opacity: 1;
   }
 
-  .species-content {
-    padding-top: 26px;
-  }
-
-  .species-intro {
-    max-width: 1140px;
-    font-family: var(--font-heading);
-    font-size: 36px;
-    line-height: 1.05;
-    color: var(--green);
-    margin-bottom: 24px;
-  }
-
-  .species-lead {
-    font-family: var(--font-ui);
-    font-size: 24px;
-    letter-spacing: 0.2px;
-    color: var(--green);
-    margin-bottom: 32px;
-  }
-
-  .species-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 28px 32px;
-  }
-
-  .species-figure {
+  .species-wagons-motion {
     width: 100%;
   }
 
-  .species-image-wrap {
-    overflow: hidden;
-    border-radius: 0;
-    aspect-ratio: 4 / 5;
-    border: 1px solid color-mix(in srgb, var(--green) 40%, var(--warm-grey-light));
-    background: #d6d5d1;
+  .species-wagon {
+    padding: 24px 60px 56px;
   }
 
-  .species-image {
+  .species-wagon-layout {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    min-height: 1px;
+    position: relative;
+  }
+
+  .species-main-wrap {
+    display: grid;
+    grid-template-columns: minmax(280px, 460px) minmax(140px, 210px);
+    gap: 10px;
+    align-items: start;
+  }
+
+  .species-wagon-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1.02;
+    overflow: hidden;
+    max-width: 460px;
+  }
+
+  .species-wagon-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .species-caption {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .species-name {
+  .species-wagon-text {
     font-family: var(--font-heading);
-    font-size: 16px;
-    line-height: 1.15;
-    color: var(--green);
-    text-transform: lowercase;
+    font-size: var(--type-label);
+    line-height: 1.34;
+    color: rgba(36, 33, 25, 0.84);
+    max-width: 20ch;
+    margin-top: 4px;
   }
 
-  .species-credit {
-    font-family: var(--font-heading);
-    font-size: 16px;
-    line-height: 1.1;
-    color: color-mix(in srgb, var(--green) 78%, var(--warm-grey-light));
-  }
-
-  @media (max-width: 1200px) {
-    .species-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+  @media (min-width: 760px) {
+    .species-train-panel[open] {
+      padding-bottom: clamp(420px, 62vh, 680px);
     }
 
-  @media (max-width: 900px) {
-    .species-inner {
-      padding: 40px 24px 48px;
+    .species-wagons-shell {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      overflow: visible;
+      max-height: none;
+      opacity: 0;
+      transition: opacity calc(var(--species-reveal-duration) * 0.8) ease;
+      pointer-events: none;
     }
 
-    .species-summary {
-      flex-direction: column;
-      gap: 20px;
+    .species-train-panel[open] > .species-coupling > .species-wagons-shell {
+      opacity: 1;
     }
 
-    .species-toggle {
-      margin-top: 0;
+    .species-wagon {
+      padding: 0;
     }
 
-    .species-intro {
-      font-size: 28px;
-      line-height: 1.05;
+    .species-wagon-layout {
+      max-width: none;
+      margin: 0;
+      min-height: clamp(420px, 62vh, 680px);
     }
 
-    .species-lead {
-      font-size: 20px;
-    }
-
-    .species-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+    .species-main-wrap {
+      position: absolute;
+      right: -700px;
+      top: -170px;
     }
   }
 
-  @media (max-width: 560px) {
-    .species-grid {
+  @media (max-width: 759px) {
+    .species-locomotive {
+      padding: 48px 24px 40px;
+      transform: none;
+      transition: none;
+    }
+
+    .species-coupling {
+      transform: none;
+      transition: none;
+    }
+
+    .species-locomotive-heading {
+      font-size: var(--type-species-mobile);
+      line-height: 1;
+      flex-wrap: wrap;
+    }
+
+    .species-wagon {
+      padding: 20px 24px 44px;
+    }
+
+    .species-wagon-layout {
+      min-height: 1px;
+    }
+
+    .species-main-wrap {
       grid-template-columns: 1fr;
+      gap: 10px;
+      position: static;
+    }
+
+    .species-wagon-text {
+      max-width: 28ch;
+      margin-top: 6px;
     }
   }
 </style>

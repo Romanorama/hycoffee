@@ -1,23 +1,40 @@
 ---
-
+import { Picture } from 'astro:assets';
+import bannerImage from '../assets/images/banner.webp';
 ---
 
 <section class="banner">
-  <img src="/images/banner.jpg" alt="HyCoffee Kaffeeanbau" />
+  <Picture
+    src={bannerImage}
+    alt="HyCoffee Kaffeeanbau"
+    widths={[768, 1280, 1920]}
+    sizes="100vw"
+    formats={['avif', 'webp']}
+    quality={72}
+    loading="lazy"
+    decoding="async"
+  />
 </section>
 
 <style>
   .banner {
     width: 100%;
-    height: 361px;
+    height: 360px;
     overflow: hidden;
-    border: 1px solid var(--warm-dark-grey);
+    border-top: 1px solid var(--warm-dark-grey);
+    border-bottom: 1px solid var(--warm-dark-grey);
   }
 
   .banner img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 30%;
+    object-position: center 60%;
+  }
+
+  @media (max-width: 768px) {
+    .banner {
+      height: 220px;
+    }
   }
 </style>
