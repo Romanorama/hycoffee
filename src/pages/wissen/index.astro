@@ -2,13 +2,20 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
+import type { ImageMetadata } from 'astro';
+import wissen1 from '../../assets/images/wissen-1.jpeg';
+import wissen2 from '../../assets/images/wissen-2.jpeg';
+import wissen3 from '../../assets/images/wissen-3.jpeg';
+import wissen4 from '../../assets/images/wissen-4.jpeg';
+import wissen5 from '../../assets/images/wissen-5.jpeg';
+import wissen6 from '../../assets/images/wissen-6.jpeg';
 
 interface ArticleCard {
   category: string;
   title: string;
   subtitle: string;
   readingTime: string;
-  image: string;
+  image: ImageMetadata;
 }
 
 const articles: ArticleCard[] = [
@@ -17,42 +24,42 @@ const articles: ArticleCard[] = [
     title: 'Wie Hitze den Arabica-Anbau veraendert',
     subtitle: 'Warum steigende Durchschnittstemperaturen die Hoehenlagen neu definieren.',
     readingTime: '5 Min',
-    image: '/images/wissen-1.jpeg',
+    image: wissen1,
   },
   {
     category: 'Klimaresilienter Kaffee',
     title: 'Agroforst als Antwort auf Trockenstress',
     subtitle: 'Schattenbaeume stabilisieren Ertraege und verbessern die Bodenfeuchte.',
     readingTime: '7 Min',
-    image: '/images/wissen-2.jpeg',
+    image: wissen2,
   },
   {
     category: 'Excelsa',
     title: 'Excelsa im Cupping: Fruchtig und wuerzig',
     subtitle: 'Ein Blick auf Geschmack, Struktur und Blend-Potenzial fuer Roestereien.',
     readingTime: '6 Min',
-    image: '/images/wissen-3.jpeg',
+    image: wissen3,
   },
   {
     category: 'Klimawandel',
     title: 'Wasserknappheit in Ostafrika',
     subtitle: 'Welche Regionen besonders betroffen sind und welche Strategien greifen.',
     readingTime: '4 Min',
-    image: '/images/wissen-4.jpeg',
+    image: wissen4,
   },
   {
     category: 'Klimaresilienter Kaffee',
     title: 'Neue Sorten fuer stabile Ernten',
     subtitle: 'Wie Selektion und Diversitaet die Lieferkette robuster machen.',
     readingTime: '8 Min',
-    image: '/images/wissen-5.jpeg',
+    image: wissen5,
   },
   {
     category: 'Excelsa',
     title: 'Vom Feld bis zur Roestung: Excelsa Prozess',
     subtitle: 'Verarbeitungsschritte, die das Profil von Excelsa praegen.',
     readingTime: '5 Min',
-    image: '/images/wissen-6.jpeg',
+    image: wissen6,
   },
 ];
 ---
@@ -65,7 +72,7 @@ const articles: ArticleCard[] = [
         <article class="science-card">
           <span class="card-category">{article.category}</span>
           <div class="card-image">
-            <img src={article.image} alt={article.title} width="2000" height="1335" loading="lazy" decoding="async" />
+            <img src={article.image.src} alt={article.title} width={article.image.width} height={article.image.height} loading="lazy" decoding="async" />
           </div>
           <h3 class="card-title">{article.title}</h3>
           <p class="card-subtitle">{article.subtitle}</p>
