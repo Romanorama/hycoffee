@@ -32,6 +32,8 @@ pnpm-debug.log*
 /Images/
 /Logo/
 /Typography/
+/_contenttxtinfo/
+/frontend-audit-handover-*.html
 
 # Local Netlify folder
 .netlify

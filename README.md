@@ -1,43 +1,29 @@
-# Astro Starter Kit: Minimal
+# HyCoffee Website
+
+Astro site for HyCoffee.
+
+## Local Commands
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
+npm run build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Image Workflow
 
-## 🚀 Project Structure
+Published page images live in `src/assets/images/` and are imported from Astro pages/components. Use Astro's `Image` or `Picture` components so the build can resize, encode, and preload images through the configured Sharp pipeline.
 
-Inside of your Astro project, you'll see the following folders and files:
+`public/images/` is only for static files that must keep a fixed public URL, such as logos used directly in markup. Do not put large content photography there because files in `public/` bypass Astro image optimization.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Raw source material and client-provided image dumps should stay local in ignored working folders such as `_contenttxtinfo/`. When a new image is needed on the site, export/convert the selected file to a web-ready asset in `src/assets/images/`, import it from the page or component, and commit only that final asset.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Current Public Assets
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `public/favicon.svg`
+- `public/favicon.ico`
+- `public/fonts/`
+- `public/images/logo-light.svg`
+- `public/images/inv-Hy-mono.svg`
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
