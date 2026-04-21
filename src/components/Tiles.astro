@@ -38,7 +38,6 @@
   .tiles {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid var(--warm-dark-grey);
   }
 
   .tile {
@@ -49,12 +48,8 @@
     text-align: center;
     gap: 16px;
     min-height: 428px;
-    border: none;
+    border: 1px solid var(--warm-dark-grey);
     overflow: hidden;
-  }
-
-  .tile + .tile {
-    border-left: 1px solid var(--warm-dark-grey);
   }
 
   .tile-violet {
@@ -68,8 +63,8 @@
 
   .caption {
     font-family: var(--font-heading);
-    font-size: var(--type-caption);
-    line-height: 1.2;
+    font-size: 20.9px;
+    line-height: 16.32px;
     letter-spacing: 1.96px;
     text-transform: uppercase;
     font-weight: 400;
@@ -85,16 +80,16 @@
 
   h3 {
     font-family: var(--font-heading);
-    font-size: var(--type-heading-sm);
-    line-height: 0.92;
+    font-size: 50px;
+    line-height: 45.76px;
     font-weight: 400;
     margin-top: 8px;
   }
 
   .tile-text {
     font-family: var(--font-heading);
-    font-size: var(--type-copy-fluid);
-    line-height: 1.3;
+    font-size: 23px;
+    line-height: 26px;
     max-width: 547px;
     margin-top: 4px;
   }
@@ -106,42 +101,19 @@
     background: var(--warm-dark-grey);
     color: var(--white);
     padding: 10px 24px;
-    border-radius: var(--radius-control);
+    border-radius: 3px;
     font-family: var(--font-ui);
-    font-size: var(--type-button);
+    font-size: 20px;
     margin-top: 16px;
     transition: opacity 0.2s;
   }
 
   .btn-secondary:hover {
-    filter: brightness(1.15);
-    transform: scale(1.01);
+    opacity: 0.85;
   }
 
   .arrow {
     width: 14px;
     height: 11px;
-    transform: rotate(0deg) translateX(0) !important;
-    transition: transform 0.3s ease;
-  }
-
-  .btn-secondary:hover .arrow {
-    transform: rotate(0deg) translateX(4px) !important;
-  }
-
-  @media (max-width: 768px) {
-    .tiles {
-      grid-template-columns: 1fr;
-    }
-
-    .tile {
-      padding: 32px 24px 40px;
-      min-height: 320px;
-    }
-
-    .tile + .tile {
-      border-top: 1px solid var(--warm-dark-grey);
-      border-left: none;
-    }
   }
 </style>

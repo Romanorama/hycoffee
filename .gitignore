@@ -27,11 +27,11 @@ pnpm-debug.log*
 .cursor/
 .claude/
 
-# design assets / working files
-/Guide Image*/
-/Images/
-/Logo/
-/Typography/
+# images (hosted separately)
+public/images/
 
-# Local Netlify folder
-.netlify
+# design assets / working files
+Guide Image*/
+Images/
+Logo/
+Typography/

@@ -5,18 +5,13 @@
 <section class="science">
   <div class="science-header">
     <span class="caption">WISSEN</span>
-    <h2 class="science-heading">
-      Zwischen Forschung <span class="science-heading-nowrap">und Markt</span>
-    </h2>
+    <h2 class="science-heading">Zwischen Forschung und Markt</h2>
     <p class="science-text">
       Wir verbinden wissenschaftliche Erkenntnisse mit der Praxis des
       Kaffeeanbaus. In unseren Artikeln teilen wir neue Erkenntnisse und
       Perspektiven aus unserer Arbeit.
     </p>
-    <a href="/wissen" class="science-link">
-      <span>Zu den Artikeln</span>
-      <span class="science-link-arrow" aria-hidden="true">›</span>
-    </a>
+    <a href="/wissen" class="science-link">Zu den Artikeln ›</a>
   </div>
   <div class="science-cards">
     <article class="science-card">
@@ -99,8 +94,8 @@
 
   .caption {
     font-family: var(--font-heading);
-    font-size: var(--type-caption);
-    line-height: 1.2;
+    font-size: 20.9px;
+    line-height: 16.32px;
     letter-spacing: 1.96px;
     text-transform: uppercase;
     font-weight: 400;
@@ -110,8 +105,8 @@
 
   .science-heading {
     font-family: var(--font-heading);
-    font-size: var(--type-heading-lg);
-    line-height: 1.02;
+    font-size: 76.6px;
+    line-height: 78px;
     letter-spacing: -3px;
     font-weight: 400;
     color: var(--grey-10);
@@ -121,14 +116,10 @@
     margin-right: auto;
   }
 
-  .science-heading-nowrap {
-    white-space: nowrap;
-  }
-
   .science-text {
     font-family: var(--font-heading);
-    font-size: var(--type-hal-copy-lg);
-    line-height: 1.1;
+    font-size: 36px;
+    line-height: 36px;
     color: var(--warm-dark-grey);
     max-width: 1000px;
     margin: 0 auto 24px;
@@ -136,60 +127,33 @@
 
   .science-link {
     font-family: var(--font-ui);
-    font-size: var(--type-button-lg);
+    font-size: 27px;
     color: var(--violet);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.22em;
-    line-height: 1;
-    transition: opacity 0.26s ease;
-  }
-
-  .science-link-arrow {
     display: inline-block;
-    transition: transform 0.26s ease;
   }
 
-  .science-link:hover,
-  .science-link:focus-visible {
-    opacity: 0.86;
-  }
-
-  .science-link:hover .science-link-arrow,
-  .science-link:focus-visible .science-link-arrow {
-    transform: translateX(3px);
+  .science-link:hover {
+    opacity: 0.7;
   }
 
   .science-cards {
     display: grid;
-    grid-template-columns: 1fr 1px 1fr 1px 1fr;
-    gap: 0 20px;
-  }
-
-  .science-cards::before,
-  .science-cards::after {
-    content: '';
-    background: var(--warm-dark-grey);
-    grid-row: 1;
-    align-self: stretch;
-  }
-
-  .science-cards::before {
-    grid-column: 2;
-  }
-
-  .science-cards::after {
-    grid-column: 4;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
   }
 
   .science-card {
     background: var(--warm-dark-grey);
-    border-radius: var(--radius-card);
+    border-radius: 10px;
     padding: 32px;
     display: flex;
     flex-direction: column;
     min-height: 655px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    border-right: 1px solid #3a3a3a;
+  }
+
+  .science-card:last-child {
+    border-right: none;
   }
 
   .science-card .caption {
@@ -199,17 +163,16 @@
 
   .card-image {
     background: #d9d9d9;
-    border-radius: var(--radius-nested);
+    border-radius: 4px;
     flex: 1;
     min-height: 260px;
     margin-bottom: 24px;
-    transition: transform 0.28s ease;
   }
 
   .card-title {
     font-family: var(--font-heading);
-    font-size: var(--type-card-title);
-    line-height: 1.14;
+    font-size: 40px;
+    line-height: 45.76px;
     font-weight: 400;
     color: var(--light-grey);
     margin-bottom: 8px;
@@ -217,8 +180,8 @@
 
   .card-subtitle {
     font-family: var(--font-heading);
-    font-size: var(--type-copy-fluid);
-    line-height: 1.3;
+    font-size: 23px;
+    line-height: 26px;
     color: var(--light-grey);
     margin-bottom: 24px;
   }
@@ -236,21 +199,19 @@
     background: var(--yellow);
     color: var(--warm-dark-grey);
     padding: 10px 24px;
-    border-radius: var(--radius-control);
+    border-radius: 3px;
     font-family: var(--font-ui);
-    font-size: var(--type-button);
+    font-size: 20px;
     transition: opacity 0.2s;
   }
 
   .btn-tertiary:hover {
-    filter: brightness(1.15);
-    transform: scale(1.01);
+    opacity: 0.85;
   }
 
   .arrow {
     width: 14px;
     height: 11px;
-    transition: transform 0.2s ease;
   }
 
   .card-meta {
@@ -259,139 +220,6 @@
     gap: 8px;
     color: var(--light-grey);
     font-family: var(--font-heading);
-    font-size: var(--type-copy-fluid);
-  }
-
-  @media (hover: hover) {
-    .science-card:hover,
-    .science-card:focus-within {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 26px rgb(0 0 0 / 18%);
-    }
-
-    .science-card:hover .card-image,
-    .science-card:focus-within .card-image {
-      transform: scale(1.02);
-    }
-
-    .science-card:hover .arrow,
-    .science-card:focus-within .arrow {
-      transform: translateX(2px);
-    }
-  }
-
-  @media (max-width: 1600px) {
-    .science-cards {
-      grid-template-columns: 1fr 1px 1fr;
-    }
-
-    .science-cards::after {
-      display: none;
-    }
-
-    .science-card:nth-child(3) {
-      display: none;
-    }
-  }
-
-  @media (max-width: 1000px) {
-    .science-cards {
-      grid-template-columns: 1fr 1px 1fr;
-    }
-
-    .science-cards::before {
-      display: block;
-    }
-
-    .science-cards::after {
-      display: none;
-    }
-
-    .science-card:nth-child(3) {
-      display: none;
-    }
-
-    .science-card:nth-child(2) {
-      display: flex;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .science {
-      padding: 48px 24px;
-    }
-
-    .science-heading {
-      letter-spacing: -0.5px;
-    }
-
-    .science-header {
-      margin-bottom: 32px;
-    }
-
-    .science-cards {
-      grid-template-columns: 1fr;
-      gap: 16px 0;
-    }
-
-    .science-cards::before,
-    .science-cards::after {
-      display: none;
-    }
-
-    .science-card:nth-child(2) {
-      display: flex;
-    }
-
-    .science-card:nth-child(3) {
-      display: none;
-    }
-
-    .science-card {
-      min-height: auto;
-      padding: 20px;
-      border-radius: var(--radius-card);
-    }
-
-    .science-card .caption {
-      font-size: var(--type-caption-sm);
-      letter-spacing: 1.4px;
-      margin-bottom: 10px;
-    }
-
-    .card-image {
-      min-height: 160px;
-      margin-bottom: 16px;
-    }
-
-    .card-title {
-      font-size: var(--type-card-title-mobile);
-      margin-bottom: 4px;
-    }
-
-    .card-subtitle {
-      font-size: var(--type-hal-copy);
-      margin-bottom: 16px;
-    }
-
-    .card-footer {
-      gap: 12px;
-    }
-
-    .btn-tertiary {
-      padding: 8px 16px;
-      font-size: var(--type-button-sm);
-      gap: 6px;
-    }
-
-    .card-meta {
-      font-size: var(--type-label);
-      gap: 4px;
-    }
-
-    .card-meta svg {
-      width: 16px;
-      height: 16px;
-    }
+    font-size: 23px;
   }
 </style>
