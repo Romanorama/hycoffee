@@ -93,15 +93,15 @@ const preload = preloadImage
           items.forEach((item, index) => {
             if (item.dataset.scrollRevealReady === 'true') return;
             item.dataset.scrollRevealReady = 'true';
-            item.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
-            item.classList.add('scroll-reveal');
+
+            if (item.dataset.noScrollReveal === 'true') return;
 
             const rect = item.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.92) {
-              revealNow(item);
-            } else {
-              observer.observe(item);
-            }
+            if (rect.top < window.innerHeight) return;
+
+            item.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
+            item.classList.add('scroll-reveal');
+            observer.observe(item);
           });
         }
 
