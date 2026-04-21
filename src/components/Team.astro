@@ -1,18 +1,25 @@
 ---
+import { Image } from 'astro:assets';
+import team1 from '../assets/images/team-1.webp';
+import team2 from '../assets/images/team-2.webp';
+import team3 from '../assets/images/team-3.webp';
+import team4 from '../assets/images/team-4.webp';
+import team5 from '../assets/images/team-5.webp';
+import team6 from '../assets/images/team-6.webp';
+import team7 from '../assets/images/team-7.webp';
+import team8 from '../assets/images/team-8.webp';
 
+const teamPhotos = [team5, team1, team8, team3, team6, team4, team7, team2];
 ---
 
 <section class="team">
   <div class="team-photos">
     <div class="team-photos-track">
-      <img src="/images/team-5.jpg" alt="Team" />
-      <img src="/images/team-1.jpg" alt="Team" />
-      <img src="/images/team-8.jpg" alt="Team" />
-      <img src="/images/team-3.jpg" alt="Team" />
-      <img src="/images/team-6.jpg" alt="Team" />
-      <img src="/images/team-4.jpg" alt="Team" />
-      <img src="/images/team-7.jpg" alt="Team" />
-      <img src="/images/team-2.jpg" alt="Team" />
+      {[...teamPhotos, ...teamPhotos].map((photo) => (
+        <div class="team-photo-frame">
+          <Image src={photo} alt="Team" loading="lazy" decoding="async" />
+        </div>
+      ))}
     </div>
   </div>
   <div class="team-content">
@@ -26,9 +33,9 @@
       </p>
     </div>
     <div class="team-right">
-      <h2 class="team-heading">Wer wir sind</h2>
+      <h2 class="team-heading">Unsere Mission</h2>
       <a href="/ueber-uns" class="btn btn-secondary">
-        <span>Secondary Button</span>
+        <span>Über uns</span>
         <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
           <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -40,7 +47,7 @@
 <style>
   .team {
     background: var(--warm-grey-light);
-    border: 1px solid var(--warm-dark-grey);
+    border-bottom: 1px solid var(--warm-dark-grey);
   }
 
   .team-photos {
@@ -55,13 +62,45 @@
     display: flex;
     height: 100%;
     gap: 0;
+    animation: strip-scroll 40s linear infinite;
+    will-change: transform;
   }
 
-  .team-photos-track img {
+  @keyframes strip-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .team-photo-frame {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    flex-shrink: 0;
+    margin-right: -2px;
+    overflow: visible;
+    z-index: 1;
+    border-left: 1px solid var(--warm-dark-grey);
+    border-right: 1px solid var(--warm-dark-grey);
+    box-sizing: border-box;
+    transform: translateZ(0) scale(1);
+    transform-origin: center center;
+    transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  .team-photo-frame img {
     height: 100%;
     width: auto;
+    min-width: 180px;
     object-fit: cover;
-    flex-shrink: 0;
+    display: block;
+  }
+
+  .team-photo-frame:hover {
+    z-index: 10;
+    transform: translateZ(0) scale(1.12);
   }
 
   .team-content {
@@ -80,8 +119,8 @@
 
   .team-description {
     font-family: var(--font-heading);
-    font-size: 36px;
-    line-height: 36px;
+    font-size: var(--type-hal-copy-lg);
+    line-height: 1.1;
     color: var(--warm-dark-grey);
   }
 
@@ -94,8 +133,8 @@
 
   .team-heading {
     font-family: var(--font-heading);
-    font-size: 75px;
-    line-height: 70.3px;
+    font-size: var(--type-heading);
+    line-height: 0.94;
     letter-spacing: -1.5px;
     font-weight: 400;
     color: var(--warm-dark-grey);
@@ -108,18 +147,31 @@
     background: var(--warm-dark-grey);
     color: var(--white);
     padding: 10px 24px;
-    border-radius: 3px;
+    border-radius: var(--radius-control);
     font-family: var(--font-ui);
-    font-size: 20px;
+    font-size: var(--type-button);
     transition: opacity 0.2s;
   }
 
   .btn-secondary:hover {
-    opacity: 0.85;
+    filter: brightness(1.15);
+    transform: scale(1.01);
   }
 
   .arrow {
     width: 14px;
     height: 11px;
+  }
+
+  @media (max-width: 768px) {
+    .team-content {
+      grid-template-columns: 1fr;
+      padding: 40px 24px;
+      gap: 32px;
+    }
+
+    .team-photos {
+      height: 140px;
+    }
   }
 </style>

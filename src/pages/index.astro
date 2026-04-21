@@ -10,11 +10,17 @@ import Science from '../components/Science.astro';
 import Banner from '../components/Banner.astro';
 import Press from '../components/Press.astro';
 import Footer from '../components/Footer.astro';
+import heroImage from '../assets/images/hero.webp';
 ---
 
-<BaseLayout title="HyCoffee – Klimaresilienter Rohkaffee">
+<BaseLayout
+  title="HyCoffee – Klimaresilienter Rohkaffee"
+  preloadImage={heroImage}
+  preloadImageSizes="(max-width: 768px) 100vw, 50vw"
+>
   <Navigation />
-  <main>
+  <main class="home-main">
+    <div class="home-nav-underlay" aria-hidden="true"></div>
     <Hero />
     <Tiles />
     <Values />
@@ -26,3 +32,27 @@ import Footer from '../components/Footer.astro';
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  .home-main {
+    position: relative;
+  }
+
+  .home-nav-underlay {
+    --home-nav-underlay-height: 278px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--home-nav-underlay-height);
+    transform: translateY(calc(-1 * var(--home-nav-underlay-height)));
+    background: var(--warm-dark-grey);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .home-main > :not(.home-nav-underlay) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

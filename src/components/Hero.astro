@@ -1,10 +1,21 @@
 ---
-
+import { Picture } from 'astro:assets';
+import heroImage from '../assets/images/hero.webp';
 ---
 
 <section class="hero">
   <div class="hero-image">
-    <img src="/images/hero.jpg" alt="Klimaresilienter Kaffeeanbau" />
+    <Picture
+      src={heroImage}
+      alt="Klimaresilienter Kaffeeanbau"
+      widths={[768, 1280, 1920]}
+      sizes="(max-width: 768px) 100vw, 50vw"
+      formats={['avif', 'webp']}
+      quality={72}
+      loading="eager"
+      fetchpriority="high"
+      decoding="sync"
+    />
   </div>
   <div class="hero-content">
     <h1 class="hero-heading">
@@ -20,6 +31,8 @@
   .hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+    height: calc(88svh - 88px);
     border-bottom: 1px solid var(--warm-dark-grey);
   }
 
@@ -39,15 +52,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 80px 60px;
+    padding: 56px 60px;
     text-align: center;
     gap: 48px;
+    background: var(--white);
   }
 
   .hero-heading {
     font-family: var(--font-heading);
-    font-size: 81.6px;
-    line-height: 70.2px;
+    font-size: var(--type-display-xl);
+    line-height: 0.88;
     letter-spacing: -1.15px;
     font-weight: 400;
     color: var(--warm-dark-grey);
@@ -59,15 +73,48 @@
     gap: 12px;
     background: var(--warm-dark-grey);
     color: var(--white);
-    padding: 12px 32px;
-    border-radius: 3px;
+    padding: 10px 26px;
+    border-radius: var(--radius-control);
     font-family: var(--font-ui);
-    font-size: 34px;
+    font-size: var(--type-button-lg);
     white-space: nowrap;
     transition: opacity 0.2s;
   }
 
   .btn-primary:hover {
-    opacity: 0.85;
+    filter: brightness(1.15);
+    transform: scale(1.01);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr;
+      grid-template-rows: 35svh 1fr;
+      min-height: calc(88svh - 50px);
+      height: auto;
+    }
+
+    .hero-image {
+      border-right: none;
+      border-bottom: 1px solid var(--warm-dark-grey);
+    }
+
+    .hero-content {
+      padding: 44px 24px 16px;
+      gap: 32px;
+      justify-content: flex-start;
+      padding-top: 8svh;
+    }
+
+    .hero-heading {
+      font-size: var(--type-hero-mobile);
+      line-height: 0.92;
+      letter-spacing: -0.8px;
+    }
+
+    .btn-primary {
+      padding: 14px 32px;
+      font-size: var(--type-button-lg);
+    }
   }
 </style>

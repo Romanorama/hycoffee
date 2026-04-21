@@ -1,5 +1,6 @@
 ---
-
+import { Image } from 'astro:assets';
+import pressImage from '../assets/images/press-arte.webp';
 ---
 
 <section class="press">
@@ -11,11 +12,11 @@
         <div class="press-divider"></div>
         <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
         <div class="press-image">
-          <img src="/images/press-arte.jpg" alt="Arte Reportage" />
+          <Image src={pressImage} alt="Arte Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
         </div>
         <div class="press-meta">
           <div class="press-source">
-            <img src="/images/arte-logo.svg" alt="arte" class="press-logo" />
+            <img src="/images/media-arte.png" alt="arte" class="press-logo" width="1800" height="1800" loading="lazy" decoding="async" />
           </div>
           <div class="press-time">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -42,11 +43,11 @@
         <div class="press-divider"></div>
         <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
         <div class="press-image">
-          <img src="/images/press-arte.jpg" alt="Arte Reportage" />
+          <Image src={pressImage} alt="ZDF Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
         </div>
         <div class="press-meta">
           <div class="press-source">
-            <img src="/images/arte-logo.svg" alt="arte" class="press-logo" />
+            <img src="/images/media-zdf.png" alt="ZDF" class="press-logo" width="1800" height="1800" loading="lazy" decoding="async" />
           </div>
           <div class="press-time">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -73,11 +74,11 @@
         <div class="press-divider"></div>
         <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
         <div class="press-image">
-          <img src="/images/press-arte.jpg" alt="Arte Reportage" />
+          <Image src={pressImage} alt="Focus Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
         </div>
         <div class="press-meta">
           <div class="press-source">
-            <img src="/images/arte-logo.svg" alt="arte" class="press-logo" />
+            <img src="/images/media-focus.png" alt="Focus" class="press-logo" width="1800" height="1800" loading="lazy" decoding="async" />
           </div>
           <div class="press-time">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -104,11 +105,11 @@
         <div class="press-divider"></div>
         <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
         <div class="press-image">
-          <img src="/images/press-arte.jpg" alt="Arte Reportage" />
+          <Image src={pressImage} alt="Brand Eins Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
         </div>
         <div class="press-meta">
           <div class="press-source">
-            <img src="/images/arte-logo.svg" alt="arte" class="press-logo" />
+            <img src="/images/media-brandeins.png" alt="Brand Eins" class="press-logo" width="1800" height="1800" loading="lazy" decoding="async" />
           </div>
           <div class="press-time">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -130,6 +131,10 @@
       </div>
     </article>
   </div>
+  <a href="#" class="press-more-link">
+    <span>View more from In the Media</span>
+    <span class="press-more-arrow" aria-hidden="true">›</span>
+  </a>
 </section>
 
 <style>
@@ -137,12 +142,13 @@
     padding: 80px 60px;
     max-width: var(--container-max);
     margin: 0 auto;
+    border-bottom: 1px solid var(--warm-dark-grey);
   }
 
   .press-heading {
     font-family: var(--font-heading);
-    font-size: 75px;
-    line-height: 70.3px;
+    font-size: var(--type-heading);
+    line-height: 0.94;
     letter-spacing: -1.5px;
     font-weight: 400;
     text-align: center;
@@ -173,8 +179,8 @@
 
   .caption {
     font-family: var(--font-heading);
-    font-size: 20.9px;
-    line-height: 16.32px;
+    font-size: var(--type-caption);
+    line-height: 1.2;
     letter-spacing: 1.96px;
     text-transform: uppercase;
     font-weight: 400;
@@ -190,8 +196,8 @@
 
   .press-title {
     font-family: var(--font-ui);
-    font-size: 35px;
-    line-height: 40.8px;
+    font-size: var(--type-copy-lg);
+    line-height: 1.17;
     font-weight: 400;
     letter-spacing: 0.7px;
     color: var(--warm-dark-grey);
@@ -219,7 +225,7 @@
   }
 
   .press-logo {
-    height: 24px;
+    height: 65px;
     width: auto;
   }
 
@@ -228,14 +234,14 @@
     align-items: center;
     gap: 6px;
     font-family: var(--font-heading);
-    font-size: 23px;
+    font-size: var(--type-copy-fluid);
     color: var(--warm-dark-grey);
   }
 
   .press-excerpt {
     font-family: var(--font-heading);
-    font-size: 16px;
-    line-height: 17px;
+    font-size: var(--type-hal-copy);
+    line-height: 1.3;
     color: var(--warm-dark-grey);
     margin-bottom: 16px;
     flex: 1;
@@ -248,19 +254,88 @@
     background: var(--warm-dark-grey);
     color: var(--white);
     padding: 10px 24px;
-    border-radius: 3px;
+    border-radius: var(--radius-control);
     font-family: var(--font-ui);
-    font-size: 20px;
+    font-size: var(--type-button);
     transition: opacity 0.2s;
     align-self: flex-start;
   }
 
   .btn-dark:hover {
-    opacity: 0.85;
+    filter: brightness(1.15);
+    transform: scale(1.01);
   }
 
   .arrow {
     width: 14px;
     height: 11px;
+  }
+
+  .press-more-link {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .press {
+      padding: 48px 24px;
+    }
+
+    .press-heading {
+      margin-bottom: 32px;
+    }
+
+    .press-cards {
+      grid-template-columns: 1fr;
+      gap: 12px 0;
+    }
+
+    .press-card {
+      border-right: none;
+      min-height: auto;
+    }
+
+    .press-card:nth-child(n+3) {
+      display: none;
+    }
+
+    .press-card-inner {
+      padding: 12px 0;
+    }
+
+    .press-more-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.24em;
+      margin-top: 22px;
+      width: 100%;
+      font-family: var(--font-ui);
+      font-size: var(--type-copy);
+      line-height: 1;
+      color: var(--warm-dark-grey);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .press-more-link:hover,
+    .press-more-link:focus-visible {
+      opacity: 0.78;
+    }
+
+    .press-more-arrow {
+      display: inline-block;
+      font-size: var(--type-copy-fluid);
+      transform: translateY(-1px);
+      transition: transform 0.2s ease;
+    }
+
+    .press-more-link:hover .press-more-arrow,
+    .press-more-link:focus-visible .press-more-arrow {
+      transform: translate(2px, -1px);
+    }
+
+    .press-logo {
+      height: 40px;
+    }
   }
 </style>
