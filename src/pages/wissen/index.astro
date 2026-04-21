@@ -11,50 +11,48 @@ interface ArticleCard {
   image: string;
 }
 
-const defaultWissenPreviewImage = '/images/DSC_5292.jpeg';
-
 const articles: ArticleCard[] = [
   {
     category: 'Klimawandel',
     title: 'Wie Hitze den Arabica-Anbau veraendert',
     subtitle: 'Warum steigende Durchschnittstemperaturen die Hoehenlagen neu definieren.',
     readingTime: '5 Min',
-    image: defaultWissenPreviewImage,
+    image: '/images/wissen-1.jpeg',
   },
   {
     category: 'Klimaresilienter Kaffee',
     title: 'Agroforst als Antwort auf Trockenstress',
     subtitle: 'Schattenbaeume stabilisieren Ertraege und verbessern die Bodenfeuchte.',
     readingTime: '7 Min',
-    image: defaultWissenPreviewImage,
+    image: '/images/wissen-2.jpeg',
   },
   {
     category: 'Excelsa',
     title: 'Excelsa im Cupping: Fruchtig und wuerzig',
     subtitle: 'Ein Blick auf Geschmack, Struktur und Blend-Potenzial fuer Roestereien.',
     readingTime: '6 Min',
-    image: defaultWissenPreviewImage,
+    image: '/images/wissen-3.jpeg',
   },
   {
     category: 'Klimawandel',
     title: 'Wasserknappheit in Ostafrika',
     subtitle: 'Welche Regionen besonders betroffen sind und welche Strategien greifen.',
     readingTime: '4 Min',
-    image: defaultWissenPreviewImage,
+    image: '/images/wissen-4.jpeg',
   },
   {
     category: 'Klimaresilienter Kaffee',
     title: 'Neue Sorten fuer stabile Ernten',
     subtitle: 'Wie Selektion und Diversitaet die Lieferkette robuster machen.',
     readingTime: '8 Min',
-    image: defaultWissenPreviewImage,
+    image: '/images/wissen-5.jpeg',
   },
   {
     category: 'Excelsa',
     title: 'Vom Feld bis zur Roestung: Excelsa Prozess',
     subtitle: 'Verarbeitungsschritte, die das Profil von Excelsa praegen.',
     readingTime: '5 Min',
-    image: defaultWissenPreviewImage,
+    image: '/images/wissen-6.jpeg',
   },
 ];
 ---
@@ -67,7 +65,7 @@ const articles: ArticleCard[] = [
         <article class="science-card">
           <span class="card-category">{article.category}</span>
           <div class="card-image">
-            <img src={article.image} alt={article.title} />
+            <img src={article.image} alt={article.title} width="2000" height="1335" loading="lazy" decoding="async" />
           </div>
           <h3 class="card-title">{article.title}</h3>
           <p class="card-subtitle">{article.subtitle}</p>
