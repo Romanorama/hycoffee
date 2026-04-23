@@ -1,0 +1,363 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import originsArabica1 from '../assets/images/origins-arabica-1.webp';
+import originsArabica2 from '../assets/images/origins-arabica-2.webp';
+import originsExcelsa1 from '../assets/images/origins-excelsa-1.webp';
+import originsExcelsa2 from '../assets/images/origins-excelsa-2.webp';
+---
+
+<BaseLayout title="Origins – HyCoffee">
+  <Navigation />
+  <main class="origins">
+
+    <!-- Uganda -->
+    <div class="country-section" id="uganda">
+      <div class="country-header">
+        <span class="country-name">Uganda</span>
+      </div>
+
+      <section class="origins-content">
+        <div class="editorial-origin">
+          <div class="editorial-left">
+            <h2 class="editorial-heading">Arabica</h2>
+            <p class="editorial-location">West Nile Region, Uganda</p>
+          </div>
+          <div class="editorial-right">
+            <p>
+              In Uganda beziehen wir Spezialitäten-Arabica, die in klimaresilienten
+              Anbausystemen in der Region West Nile wachsen.
+            </p>
+            <p>
+              Diese Gegend gehört zu den am wenigsten investierten Regionen des
+              Landes, und die dortigen Kaffeeanbau-Gemeinschaften werden
+              voraussichtlich zu denjenigen gehören, die besonders stark vom
+              Klimawandel betroffen sein werden.
+            </p>
+            <p>
+              Diese Herausforderungen setzen die Lebensgrundlagen der Landwirte
+              ernsthaft unter Druck und zeigen, wie dringend Investitionen in
+              Anpassungsmaßnahmen an den Klimawandel sind.
+            </p>
+            <p>
+              Deshalb arbeitet HyCoffee unter anderem mit Zombo Coffee Partners
+              zusammen, die eng mit der Produzent:innengemeinschaft in der Region
+              zusammenarbeiten. Gemeinsam unterstützen wir Produzent:innen beim
+              Übergang zu regenerativen Anbausystemen.
+            </p>
+            <p>
+              Die Produzent:innen bauen ihren Kaffee in regenerativen Anbausystemen
+              an, die die Bodengesundheit verbessern, die Wasserspeicherung erhöhen
+              und Schatten für die Pflanzen schaffen.
+            </p>
+            <p>
+              In einer der klimatisch exponiertesten Regionen Ugandas ist
+              regenerative Landwirtschaft keine Option, sondern eine Notwendigkeit.
+            </p>
+            <div class="editorial-images">
+              <figure class="editorial-figure">
+                <Image src={originsArabica1} alt="Trocknungsbetten in der West Nile Region" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
+              </figure>
+              <figure class="editorial-figure">
+                <Image src={originsArabica2} alt="Kaffeekirschen aus der West Nile Region" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="editorial-origin">
+          <div class="editorial-left">
+            <h2 class="editorial-heading">Excelsa</h2>
+            <p class="editorial-location">Zentral Uganda</p>
+          </div>
+          <div class="editorial-right">
+            <p>
+              Die Kaffeeart Excelsa (Coffea dewevrei) ist in Uganda heimisch. Aufgrund
+              ihrer hohen Produktivität sowie ihrer Widerstandsfähigkeit gegenüber
+              Dürre, Schädlingen und Krankheiten wird Excelsa bereits von vielen
+              Kaffeebäuerinnen und -bauern im Land angebaut.
+            </p>
+            <p>
+              Die geernteten Kirschen werden jedoch häufig zu niedrigen Preisen verkauft
+              und mit Robusta-Kaffee geringerer Qualität vermischt. Damit bleibt ein
+              großes Potenzial ungenutzt: Richtig geerntet und verarbeitet besitzt
+              Excelsa ein beeindruckendes Cupping-Profil.
+            </p>
+            <p>
+              Über bestehende Kooperativenstrukturen arbeitet HyCoffee mit
+              Excelsa-Farmern zusammen, um Anbau, Ernte, Verarbeitung, Lagerung und
+              Vermarktung von Excelsa zu verbessern. Ziel ist es, hochwertige
+              Kaffeebohnen für den Export zu produzieren.
+            </p>
+            <p>
+              Damit sich die zusätzlichen Anstrengungen der Farmer auch auszahlen, hat
+              sich HyCoffee verpflichtet, den Kaffee zu importieren und den Marktzugang
+              in der Europäischen Union zu ermöglichen.
+            </p>
+            <div class="editorial-images">
+              <figure class="editorial-figure">
+                <Image src={originsExcelsa1} alt="Excelsa-Produzentin in Zentral Uganda" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
+              </figure>
+              <figure class="editorial-figure">
+                <Image src={originsExcelsa2} alt="Sortieren von Excelsa-Kirschen" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .origins {
+    min-height: 100vh;
+    background: var(--warm-grey-light);
+  }
+
+  /* Country sections with stacking sticky headers — later countries stack on top */
+  .country-section {
+    position: relative;
+    isolation: isolate;
+    background: var(--warm-grey-light);
+  }
+
+  #uganda { z-index: 1; }
+
+  .country-header {
+    position: sticky;
+    top: var(--nav-height, 88px);
+    z-index: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    padding: 20px 69px;
+    background: var(--warm-grey-light);
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .country-name {
+    font-family: var(--font-heading);
+    font-size: var(--type-interactive-heading);
+    line-height: 1.1;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    color: var(--warm-dark-grey);
+  }
+
+  .origins-content {
+    background: var(--warm-grey-light);
+    border-bottom: 1px solid var(--warm-dark-grey);
+    padding: 0;
+  }
+
+  .editorial-origin {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    border-bottom: 1px solid var(--warm-dark-grey);
+    padding: 64px 69px 100px;
+    gap: 80px;
+    align-items: start;
+    min-width: 0;
+  }
+
+  .editorial-origin:last-child {
+    border-bottom: none;
+  }
+
+  .editorial-left {
+    position: sticky;
+    top: calc(var(--nav-height, 88px) + 96px);
+    min-width: 0;
+  }
+
+  .editorial-right {
+    min-width: 0;
+  }
+
+  .editorial-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(60px, 7vw, 108px);
+    line-height: 0.95;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 28px;
+  }
+
+  .editorial-location {
+    font-family: var(--font-ui);
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(36, 33, 25, 0.55);
+    line-height: 1.5;
+  }
+
+  .editorial-right p {
+    font-family: var(--font-heading);
+    font-size: var(--type-copy-intro);
+    line-height: 1.4;
+    color: var(--warm-dark-grey);
+    margin-bottom: 24px;
+    overflow-wrap: break-word;
+  }
+
+  .editorial-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .editorial-figure img {
+    display: block;
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1024px) {
+    .country-header {
+      padding: 18px 32px;
+    }
+
+    .editorial-origin {
+      grid-template-columns: 1fr;
+      padding: 56px 32px 76px;
+      gap: 32px;
+    }
+
+    .editorial-left {
+      position: static;
+    }
+
+    .editorial-heading {
+      font-size: clamp(64px, 11vw, 96px);
+      margin-bottom: 18px;
+    }
+
+    .editorial-right {
+      max-width: 760px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .country-section {
+      --mobile-country-header-height: 52px;
+      --mobile-sticky-overlap: 5px;
+    }
+
+    .country-header {
+      top: calc(var(--nav-height, 50px) - var(--mobile-sticky-overlap));
+      z-index: 3;
+      min-height: var(--mobile-country-header-height);
+      padding: 14px 20px 13px;
+      gap: 12px;
+    }
+
+    .country-name {
+      font-size: var(--type-interactive-heading-mobile);
+      letter-spacing: 1.2px;
+    }
+
+    .editorial-origin {
+      display: contents;
+    }
+
+    .editorial-left {
+      position: sticky;
+      top: calc(var(--nav-height, 50px) + var(--mobile-country-header-height) - var(--mobile-sticky-overlap) - 1px);
+      z-index: 2;
+      padding: 16px 20px 16px;
+      background: var(--warm-grey-light);
+      border-bottom: 1px solid var(--warm-dark-grey);
+    }
+
+    .editorial-origin + .editorial-origin .editorial-left {
+      border-top: 1px solid var(--warm-dark-grey);
+    }
+
+    .editorial-right {
+      max-width: none;
+      border-bottom: 1px solid var(--warm-dark-grey);
+      margin-bottom: -1px;
+      padding: 24px 20px 58px;
+    }
+
+    .editorial-heading {
+      max-width: 100%;
+      font-size: clamp(46px, 15vw, 68px);
+      line-height: 0.92;
+      margin-bottom: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .editorial-location {
+      max-width: 100%;
+      font-size: 16px;
+      line-height: 1.35;
+      letter-spacing: 1.2px;
+    }
+
+    .editorial-right p {
+      font-size: var(--type-hal-copy);
+      line-height: 1.55;
+      margin-bottom: 16px;
+      hyphens: auto;
+    }
+
+    .editorial-images {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .editorial-figure img {
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .country-header {
+      padding-inline: 20px;
+    }
+
+    .editorial-left {
+      padding: 16px 20px 16px;
+    }
+
+    .editorial-right {
+      padding: 22px 20px 52px;
+    }
+
+    .editorial-heading {
+      font-size: clamp(42px, 15vw, 58px);
+      margin-bottom: 12px;
+    }
+
+    .editorial-images {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .editorial-figure img {
+      aspect-ratio: 16 / 11;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .country-header {
+      padding-inline: 16px;
+    }
+
+    .editorial-left,
+    .editorial-right {
+      padding-inline: 16px;
+    }
+  }
+</style>

@@ -1,0 +1,120 @@
+---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  title: string;
+  preloadImage?: ImageMetadata;
+  preloadImageSizes?: string;
+  preloadImageWidths?: number[];
+}
+
+const {
+  title,
+  preloadImage,
+  preloadImageSizes,
+  preloadImageWidths = [768, 1280, 1920],
+} = Astro.props;
+
+const preload = preloadImage
+  ? await getImage({
+      src: preloadImage,
+      widths: preloadImageWidths,
+      format: 'webp',
+      quality: 72,
+    })
+  : null;
+---
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preload" href="/fonts/HALTimezone-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/DGMSprinter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    {preload && (
+      <link
+        rel="preload"
+        as="image"
+        href={preload.src}
+        imagesrcset={preload.srcSet.attribute}
+        imagesizes={preloadImageSizes}
+        fetchpriority="high"
+      />
+    )}
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <script is:inline>
+      (() => {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const sectionSelector = 'main section, main article';
+
+        function getRevealItems() {
+          return Array.from(document.querySelectorAll(sectionSelector)).filter((item) => {
+            const parentSection = item.parentElement?.closest(sectionSelector);
+            return !parentSection;
+          });
+        }
+
+        function revealNow(item) {
+          item.classList.add('is-visible');
+        }
+
+        function initSectionReveals() {
+          const items = getRevealItems();
+          if (!items.length) return;
+
+          if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            items.forEach((item) => {
+              item.classList.add('scroll-reveal', 'is-visible');
+            });
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                revealNow(entry.target);
+                observer.unobserve(entry.target);
+              });
+            },
+            {
+              rootMargin: '0px 0px -12% 0px',
+              threshold: 0.08,
+            }
+          );
+
+          items.forEach((item, index) => {
+            if (item.dataset.scrollRevealReady === 'true') return;
+            item.dataset.scrollRevealReady = 'true';
+
+            if (item.dataset.noScrollReveal === 'true') return;
+
+            const rect = item.getBoundingClientRect();
+            if (rect.top < window.innerHeight) return;
+
+            item.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
+            item.classList.add('scroll-reveal');
+            observer.observe(item);
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initSectionReveals, { once: true });
+        } else {
+          initSectionReveals();
+        }
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

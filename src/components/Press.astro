@@ -1,0 +1,345 @@
+---
+import { Image } from 'astro:assets';
+import pressImage from '../assets/images/press-arte.webp';
+import logoArte from '../assets/images/media-arte.webp';
+import logoZdf from '../assets/images/media-zdf.webp';
+import logoFocus from '../assets/images/media-focus.webp';
+import logoBrandeins from '../assets/images/media-brandeins.webp';
+---
+
+<section class="press">
+  <h2 class="press-heading">HyCoffee in den Medien</h2>
+  <div class="press-cards">
+    <article class="press-card">
+      <div class="press-card-inner">
+        <span class="caption">PRESSE</span>
+        <div class="press-divider"></div>
+        <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
+        <div class="press-image">
+          <Image src={pressImage} alt="Arte Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
+        </div>
+        <div class="press-meta">
+          <div class="press-source">
+            <Image src={logoArte} alt="arte" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
+          </div>
+          <div class="press-time">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1"/>
+              <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+            <span>2 Min</span>
+          </div>
+        </div>
+        <p class="press-excerpt">
+          Sophie is portrait by arte as one of three entrepreneurs who change the perspective on…
+        </p>
+        <a href="#" class="btn btn-dark">
+          <span>Tertiary Button</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+    <article class="press-card">
+      <div class="press-card-inner">
+        <span class="caption">PRESSE</span>
+        <div class="press-divider"></div>
+        <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
+        <div class="press-image">
+          <Image src={pressImage} alt="ZDF Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
+        </div>
+        <div class="press-meta">
+          <div class="press-source">
+            <Image src={logoZdf} alt="ZDF" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
+          </div>
+          <div class="press-time">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1"/>
+              <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+            <span>2 Min</span>
+          </div>
+        </div>
+        <p class="press-excerpt">
+          Sophie is portrait by arte as one of three entrepreneurs who change the perspective on…
+        </p>
+        <a href="#" class="btn btn-dark">
+          <span>Tertiary Button</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+    <article class="press-card">
+      <div class="press-card-inner">
+        <span class="caption">PRESSE</span>
+        <div class="press-divider"></div>
+        <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
+        <div class="press-image">
+          <Image src={pressImage} alt="Focus Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
+        </div>
+        <div class="press-meta">
+          <div class="press-source">
+            <Image src={logoFocus} alt="Focus" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
+          </div>
+          <div class="press-time">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1"/>
+              <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+            <span>2 Min</span>
+          </div>
+        </div>
+        <p class="press-excerpt">
+          Sophie is portrait by arte as one of three entrepreneurs who change the perspective on…
+        </p>
+        <a href="#" class="btn btn-dark">
+          <span>Tertiary Button</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+    <article class="press-card">
+      <div class="press-card-inner">
+        <span class="caption">PRESSE</span>
+        <div class="press-divider"></div>
+        <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
+        <div class="press-image">
+          <Image src={pressImage} alt="Brand Eins Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
+        </div>
+        <div class="press-meta">
+          <div class="press-source">
+            <Image src={logoBrandeins} alt="Brand Eins" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
+          </div>
+          <div class="press-time">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1"/>
+              <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+            <span>2 Min</span>
+          </div>
+        </div>
+        <p class="press-excerpt">
+          Sophie is portrait by arte as one of three entrepreneurs who change the perspective on…
+        </p>
+        <a href="#" class="btn btn-dark">
+          <span>Tertiary Button</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+  </div>
+  <a href="#" class="press-more-link">
+    <span>View more from In the Media</span>
+    <span class="press-more-arrow" aria-hidden="true">›</span>
+  </a>
+</section>
+
+<style>
+  .press {
+    padding: 80px 60px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .press-heading {
+    font-family: var(--font-heading);
+    font-size: var(--type-heading);
+    line-height: 0.94;
+    letter-spacing: -1.5px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .press-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .press-card {
+    border-right: 1px solid var(--warm-dark-grey);
+    min-height: 587px;
+  }
+
+  .press-card:last-child {
+    border-right: none;
+  }
+
+  .press-card-inner {
+    padding: 12px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .caption {
+    font-family: var(--font-heading);
+    font-size: var(--type-caption);
+    line-height: 1.2;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+  }
+
+  .press-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--warm-dark-grey);
+    margin: 12px 0;
+  }
+
+  .press-title {
+    font-family: var(--font-ui);
+    font-size: var(--type-copy-lg);
+    line-height: 1.17;
+    font-weight: 400;
+    letter-spacing: 0.7px;
+    color: var(--warm-dark-grey);
+    margin-bottom: 16px;
+  }
+
+  .press-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .press-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .press-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .press-logo {
+    height: 65px;
+    width: auto;
+  }
+
+  .press-time {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-heading);
+    font-size: var(--type-copy-fluid);
+    color: var(--warm-dark-grey);
+  }
+
+  .press-excerpt {
+    font-family: var(--font-heading);
+    font-size: var(--type-hal-copy);
+    line-height: 1.3;
+    color: var(--warm-dark-grey);
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .btn-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: var(--radius-control);
+    font-family: var(--font-ui);
+    font-size: var(--type-button);
+    transition: opacity 0.2s;
+    align-self: flex-start;
+  }
+
+  .btn-dark:hover {
+    filter: brightness(1.15);
+    transform: scale(1.01);
+  }
+
+  .arrow {
+    width: 14px;
+    height: 11px;
+  }
+
+  .press-more-link {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .press {
+      padding: 48px 24px;
+    }
+
+    .press-heading {
+      margin-bottom: 32px;
+    }
+
+    .press-cards {
+      grid-template-columns: 1fr;
+      gap: 12px 0;
+    }
+
+    .press-card {
+      border-right: none;
+      min-height: auto;
+    }
+
+    .press-card:nth-child(n+3) {
+      display: none;
+    }
+
+    .press-card-inner {
+      padding: 12px 0;
+    }
+
+    .press-more-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.24em;
+      margin-top: 22px;
+      width: 100%;
+      font-family: var(--font-ui);
+      font-size: var(--type-copy);
+      line-height: 1;
+      color: var(--warm-dark-grey);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .press-more-link:hover,
+    .press-more-link:focus-visible {
+      opacity: 0.78;
+    }
+
+    .press-more-arrow {
+      display: inline-block;
+      font-size: var(--type-copy-fluid);
+      transform: translateY(-1px);
+      transition: transform 0.2s ease;
+    }
+
+    .press-more-link:hover .press-more-arrow,
+    .press-more-link:focus-visible .press-more-arrow {
+      transform: translate(2px, -1px);
+    }
+
+    .press-logo {
+      height: 40px;
+    }
+  }
+</style>

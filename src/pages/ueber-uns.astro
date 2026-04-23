@@ -1,0 +1,582 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import strip1 from '../assets/images/strip-1.webp';
+import strip2 from '../assets/images/strip-2.webp';
+import strip3 from '../assets/images/strip-3.webp';
+import strip4 from '../assets/images/strip-4.webp';
+import strip5 from '../assets/images/strip-5.webp';
+import strip6 from '../assets/images/strip-6.webp';
+import strip7 from '../assets/images/strip-7.webp';
+import strip8 from '../assets/images/strip-8.webp';
+import wissen1 from '../assets/images/origins-arabica-1.webp';
+import wissen2 from '../assets/images/ambe-anaerobic.webp';
+import wissen3 from '../assets/images/excelsa.webp';
+import wissen4 from '../assets/images/origins-excelsa-2.webp';
+import wissen5 from '../assets/images/origins-excelsa-1.webp';
+import wissen6 from '../assets/images/disco3.webp';
+import dsc5180 from '../assets/images/DSC_5180.webp';
+import dsc5182 from '../assets/images/DSC_5182.webp';
+import aboutGreenHero from '../assets/images/about-green-hero.webp';
+
+const stripItems = [
+  { src: strip1, alt: 'Kaffeeanbau' },
+  { src: strip2, alt: 'Ernte' },
+  { src: strip3, alt: 'Verarbeitung' },
+  { src: strip4, alt: 'Pflanzen' },
+  { src: strip5, alt: 'Landschaft' },
+  { src: strip6, alt: 'Team' },
+  { src: strip7, alt: 'Farm' },
+  { src: strip8, alt: 'Bohnen' },
+  { src: wissen1, alt: 'Kaffee' },
+  { src: dsc5180, alt: 'Ernte' },
+  { src: wissen3, alt: 'Excelsa' },
+  { src: dsc5182, alt: 'Farm' },
+  { src: wissen5, alt: 'Sorten' },
+  { src: wissen2, alt: 'Agroforst' },
+  { src: wissen4, alt: 'Ostafrika' },
+  { src: wissen6, alt: 'Roestung' },
+];
+---
+
+<BaseLayout title="Über Uns – HyCoffee">
+  <Navigation />
+  <main class="about">
+    <!-- Photo Strip -->
+    <div class="photo-strip">
+      <div class="photo-strip-track">
+        {[...stripItems, ...stripItems].map((item) => (
+          <Image src={item.src} alt={item.alt} class="strip-img" widths={[200, 400]} sizes="200px" format="webp" quality={72} loading="lazy" decoding="async" />
+        ))}
+      </div>
+    </div>
+
+    <!-- Split: sticky green left + scrollable right -->
+    <div class="about-split">
+      <aside class="about-split-left">
+        <Image src={aboutGreenHero} alt="Sophie und Charlotte" class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
+        <div class="about-hero-left-inner">
+          <p class="about-hero-text">
+            Wir sind Sophie und Charlotte.
+            Wir haben HyCoffee gegründet, weil der Kaffeesektor vor einer der größten
+            Herausforderungen seiner Zeit steht: dem Klimawandel. Steigende
+            Temperaturen, Dürren und neue Pflanzenkrankheiten setzen den Kaffeeanbau
+            weltweit unter Druck.
+          </p>
+        </div>
+      </aside>
+
+      <div class="about-split-right">
+        <section class="about-hero-right">
+          <h2 class="about-headline">Unsere Geschichte</h2>
+          <p class="about-body">
+            Wir arbeiten zwischen Ostafrika und Deutschland. Unser Fokus liegt auf
+            Klimaresilienz als konkrete Antwort auf die Frage, wie Kaffeeanbau
+            langfristig funktionieren kann. Gemeinsam mit Produzent:innen vor Ort
+            fördern wir widerstandsfähige Anbausysteme wie Agroforst und regenerative
+            Landwirtschaft. Gleichzeitig erschließen wir das Potenzial alternativer
+            Kaffeearten wie Excelsa – bisher kaum auf dem Markt, obwohl seit
+            Generationen angebaut.
+          </p>
+          <p class="about-body">
+            HyCoffee ist die Brücke zwischen Forschung und Praxis: wissenschaftliche
+            Erkenntnisse direkt auf die Farm, in die Lieferkette und in die Tasse.
+          </p>
+          <p class="about-body">
+            Sophie hat bei den Vereinten Nationen gearbeitet, bevor sie sich auf
+            Forschung zu Kaffee und Klimawandel spezialisierte. Die Entdeckung, dass
+            es längst klimaresiliente Kaffeearten gibt – kaum bekannt, kaum vermarktet
+            – ließ sie nicht mehr los. Forschen allein reichte ihr nicht.
+          </p>
+          <p class="about-body">
+            Charlotte hat in der internationalen Entwicklungszusammenarbeit gearbeitet
+            und berät internationale Organisationen und Stiftungen zu Strategie und
+            Partnerschaften. Sie kennt aus eigener Erfahrung, wie Privatsektor
+            Partnerschaften echten Wandel bewirken können. Ihr Antrieb: Trade instead
+            of Aid – faire Handelspartnerschaften statt Hilfe von außen.
+          </p>
+        </section>
+
+        <section class="origins-banner">
+          <p class="origins-banner-text">More Info about the Places we work with</p>
+          <a href="/origins" class="btn-origins">
+            <span>Origins</span>
+            <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+              <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </section>
+
+        <section class="say-hy">
+          <p class="say-hy-heading">Say Hy:<br /><a href="mailto:info@hycoffee.de" class="say-hy-email">info@hycoffee.de</a></p>
+        </section>
+
+        <section class="contact-cards">
+          <div class="contact-card contact-card-yellow">
+            <p class="contact-name">Charlotte Schmidt</p>
+            <a href="mailto:charlotte@hycoffee.de" class="contact-detail">charlotte@hycoffee.de</a>
+            <a href="tel:+490157123456" class="contact-detail">0157123456</a>
+          </div>
+          <div class="contact-card contact-card-green">
+            <p class="contact-name">Sophie von Loeben</p>
+            <a href="mailto:sophie@hycoffee.de" class="contact-detail">sophie@hycoffee.de</a>
+            <a href="tel:+490157123456" class="contact-detail">0157123456</a>
+          </div>
+        </section>
+
+        <a href="https://www.instagram.com/hycoffeeco/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
+        <a href="https://de.linkedin.com/company/hycoffee" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .photo-strip {
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    filter: grayscale(100%);
+    border-bottom: 1px solid var(--warm-dark-grey);
+    position: sticky;
+    /* Keep the strip flush with the sticky nav/subbar area. */
+    top: 84px;
+    z-index: 5;
+    margin-top: -1px;
+  }
+
+  .photo-strip-track {
+    display: flex;
+    height: 100%;
+    gap: 0;
+    animation: strip-scroll 40s linear infinite;
+  }
+
+  @keyframes strip-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .strip-img {
+    height: 100%;
+    width: auto;
+    min-width: 180px;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin-right: -8px;
+    transition: transform 0.6s ease, z-index 0s;
+    position: relative;
+    z-index: 1;
+    border-right: 1px solid var(--warm-dark-grey);
+  }
+
+  .strip-img:hover {
+    transform: scale(1.15);
+    z-index: 10;
+  }
+
+  .about-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .about-split-left {
+    background: var(--green);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: sticky;
+    top: 184px;
+    height: calc(100vh - 184px);
+    overflow: hidden;
+    align-self: start;
+    z-index: 1;
+  }
+
+  .about-split-right {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    container-type: inline-size;
+    container-name: about-right;
+    border-left: 1px solid var(--warm-dark-grey);
+  }
+
+  .about-hero-img {
+    display: block;
+    width: 100%;
+    flex: 1 1 0;
+    min-height: 0;
+    object-fit: cover;
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .about-hero-left-inner {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 48px;
+  }
+
+  .about-hero-text {
+    font-family: var(--font-heading);
+    font-size: var(--type-statement-sm);
+    line-height: 1.3;
+    color: #f5f5f5;
+    text-align: center;
+    max-width: 700px;
+  }
+
+  .about-hero-right {
+    padding: clamp(36px, 4.2vw, 60px);
+  }
+
+  .about-headline {
+    font-family: var(--font-heading);
+    font-size: var(--type-statement);
+    line-height: 1.1;
+    color: var(--warm-dark-grey);
+    margin: 0 0 24px;
+    font-weight: 400;
+  }
+
+  .about-body {
+    font-family: var(--font-heading);
+    font-size: clamp(17px, 1.45vw, 20px);
+    line-height: 1.3;
+    color: var(--warm-dark-grey);
+    margin-bottom: 16px;
+  }
+
+  .origins-banner {
+    container-type: inline-size;
+    background: var(--warm-grey-light);
+    border-top: 1px solid var(--warm-dark-grey);
+    border-bottom: 1px solid var(--warm-dark-grey);
+    padding: clamp(32px, 3.8vw, 40px) clamp(28px, 5vw, 69px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(16px, 2vw, 24px);
+  }
+
+  .origins-banner-text {
+    font-family: var(--font-heading);
+    font-size: clamp(26px, 3vw, var(--type-statement));
+    font-size: clamp(26px, 4.8cqw, var(--type-statement));
+    line-height: 1.05;
+    color: var(--warm-dark-grey);
+    text-align: center;
+    min-width: 0;
+  }
+
+  .btn-origins {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    padding: 16px 20px 6px;
+    border-radius: var(--radius-control);
+    font-family: var(--font-ui);
+    font-size: var(--type-button-lg);
+    line-height: 1;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+
+  .btn-origins:hover {
+    filter: brightness(1.15);
+    transform: scale(1.01);
+    text-shadow: var(--button-text-hover-glow);
+  }
+
+  .arrow {
+    width: 14px;
+    height: 11px;
+  }
+
+  .say-hy {
+    container-type: inline-size;
+    background: var(--violet);
+    padding: clamp(48px, 5vw, 64px) clamp(20px, 3vw, 36px);
+    text-align: center;
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .say-hy-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(34px, 3.6vw, var(--type-display-sm));
+    font-size: clamp(34px, 7.2cqw, var(--type-display-sm));
+    line-height: 0.95;
+    letter-spacing: 0;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+  }
+
+  .say-hy-email {
+    color: var(--warm-dark-grey);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .say-hy-email:hover {
+    opacity: 0.7;
+  }
+
+  .contact-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+    background: var(--warm-dark-grey);
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .contact-cards::before {
+    content: "";
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    left: 50%;
+    width: 1px;
+    background: var(--white);
+    transform: translateX(-0.5px);
+    pointer-events: none;
+  }
+
+  .contact-card {
+    container-type: inline-size;
+    min-width: 0;
+    padding: clamp(36px, 3.6vw, 48px) clamp(18px, 2.5vw, 48px);
+    text-align: center;
+  }
+
+  .contact-card-yellow {
+    background: var(--warm-dark-grey);
+  }
+
+  .contact-card-green {
+    background: var(--warm-dark-grey);
+  }
+
+  .contact-card .contact-name,
+  .contact-card .contact-detail {
+    color: var(--white);
+  }
+
+  .contact-name {
+    font-family: var(--font-heading);
+    font-size: clamp(22px, 2.5vw, var(--type-statement));
+    font-size: clamp(22px, 7.2cqw, var(--type-statement));
+    line-height: 1.08;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .contact-detail {
+    display: block;
+    transition: opacity 0.2s;
+    font-family: var(--font-heading);
+    font-size: clamp(22px, 2.5vw, var(--type-statement));
+    font-size: clamp(22px, 7.2cqw, var(--type-statement));
+    line-height: 1.08;
+    color: var(--white);
+    white-space: nowrap;
+  }
+
+  .contact-detail:hover {
+    opacity: 0.6;
+  }
+
+  .social-link {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 3vw, var(--type-statement));
+    line-height: 1.05;
+    color: var(--warm-dark-grey);
+    text-align: center;
+    padding: 40px;
+    border-bottom: 1px solid var(--warm-dark-grey);
+    transition: background 0.2s;
+  }
+
+  .social-link:hover {
+    background: var(--warm-grey-light);
+  }
+
+  @media (max-width: 1180px) {
+    .about-split {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+
+    .about-hero-left-inner {
+      padding: 44px 30px;
+    }
+
+    .about-hero-text {
+      font-size: clamp(24px, 2.45vw, var(--type-statement-sm));
+      line-height: 1.24;
+    }
+
+    .origins-banner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+  }
+
+  @container about-right (max-width: 760px) {
+    .origins-banner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .contact-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-cards::before {
+      content: none;
+    }
+
+    .contact-card-yellow {
+      border-right: none;
+      position: relative;
+    }
+
+    .contact-card-yellow::after {
+      content: "";
+      position: absolute;
+      right: 15%;
+      bottom: 0;
+      left: 15%;
+      border-bottom: 1px solid var(--white);
+    }
+
+    .contact-name,
+    .contact-detail {
+      font-size: clamp(26px, 5.4cqw, var(--type-statement));
+    }
+  }
+
+  @media (max-width: 980px) {
+    .contact-name,
+    .contact-detail {
+      font-size: clamp(26px, 5vw, var(--type-statement));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .photo-strip {
+      height: 70px;
+      top: calc(var(--nav-height, 50px) - 4px);
+    }
+
+    .strip-img {
+      min-width: 120px;
+    }
+
+    .about-split {
+      display: block;
+    }
+
+    .about-split-left {
+      position: static;
+      height: auto;
+      overflow: visible;
+    }
+
+    .about-hero-img {
+      flex: 0 0 auto;
+      height: auto;
+    }
+
+    .about-hero-left-inner {
+      padding: 56px 20px 32px;
+    }
+
+    .about-hero-text {
+      font-size: var(--type-copy-intro);
+      line-height: 1.3;
+      max-width: none;
+    }
+
+    .about-hero-right {
+      padding: 32px 20px;
+      text-align: left;
+    }
+
+    .about-body {
+      font-size: var(--type-hal-copy);
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+
+    .origins-banner {
+      padding: 28px 20px;
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .origins-banner-text {
+      font-size: var(--type-banner-mobile);
+      line-height: 1.2;
+    }
+
+    .btn-origins {
+      font-size: var(--type-button);
+      padding: 9px 18px;
+    }
+
+    .say-hy {
+      padding: 40px 20px;
+    }
+
+    .contact-cards {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .contact-cards::before {
+      content: none;
+    }
+
+    .contact-card {
+      padding: 32px 20px;
+    }
+
+    .contact-card-yellow {
+      border-right: none;
+      position: relative;
+    }
+
+    .contact-card-yellow::after {
+      content: "";
+      position: absolute;
+      right: 15%;
+      bottom: 0;
+      left: 15%;
+      border-bottom: 1px solid var(--white);
+    }
+
+    .contact-name,
+    .contact-detail {
+      font-size: var(--type-statement-mobile);
+      line-height: 1.25;
+    }
+
+    .social-link {
+      font-size: var(--type-statement-mobile);
+      line-height: 1.2;
+      padding: 24px 20px;
+    }
+  }
+</style>

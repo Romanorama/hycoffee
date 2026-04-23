@@ -1,0 +1,337 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'klimawandel-kaffeeanbau' },
+      props: {
+        article: {
+          category: 'Klimawandel',
+          date: 'March 25th 2026',
+          readTime: '6 Min Read',
+          title: 'Der Klimawandel und seine Folgen für den Kaffeeanbau',
+          subtitle: 'Bis zum Jahr 2050 könnte der Klimawandel die weltweit für Kaffeeanbau geeigneten Flächen um mehr als die Hälfte reduzieren',
+        },
+      },
+    },
+  ];
+}
+
+const { article } = Astro.props;
+---
+
+<BaseLayout title={`${article.title} – HyCoffee`}>
+  <Navigation />
+  <main class="article-page">
+    <header class="article-header">
+      <p class="article-meta">
+        {article.category} | {article.date} | {article.readTime}
+      </p>
+      <h1 class="article-title">{article.title}</h1>
+      <p class="article-subtitle">{article.subtitle}</p>
+    </header>
+
+    <div class="article-layout">
+      <div class="article-body">
+        <p>
+          Die Kaffeepflanze ist stark von stabilen klimatischen Bedingungen abhängig
+          und gedeiht nur innerhalb eines engen Spektrums von Temperatur- und
+          Niederschlagsmustern.
+        </p>
+        <p>
+          Durch den Klimawandel verschieben sich diese Bedingungen jedoch zunehmend:
+          steigende Temperaturen, veränderte Regenzeiten und häufigere
+          Extremwetterereignisse beeinträchtigen Wachstum, Ertrag und Qualität der
+          Kaffeebohnen. Gleichzeitig begünstigen wärmere Klimazonen die Ausbreitung
+          von Schädlingen und Pflanzenkrankheiten, was die Produktion zusätzlich
+          erschwert.² Arabica und Robusta reagieren unterschiedlich auf klimatische
+          Veränderungen, sind jedoch beide stark davon betroffen. Arabica gedeiht
+          optimal bei Temperaturen zwischen 15 und 24 °C. Temperaturen über 24 °C
+          führen zu Stress für die Pflanze und können sie erheblich schädigen.
+          Robusta ist zwar hitzetoleranter als Arabica und wächst idealerweise bei
+          22 bis 28 °C, reagiert jedoch deutlich empfindlicher auf niedrigere
+          Temperaturen.³
+        </p>
+
+        <figure class="article-figure">
+          <div class="article-image-placeholder"></div>
+          <figcaption>Bildunterschrift</figcaption>
+        </figure>
+
+        <p>
+          Beide Arten sind zudem auf ein bestimmtes jährliches Niederschlagsmuster
+          angewiesen – mit einigen Monaten geringer Regenmengen oder sogar relativer
+          Trockenheit. Schon kleine Veränderungen dieser optimalen Bedingungen können
+          Erträge und Qualität direkt negativ beeinflussen. Aktuelle Forschung zeigt,
+          dass sich diese optimalen Anbaubedingungen bereits verändern – und sich in
+          Zukunft weiter verschieben werden. Bis 2050 könnte der Klimawandel die
+          weltweit geeigneten Anbauflächen für Kaffee um mehr als die Hälfte
+          reduzieren.⁴ Gleichzeitig steigt die globale Nachfrage nach Kaffee stetig.
+          Ein großer Teil dieser Belastung trifft Kleinbäuerinnen und Kleinbauern
+          sowie ihre Familien, deren Lebensgrundlage direkt vom Kaffeeanbau abhängt.
+          Grüne Kaffeebohnen, die von Dürre betroffen sind (links), und solche ohne
+          Dürreschäden (rechts).
+        </p>
+        <p>
+          <strong>Wilde und hybride Kaffees für einen klimaresilienten Kaffeesektor</strong><br />
+          Wusstet ihr, dass von über 130 bekannten Coffea-Arten weltweit nur zwei
+          kommerziell genutzt werden – Arabica und Robusta?
+        </p>
+        <p>
+          Das geringe Interesse an wilden Kaffeearten setzt viele von ihnen einem
+          hohen Aussterberisiko aus.⁵ Gleichzeitig können genau diese Arten eine
+          wichtige Rolle dabei spielen, den Kaffeeanbau an den Klimawandel
+          anzupassen. Die genetischen Eigenschaften dieser Pflanzen sind entscheidend,
+          damit Wissenschaftler klimaresiliente Kaffeevarietäten entwickeln können.
+          Einige wilde Kaffeearten – etwa Excelsa oder der erst kürzlich
+          wiederentdeckte Stenophylla-Kaffee – bieten sogar eine geschmacklich
+          interessante und zugleich Dürre-tolerante Alternative zu Arabica und Robusta.
+        </p>
+      </div>
+
+      <aside class="article-sidebar">
+        <div class="sidebar-divider"></div>
+        <p class="sidebar-label">RELATED</p>
+        <div class="related-article">
+          <a href="#" class="related-title">Titel des Artikels</a>
+          <div class="related-image-placeholder"></div>
+          <p class="related-caption">Bildunterschrift</p>
+        </div>
+        <div class="related-article">
+          <a href="#" class="related-title">Titel des Artikels</a>
+          <div class="related-image-placeholder"></div>
+          <p class="related-caption">Bildunterschrift</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .article-page {
+    background: var(--white);
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .article-header {
+    text-align: center;
+    padding: 60px 60px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .article-meta {
+    font-family: var(--font-heading);
+    font-size: var(--type-caption);
+    line-height: 1.2;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 32px;
+  }
+
+  .article-title {
+    font-family: var(--font-heading);
+    font-size: var(--type-display);
+    line-height: 1;
+    letter-spacing: -1.15px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 24px;
+  }
+
+  .article-subtitle {
+    font-family: var(--font-heading);
+    font-size: var(--type-copy-intro);
+    line-height: 1.3;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .article-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 80px;
+    max-width: 1520px;
+    margin: 0 auto;
+    padding: 0 60px 80px 160px;
+    align-items: start;
+  }
+
+  .article-body {
+    max-width: none;
+  }
+
+  .article-body p {
+    font-family: var(--font-heading);
+    font-size: var(--type-hal-copy);
+    line-height: 1.6;
+    color: var(--warm-dark-grey);
+    margin-bottom: 20px;
+  }
+
+  .article-body strong {
+    font-weight: 400;
+  }
+
+  .article-figure {
+    margin: 40px 0;
+  }
+
+  .article-image-placeholder {
+    width: 100%;
+    height: 473px;
+    background: #d9d9d9;
+  }
+
+  .article-figure figcaption {
+    font-family: var(--font-ui);
+    font-size: var(--type-caption-sm);
+    line-height: 1.3;
+    letter-spacing: 0.1px;
+    color: var(--warm-dark-grey);
+    margin-top: 12px;
+  }
+
+  .article-sidebar {
+    position: sticky;
+    top: 140px;
+  }
+
+  .sidebar-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--warm-dark-grey);
+    margin-bottom: 24px;
+  }
+
+  .sidebar-label {
+    font-family: var(--font-heading);
+    font-size: var(--type-caption-sm);
+    line-height: 1.2;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 32px;
+  }
+
+  .related-article {
+    margin-bottom: 32px;
+  }
+
+  .related-title {
+    font-family: var(--font-heading);
+    font-size: var(--type-hal-copy);
+    line-height: 1.3;
+    color: var(--warm-dark-grey);
+    text-decoration: underline;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .related-title:hover {
+    opacity: 0.7;
+  }
+
+  .related-image-placeholder {
+    width: 253px;
+    height: 156px;
+    background: #d9d9d9;
+    margin-bottom: 8px;
+  }
+
+  .related-caption {
+    font-family: var(--font-ui);
+    font-size: var(--type-caption-sm);
+    line-height: 1.3;
+    letter-spacing: 0.1px;
+    color: var(--warm-dark-grey);
+  }
+
+  @media (max-width: 768px) {
+    .article-header {
+      text-align: center;
+      padding: 40px 24px 36px;
+      max-width: none;
+      border-bottom: 1px solid var(--warm-dark-grey);
+      margin: 0 24px;
+    }
+
+    .article-meta {
+      font-size: var(--type-caption-sm);
+      letter-spacing: 1.5px;
+      margin-bottom: 24px;
+    }
+
+    .article-title {
+      font-size: var(--type-mobile-display);
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+
+    .article-subtitle {
+      font-size: var(--type-copy-intro);
+      line-height: 1.35;
+      max-width: none;
+      margin: 0 auto;
+      color: rgba(36, 33, 25, 0.7);
+    }
+
+    .article-layout {
+      display: block;
+      max-width: none;
+      padding: 40px 24px 48px;
+    }
+
+    .article-body p {
+      font-size: var(--type-hal-copy);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .article-figure {
+      margin: 24px -16px;
+    }
+
+    .article-image-placeholder {
+      height: 220px;
+    }
+
+    .article-figure figcaption {
+      padding: 0 16px;
+      margin-top: 8px;
+    }
+
+    .article-sidebar {
+      position: static;
+      margin-top: 32px;
+      padding-top: 8px;
+    }
+
+    .sidebar-divider {
+      margin-bottom: 20px;
+    }
+
+    .sidebar-label {
+      margin-bottom: 20px;
+    }
+
+    .related-article {
+      margin-bottom: 24px;
+    }
+
+    .related-image-placeholder {
+      width: 100%;
+      height: 180px;
+    }
+  }
+</style>
