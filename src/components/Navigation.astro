@@ -241,7 +241,7 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
   }
 
   .nav-light .nav-lang-active {
-    background: transparent;
+    background: rgba(36, 33, 25, 0.08);
     color: var(--warm-dark-grey);
   }
 
@@ -252,10 +252,6 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
 
   .nav-light .nav-lang-option:hover {
     background: rgba(36, 33, 25, 0.08);
-  }
-
-  .nav-light .nav-lang-active:hover {
-    background: transparent;
   }
 
   .nav-light .nav-bottom {
@@ -358,7 +354,7 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
   }
 
   .nav-lang-active {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.12);
     color: var(--white);
   }
 
@@ -374,10 +370,6 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
   .nav-lang-option:hover {
     opacity: 1;
     background: rgba(255, 255, 255, 0.12);
-  }
-
-  .nav-lang-active:hover {
-    background: transparent;
   }
 
   .nav-contact-wrap {
@@ -415,9 +407,9 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
   }
 
   .nav-contact-btn[aria-expanded="true"] {
-    background: var(--warm-grey-light);
-    color: var(--warm-dark-grey);
-    border-color: var(--warm-grey-light);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.82);
   }
 
   .nav-light .nav-contact-btn {
@@ -430,8 +422,8 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
   }
 
   .nav-light .nav-contact-btn[aria-expanded="true"] {
-    background: var(--warm-dark-grey);
-    color: var(--white);
+    background: rgba(36, 33, 25, 0.08);
+    color: var(--warm-dark-grey);
     border-color: var(--warm-dark-grey);
   }
 
@@ -760,7 +752,7 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
   }
 
   .nav-mobile-lang-active {
-    background: transparent;
+    background: rgba(36, 33, 25, 0.08);
     color: var(--warm-dark-grey);
   }
 
@@ -772,10 +764,6 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
   .nav-mobile-lang-option:hover {
     opacity: 1;
     background: rgba(36, 33, 25, 0.08);
-  }
-
-  .nav-mobile-lang-active:hover {
-    background: transparent;
   }
 
   .nav-mobile-lang-option:hover {
@@ -928,8 +916,13 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
   function syncNavHeight() {
     if (!navRoot) return;
     const navHeight = Math.max(50, Math.round(navRoot.getBoundingClientRect().height));
+    const navFilter = navRoot.querySelector('.nav-filter');
+    const navFilterHeight = navFilter
+      ? Math.round(navFilter.getBoundingClientRect().height)
+      : 0;
     document.body.classList.add('has-fixed-nav');
     document.body.style.setProperty('--nav-height', `${navHeight}px`);
+    document.body.style.setProperty('--nav-filter-height', `${navFilterHeight}px`);
   }
 
   if (navRoot) {

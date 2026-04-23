@@ -26,7 +26,7 @@ import { wissenArticles } from '../../lib/wissenArticles';
     display: grid;
     grid-template-columns: minmax(0, 1fr) !important;
     gap: 32px;
-    padding: 64px 60px 60px;
+    padding: calc(25px + (var(--nav-filter-height, 38px) / 2)) 60px 60px;
   }
 
   @media (min-width: 1000px) and (max-width: 1599px) {
@@ -44,7 +44,7 @@ import { wissenArticles } from '../../lib/wissenArticles';
   @media (max-width: 768px) {
     .articles-grid {
       gap: 16px;
-      padding: 40px 12px 40px;
+      padding: calc(25px + (var(--nav-filter-height, 52px) / 2)) 12px 40px;
     }
   }
 </style>

@@ -27,6 +27,7 @@
   --violet: #ab9ff2;
   --light-grey: #e3e2e0;
   --grey-10: #1a1a1a;
+  --button-text-hover-glow: 0 0 4px rgba(255, 255, 255, 0.34), 0 0 9px rgba(255, 255, 255, 0.14);
 
   /* Fonts */
   --font-heading: 'HAL Timezone', sans-serif;
@@ -252,6 +253,7 @@ button {
   filter: brightness(1.15);
   font-size-adjust: inherit;
   transform: scale(1.01);
+  text-shadow: var(--button-text-hover-glow);
 }
 
 .btn-primary {

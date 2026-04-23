@@ -6,6 +6,13 @@ import ambeAnaerobic from '../assets/images/ambe-anaerobic.webp';
 import amiziRock from '../assets/images/amizi-rock.webp';
 import disco3 from '../assets/images/disco3.webp';
 import excelsa from '../assets/images/excelsa.webp';
+
+const samplesSoldOut = true;
+const sampleButtonClass = `btn-sample${samplesSoldOut ? ' is-sold-out' : ''}`;
+const sampleButtonText = samplesSoldOut ? 'Sold out' : 'Add Sample';
+const sampleButtonIcon = samplesSoldOut ? '!' : '+';
+const sampleButtonLabel = samplesSoldOut ? 'Samples sold out' : 'Add Sample';
+const checkoutCopy = samplesSoldOut ? 'Samples sold out' : '0 Samples Added';
 ---
 
 <BaseLayout title="Kaffee kaufen – HyCoffee">
@@ -51,9 +58,9 @@ import excelsa from '../assets/images/excelsa.webp';
               </svg>
               <span>Product Sheet</span>
             </button>
-            <button class="btn-sample" onclick="event.stopPropagation()">
-              <span class="sample-plus">+</span>
-              <span>Add Sample</span>
+            <button type="button" class={sampleButtonClass} data-sample-action data-sample-sold-out={samplesSoldOut ? 'true' : 'false'} aria-label={sampleButtonLabel} onclick="event.stopPropagation()">
+              <span class="sample-plus">{sampleButtonIcon}</span>
+              <span>{sampleButtonText}</span>
             </button>
           </span>
         </summary>
@@ -86,9 +93,9 @@ import excelsa from '../assets/images/excelsa.webp';
               </svg>
               <span>Product Sheet</span>
             </button>
-            <button class="btn-sample">
-              <span class="sample-plus">+</span>
-              <span>Add Sample</span>
+            <button type="button" class={sampleButtonClass} data-sample-action data-sample-sold-out={samplesSoldOut ? 'true' : 'false'} aria-label={sampleButtonLabel}>
+              <span class="sample-plus">{sampleButtonIcon}</span>
+              <span>{sampleButtonText}</span>
             </button>
           </div>
         </div>
@@ -111,9 +118,9 @@ import excelsa from '../assets/images/excelsa.webp';
               </svg>
               <span>Product Sheet</span>
             </button>
-            <button class="btn-sample" onclick="event.stopPropagation()">
-              <span class="sample-plus">+</span>
-              <span>Add Sample</span>
+            <button type="button" class={sampleButtonClass} data-sample-action data-sample-sold-out={samplesSoldOut ? 'true' : 'false'} aria-label={sampleButtonLabel} onclick="event.stopPropagation()">
+              <span class="sample-plus">{sampleButtonIcon}</span>
+              <span>{sampleButtonText}</span>
             </button>
           </span>
         </summary>
@@ -146,9 +153,9 @@ import excelsa from '../assets/images/excelsa.webp';
               </svg>
               <span>Product Sheet</span>
             </button>
-            <button class="btn-sample">
-              <span class="sample-plus">+</span>
-              <span>Add Sample</span>
+            <button type="button" class={sampleButtonClass} data-sample-action data-sample-sold-out={samplesSoldOut ? 'true' : 'false'} aria-label={sampleButtonLabel}>
+              <span class="sample-plus">{sampleButtonIcon}</span>
+              <span>{sampleButtonText}</span>
             </button>
           </div>
         </div>
@@ -171,9 +178,9 @@ import excelsa from '../assets/images/excelsa.webp';
               </svg>
               <span>Product Sheet</span>
             </button>
-            <button class="btn-sample" onclick="event.stopPropagation()">
-              <span class="sample-plus">+</span>
-              <span>Add Sample</span>
+            <button type="button" class={sampleButtonClass} data-sample-action data-sample-sold-out={samplesSoldOut ? 'true' : 'false'} aria-label={sampleButtonLabel} onclick="event.stopPropagation()">
+              <span class="sample-plus">{sampleButtonIcon}</span>
+              <span>{sampleButtonText}</span>
             </button>
           </span>
         </summary>
@@ -206,9 +213,9 @@ import excelsa from '../assets/images/excelsa.webp';
               </svg>
               <span>Product Sheet</span>
             </button>
-            <button class="btn-sample">
-              <span class="sample-plus">+</span>
-              <span>Add Sample</span>
+            <button type="button" class={sampleButtonClass} data-sample-action data-sample-sold-out={samplesSoldOut ? 'true' : 'false'} aria-label={sampleButtonLabel}>
+              <span class="sample-plus">{sampleButtonIcon}</span>
+              <span>{sampleButtonText}</span>
             </button>
           </div>
         </div>
@@ -231,9 +238,9 @@ import excelsa from '../assets/images/excelsa.webp';
               </svg>
               <span>Product Sheet</span>
             </button>
-            <button class="btn-sample" onclick="event.stopPropagation()">
-              <span class="sample-plus">+</span>
-              <span>Add Sample</span>
+            <button type="button" class={sampleButtonClass} data-sample-action data-sample-sold-out={samplesSoldOut ? 'true' : 'false'} aria-label={sampleButtonLabel} onclick="event.stopPropagation()">
+              <span class="sample-plus">{sampleButtonIcon}</span>
+              <span>{sampleButtonText}</span>
             </button>
           </span>
         </summary>
@@ -266,9 +273,9 @@ import excelsa from '../assets/images/excelsa.webp';
               </svg>
               <span>Product Sheet</span>
             </button>
-            <button class="btn-sample">
-              <span class="sample-plus">+</span>
-              <span>Add Sample</span>
+            <button type="button" class={sampleButtonClass} data-sample-action data-sample-sold-out={samplesSoldOut ? 'true' : 'false'} aria-label={sampleButtonLabel}>
+              <span class="sample-plus">{sampleButtonIcon}</span>
+              <span>{sampleButtonText}</span>
             </button>
           </div>
         </div>
@@ -279,8 +286,8 @@ import excelsa from '../assets/images/excelsa.webp';
     <div class="checkout-spacer">
       <section class="checkout-bar" data-no-scroll-reveal="true">
         <div class="checkout-inner">
-          <p class="checkout-count">0 Samples Added</p>
-          <a href="#" class="btn-checkout">
+          <p class="checkout-count">{checkoutCopy}</p>
+          <a href="#" class="btn-checkout" data-sample-checkout data-sample-sold-out={samplesSoldOut ? 'true' : 'false'}>
             <span>Check out</span>
             <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
               <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
@@ -289,6 +296,32 @@ import excelsa from '../assets/images/excelsa.webp';
         </div>
       </section>
     </div>
+
+    {samplesSoldOut && (
+      <div class="sample-popup" data-sample-popup hidden>
+        <button type="button" class="sample-popup-backdrop" data-sample-popup-close aria-label="Popup schliessen"></button>
+        <aside class="sample-popup-panel" role="dialog" aria-modal="true" aria-labelledby="sample-popup-title" aria-describedby="sample-popup-copy" tabindex="-1">
+          <button type="button" class="sample-popup-close" data-sample-popup-close aria-label="Popup schliessen">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <p class="sample-popup-kicker">Samples</p>
+          <h2 id="sample-popup-title" class="sample-popup-title">Sample Box gerade vergriffen</h2>
+          <p id="sample-popup-copy" class="sample-popup-copy">
+            Unsere Muster sind im Moment ausverkauft. Schreib uns kurz, dann reservieren wir dir die nächste Box und melden uns, sobald neue Samples bereitstehen.
+          </p>
+          <div class="sample-popup-actions">
+            <a class="sample-popup-primary" href="mailto:info@hycoffee.de?subject=Sample%20Box%20Warteliste">
+              <span>Benachrichtige mich</span>
+            </a>
+            <button type="button" class="sample-popup-secondary" data-sample-popup-close>
+              <span>Schliessen</span>
+            </button>
+          </div>
+        </aside>
+      </div>
+    )}
 
   </main>
 </BaseLayout>
@@ -566,15 +599,21 @@ import excelsa from '../assets/images/excelsa.webp';
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--black);
-    color: var(--white);
+    background: var(--yellow);
+    color: var(--warm-dark-grey);
     padding: 8px 16px;
+    border: 1px solid var(--warm-dark-grey);
     border-radius: var(--radius-control);
     font-family: var(--font-ui);
     font-size: var(--type-button-sm);
     letter-spacing: 0.42px;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: filter 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .btn-sample.is-sold-out {
+    background: var(--yellow);
+    color: var(--warm-dark-grey);
   }
 
   .btn-sample:hover,
@@ -583,9 +622,26 @@ import excelsa from '../assets/images/excelsa.webp';
     transform: scale(1.01);
   }
 
+  .btn-download-row:hover {
+    text-shadow: var(--button-text-hover-glow);
+  }
+
   .sample-plus {
     font-size: var(--type-copy-fluid);
     letter-spacing: 0.6px;
+  }
+
+  .btn-sample.is-sold-out .sample-plus {
+    width: 15px;
+    height: 15px;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-round);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    line-height: 1;
   }
 
   .btn-sample span:not(.sample-plus) {
@@ -669,6 +725,7 @@ import excelsa from '../assets/images/excelsa.webp';
   .btn-download:hover {
     filter: brightness(1.15);
     transform: scale(1.01);
+    text-shadow: var(--button-text-hover-glow);
   }
 
   .btn-checkout {
@@ -693,6 +750,7 @@ import excelsa from '../assets/images/excelsa.webp';
   .btn-checkout:hover {
     filter: brightness(1.15);
     transform: scale(1.01);
+    text-shadow: var(--button-text-hover-glow);
   }
 
   .arrow {
@@ -702,6 +760,145 @@ import excelsa from '../assets/images/excelsa.webp';
 
   .row-details-actions {
     display: none;
+  }
+
+  .sample-popup[hidden] {
+    display: none;
+  }
+
+  .sample-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+
+  .sample-popup-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(36, 33, 25, 0.5);
+    backdrop-filter: blur(8px);
+  }
+
+  .sample-popup-panel {
+    position: relative;
+    z-index: 1;
+    width: min(520px, 100%);
+    background: var(--yellow);
+    color: var(--warm-dark-grey);
+    border: 1px solid var(--warm-dark-grey);
+    border-radius: var(--radius-media);
+    padding: clamp(28px, 4vw, 44px);
+    box-shadow: 0 22px 70px rgba(36, 33, 25, 0.25);
+  }
+
+  .sample-popup-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--warm-dark-grey);
+    border: 1px solid currentColor;
+    border-radius: var(--radius-control);
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+
+  .sample-popup-close:hover {
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    transform: scale(1.02);
+    text-shadow: var(--button-text-hover-glow);
+  }
+
+  .sample-popup-kicker {
+    font-family: var(--font-ui);
+    font-size: var(--type-label);
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .sample-popup-title {
+    max-width: 420px;
+    font-family: var(--font-heading);
+    font-size: clamp(36px, 3vw + 18px, 58px);
+    line-height: 0.96;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  .sample-popup-copy {
+    margin-top: 22px;
+    font-family: var(--font-heading);
+    font-size: var(--type-copy-fluid);
+    line-height: 1.28;
+    letter-spacing: 0;
+    max-width: 430px;
+  }
+
+  .sample-popup-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+  }
+
+  .sample-popup-primary,
+  .sample-popup-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border-radius: var(--radius-control);
+    font-family: var(--font-ui);
+    font-size: var(--type-button-sm);
+    line-height: 1;
+    letter-spacing: 0.42px;
+    transition: filter 0.2s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .sample-popup-primary span,
+  .sample-popup-secondary span {
+    transform: translateY(1px);
+  }
+
+  .sample-popup-primary {
+    background: var(--warm-dark-grey);
+    color: var(--white);
+  }
+
+  .sample-popup-secondary {
+    border: 1px solid var(--warm-dark-grey);
+    color: var(--warm-dark-grey);
+  }
+
+  .sample-popup-primary:hover,
+  .sample-popup-secondary:hover {
+    filter: brightness(1.12);
+    transform: scale(1.01);
+  }
+
+  .sample-popup-primary:hover {
+    text-shadow: var(--button-text-hover-glow);
+  }
+
+  .sample-popup-secondary:hover {
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    text-shadow: var(--button-text-hover-glow);
+  }
+
+  :global(body.has-sample-popup) {
+    overflow: hidden;
   }
 
   @media (max-width: 1100px) {
@@ -840,6 +1037,30 @@ import excelsa from '../assets/images/excelsa.webp';
     .checkout-bar {
       padding: 16px 24px;
     }
+
+    .sample-popup {
+      align-items: end;
+      padding: 16px;
+    }
+
+    .sample-popup-panel {
+      width: 100%;
+      padding: 28px 22px 22px;
+    }
+
+    .sample-popup-title {
+      font-size: 34px;
+      max-width: 280px;
+    }
+
+    .sample-popup-actions {
+      flex-direction: column;
+    }
+
+    .sample-popup-primary,
+    .sample-popup-secondary {
+      width: 100%;
+    }
   }
 
   .table-row-wrapper.is-animating {
@@ -953,5 +1174,72 @@ import excelsa from '../assets/images/excelsa.webp';
       e.stopPropagation();
     });
   });
+
+  (() => {
+    const popup = document.querySelector('[data-sample-popup]');
+    const popupPanel = popup?.querySelector('.sample-popup-panel');
+    let lastFocusedElement = null;
+
+    function getFocusableItems() {
+      if (!popupPanel) return [];
+      return Array.from(
+        popupPanel.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+      );
+    }
+
+    function openPopup() {
+      if (!popup || !popupPanel) return;
+      lastFocusedElement = document.activeElement;
+      popup.hidden = false;
+      document.body.classList.add('has-sample-popup');
+      requestAnimationFrame(() => popupPanel.focus());
+    }
+
+    function closePopup() {
+      if (!popup) return;
+      popup.hidden = true;
+      document.body.classList.remove('has-sample-popup');
+      if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
+    }
+
+    document.querySelectorAll('[data-sample-action], [data-sample-checkout]').forEach(control => {
+      control.addEventListener('click', event => {
+        if (control.dataset.sampleSoldOut !== 'true') return;
+        event.preventDefault();
+        event.stopPropagation();
+        openPopup();
+      });
+    });
+
+    popup?.querySelectorAll('[data-sample-popup-close]').forEach(control => {
+      control.addEventListener('click', closePopup);
+    });
+
+    document.addEventListener('keydown', event => {
+      if (!popup || popup.hidden) return;
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closePopup();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusableItems = getFocusableItems();
+      if (!focusableItems.length) return;
+
+      const firstItem = focusableItems[0];
+      const lastItem = focusableItems[focusableItems.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstItem) {
+        event.preventDefault();
+        lastItem.focus();
+      } else if (!event.shiftKey && document.activeElement === lastItem) {
+        event.preventDefault();
+        firstItem.focus();
+      }
+    });
+  })();
 
 </script>

@@ -15,10 +15,10 @@
   </section>
 
   <section class="footer-alt-main">
-    <div class="footer-alt-brand" aria-hidden="true">
+    <div class="footer-alt-brand">
       <img src="/images/inv-Hy-mono.svg" alt="" class="footer-alt-logo" width="455" height="316" loading="lazy" decoding="async" />
+      <p class="footer-alt-tagline">Klimaresiliente Kaffeebohnen</p>
     </div>
-    <p class="footer-alt-tagline">Klimaresiliente Kaffeebohnen</p>
 
     <div class="footer-alt-content">
       <div class="footer-alt-col footer-alt-contact">
@@ -183,7 +183,7 @@
     min-width: 0;
     margin-top: -118px;
     margin-left: calc(-1 * var(--footer-alt-logo-bleed));
-    overflow: hidden;
+    overflow: visible;
     pointer-events: none;
   }
 
@@ -196,8 +196,8 @@
 
   .footer-alt-tagline {
     position: absolute;
-    left: var(--footer-alt-edge);
-    bottom: var(--footer-alt-edge);
+    left: calc(var(--footer-alt-logo-bleed) - var(--footer-alt-pad) + var(--footer-alt-edge));
+    bottom: -38px;
     width: max-content;
     z-index: 2;
     font-family: var(--font-ui);
@@ -319,7 +319,7 @@
     }
 
     .footer-alt-brand {
-      opacity: 0.34;
+      opacity: 1;
     }
 
     .footer-alt-content {
