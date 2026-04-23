@@ -169,6 +169,7 @@ export default config({
     global: singleton({
       label: 'Global (Kontakt, Footer, Social)',
       path: 'src/data/global',
+      previewUrl: 'http://localhost:4321/',
       schema: {
         email: fields.text({ label: 'E-Mail' }),
         phone: fields.text({ label: 'Telefon' }),
@@ -185,6 +186,7 @@ export default config({
     home: singleton({
       label: 'Home',
       path: 'src/data/home',
+      previewUrl: 'http://localhost:4321/',
       schema: {
         heroHeadline: fields.text({ label: 'Hero-Überschrift', multiline: true }),
         heroImage: fields.image({
