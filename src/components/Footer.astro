@@ -2,76 +2,7 @@
 
 ---
 
-<footer class="footer">
-  <div class="footer-inner">
-    <!-- Top: Logo + Newsletter + Contact -->
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="/images/logo-light.svg" alt="HyCoffee" class="footer-logo" width="169" height="40" loading="lazy" decoding="async" />
-        <p class="footer-tagline">Klimaresiliente Kaffeebohnen</p>
-      </div>
-      <div class="footer-newsletter">
-        <p class="newsletter-label">Signup for our Newsletter and join the growing community.</p>
-        <div class="newsletter-form">
-          <input type="email" placeholder="Enter your email" class="newsletter-input" />
-          <button class="btn-newsletter">
-            <span>Anmelden</span>
-            <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
-              <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-      <div class="footer-contact">
-        <a href="tel:+41000000000" class="footer-contact-link">+41 00 000 00 00</a>
-        <a href="mailto:info@hycoffee.com" class="footer-contact-link">info@hycoffee.com</a>
-      </div>
-    </div>
-
-    <div class="footer-divider"></div>
-
-    <!-- Middle: 4 columns -->
-    <div class="footer-columns">
-      <div class="footer-col">
-        <h4 class="footer-col-title">About us</h4>
-        <p class="footer-col-text">Wir erforschen, entwickeln und liefern klimaresilienten Rohkaffee für eine nachhaltige Zukunft.</p>
-      </div>
-      <div class="footer-col">
-        <h4 class="footer-col-title">Navigation</h4>
-        <a href="/" class="footer-col-link">Home</a>
-        <a href="/kaffee" class="footer-col-link">Kaffee kaufen</a>
-        <a href="/wissen" class="footer-col-link">Wissen</a>
-        <a href="/ueber-uns" class="footer-col-link">Über Uns</a>
-      </div>
-      <div class="footer-col">
-        <h4 class="footer-col-title">Adresse</h4>
-        <p class="footer-col-text">HyCoffee UG (haftungsbeschränkt)</p>
-        <p class="footer-col-text">Tassilostraße 15</p>
-        <p class="footer-col-text">82166 Gräfelfing</p>
-        <p class="footer-col-text">Deutschland</p>
-      </div>
-      <div class="footer-col">
-        <h4 class="footer-col-title">Follow Us</h4>
-        <a href="https://www.instagram.com/hycoffeeco/" target="_blank" rel="noopener noreferrer" class="footer-col-link">Instagram</a>
-        <a href="https://de.linkedin.com/company/hycoffee" target="_blank" rel="noopener noreferrer" class="footer-col-link">LinkedIn</a>
-      </div>
-    </div>
-
-    <div class="footer-divider"></div>
-
-    <!-- Bottom: Copyright + Legal -->
-    <div class="footer-bottom">
-      <p class="footer-copyright">© 2026 HyCoffee. All rights reserved.</p>
-      <div class="footer-legal">
-        <a href="/impressum" class="footer-legal-link">Impressum</a>
-        <a href="/datenschutz" class="footer-legal-link">Datenschutz</a>
-        <a href="/agb" class="footer-legal-link">AGB</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<footer class="footer-alt" aria-label="Alternative Footer">
+<footer class="site-footer footer-alt" aria-label="Footer">
   <section class="footer-alt-newsletter" aria-label="Newsletter">
     <h2 class="footer-alt-newsletter-title">HyC monthly Newsletter</h2>
     <form class="footer-alt-form">
@@ -127,73 +58,16 @@
   </section>
 </footer>
 
-<div id="footer-version-switcher" class="footer-version-switcher" aria-label="Footer-Version wechseln">
-  <button type="button" class="footer-version-option" data-footer-version="classic">Footer A</button>
-  <button type="button" class="footer-version-option" data-footer-version="alt">Footer B</button>
-</div>
-
 <style>
-  .footer {
-    background: var(--warm-dark-grey);
-    color: var(--white);
-    padding: 60px 60px 40px;
-  }
-
-  .footer-inner {
-    max-width: var(--container-max);
-    margin: 0 auto;
-  }
-
-  :global(body.footer-alt-active) .footer {
-    display: none;
-  }
-
-  .footer-alt {
-    display: none;
+  .site-footer {
     --footer-alt-pad: 69px;
     --footer-alt-edge: 12px;
     --footer-alt-gap: clamp(12px, 1.2vw, 24px);
     --footer-alt-logo-bleed: clamp(54px, 7vw, 132px);
     --footer-alt-cols: repeat(4, minmax(0, 1fr));
-  }
-
-  :global(body.footer-alt-active) .footer-alt {
-    display: block;
-  }
-
-  .footer-version-switcher {
-    position: fixed;
-    right: 12px;
-    bottom: 12px;
-    z-index: 290;
-    display: inline-flex;
-    gap: 2px;
-    padding: 3px;
-    font-family: var(--font-ui);
-    font-size: var(--type-control-tiny);
-    letter-spacing: 1.1px;
-    text-transform: uppercase;
-    background: rgba(36, 33, 25, 0.75);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: var(--radius-pill);
-  }
-
-  .footer-version-option {
-    min-width: 70px;
-    padding: 6px 9px 4px;
-    border-radius: var(--radius-pill);
-    color: rgba(255, 255, 255, 0.75);
-    font-family: var(--font-ui);
-    font-size: var(--type-control-tiny);
-    letter-spacing: 1.1px;
-    text-transform: uppercase;
-  }
-
-  .footer-version-option.is-active {
-    background: var(--white);
-    color: var(--warm-dark-grey);
+    display: block !important;
+    background: var(--warm-dark-grey);
+    color: var(--white);
   }
 
   .footer-alt-newsletter {
@@ -203,9 +77,9 @@
     gap: var(--footer-alt-gap);
     align-items: center;
     padding: 52px var(--footer-alt-pad);
-    background: var(--warm-grey-light);
-    color: var(--warm-dark-grey);
-    border-bottom: 1px solid var(--warm-dark-grey);
+    background: var(--warm-dark-grey);
+    color: var(--white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
   }
 
   .footer-alt-newsletter-title,
@@ -215,6 +89,7 @@
     line-height: 1.08;
     letter-spacing: 0;
     font-weight: 400;
+    color: var(--white);
   }
 
   .footer-alt-newsletter-title {
@@ -241,9 +116,9 @@
     width: 100%;
     height: 100%;
     min-height: 50px;
-    border: 1px solid rgba(36, 33, 25, 0.62);
+    border: 1px solid var(--white);
     border-radius: var(--radius-media);
-    background: transparent;
+    background: var(--white);
     padding: 4px 22px 0;
     font-family: var(--font-ui);
     font-size: var(--footer-alt-newsletter-control-type);
@@ -365,15 +240,12 @@
 
   .footer-alt-link {
     font-family: var(--font-ui);
+    transition: color 0.2s, opacity 0.2s;
   }
 
   .footer-alt-contact .footer-alt-link,
   .footer-alt-address {
     font-family: var(--font-heading);
-  }
-
-  .footer-alt-link {
-    transition: color 0.2s, opacity 0.2s;
   }
 
   .footer-alt-link:hover {
@@ -387,7 +259,6 @@
   .footer-alt-address {
     margin-top: 42px;
     max-width: 360px;
-    color: rgba(255, 255, 255, 0.82);
   }
 
   .footer-alt-nav-legal {
@@ -422,7 +293,7 @@
   }
 
   @media (max-width: 1180px) {
-    .footer-alt {
+    .site-footer {
       --footer-alt-gap: 36px;
       --footer-alt-logo-bleed: clamp(44px, 6vw, 88px);
     }
@@ -456,238 +327,12 @@
     }
   }
 
-  /* Top */
-  .footer-top {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    align-items: start;
-    padding-bottom: 48px;
-  }
-
-  .footer-brand {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .footer-logo {
-    height: 40px;
-    max-width: 100%;
-    object-fit: contain;
-    object-position: left;
-    justify-self: start;
-  }
-
-  .footer-tagline {
-    font-family: var(--font-ui);
-    font-size: var(--type-copy-sm);
-    letter-spacing: 0.5px;
-    color: rgba(255, 255, 255, 0.45);
-  }
-
-  .footer-newsletter {
-    grid-column: 2 / 4;
-    width: 100%;
-    justify-self: start;
-  }
-
-  .newsletter-label {
-    font-family: var(--font-ui);
-    font-size: var(--type-copy-sm);
-    letter-spacing: 0.5px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 10px;
-  }
-
-  .newsletter-form {
-    display: flex;
-    align-items: center;
-    background: var(--warm-grey-light);
-    border-radius: var(--radius-media);
-    padding: 4px 4px 4px 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
-  }
-
-  .newsletter-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-family: var(--font-ui);
-    font-size: var(--type-copy);
-    letter-spacing: 0.5px;
-    color: var(--warm-dark-grey);
-    padding: 10px 0;
-  }
-
-  .newsletter-input::placeholder {
-    color: rgba(36, 33, 25, 0.45);
-  }
-
-  .btn-newsletter {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 42px;
-    background: var(--yellow);
-    color: var(--warm-dark-grey);
-    padding: 0 20px;
-    border-radius: var(--radius-nested);
-    font-family: var(--font-ui);
-    font-size: var(--type-button);
-    line-height: 1;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: filter 0.2s ease, transform 0.2s ease;
-    white-space: nowrap;
-    border: none;
-  }
-
-  .btn-newsletter span {
-    transform: translateY(1px);
-  }
-
-  .btn-newsletter:hover {
-    filter: brightness(1.15);
-    transform: scale(1.01);
-  }
-
-  .footer-contact {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-  }
-
-  .footer-contact-link {
-    font-family: var(--font-ui);
-    font-size: var(--type-copy);
-    letter-spacing: 0.5px;
-    color: var(--white);
-    transition: opacity 0.2s;
-  }
-
-  .footer-contact-link:hover {
-    opacity: 0.7;
-  }
-
-  /* Divider */
-  .footer-divider {
-    height: 1px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.2), rgba(255,255,255,0.08));
-  }
-
-  /* Columns */
-  .footer-columns {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    padding: 48px 0;
-  }
-
-  .footer-col-title {
-    font-family: var(--font-ui);
-    font-size: var(--type-copy);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: var(--white);
-    margin-bottom: 16px;
-  }
-
-  .footer-col-text {
-    font-family: var(--font-heading);
-    font-size: var(--type-hal-copy);
-    letter-spacing: 0.5px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  .footer-col-link {
-    display: block;
-    font-family: var(--font-ui);
-    font-size: var(--type-copy);
-    letter-spacing: 0.5px;
-    line-height: 2;
-    color: rgba(255, 255, 255, 0.5);
-    transition: color 0.2s;
-  }
-
-  .footer-col-link:hover {
-    color: var(--white);
-  }
-
-  /* Bottom */
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 48px;
-  }
-
-  .footer-copyright {
-    font-family: var(--font-ui);
-    font-size: var(--type-copy-sm);
-    letter-spacing: 0.5px;
-    color: rgba(255, 255, 255, 0.35);
-  }
-
-  .footer-legal {
-    display: flex;
-    gap: 28px;
-  }
-
-  .footer-legal-link {
-    font-family: var(--font-ui);
-    font-size: var(--type-copy-sm);
-    letter-spacing: 0.5px;
-    color: rgba(255, 255, 255, 0.35);
-    transition: color 0.2s;
-  }
-
-  .footer-legal-link:hover {
-    color: var(--white);
-  }
-
   @media (max-width: 900px) {
-    .footer-alt {
+    .site-footer {
       --footer-alt-pad: 16px;
       --footer-alt-edge: 16px;
       --footer-alt-logo-bleed: clamp(64px, 18vw, 120px);
       --footer-alt-cols: 1fr;
-    }
-
-    .footer {
-      padding: 40px 24px 32px;
-    }
-
-    .footer-top {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      padding-bottom: 32px;
-    }
-
-    .footer-newsletter {
-      width: 100%;
-      justify-self: stretch;
-    }
-
-    .footer-contact {
-      align-items: flex-start;
-    }
-
-    .footer-columns {
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      padding: 32px 0;
-    }
-
-    .footer-bottom {
-      flex-direction: column;
-      gap: 12px;
-      align-items: flex-start;
-      padding-top: 32px;
     }
 
     .footer-alt-newsletter {
@@ -777,144 +422,6 @@
   }
 
   @media (max-width: 768px) {
-    .footer {
-      padding: 0;
-    }
-
-    .footer-inner {
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Top: reorder — tagline, newsletter, then logo — all left-aligned */
-    .footer-top {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
-      padding: 0 24px;
-    }
-
-    .footer-brand {
-      order: 2;
-      align-items: flex-start;
-      padding: 24px 0 32px;
-    }
-
-    .footer-tagline {
-      order: 0;
-      padding: 32px 0 0;
-      font-size: var(--type-caption-sm);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: rgba(255, 255, 255, 0.35);
-    }
-
-    .footer-logo {
-      height: 36px;
-    }
-
-    .footer-newsletter {
-      order: 1;
-      width: 100%;
-      grid-column: unset;
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .newsletter-label {
-      text-align: left;
-      font-size: var(--type-label);
-    }
-
-    .newsletter-input {
-      font-size: var(--type-button);
-    }
-
-    .btn-newsletter {
-      font-size: var(--type-label);
-      min-height: 34px;
-      padding: 0 16px;
-    }
-
-    .footer-contact {
-      order: 3;
-      align-items: flex-start;
-      gap: 6px;
-      padding-bottom: 24px;
-    }
-
-    .footer-contact-link {
-      font-size: var(--type-copy-sm);
-    }
-
-    /* Dividers */
-    .footer-divider {
-      margin: 0 24px;
-    }
-
-    /* Columns — stacked, compact */
-    .footer-columns {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      padding: 0;
-    }
-
-    .footer-col {
-      padding: 20px 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .footer-col:last-child {
-      border-bottom: none;
-    }
-
-    .footer-col-title {
-      margin-bottom: 8px;
-      font-size: var(--type-caption-sm);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: rgba(255, 255, 255, 0.35);
-    }
-
-    .footer-col-text {
-      font-size: var(--type-hal-copy);
-      line-height: 1.5;
-    }
-
-    .footer-col-link {
-      font-size: var(--type-button);
-      line-height: 2.2;
-    }
-
-    /* Bottom */
-    .footer-bottom {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 20px 24px 28px;
-      gap: 12px;
-    }
-
-    .footer-legal {
-      gap: 20px;
-    }
-
-    .footer-copyright,
-    .footer-legal-link {
-      font-size: var(--type-caption-sm);
-    }
-
-    .footer-version-switcher {
-      right: 10px;
-      bottom: 10px;
-    }
-
-    .footer-version-option {
-      min-width: 62px;
-      padding-inline: 8px;
-    }
-
     .footer-alt-form {
       grid-template-columns: 1fr;
       row-gap: 8px;
@@ -922,7 +429,6 @@
 
     .footer-alt-input {
       min-height: 58px;
-      border-bottom: 1px solid rgba(36, 33, 25, 0.25);
       font-size: var(--footer-alt-newsletter-control-type);
     }
 
@@ -958,34 +464,3 @@
     }
   }
 </style>
-
-<script is:inline>
-  (function () {
-    const switcher = document.getElementById('footer-version-switcher');
-    if (!switcher) return;
-    const options = Array.from(switcher.querySelectorAll('[data-footer-version]'));
-    const STORAGE_KEY = 'hycoffee-footer-version';
-    const versions = ['classic', 'alt'];
-
-    function apply(version) {
-      const next = versions.includes(version) ? version : 'classic';
-      document.body.classList.toggle('footer-alt-active', next === 'alt');
-      options.forEach((option) => {
-        const active = option.dataset.footerVersion === next;
-        option.classList.toggle('is-active', active);
-        option.setAttribute('aria-pressed', String(active));
-      });
-    }
-
-    apply(localStorage.getItem(STORAGE_KEY));
-
-    options.forEach((option) => {
-      option.addEventListener('click', () => {
-        const next = option.dataset.footerVersion;
-        if (!versions.includes(next)) return;
-        localStorage.setItem(STORAGE_KEY, next);
-        apply(next);
-      });
-    });
-  })();
-</script>
