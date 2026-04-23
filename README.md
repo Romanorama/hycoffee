@@ -19,6 +19,8 @@ Published page images live in `src/assets/images/` and are imported from Astro p
 
 Raw source material and client-provided image dumps should stay local in ignored working folders such as `_contenttxtinfo/`. When a new image is needed on the site, export/convert the selected file to a web-ready asset in `src/assets/images/`, import it from the page or component, and commit only that final asset.
 
+See `docs/image-workflow.md` for export sizes, naming rules, CMS image handling, and the preview loop.
+
 ## Current Public Assets
 
 - `public/favicon.svg`
@@ -26,4 +28,3 @@ Raw source material and client-provided image dumps should stay local in ignored
 - `public/fonts/`
 - `public/images/logo-light.svg`
 - `public/images/inv-Hy-mono.svg`
-

@@ -1,6 +1,13 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
 
-const image = (directory: string, publicPath: string) => ({ directory, publicPath });
+const assetImage = (section: string, relativePathToSrc: '../' | '../../') => ({
+  directory: `src/assets/images/cms/${section}`,
+  publicPath: `${relativePathToSrc}assets/images/cms/${section}/`,
+});
+
+const contentImage = (section: string) => assetImage(section, '../../');
+const dataImage = (section: string) => assetImage(section, '../');
+const publicFile = (directory: string, publicPath: string) => ({ directory, publicPath });
 
 export default config({
   storage: { kind: 'local' },
@@ -37,7 +44,7 @@ export default config({
         readingTime: fields.integer({ label: 'Lesezeit (Minuten)', defaultValue: 5 }),
         heroImage: fields.image({
           label: 'Titelbild',
-          ...image('public/images/wissen', '/images/wissen/'),
+          ...contentImage('wissen'),
         }),
         relatedArticles: fields.array(
           fields.relationship({ label: 'Artikel', collection: 'wissen' }),
@@ -76,11 +83,11 @@ export default config({
         intro: fields.text({ label: 'Einleitung', multiline: true }),
         heroImage: fields.image({
           label: 'Produktbild',
-          ...image('public/images/kaffee', '/images/kaffee/'),
+          ...contentImage('kaffee'),
         }),
         pdfDownload: fields.file({
           label: 'Product Sheet (PDF)',
-          ...image('public/downloads', '/downloads/'),
+          ...publicFile('public/downloads', '/downloads/'),
         }),
         resilienceText: fields.text({ label: 'Klimaresilienz-Text', multiline: true }),
         socialText: fields.text({ label: 'Sozial-Text', multiline: true }),
@@ -98,11 +105,11 @@ export default config({
         outlet: fields.text({ label: 'Medium (z.B. ARTE, ZDF)' }),
         logoImage: fields.image({
           label: 'Medien-Logo',
-          ...image('public/images/press', '/images/press/'),
+          ...contentImage('press'),
         }),
         featureImage: fields.image({
           label: 'Feature-Bild',
-          ...image('public/images/press', '/images/press/'),
+          ...contentImage('press'),
         }),
         excerpt: fields.text({ label: 'Beschreibung', multiline: true }),
         readingTime: fields.integer({ label: 'Lesezeit (Minuten)', defaultValue: 2 }),
@@ -129,11 +136,11 @@ export default config({
         region: fields.text({ label: 'Region' }),
         image1: fields.image({
           label: 'Bild 1',
-          ...image('public/images/origins', '/images/origins/'),
+          ...contentImage('origins'),
         }),
         image2: fields.image({
           label: 'Bild 2',
-          ...image('public/images/origins', '/images/origins/'),
+          ...contentImage('origins'),
         }),
         sortOrder: fields.integer({ label: 'Reihenfolge', defaultValue: 0 }),
         body: fields.markdoc({ label: 'Text' }),
@@ -151,7 +158,7 @@ export default config({
         phone: fields.text({ label: 'Telefon' }),
         portrait: fields.image({
           label: 'Portraitfoto',
-          ...image('public/images/team', '/images/team/'),
+          ...contentImage('team'),
         }),
         sortOrder: fields.integer({ label: 'Reihenfolge', defaultValue: 0 }),
       },
@@ -182,7 +189,7 @@ export default config({
         heroHeadline: fields.text({ label: 'Hero-Überschrift', multiline: true }),
         heroImage: fields.image({
           label: 'Hero-Bild',
-          ...image('public/images/home', '/images/home/'),
+          ...dataImage('home'),
         }),
         heroCtaLabel: fields.text({ label: 'Hero-Button' }),
         heroCtaUrl: fields.text({ label: 'Hero-Button-Link' }),
@@ -216,7 +223,7 @@ export default config({
         teamStripImages: fields.array(
           fields.image({
             label: 'Bild',
-            ...image('public/images/team-strip', '/images/team-strip/'),
+            ...dataImage('team-strip'),
           }),
           { label: 'Team-Fotostreifen', itemLabel: (p) => p.value?.filename ?? 'Bild' },
         ),
@@ -227,7 +234,7 @@ export default config({
         speciesHeading: fields.text({ label: 'Species-Überschrift', multiline: true }),
         speciesExpandedPhoto: fields.image({
           label: 'Species-Foto',
-          ...image('public/images/home', '/images/home/'),
+          ...dataImage('home'),
         }),
         speciesExpandedBody: fields.text({ label: 'Species-Text', multiline: true }),
 
@@ -256,13 +263,13 @@ export default config({
         stripImages: fields.array(
           fields.image({
             label: 'Bild',
-            ...image('public/images/strip', '/images/strip/'),
+            ...dataImage('strip'),
           }),
           { label: 'Fotostreifen', itemLabel: (p) => p.value?.filename ?? 'Bild' },
         ),
         heroImage: fields.image({
           label: 'Hero-Bild',
-          ...image('public/images/about', '/images/about/'),
+          ...dataImage('about'),
         }),
         heroText: fields.text({ label: 'Hero-Text', multiline: true }),
         storyHeading: fields.text({ label: 'Story-Überschrift' }),
@@ -293,7 +300,7 @@ export default config({
         heroIntro: fields.text({ label: 'Hero-Text', multiline: true }),
         heroImage: fields.image({
           label: 'Hero-Bild',
-          ...image('public/images/kaffee', '/images/kaffee/'),
+          ...dataImage('kaffee'),
         }),
         offerHeading: fields.text({ label: 'Angebot-Überschrift' }),
         offerIntro: fields.text({ label: 'Angebot-Text', multiline: true }),

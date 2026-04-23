@@ -1,5 +1,8 @@
 ---
+import WissenCard from './WissenCard.astro';
+import { getRandomWissenArticles } from '../lib/wissenArticles';
 
+const featuredArticles = getRandomWissenArticles(3);
 ---
 
 <section class="science">
@@ -19,69 +22,14 @@
     </a>
   </div>
   <div class="science-cards">
-    <article class="science-card">
-      <span class="caption">Knowledge & Science</span>
-      <div class="card-image"></div>
-      <h4 class="card-title">Article Headline</h4>
-      <p class="card-subtitle">Article Subline</p>
-      <div class="card-footer">
-        <a href="#" class="btn btn-tertiary">
-          <span>Tertiary Button</span>
-          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <div class="card-meta">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <circle cx="11" cy="11" r="10" stroke="#e3e2e0" stroke-width="1"/>
-            <path d="M11 6v5l3 3" stroke="#e3e2e0" stroke-width="1" stroke-linecap="round"/>
-          </svg>
-          <span>6 Min</span>
-        </div>
-      </div>
-    </article>
-    <article class="science-card">
-      <span class="caption">Knowledge & Science</span>
-      <div class="card-image"></div>
-      <h4 class="card-title">Article Headline</h4>
-      <p class="card-subtitle">Article Subline</p>
-      <div class="card-footer">
-        <a href="#" class="btn btn-tertiary">
-          <span>Tertiary Button</span>
-          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <div class="card-meta">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <circle cx="11" cy="11" r="10" stroke="#e3e2e0" stroke-width="1"/>
-            <path d="M11 6v5l3 3" stroke="#e3e2e0" stroke-width="1" stroke-linecap="round"/>
-          </svg>
-          <span>6 Min</span>
-        </div>
-      </div>
-    </article>
-    <article class="science-card">
-      <span class="caption">Knowledge & Science</span>
-      <div class="card-image"></div>
-      <h4 class="card-title">Article Headline</h4>
-      <p class="card-subtitle">Article Subline</p>
-      <div class="card-footer">
-        <a href="#" class="btn btn-tertiary">
-          <span>Tertiary Button</span>
-          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <div class="card-meta">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <circle cx="11" cy="11" r="10" stroke="#e3e2e0" stroke-width="1"/>
-            <path d="M11 6v5l3 3" stroke="#e3e2e0" stroke-width="1" stroke-linecap="round"/>
-          </svg>
-          <span>6 Min</span>
-        </div>
-      </div>
-    </article>
+    {
+      featuredArticles.map((article) => (
+        <WissenCard
+          article={article}
+          imageSizes="(min-width: 1201px) 30vw, (min-width: 769px) 50vw, 100vw"
+        />
+      ))
+    }
   </div>
 </section>
 
@@ -162,157 +110,13 @@
 
   .science-cards {
     display: grid;
-    grid-template-columns: 1fr 1px 1fr 1px 1fr;
-    gap: 0 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
   }
 
-  .science-cards::before,
-  .science-cards::after {
-    content: '';
-    background: var(--warm-dark-grey);
-    grid-row: 1;
-    align-self: stretch;
-  }
-
-  .science-cards::before {
-    grid-column: 2;
-  }
-
-  .science-cards::after {
-    grid-column: 4;
-  }
-
-  .science-card {
-    background: var(--warm-dark-grey);
-    border-radius: var(--radius-card);
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    min-height: 655px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-  }
-
-  .science-card .caption {
-    color: var(--light-grey);
-    margin-bottom: 16px;
-  }
-
-  .card-image {
-    background: #d9d9d9;
-    border-radius: var(--radius-nested);
-    flex: 1;
-    min-height: 260px;
-    margin-bottom: 24px;
-    transition: transform 0.28s ease;
-  }
-
-  .card-title {
-    font-family: var(--font-heading);
-    font-size: var(--type-card-title);
-    line-height: 1.14;
-    font-weight: 400;
-    color: var(--light-grey);
-    margin-bottom: 8px;
-  }
-
-  .card-subtitle {
-    font-family: var(--font-heading);
-    font-size: var(--type-copy-fluid);
-    line-height: 1.3;
-    color: var(--light-grey);
-    margin-bottom: 24px;
-  }
-
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .btn-tertiary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--yellow);
-    color: var(--warm-dark-grey);
-    padding: 10px 24px;
-    border-radius: var(--radius-control);
-    font-family: var(--font-ui);
-    font-size: var(--type-button);
-    transition: opacity 0.2s;
-  }
-
-  .btn-tertiary:hover {
-    filter: brightness(1.15);
-    transform: scale(1.01);
-  }
-
-  .arrow {
-    width: 14px;
-    height: 11px;
-    transition: transform 0.2s ease;
-  }
-
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--light-grey);
-    font-family: var(--font-heading);
-    font-size: var(--type-copy-fluid);
-  }
-
-  @media (hover: hover) {
-    .science-card:hover,
-    .science-card:focus-within {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 26px rgb(0 0 0 / 18%);
-    }
-
-    .science-card:hover .card-image,
-    .science-card:focus-within .card-image {
-      transform: scale(1.02);
-    }
-
-    .science-card:hover .arrow,
-    .science-card:focus-within .arrow {
-      transform: translateX(2px);
-    }
-  }
-
-  @media (max-width: 1600px) {
+  @media (max-width: 1200px) {
     .science-cards {
-      grid-template-columns: 1fr 1px 1fr;
-    }
-
-    .science-cards::after {
-      display: none;
-    }
-
-    .science-card:nth-child(3) {
-      display: none;
-    }
-  }
-
-  @media (max-width: 1000px) {
-    .science-cards {
-      grid-template-columns: 1fr 1px 1fr;
-    }
-
-    .science-cards::before {
-      display: block;
-    }
-
-    .science-cards::after {
-      display: none;
-    }
-
-    .science-card:nth-child(3) {
-      display: none;
-    }
-
-    .science-card:nth-child(2) {
-      display: flex;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -331,67 +135,7 @@
 
     .science-cards {
       grid-template-columns: 1fr;
-      gap: 16px 0;
-    }
-
-    .science-cards::before,
-    .science-cards::after {
-      display: none;
-    }
-
-    .science-card:nth-child(2) {
-      display: flex;
-    }
-
-    .science-card:nth-child(3) {
-      display: none;
-    }
-
-    .science-card {
-      min-height: auto;
-      padding: 20px;
-      border-radius: var(--radius-card);
-    }
-
-    .science-card .caption {
-      font-size: var(--type-caption-sm);
-      letter-spacing: 1.4px;
-      margin-bottom: 10px;
-    }
-
-    .card-image {
-      min-height: 160px;
-      margin-bottom: 16px;
-    }
-
-    .card-title {
-      font-size: var(--type-card-title-mobile);
-      margin-bottom: 4px;
-    }
-
-    .card-subtitle {
-      font-size: var(--type-hal-copy);
-      margin-bottom: 16px;
-    }
-
-    .card-footer {
-      gap: 12px;
-    }
-
-    .btn-tertiary {
-      padding: 8px 16px;
-      font-size: var(--type-button-sm);
-      gap: 6px;
-    }
-
-    .card-meta {
-      font-size: var(--type-label);
-      gap: 4px;
-    }
-
-    .card-meta svg {
-      width: 16px;
-      height: 16px;
+      gap: 16px;
     }
   }
 </style>
