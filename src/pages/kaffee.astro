@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import { Image } from 'astro:assets';
-import shopStrip from '../assets/images/DSC_5180.webp';
 import ambeAnaerobic from '../assets/images/ambe-anaerobic.webp';
 import amiziRock from '../assets/images/amizi-rock.webp';
 import disco3 from '../assets/images/disco3.webp';
@@ -12,27 +11,7 @@ import excelsa from '../assets/images/excelsa.webp';
 <BaseLayout title="Kaffee kaufen – HyCoffee">
   <Navigation />
   <main class="shop">
-    <!-- Image Strip -->
-    <div class="shop-strip">
-      <Image src={shopStrip} alt="Kaffeeanbau Detail" widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={72} loading="lazy" decoding="async" />
-    </div>
-    <!-- Hero v1 (legacy — toggle via bottom-left pill to re-enable) -->
-    <section class="shop-hero shop-hero-v1">
-      <div class="shop-hero-content">
-        <h1 class="shop-heading">Unser Rohkaffee Angebot</h1>
-        <p class="shop-intro">
-          Die Zukunft des Kaffees beginnt mit neuen Arten, Sorten und klimaresilienten
-          Anbau. Wir fokussieren uns auf den Anbau von und Handel mit klimaresilientem
-          Kaffee. Dazu gehören zum Beispiel Arabica aus klimaresilienten Anbausystemen
-          wie Agroforst, aber auch Excelsa (Coffea dewevrei) – eine seltene Kaffeeart,
-          die deutlich widerstandsfähiger gegenüber Hitze, Trockenheit und Klimastress
-          ist. Für Röstereien eröffnen sich so neue Geschmacksprofile und eine
-          klimaresiliente Lieferkette – für Landwirt:innen eine langfristige Perspektive.
-        </p>
-      </div>
-    </section>
-
-    <!-- Offer layout v3: no image, table anchored at bottom -->
+    <!-- Yellow offer layout v2: no image, table anchored at bottom -->
     <section class="shop-offer-alt" aria-labelledby="shop-offer-title">
       <div class="shop-offer-copy">
         <h1 id="shop-offer-title" class="shop-offer-heading">Rohkaffee Angebot</h1>
@@ -312,54 +291,12 @@ import excelsa from '../assets/images/excelsa.webp';
     </div>
 
   </main>
-
-  <div id="shop-layout-switcher" class="shop-layout-switcher" aria-label="Layout-Version wechseln">
-    <button type="button" class="shop-layout-option" data-shop-version="alt">v2</button>
-    <button type="button" class="shop-layout-option" data-shop-version="v1">v1</button>
-  </div>
-
-  <div id="shop-color-switcher" class="shop-color-switcher" aria-label="Angebotsfarbe wechseln">
-    <button type="button" class="shop-color-option shop-color-option-yellow" data-shop-color="yellow" aria-label="Gelb" title="Gelb"></button>
-    <button type="button" class="shop-color-option shop-color-option-green" data-shop-color="green" aria-label="Grün" title="Grün"></button>
-    <button type="button" class="shop-color-option shop-color-option-purple" data-shop-color="purple" aria-label="Lila" title="Lila"></button>
-  </div>
 </BaseLayout>
 
 <style>
   .shop {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 88px);
-  }
-
-  .shop-strip {
-    width: 100%;
-    flex: 0 0 auto;
-    height: 28vh;
-    min-height: 200px;
-    overflow: hidden;
-  }
-
-  .shop-strip img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 66%;
-  }
-
-  .shop-hero {
-    background: var(--warm-dark-grey);
-  }
-
-  /* Preview modes: alt is the default no-image offer layout. */
-  .shop-hero-v1 { display: none; }
-  .shop-strip { display: none; }
-  .shop-table { background: var(--white); }
-  :global(body.shop-v1) .shop-hero-v1 { display: block; }
-  :global(body.shop-v1) .shop-strip { display: block; }
-  :global(body.shop-v1) .shop-offer-alt { display: none; }
-
-  :global(body.shop-alt) .shop {
     height: calc(100svh - var(--nav-height, 88px) + 25px);
     min-height: 0;
     overflow-x: hidden;
@@ -380,16 +317,6 @@ import excelsa from '../assets/images/excelsa.webp';
     padding: clamp(36px, 6vh, 72px) 60px;
     border-bottom: 1px solid var(--warm-dark-grey);
     transition: background-color 0.25s ease, color 0.25s ease;
-  }
-
-  :global(body.shop-color-green) .shop-offer-alt {
-    --shop-offer-bg: var(--green);
-    --shop-offer-fg: var(--white);
-  }
-
-  :global(body.shop-color-purple) .shop-offer-alt {
-    --shop-offer-bg: var(--violet);
-    --shop-offer-fg: var(--warm-dark-grey);
   }
 
   .shop-offer-copy {
@@ -420,141 +347,23 @@ import excelsa from '../assets/images/excelsa.webp';
     max-width: 1220px;
   }
 
-  :global(body.shop-alt) .shop-table {
+  .shop-table {
     flex: 0 0 auto;
   }
 
-  :global(body.shop-alt) .table-header {
+  .table-header {
     min-height: 66px;
     align-items: center;
   }
 
-  :global(body.shop-alt) .table-row {
+  .table-row {
     min-height: 82px;
     padding-top: 0;
     padding-bottom: 0;
   }
 
-  :global(body.shop-alt) .checkout-spacer {
+  .checkout-spacer {
     flex-basis: 92px;
-  }
-
-  .shop-layout-switcher {
-    position: fixed;
-    top: calc(var(--nav-height, 88px) + 8px);
-    right: 12px;
-    z-index: 200;
-    display: inline-flex;
-    gap: 2px;
-    padding: 3px;
-    font-family: var(--font-ui);
-    font-size: var(--type-control-tiny);
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    background: rgba(36, 33, 25, 0.75);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: var(--radius-pill);
-    transition: background 0.2s;
-  }
-
-  .shop-color-switcher {
-    position: fixed;
-    top: calc(var(--nav-height, 88px) + 50px);
-    right: 12px;
-    z-index: 200;
-    display: inline-flex;
-    gap: 4px;
-    padding: 4px;
-    background: rgba(36, 33, 25, 0.75);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: var(--radius-pill);
-    transition: background 0.2s, opacity 0.2s, transform 0.2s;
-  }
-
-  :global(body.shop-v1) .shop-color-switcher {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-4px);
-  }
-
-  .shop-layout-switcher:hover {
-    background: rgba(36, 33, 25, 0.95);
-  }
-
-  .shop-color-switcher:hover {
-    background: rgba(36, 33, 25, 0.95);
-  }
-
-  .shop-layout-option {
-    min-width: 52px;
-    padding: 6px 9px 4px;
-    border-radius: var(--radius-pill);
-    color: rgba(255, 255, 255, 0.75);
-    font-family: var(--font-ui);
-    font-size: var(--type-control-tiny);
-    letter-spacing: 1.1px;
-    text-transform: uppercase;
-  }
-
-  .shop-layout-option.is-active {
-    background: var(--white);
-    color: var(--warm-dark-grey);
-  }
-
-  .shop-color-option {
-    width: 24px;
-    height: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: var(--radius-pill);
-    box-shadow: inset 0 0 0 1px rgba(36, 33, 25, 0.2);
-    cursor: pointer;
-  }
-
-  .shop-color-option-yellow {
-    background: var(--yellow);
-  }
-
-  .shop-color-option-green {
-    background: var(--green);
-  }
-
-  .shop-color-option-purple {
-    background: var(--violet);
-  }
-
-  .shop-color-option.is-active {
-    box-shadow:
-      0 0 0 2px var(--white),
-      inset 0 0 0 1px rgba(36, 33, 25, 0.22);
-  }
-
-  .shop-hero-content {
-    padding: 40px 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .shop-heading {
-    font-family: var(--font-heading);
-    font-size: var(--type-heading-md);
-    line-height: 1;
-    letter-spacing: -1px;
-    font-weight: 400;
-    color: #f5f5f5;
-    margin-bottom: 16px;
-  }
-
-  .shop-intro {
-    font-family: var(--font-heading);
-    font-size: var(--type-copy-detail);
-    line-height: 1.5;
-    font-weight: 400;
-    color: #d9d9d9;
-    max-width: 837px;
   }
 
   /* Table */
@@ -597,7 +406,7 @@ import excelsa from '../assets/images/excelsa.webp';
   .table-row {
     display: grid;
     grid-template-columns: 1.8fr 1fr 1fr 0.8fr 1fr 300px;
-    padding: 20px 60px;
+    padding: 0 60px;
     background: var(--white);
     align-items: center;
     justify-items: start;
@@ -810,7 +619,7 @@ import excelsa from '../assets/images/excelsa.webp';
 
   /* Checkout */
   .checkout-spacer {
-    flex: 0 0 100px;
+    flex: 0 0 92px;
     position: sticky;
     bottom: 0;
     z-index: 2;
@@ -932,7 +741,7 @@ import excelsa from '../assets/images/excelsa.webp';
   }
 
   @media (max-width: 768px) {
-    :global(body.shop-alt) .shop {
+    .shop {
       height: auto;
       min-height: calc(100svh - var(--nav-height, 88px) + 25px);
       overflow: visible;
@@ -958,21 +767,6 @@ import excelsa from '../assets/images/excelsa.webp';
       line-height: 1.1;
     }
 
-    .shop-layout-switcher {
-      top: calc(var(--nav-height, 88px) + 8px);
-      right: 10px;
-    }
-
-    .shop-color-switcher {
-      top: calc(var(--nav-height, 88px) + 50px);
-      right: 10px;
-    }
-
-    .shop-layout-option {
-      min-width: 48px;
-      padding: 6px 8px 4px;
-    }
-
     .col-country,
     .col-process,
     .col-action,
@@ -990,10 +784,6 @@ import excelsa from '../assets/images/excelsa.webp';
     .table-row {
       grid-template-columns: 1.8fr 1fr 0.8fr;
       padding: 20px 24px;
-    }
-
-    .shop-hero-content {
-      padding: 40px 24px;
     }
 
     .row-details {
@@ -1164,82 +954,4 @@ import excelsa from '../assets/images/excelsa.webp';
     });
   });
 
-  // Client preview switcher: alt = no-image offer, v1 = legacy image intro.
-  (function () {
-    const switcher = document.getElementById('shop-layout-switcher');
-    if (!switcher) return;
-    const options = Array.from(switcher.querySelectorAll('[data-shop-version]'));
-    const STORAGE_KEY = 'hycoffee-shop-layout';
-    const versions = ['alt', 'v1'];
-
-    function apply(version) {
-      const next = versions.includes(version) ? version : 'alt';
-      document.body.classList.remove('shop-alt', 'shop-v1');
-      document.body.classList.add(`shop-${next}`);
-      options.forEach((option) => {
-        const active = option.dataset.shopVersion === next;
-        option.classList.toggle('is-active', active);
-        option.setAttribute('aria-pressed', String(active));
-      });
-
-      if (next === 'alt') {
-        document.querySelectorAll('.table-row-wrapper[open]').forEach((row) => {
-          row.removeAttribute('open');
-        });
-      }
-    }
-
-    const saved = localStorage.getItem(STORAGE_KEY);
-    apply(saved);
-
-    options.forEach((option) => {
-      option.addEventListener('click', () => {
-        const next = option.dataset.shopVersion;
-        if (!versions.includes(next)) return;
-        localStorage.setItem(STORAGE_KEY, next);
-        apply(next);
-      });
-    });
-  })();
-
-  (function () {
-    const switcher = document.getElementById('shop-color-switcher');
-    if (!switcher) return;
-    const options = Array.from(switcher.querySelectorAll('[data-shop-color]'));
-    const STORAGE_KEY = 'hycoffee-shop-offer-color';
-    const colors = ['yellow', 'green', 'purple'];
-
-    function apply(color) {
-      const next = colors.includes(color) ? color : 'yellow';
-      document.body.classList.remove('shop-color-yellow', 'shop-color-green', 'shop-color-purple');
-      document.body.classList.add(`shop-color-${next}`);
-      options.forEach((option) => {
-        const active = option.dataset.shopColor === next;
-        option.classList.toggle('is-active', active);
-        option.setAttribute('aria-pressed', String(active));
-      });
-    }
-
-    const saved = localStorage.getItem(STORAGE_KEY);
-    apply(saved);
-
-    options.forEach((option) => {
-      option.addEventListener('click', () => {
-        const next = option.dataset.shopColor;
-        if (!colors.includes(next)) return;
-        localStorage.setItem(STORAGE_KEY, next);
-        apply(next);
-      });
-    });
-  })();
-
-  (function () {
-    if (document.body.classList.contains('shop-alt') || document.body.classList.contains('shop-v1')) return;
-    document.body.classList.add('shop-alt');
-  })();
-
-  (function () {
-    if (document.body.classList.contains('shop-color-yellow') || document.body.classList.contains('shop-color-green') || document.body.classList.contains('shop-color-purple')) return;
-    document.body.classList.add('shop-color-yellow');
-  })();
 </script>
