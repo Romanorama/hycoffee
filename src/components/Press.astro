@@ -1,139 +1,87 @@
 ---
 import { Image } from 'astro:assets';
-import pressImage from '../assets/images/press-arte.webp';
-import logoArte from '../assets/images/media-arte.webp';
-import logoZdf from '../assets/images/media-zdf.webp';
-import logoFocus from '../assets/images/media-focus.webp';
-import logoBrandeins from '../assets/images/media-brandeins.webp';
+import { reader, resolveCmsImage } from '../lib/cms';
+
+interface Props {
+  heading: string;
+}
+
+const { heading } = Astro.props;
+
+const entries = await reader.collections.press.all();
+const items = entries.map(({ slug, entry }) => ({
+  slug,
+  title: entry.title,
+  outlet: entry.outlet,
+  excerpt: entry.excerpt,
+  readingTime: entry.readingTime ?? 2,
+  externalLink: entry.externalLink ?? '#',
+  logoImage: resolveCmsImage(entry.logoImage),
+  featureImage: resolveCmsImage(entry.featureImage),
+}));
 ---
 
 <section class="press">
-  <h2 class="press-heading">HyCoffee in den Medien</h2>
+  <h2 class="press-heading">{heading}</h2>
   <div class="press-cards">
-    <article class="press-card">
-      <div class="press-card-inner">
-        <span class="caption">PRESSE</span>
-        <div class="press-divider"></div>
-        <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
-        <div class="press-image">
-          <Image src={pressImage} alt="Arte Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
-        </div>
-        <div class="press-meta">
-          <div class="press-source">
-            <Image src={logoArte} alt="arte" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
+    {
+      items.map((item) => (
+        <article class="press-card">
+          <div class="press-card-inner">
+            <span class="caption">PRESSE</span>
+            <div class="press-divider" />
+            <h3 class="press-title">{item.title}</h3>
+            {item.featureImage && (
+              <div class="press-image">
+                <Image
+                  src={item.featureImage}
+                  alt={`${item.outlet} Reportage`}
+                  widths={[450, 900]}
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <div class="press-meta">
+              <div class="press-source">
+                {item.logoImage && (
+                  <Image
+                    src={item.logoImage}
+                    alt={item.outlet}
+                    class="press-logo"
+                    widths={[130, 260]}
+                    sizes="130px"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </div>
+              <div class="press-time">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1" />
+                  <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round" />
+                </svg>
+                <span>{item.readingTime} Min</span>
+              </div>
+            </div>
+            <p class="press-excerpt">{item.excerpt}</p>
+            <a href={item.externalLink} class="btn btn-dark" target="_blank" rel="noopener noreferrer">
+              <span>Artikel lesen</span>
+              <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+                <path
+                  d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10"
+                  stroke="white"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
           </div>
-          <div class="press-time">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1"/>
-              <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round"/>
-            </svg>
-            <span>2 Min</span>
-          </div>
-        </div>
-        <p class="press-excerpt">
-          Sophie is portrait by arte as one of three entrepreneurs who change the perspective on…
-        </p>
-        <a href="#" class="btn btn-dark">
-          <span>Tertiary Button</span>
-          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </article>
-    <article class="press-card">
-      <div class="press-card-inner">
-        <span class="caption">PRESSE</span>
-        <div class="press-divider"></div>
-        <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
-        <div class="press-image">
-          <Image src={pressImage} alt="ZDF Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
-        </div>
-        <div class="press-meta">
-          <div class="press-source">
-            <Image src={logoZdf} alt="ZDF" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
-          </div>
-          <div class="press-time">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1"/>
-              <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round"/>
-            </svg>
-            <span>2 Min</span>
-          </div>
-        </div>
-        <p class="press-excerpt">
-          Sophie is portrait by arte as one of three entrepreneurs who change the perspective on…
-        </p>
-        <a href="#" class="btn btn-dark">
-          <span>Tertiary Button</span>
-          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </article>
-    <article class="press-card">
-      <div class="press-card-inner">
-        <span class="caption">PRESSE</span>
-        <div class="press-divider"></div>
-        <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
-        <div class="press-image">
-          <Image src={pressImage} alt="Focus Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
-        </div>
-        <div class="press-meta">
-          <div class="press-source">
-            <Image src={logoFocus} alt="Focus" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
-          </div>
-          <div class="press-time">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1"/>
-              <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round"/>
-            </svg>
-            <span>2 Min</span>
-          </div>
-        </div>
-        <p class="press-excerpt">
-          Sophie is portrait by arte as one of three entrepreneurs who change the perspective on…
-        </p>
-        <a href="#" class="btn btn-dark">
-          <span>Tertiary Button</span>
-          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </article>
-    <article class="press-card">
-      <div class="press-card-inner">
-        <span class="caption">PRESSE</span>
-        <div class="press-divider"></div>
-        <h3 class="press-title">Re: Kaffee mit Zukunft</h3>
-        <div class="press-image">
-          <Image src={pressImage} alt="Brand Eins Reportage" widths={[450, 900]} sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" decoding="async" />
-        </div>
-        <div class="press-meta">
-          <div class="press-source">
-            <Image src={logoBrandeins} alt="Brand Eins" class="press-logo" widths={[130, 260]} sizes="130px" loading="lazy" decoding="async" />
-          </div>
-          <div class="press-time">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1"/>
-              <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round"/>
-            </svg>
-            <span>2 Min</span>
-          </div>
-        </div>
-        <p class="press-excerpt">
-          Sophie is portrait by arte as one of three entrepreneurs who change the perspective on…
-        </p>
-        <a href="#" class="btn btn-dark">
-          <span>Tertiary Button</span>
-          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </article>
+        </article>
+      ))
+    }
   </div>
   <a href="#" class="press-more-link">
     <span>View more from In the Media</span>

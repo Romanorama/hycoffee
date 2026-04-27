@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from './Navigation.astro';
+import Footer from './Footer.astro';
+
+interface Section {
+  heading: string;
+  body: string;
+}
+
+interface Props {
+  title: string;
+  heading: string;
+  sections: readonly Section[];
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title, heading, sections, description, noindex = false } = Astro.props;
+
+const escapeHtml = (s: string) =>
+  s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+const linkify = (s: string) =>
+  s.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    (_m, text, href) => {
+      const safeHref = href.replace(/"/g, '&quot;');
+      const isExternal = /^https?:\/\//.test(href);
+      const attrs = isExternal
+        ? ' target="_blank" rel="noopener noreferrer"'
+        : '';
+      return `<a href="${safeHref}" class="legal-link"${attrs}>${text}</a>`;
+    },
+  );
+
+const renderBody = (body: string) =>
+  body
+    .split(/\n{2,}/)
+    .map((paragraph) => {
+      const safe = linkify(escapeHtml(paragraph.trim()));
+      return `<p class="legal-text">${safe.replace(/\n/g, '<br />')}</p>`;
+    })
+    .join('');
+---
+
+<BaseLayout title={title} description={description} noindex={noindex}>
+  <Navigation />
+  <main class="legal">
+    <div class="legal-inner">
+      <h1 class="legal-heading">{heading}</h1>
+      {
+        sections.map((section) => (
+          <section class="legal-section">
+            <h2 class="legal-subheading">{section.heading}</h2>
+            <Fragment set:html={renderBody(section.body)} />
+          </section>
+        ))
+      }
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal {
+    background: var(--warm-grey-light);
+    border-bottom: 1px solid var(--warm-dark-grey);
+    padding: 60px 60px 80px;
+  }
+
+  .legal-inner {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .legal-heading {
+    font-family: var(--font-heading);
+    font-size: var(--type-display-sm);
+    line-height: 1;
+    letter-spacing: -1px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 40px;
+  }
+
+  .legal-section {
+    margin-bottom: 32px;
+  }
+
+  .legal-subheading {
+    font-family: var(--font-ui);
+    font-size: var(--type-copy);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--warm-dark-grey);
+    margin-bottom: 8px;
+  }
+
+  .legal :global(.legal-text) {
+    font-family: var(--font-heading);
+    font-size: var(--type-hal-copy);
+    line-height: 1.6;
+    color: var(--warm-dark-grey);
+    margin-bottom: 12px;
+  }
+
+  .legal :global(.legal-text:last-child) {
+    margin-bottom: 0;
+  }
+
+  .legal :global(.legal-link) {
+    color: var(--warm-dark-grey);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s;
+    word-break: break-word;
+  }
+
+  .legal :global(.legal-link:hover) {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .legal {
+      padding: 40px 24px 60px;
+    }
+  }
+</style>

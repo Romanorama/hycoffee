@@ -3,111 +3,84 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
-import originsArabica1 from '../assets/images/origins-arabica-1.webp';
-import originsArabica2 from '../assets/images/origins-arabica-2.webp';
-import originsExcelsa1 from '../assets/images/origins-excelsa-1.webp';
-import originsExcelsa2 from '../assets/images/origins-excelsa-2.webp';
+import { reader, resolveCmsImage } from '../lib/cms';
+
+export const prerender = true;
+
+const page = await reader.singletons.originsPage.read();
+if (!page) throw new Error('originsPage singleton not found');
+
+const allStories = await reader.collections.originStories.all();
+
+type Country = 'uganda' | 'kenia';
+const countries: { code: Country; heading: string }[] = [
+  { code: 'uganda', heading: page.ugandaHeading },
+  { code: 'kenia', heading: page.kenyaHeading },
+];
+
+const storiesByCountry = countries
+  .map(({ code, heading }) => ({
+    code,
+    heading,
+    stories: allStories
+      .filter((s) => s.entry.country === code)
+      .sort((a, b) => (a.entry.sortOrder ?? 0) - (b.entry.sortOrder ?? 0))
+      .map(({ slug, entry }) => ({
+        slug,
+        ...entry,
+        image1Resolved: resolveCmsImage(entry.image1),
+        image2Resolved: resolveCmsImage(entry.image2),
+        paragraphs: entry.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean),
+      })),
+  }))
+  .filter((c) => c.stories.length > 0);
+
+const seoImage = storiesByCountry[0]?.stories[0]?.image1Resolved ?? undefined;
 ---
 
-<BaseLayout title="Origins – HyCoffee">
+<BaseLayout
+  title="Origins – HyCoffee"
+  description="Erfahre mehr ueber HyCoffee Projekte in Uganda und ueber klimaresiliente Kaffeearten wie Arabica und Excelsa entlang ihrer Herkunft."
+  ogImage={seoImage}
+  ogImageAlt="Kaffeeherkunft von HyCoffee in Uganda"
+>
   <Navigation />
   <main class="origins">
+    {storiesByCountry.map(({ code, heading, stories }) => (
+      <div class="country-section" id={code}>
+        <div class="country-header">
+          <span class="country-name">{heading}</span>
+        </div>
 
-    <!-- Uganda -->
-    <div class="country-section" id="uganda">
-      <div class="country-header">
-        <span class="country-name">Uganda</span>
+        <section class="origins-content">
+          {stories.map((story) => (
+            <div class="editorial-origin">
+              <div class="editorial-left">
+                <h2 class="editorial-heading">{story.species}</h2>
+                <p class="editorial-location">{story.region}</p>
+              </div>
+              <div class="editorial-right">
+                {story.paragraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+                <div class="editorial-images">
+                  {story.image1Resolved && (
+                    <figure class="editorial-figure">
+                      <Image src={story.image1Resolved} alt={story.image1Alt ?? ''} widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
+                    </figure>
+                  )}
+                  {story.image2Resolved && (
+                    <figure class="editorial-figure">
+                      <Image src={story.image2Resolved} alt={story.image2Alt ?? ''} widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
+                    </figure>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </section>
       </div>
-
-      <section class="origins-content">
-        <div class="editorial-origin">
-          <div class="editorial-left">
-            <h2 class="editorial-heading">Arabica</h2>
-            <p class="editorial-location">West Nile Region, Uganda</p>
-          </div>
-          <div class="editorial-right">
-            <p>
-              In Uganda beziehen wir Spezialitäten-Arabica, die in klimaresilienten
-              Anbausystemen in der Region West Nile wachsen.
-            </p>
-            <p>
-              Diese Gegend gehört zu den am wenigsten investierten Regionen des
-              Landes, und die dortigen Kaffeeanbau-Gemeinschaften werden
-              voraussichtlich zu denjenigen gehören, die besonders stark vom
-              Klimawandel betroffen sein werden.
-            </p>
-            <p>
-              Diese Herausforderungen setzen die Lebensgrundlagen der Landwirte
-              ernsthaft unter Druck und zeigen, wie dringend Investitionen in
-              Anpassungsmaßnahmen an den Klimawandel sind.
-            </p>
-            <p>
-              Deshalb arbeitet HyCoffee unter anderem mit Zombo Coffee Partners
-              zusammen, die eng mit der Produzent:innengemeinschaft in der Region
-              zusammenarbeiten. Gemeinsam unterstützen wir Produzent:innen beim
-              Übergang zu regenerativen Anbausystemen.
-            </p>
-            <p>
-              Die Produzent:innen bauen ihren Kaffee in regenerativen Anbausystemen
-              an, die die Bodengesundheit verbessern, die Wasserspeicherung erhöhen
-              und Schatten für die Pflanzen schaffen.
-            </p>
-            <p>
-              In einer der klimatisch exponiertesten Regionen Ugandas ist
-              regenerative Landwirtschaft keine Option, sondern eine Notwendigkeit.
-            </p>
-            <div class="editorial-images">
-              <figure class="editorial-figure">
-                <Image src={originsArabica1} alt="Trocknungsbetten in der West Nile Region" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
-              </figure>
-              <figure class="editorial-figure">
-                <Image src={originsArabica2} alt="Kaffeekirschen aus der West Nile Region" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
-              </figure>
-            </div>
-          </div>
-        </div>
-
-        <div class="editorial-origin">
-          <div class="editorial-left">
-            <h2 class="editorial-heading">Excelsa</h2>
-            <p class="editorial-location">Zentral Uganda</p>
-          </div>
-          <div class="editorial-right">
-            <p>
-              Die Kaffeeart Excelsa (Coffea dewevrei) ist in Uganda heimisch. Aufgrund
-              ihrer hohen Produktivität sowie ihrer Widerstandsfähigkeit gegenüber
-              Dürre, Schädlingen und Krankheiten wird Excelsa bereits von vielen
-              Kaffeebäuerinnen und -bauern im Land angebaut.
-            </p>
-            <p>
-              Die geernteten Kirschen werden jedoch häufig zu niedrigen Preisen verkauft
-              und mit Robusta-Kaffee geringerer Qualität vermischt. Damit bleibt ein
-              großes Potenzial ungenutzt: Richtig geerntet und verarbeitet besitzt
-              Excelsa ein beeindruckendes Cupping-Profil.
-            </p>
-            <p>
-              Über bestehende Kooperativenstrukturen arbeitet HyCoffee mit
-              Excelsa-Farmern zusammen, um Anbau, Ernte, Verarbeitung, Lagerung und
-              Vermarktung von Excelsa zu verbessern. Ziel ist es, hochwertige
-              Kaffeebohnen für den Export zu produzieren.
-            </p>
-            <p>
-              Damit sich die zusätzlichen Anstrengungen der Farmer auch auszahlen, hat
-              sich HyCoffee verpflichtet, den Kaffee zu importieren und den Marktzugang
-              in der Europäischen Union zu ermöglichen.
-            </p>
-            <div class="editorial-images">
-              <figure class="editorial-figure">
-                <Image src={originsExcelsa1} alt="Excelsa-Produzentin in Zentral Uganda" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
-              </figure>
-              <figure class="editorial-figure">
-                <Image src={originsExcelsa2} alt="Sortieren von Excelsa-Kirschen" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
-              </figure>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    ))}
   </main>
   <Footer />
 </BaseLayout>

@@ -1,0 +1,33 @@
+stripImages:
+  - ../assets/images/cms/strip/strip-1.webp
+  - ../assets/images/cms/strip/strip-2.webp
+  - ../assets/images/cms/strip/strip-3.webp
+  - ../assets/images/cms/strip/strip-4.webp
+  - ../assets/images/cms/strip/strip-5.webp
+  - ../assets/images/cms/strip/strip-6.webp
+  - ../assets/images/cms/strip/strip-7.webp
+  - ../assets/images/cms/strip/strip-8.webp
+  - ../assets/images/cms/strip/origins-arabica-1.webp
+  - ../assets/images/cms/strip/DSC_5180.webp
+  - ../assets/images/cms/strip/excelsa.webp
+  - ../assets/images/cms/strip/DSC_5182.webp
+  - ../assets/images/cms/strip/origins-excelsa-1.webp
+  - ../assets/images/cms/strip/ambe-anaerobic.webp
+  - ../assets/images/cms/strip/origins-excelsa-2.webp
+  - ../assets/images/cms/strip/disco3.webp
+heroImage: ../assets/images/cms/about/about-green-hero.webp
+heroText: |-
+  Wir sind Sophie und Charlotte. Wir haben HyCoffee gegründet, weil der Kaffeesektor vor einer der größten Herausforderungen seiner Zeit steht: dem Klimawandel. Steigende Temperaturen, Dürren und neue Pflanzenkrankheiten setzen den Kaffeeanbau weltweit unter Druck.
+storyHeading: Unsere Geschichte
+storyBody: |-
+  Wir arbeiten zwischen Ostafrika und Deutschland. Unser Fokus liegt auf Klimaresilienz als konkrete Antwort auf die Frage, wie Kaffeeanbau langfristig funktionieren kann. Gemeinsam mit Produzent:innen vor Ort fördern wir widerstandsfähige Anbausysteme wie Agroforst und regenerative Landwirtschaft. Gleichzeitig erschließen wir das Potenzial alternativer Kaffeearten wie Excelsa – bisher kaum auf dem Markt, obwohl seit Generationen angebaut.
+
+  HyCoffee ist die Brücke zwischen Forschung und Praxis: wissenschaftliche Erkenntnisse direkt auf die Farm, in die Lieferkette und in die Tasse.
+
+  Sophie hat bei den Vereinten Nationen gearbeitet, bevor sie sich auf Forschung zu Kaffee und Klimawandel spezialisierte. Die Entdeckung, dass es längst klimaresiliente Kaffeearten gibt – kaum bekannt, kaum vermarktet – ließ sie nicht mehr los. Forschen allein reichte ihr nicht.
+
+  Charlotte hat in der internationalen Entwicklungszusammenarbeit gearbeitet und berät internationale Organisationen und Stiftungen zu Strategie und Partnerschaften. Sie kennt aus eigener Erfahrung, wie Privatsektor Partnerschaften echten Wandel bewirken können. Ihr Antrieb: Trade instead of Aid – faire Handelspartnerschaften statt Hilfe von außen.
+originsBannerText: More Info about the Places we work with
+originsBannerCtaLabel: Origins
+sayHiHeading: 'Say Hy:'
+sayHiEmail: info@hycoffee.de

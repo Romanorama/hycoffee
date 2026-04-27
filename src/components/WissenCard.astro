@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import type { WissenArticle } from '../lib/wissenArticles';
+import type { WissenArticle } from '../lib/wissen';
 
 interface Props {
   article: WissenArticle;
@@ -14,18 +14,20 @@ const {
 ---
 
 <article class="science-card">
-  <span class="card-category">{article.category}</span>
+  <span class="card-category">{article.categoryLabel}</span>
   <div class="card-image">
-    <Image
-      src={article.image}
-      alt={article.title}
-      widths={[400, 800, 1200]}
-      sizes={imageSizes}
-      format="webp"
-      quality={72}
-      loading="lazy"
-      decoding="async"
-    />
+    {article.image && (
+      <Image
+        src={article.image}
+        alt={article.title}
+        widths={[400, 800, 1200]}
+        sizes={imageSizes}
+        format="webp"
+        quality={72}
+        loading="lazy"
+        decoding="async"
+      />
+    )}
   </div>
   <h3 class="card-title">{article.title}</h3>
   <p class="card-subtitle">{article.subtitle}</p>
@@ -35,7 +37,7 @@ const {
         <circle cx="11" cy="11" r="10" stroke="#e3e2e0" stroke-width="1"></circle>
         <path d="M11 6v5l3 3" stroke="#e3e2e0" stroke-width="1" stroke-linecap="round"></path>
       </svg>
-      <span>{article.readingTime}</span>
+      <span>{article.readingTimeLabel}</span>
     </div>
     <a href={article.href} class="btn-tertiary">
       <span>Artikel lesen</span>

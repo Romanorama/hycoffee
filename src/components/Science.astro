@@ -1,23 +1,25 @@
 ---
 import WissenCard from './WissenCard.astro';
-import { getRandomWissenArticles } from '../lib/wissenArticles';
+import { getRandomWissenArticles } from '../lib/wissen';
 
-const featuredArticles = getRandomWissenArticles(3);
+interface Props {
+  label: string;
+  heading: string;
+  body: string;
+  ctaLabel: string;
+}
+
+const { label, heading, body, ctaLabel } = Astro.props;
+const featuredArticles = await getRandomWissenArticles(3);
 ---
 
 <section class="science">
   <div class="science-header">
-    <span class="caption">WISSEN</span>
-    <h2 class="science-heading">
-      Zwischen Forschung <span class="science-heading-nowrap">und Markt</span>
-    </h2>
-    <p class="science-text">
-      Wir verbinden wissenschaftliche Erkenntnisse mit der Praxis des
-      Kaffeeanbaus. In unseren Artikeln teilen wir neue Erkenntnisse und
-      Perspektiven aus unserer Arbeit.
-    </p>
+    <span class="caption">{label}</span>
+    <h2 class="science-heading">{heading}</h2>
+    <p class="science-text">{body}</p>
     <a href="/wissen" class="science-link">
-      <span>Zu den Artikeln</span>
+      <span>{ctaLabel}</span>
       <span class="science-link-arrow" aria-hidden="true">›</span>
     </a>
   </div>

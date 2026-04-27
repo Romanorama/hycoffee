@@ -27,7 +27,6 @@ export default config({
       label: 'Wissen-Artikel',
       slugField: 'title',
       path: 'src/content/wissen/*',
-      format: { contentField: 'body' },
       schema: {
         title: fields.slug({ name: { label: 'Titel' } }),
         category: fields.select({
@@ -46,15 +45,11 @@ export default config({
           label: 'Titelbild',
           ...contentImage('wissen'),
         }),
-        relatedArticles: fields.array(
-          fields.relationship({ label: 'Artikel', collection: 'wissen' }),
-          {
-            label: 'Verwandte Artikel',
-            itemLabel: (p) => p.value ?? 'Artikel',
-            validation: { length: { max: 2 } },
-          },
-        ),
-        body: fields.markdoc({ label: 'Inhalt' }),
+        body: fields.text({
+          label: 'Inhalt',
+          multiline: true,
+          description: 'Absätze durch Leerzeile trennen.',
+        }),
       },
     }),
 
@@ -121,7 +116,6 @@ export default config({
       label: 'Origin-Stories',
       slugField: 'title',
       path: 'src/content/origin-stories/*',
-      format: { contentField: 'body' },
       schema: {
         title: fields.slug({ name: { label: 'Titel' } }),
         country: fields.select({
@@ -138,12 +132,18 @@ export default config({
           label: 'Bild 1',
           ...contentImage('origins'),
         }),
+        image1Alt: fields.text({ label: 'Bild 1 Alt-Text' }),
         image2: fields.image({
           label: 'Bild 2',
           ...contentImage('origins'),
         }),
+        image2Alt: fields.text({ label: 'Bild 2 Alt-Text' }),
         sortOrder: fields.integer({ label: 'Reihenfolge', defaultValue: 0 }),
-        body: fields.markdoc({ label: 'Text' }),
+        body: fields.text({
+          label: 'Text',
+          multiline: true,
+          description: 'Absätze durch Leerzeile trennen.',
+        }),
       },
     }),
 
@@ -168,7 +168,7 @@ export default config({
   singletons: {
     global: singleton({
       label: 'Global (Kontakt, Footer, Social)',
-      path: 'src/data/global',
+      path: 'src/data/global/',
       previewUrl: 'http://localhost:4321/',
       schema: {
         email: fields.text({ label: 'E-Mail' }),
@@ -185,7 +185,7 @@ export default config({
 
     home: singleton({
       label: 'Home',
-      path: 'src/data/home',
+      path: 'src/data/home/',
       previewUrl: 'http://localhost:4321/',
       schema: {
         heroHeadline: fields.text({ label: 'Hero-Überschrift', multiline: true }),
@@ -247,9 +247,9 @@ export default config({
         scienceFeaturedArticles: fields.array(
           fields.relationship({ label: 'Artikel', collection: 'wissen' }),
           {
-            label: 'Empfohlene Artikel',
+            label: 'Empfohlene Artikel (3 auswählen, sonst werden zufällige gezeigt)',
             itemLabel: (p) => p.value ?? 'Artikel',
-            validation: { length: { min: 3, max: 3 } },
+            validation: { length: { max: 3 } },
           },
         ),
 
@@ -259,8 +259,7 @@ export default config({
 
     ueberUns: singleton({
       label: 'Über uns',
-      path: 'src/data/ueber-uns',
-      format: { contentField: 'storyBody' },
+      path: 'src/data/ueber-uns/',
       schema: {
         stripImages: fields.array(
           fields.image({
@@ -275,7 +274,11 @@ export default config({
         }),
         heroText: fields.text({ label: 'Hero-Text', multiline: true }),
         storyHeading: fields.text({ label: 'Story-Überschrift' }),
-        storyBody: fields.markdoc({ label: 'Story-Text' }),
+        storyBody: fields.text({
+          label: 'Story-Text',
+          multiline: true,
+          description: 'Absätze durch Leerzeile trennen.',
+        }),
         originsBannerText: fields.text({ label: 'Origins-Banner-Text' }),
         originsBannerCtaLabel: fields.text({ label: 'Origins-Banner-Button' }),
         sayHiHeading: fields.text({ label: 'Say-Hi-Überschrift' }),
@@ -285,64 +288,107 @@ export default config({
 
     originsPage: singleton({
       label: 'Origins-Seite',
-      path: 'src/data/origins',
+      path: 'src/data/origins/',
       schema: {
-        pageIntroHeading: fields.text({ label: 'Seiten-Überschrift' }),
-        pageIntroBody: fields.text({ label: 'Seiten-Einleitung', multiline: true }),
-        ugandaHeading: fields.text({ label: 'Uganda-Überschrift' }),
-        kenyaHeading: fields.text({ label: 'Kenia-Überschrift' }),
+        ugandaHeading: fields.text({ label: 'Uganda-Überschrift', defaultValue: 'Uganda' }),
+        kenyaHeading: fields.text({ label: 'Kenia-Überschrift', defaultValue: 'Kenia' }),
       },
     }),
 
     kaffee: singleton({
       label: 'Kaffee-Seite',
-      path: 'src/data/kaffee',
+      path: 'src/data/kaffee/',
       schema: {
-        heroHeading: fields.text({ label: 'Hero-Überschrift' }),
-        heroIntro: fields.text({ label: 'Hero-Text', multiline: true }),
-        heroImage: fields.image({
-          label: 'Hero-Bild',
-          ...dataImage('kaffee'),
+        pageHeading: fields.text({ label: 'Seiten-Überschrift' }),
+        pageIntro: fields.text({ label: 'Seiten-Einleitung', multiline: true }),
+        samplesSoldOut: fields.checkbox({
+          label: 'Samples ausverkauft (globaler Schalter)',
+          description:
+            'Wenn aktiviert: alle "Add Sample"-Buttons werden zu "Sold out" und das Popup erscheint beim Klick.',
+          defaultValue: false,
         }),
-        offerHeading: fields.text({ label: 'Angebot-Überschrift' }),
-        offerIntro: fields.text({ label: 'Angebot-Text', multiline: true }),
+        soldOutPopupKicker: fields.text({ label: 'Sold-out-Popup: Kicker', defaultValue: 'Samples' }),
+        soldOutPopupTitle: fields.text({ label: 'Sold-out-Popup: Titel' }),
+        soldOutPopupCopy: fields.text({
+          label: 'Sold-out-Popup: Text',
+          multiline: true,
+        }),
+        soldOutPopupPrimaryLabel: fields.text({
+          label: 'Sold-out-Popup: Primär-Button',
+          defaultValue: 'Benachrichtige mich',
+        }),
+        soldOutPopupPrimaryHref: fields.text({
+          label: 'Sold-out-Popup: Primär-Button-Link (z.B. mailto:...)',
+        }),
       },
     }),
 
     impressum: singleton({
       label: 'Impressum',
-      path: 'src/data/impressum',
-      format: { contentField: 'body' },
+      path: 'src/data/impressum/',
       schema: {
-        companyName: fields.text({ label: 'Firmenname' }),
-        address: fields.text({ label: 'Adresse', multiline: true }),
-        representedBy: fields.text({ label: 'Vertreten durch' }),
-        court: fields.text({ label: 'Registergericht' }),
-        hrb: fields.text({ label: 'Handelsregisternummer' }),
-        vatId: fields.text({ label: 'USt-IdNr.' }),
-        editorialResponsible: fields.text({ label: 'Verantwortlich (§ 18 MStV)' }),
-        lastUpdated: fields.date({ label: 'Stand' }),
-        body: fields.markdoc({ label: 'Impressum-Text (Haftung, Urheberrecht, etc.)' }),
+        heading: fields.text({ label: 'Seiten-Überschrift' }),
+        sections: fields.array(
+          fields.object({
+            heading: fields.text({ label: 'Abschnitt-Überschrift' }),
+            body: fields.text({
+              label: 'Text',
+              multiline: true,
+              description:
+                'Absätze durch Leerzeile trennen. Links: [Text](https://url). Zeilenumbruch: einfach Enter drücken.',
+            }),
+          }),
+          {
+            label: 'Abschnitte',
+            itemLabel: (p) => p.fields.heading.value || 'Abschnitt',
+          },
+        ),
       },
     }),
 
     agb: singleton({
       label: 'AGB',
-      path: 'src/data/agb',
-      format: { contentField: 'body' },
+      path: 'src/data/agb/',
       schema: {
-        lastUpdated: fields.date({ label: 'Stand' }),
-        body: fields.markdoc({ label: 'AGB-Text' }),
+        heading: fields.text({ label: 'Seiten-Überschrift' }),
+        sections: fields.array(
+          fields.object({
+            heading: fields.text({ label: 'Abschnitt-Überschrift' }),
+            body: fields.text({
+              label: 'Text',
+              multiline: true,
+              description:
+                'Absätze durch Leerzeile trennen. Links: [Text](https://url). Zeilenumbruch: einfach Enter drücken.',
+            }),
+          }),
+          {
+            label: 'Abschnitte',
+            itemLabel: (p) => p.fields.heading.value || 'Abschnitt',
+          },
+        ),
       },
     }),
 
     datenschutz: singleton({
       label: 'Datenschutzerklärung',
-      path: 'src/data/datenschutz',
-      format: { contentField: 'body' },
+      path: 'src/data/datenschutz/',
       schema: {
-        lastUpdated: fields.date({ label: 'Stand' }),
-        body: fields.markdoc({ label: 'Datenschutz-Text' }),
+        heading: fields.text({ label: 'Seiten-Überschrift' }),
+        sections: fields.array(
+          fields.object({
+            heading: fields.text({ label: 'Abschnitt-Überschrift' }),
+            body: fields.text({
+              label: 'Text',
+              multiline: true,
+              description:
+                'Absätze durch Leerzeile trennen. Links: [Text](https://url). Zeilenumbruch: einfach Enter drücken.',
+            }),
+          }),
+          {
+            label: 'Abschnitte',
+            itemLabel: (p) => p.fields.heading.value || 'Abschnitt',
+          },
+        ),
       },
     }),
   },

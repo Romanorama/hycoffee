@@ -1,14 +1,26 @@
 ---
+import { reader } from '../lib/cms';
 
+const global = await reader.singletons.global.read();
+const email = global?.email ?? '';
+const phone = global?.phone ?? '';
+const address = global?.address ?? '';
+const instagramUrl = global?.instagramUrl ?? '';
+const linkedinUrl = global?.linkedinUrl ?? '';
+const footerTagline = global?.footerTagline ?? '';
+const newsletterLabel = global?.newsletterLabel ?? '';
+const newsletterButton = global?.newsletterButton ?? '';
+const telHref = phone.replace(/[^+\d]/g, '');
 ---
 
 <footer class="site-footer footer-alt" aria-label="Footer">
   <section class="footer-alt-newsletter" aria-label="Newsletter">
-    <h2 class="footer-alt-newsletter-title">HyC monthly Newsletter</h2>
-    <form class="footer-alt-form">
-      <input type="email" placeholder="Email" class="footer-alt-input" aria-label="Email" />
+    <h2 class="footer-alt-newsletter-title">{newsletterLabel}</h2>
+    <form class="footer-alt-form" name="newsletter" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="newsletter" />
+      <input type="email" name="email" placeholder="Email" class="footer-alt-input" aria-label="Email" required />
       <button type="submit" class="footer-alt-submit" aria-label="Newsletter abonnieren">
-        <span>Anmelden</span>
+        <span>{newsletterButton}</span>
       </button>
     </form>
     <p class="footer-alt-newsletter-copy">Join the growing community</p>
@@ -17,22 +29,16 @@
   <section class="footer-alt-main">
     <div class="footer-alt-brand">
       <img src="/images/inv-Hy-mono.svg" alt="" class="footer-alt-logo" width="455" height="316" loading="lazy" decoding="async" />
-      <p class="footer-alt-tagline">Klimaresiliente Kaffeebohnen</p>
+      <p class="footer-alt-tagline">{footerTagline}</p>
     </div>
 
     <div class="footer-alt-content">
       <div class="footer-alt-col footer-alt-contact">
         <h3 class="footer-alt-label">Kontakt</h3>
-        <a href="mailto:info@hycoffee.com" class="footer-alt-link footer-alt-mono">info@hycoffee.com</a>
-        <a href="tel:+4901571234556" class="footer-alt-link footer-alt-mono">0049 (0) 157123 45 56</a>
+        <a href={`mailto:${email}`} class="footer-alt-link footer-alt-mono">{email}</a>
+        <a href={`tel:${telHref}`} class="footer-alt-link footer-alt-mono">{phone}</a>
 
-        <address class="footer-alt-address">
-          HyCoffee UG<br />
-          (haftungsbeschränkt)<br />
-          Tassilostraße 15<br />
-          82166 Gräfelfing<br />
-          Deutschland
-        </address>
+        <address class="footer-alt-address">{address}</address>
       </div>
 
       <nav class="footer-alt-col" aria-label="Footer Navigation">
@@ -50,8 +56,8 @@
 
       <div class="footer-alt-col">
         <h3 class="footer-alt-label">Folge uns</h3>
-        <a href="https://www.instagram.com/hycoffeeco/" target="_blank" rel="noopener noreferrer" class="footer-alt-link">Instagram</a>
-        <a href="https://de.linkedin.com/company/hycoffee" target="_blank" rel="noopener noreferrer" class="footer-alt-link">LinkedIn</a>
+        {instagramUrl && <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="footer-alt-link">Instagram</a>}
+        {linkedinUrl && <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" class="footer-alt-link">LinkedIn</a>}
       </div>
     </div>
     <p class="footer-alt-copyright">© 2026 HyCoffee. All rights reserved.</p>
@@ -259,6 +265,7 @@
   .footer-alt-address {
     margin-top: 42px;
     max-width: 360px;
+    white-space: pre-line;
   }
 
   .footer-alt-nav-legal {

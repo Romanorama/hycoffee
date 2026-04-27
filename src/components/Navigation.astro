@@ -1,4 +1,6 @@
 ---
+import { reader } from '../lib/cms';
+
 const pathname = Astro.url.pathname;
 const isWissenRoute = pathname === '/wissen' || pathname.startsWith('/wissen/');
 const isWissenIndex = pathname === '/wissen' || pathname === '/wissen/';
@@ -7,6 +9,12 @@ const isKaffeeRoute = pathname === '/kaffee' || pathname.startsWith('/kaffee/');
 const isOriginsRoute = pathname === '/origins' || pathname.startsWith('/origins/');
 const isUeberUnsRoute = pathname === '/ueber-uns' || pathname.startsWith('/ueber-uns/');
 const isWissenArticle = isWissenRoute && !isWissenIndex;
+
+const global = await reader.singletons.global.read();
+const email = global?.email ?? '';
+const phone = global?.phone ?? '';
+const contactLabel = global?.navContactLabel ?? 'KONTAKT';
+const telHref = phone.replace(/[^+\d]/g, '');
 ---
 
 <nav class={`nav${isHomeRoute ? ' nav-home' : ''}${isWissenArticle ? ' nav-light' : ''}`}>
@@ -43,7 +51,7 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
       aria-expanded="false"
       aria-controls="nav-contact-popover"
     >
-      <span class="nav-contact-label">KONTAKT</span>
+      <span class="nav-contact-label">{contactLabel}</span>
     </button>
     <div
       id="nav-contact-popover"
@@ -51,8 +59,8 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
       role="dialog"
       aria-label="Kontakt"
     >
-      <a href="mailto:info@hycoffee.de" class="nav-contact-item">info@hycoffee.de</a>
-      <a href="tel:+490157123456" class="nav-contact-item">0157 123456</a>
+      <a href={`mailto:${email}`} class="nav-contact-item">{email}</a>
+      <a href={`tel:${telHref}`} class="nav-contact-item">{phone}</a>
     </div>
   </div>
   <div class="nav-burger-wrap">
@@ -136,8 +144,8 @@ const isWissenArticle = isWissenRoute && !isWissenIndex;
         Über Uns
       </a>
       <div class="nav-mobile-contact">
-        <a href="mailto:info@hycoffee.de" class="nav-mobile-contact-item">info@hycoffee.de</a>
-        <a href="tel:+490157123456" class="nav-mobile-contact-item">0157 123456</a>
+        <a href={`mailto:${email}`} class="nav-mobile-contact-item">{email}</a>
+        <a href={`tel:${telHref}`} class="nav-mobile-contact-item">{phone}</a>
       </div>
       <div class="nav-mobile-lang" role="group" aria-label="Sprache wählen">
         <button type="button" class="nav-mobile-lang-option nav-mobile-lang-active" data-lang="de" aria-pressed="true"><span class="nav-lang-label">DE</span></button>

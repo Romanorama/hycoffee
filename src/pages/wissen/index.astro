@@ -3,14 +3,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
 import WissenCard from '../../components/WissenCard.astro';
-import { wissenArticles } from '../../lib/wissenArticles';
+import { getAllWissenArticles } from '../../lib/wissen';
+
+export const prerender = true;
+
+const articles = await getAllWissenArticles();
+const featuredArticle = articles[0];
 ---
 
-<BaseLayout title="Wissen – HyCoffee">
+<BaseLayout
+  title="Wissen – HyCoffee"
+  description="Hintergruende zu Klimawandel, klimaresilientem Kaffee, neuen Arten und wissenschaftlichen Entwicklungen entlang der Kaffee-Wertschoepfung."
+  ogImage={featuredArticle?.image ?? undefined}
+  ogImageAlt={featuredArticle?.title}
+>
   <Navigation />
   <main class="wissen">
     <div class="articles-grid">
-      {wissenArticles.map((article) => <WissenCard article={article} />)}
+      {articles.map((article) => <WissenCard article={article} />)}
     </div>
   </main>
   <Footer />

@@ -1,0 +1,58 @@
+heading: Datenschutzerklärung
+sections:
+  - heading: 1. Verantwortliche Stelle
+    body: |-
+      Verantwortlich für die Datenverarbeitung auf dieser Website ist:
+
+      HyCoffee UG (haftungsbeschränkt)
+      Tassilostraße 15
+      82166 Gräfelfing
+      Deutschland
+
+      E-Mail: [info@hycoffee.de](mailto:info@hycoffee.de)
+      Telefon: [+49 0157 123456](tel:+490157123456)
+  - heading: 2. Allgemeine Hinweise zur Datenverarbeitung
+    body: Wir verarbeiten personenbezogene Daten nur, soweit dies für die Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung erfolgt auf Grundlage der Datenschutz-Grundverordnung (DSGVO) und weiterer anwendbarer Datenschutzvorschriften.
+  - heading: 3. Hosting und Server-Logfiles
+    body: |-
+      Beim Aufruf dieser Website werden durch den Hosting-Anbieter automatisch Informationen in sogenannten Server-Logfiles erhoben und gespeichert. Dies betrifft insbesondere:
+
+      - Browsertyp und Browserversion
+      - verwendetes Betriebssystem
+      - Referrer-URL
+      - Hostname des zugreifenden Rechners
+      - Uhrzeit der Serveranfrage
+      - IP-Adresse
+
+      Diese Daten werden zur Gewährleistung der Sicherheit und Stabilität der Website verarbeitet (Art. 6 Abs. 1 lit. f DSGVO). Eine Zusammenführung dieser Daten mit anderen Datenquellen erfolgt nicht.
+  - heading: 4. Kontaktaufnahme
+    body: |-
+      Wenn Sie uns per E-Mail oder Telefon kontaktieren, verarbeiten wir die von Ihnen mitgeteilten Daten (z. B. Name, E-Mail-Adresse, Telefonnummer, Inhalt der Nachricht), um Ihre Anfrage zu bearbeiten.
+
+      Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen / Vertragserfüllung), soweit es um konkrete Geschäftsanbahnung geht, und im Übrigen Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung von Anfragen).
+  - heading: 5. Newsletter
+    body: |-
+      Sofern Sie sich für unseren Newsletter anmelden, verwenden wir Ihre E-Mail-Adresse ausschließlich für den Versand des Newsletters und ggf. für organisatorische Hinweise hierzu.
+
+      Rechtsgrundlage ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO. Sie können diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen, z. B. über einen Abmeldelink oder durch Nachricht an [info@hycoffee.de](mailto:info@hycoffee.de).
+  - heading: 6. Cookies und ähnliche Technologien
+    body: Diese Website kann technisch notwendige Cookies verwenden, um die Grundfunktionen und Sicherheit der Seite bereitzustellen. Sofern darüber hinaus Cookies oder Tracking-Technologien eingesetzt werden, erfolgt dies nur auf einer gültigen Rechtsgrundlage und ggf. nach entsprechender Einwilligung.
+  - heading: 7. Empfänger von Daten
+    body: Wir geben personenbezogene Daten nur dann an Dritte weiter, wenn dies zur Vertragserfüllung erforderlich ist, eine gesetzliche Verpflichtung besteht oder eine andere datenschutzrechtliche Grundlage dies erlaubt. Dienstleister werden, soweit erforderlich, im Rahmen einer Auftragsverarbeitung nach Art. 28 DSGVO eingebunden.
+  - heading: 8. Speicherdauer
+    body: Wir speichern personenbezogene Daten nur so lange, wie dies für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungsfristen bestehen.
+  - heading: 9. Ihre Rechte
+    body: |-
+      Sie haben nach der DSGVO insbesondere folgende Rechte:
+
+      - Recht auf Auskunft (Art. 15 DSGVO)
+      - Recht auf Berichtigung (Art. 16 DSGVO)
+      - Recht auf Löschung (Art. 17 DSGVO)
+      - Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)
+      - Recht auf Datenübertragbarkeit (Art. 20 DSGVO)
+      - Widerspruchsrecht gegen bestimmte Verarbeitungen (Art. 21 DSGVO)
+      - Recht auf Widerruf erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO)
+  - heading: 10. Beschwerderecht bei einer Aufsichtsbehörde
+    body: Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren, wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten rechtswidrig erfolgt.
+  - heading: 11. Stand und Änderungen
+    body: 'Stand dieser Datenschutzerklärung: April 2026. Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte Rechtslagen oder technische Entwicklungen anzupassen.'

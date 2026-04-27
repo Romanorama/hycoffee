@@ -3,106 +3,71 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
-import strip1 from '../assets/images/strip-1.webp';
-import strip2 from '../assets/images/strip-2.webp';
-import strip3 from '../assets/images/strip-3.webp';
-import strip4 from '../assets/images/strip-4.webp';
-import strip5 from '../assets/images/strip-5.webp';
-import strip6 from '../assets/images/strip-6.webp';
-import strip7 from '../assets/images/strip-7.webp';
-import strip8 from '../assets/images/strip-8.webp';
-import wissen1 from '../assets/images/origins-arabica-1.webp';
-import wissen2 from '../assets/images/ambe-anaerobic.webp';
-import wissen3 from '../assets/images/excelsa.webp';
-import wissen4 from '../assets/images/origins-excelsa-2.webp';
-import wissen5 from '../assets/images/origins-excelsa-1.webp';
-import wissen6 from '../assets/images/disco3.webp';
-import dsc5180 from '../assets/images/DSC_5180.webp';
-import dsc5182 from '../assets/images/DSC_5182.webp';
-import aboutGreenHero from '../assets/images/about-green-hero.webp';
+import { reader, resolveCmsImage } from '../lib/cms';
 
-const stripItems = [
-  { src: strip1, alt: 'Kaffeeanbau' },
-  { src: strip2, alt: 'Ernte' },
-  { src: strip3, alt: 'Verarbeitung' },
-  { src: strip4, alt: 'Pflanzen' },
-  { src: strip5, alt: 'Landschaft' },
-  { src: strip6, alt: 'Team' },
-  { src: strip7, alt: 'Farm' },
-  { src: strip8, alt: 'Bohnen' },
-  { src: wissen1, alt: 'Kaffee' },
-  { src: dsc5180, alt: 'Ernte' },
-  { src: wissen3, alt: 'Excelsa' },
-  { src: dsc5182, alt: 'Farm' },
-  { src: wissen5, alt: 'Sorten' },
-  { src: wissen2, alt: 'Agroforst' },
-  { src: wissen4, alt: 'Ostafrika' },
-  { src: wissen6, alt: 'Roestung' },
-];
+export const prerender = true;
+
+const data = await reader.singletons.ueberUns.read();
+if (!data) throw new Error('Über-uns singleton not found');
+
+const heroImage = resolveCmsImage(data.heroImage);
+if (!heroImage) throw new Error(`Hero image not found: ${data.heroImage}`);
+
+const stripImages = data.stripImages
+  .map((path) => resolveCmsImage(path))
+  .filter((img): img is NonNullable<typeof img> => img !== null);
+
+const storyParagraphs = data.storyBody.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+
+const teamEntries = await reader.collections.team.all();
+const teamMembers = teamEntries
+  .map(({ entry }) => entry)
+  .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+
+const telHref = (phone: string) => {
+  const clean = phone.replace(/\s/g, '');
+  if (clean.startsWith('+')) return `tel:${clean}`;
+  if (clean.startsWith('0')) return `tel:+49${clean.slice(1)}`;
+  return `tel:${clean}`;
+};
 ---
 
-<BaseLayout title="Über Uns – HyCoffee">
+<BaseLayout
+  title="Über Uns – HyCoffee"
+  description="Lerne das Team hinter HyCoffee kennen und erfahre, wie wir klimaresiliente Kaffees mit Forschung, Partnerschaften und direkter Zusammenarbeit voranbringen."
+  ogImage={heroImage}
+  ogImageAlt="Das HyCoffee Team"
+>
   <Navigation />
   <main class="about">
-    <!-- Photo Strip -->
     <div class="photo-strip">
       <div class="photo-strip-track">
-        {[...stripItems, ...stripItems].map((item) => (
-          <Image src={item.src} alt={item.alt} class="strip-img" widths={[200, 400]} sizes="200px" format="webp" quality={72} loading="lazy" decoding="async" />
+        {[...stripImages, ...stripImages].map((img) => (
+          <Image src={img} alt="" class="strip-img" widths={[200, 400]} sizes="200px" format="webp" quality={72} loading="lazy" decoding="async" />
         ))}
       </div>
     </div>
 
-    <!-- Split: sticky green left + scrollable right -->
     <div class="about-split">
       <aside class="about-split-left">
-        <Image src={aboutGreenHero} alt="Sophie und Charlotte" class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
+        <Image src={heroImage} alt="Sophie und Charlotte" class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
         <div class="about-hero-left-inner">
-          <p class="about-hero-text">
-            Wir sind Sophie und Charlotte.
-            Wir haben HyCoffee gegründet, weil der Kaffeesektor vor einer der größten
-            Herausforderungen seiner Zeit steht: dem Klimawandel. Steigende
-            Temperaturen, Dürren und neue Pflanzenkrankheiten setzen den Kaffeeanbau
-            weltweit unter Druck.
-          </p>
+          <p class="about-hero-text">{data.heroText}</p>
         </div>
       </aside>
 
       <div class="about-split-right">
         <section class="about-hero-right">
-          <h2 class="about-headline">Unsere Geschichte</h2>
-          <p class="about-body">
-            Wir arbeiten zwischen Ostafrika und Deutschland. Unser Fokus liegt auf
-            Klimaresilienz als konkrete Antwort auf die Frage, wie Kaffeeanbau
-            langfristig funktionieren kann. Gemeinsam mit Produzent:innen vor Ort
-            fördern wir widerstandsfähige Anbausysteme wie Agroforst und regenerative
-            Landwirtschaft. Gleichzeitig erschließen wir das Potenzial alternativer
-            Kaffeearten wie Excelsa – bisher kaum auf dem Markt, obwohl seit
-            Generationen angebaut.
-          </p>
-          <p class="about-body">
-            HyCoffee ist die Brücke zwischen Forschung und Praxis: wissenschaftliche
-            Erkenntnisse direkt auf die Farm, in die Lieferkette und in die Tasse.
-          </p>
-          <p class="about-body">
-            Sophie hat bei den Vereinten Nationen gearbeitet, bevor sie sich auf
-            Forschung zu Kaffee und Klimawandel spezialisierte. Die Entdeckung, dass
-            es längst klimaresiliente Kaffeearten gibt – kaum bekannt, kaum vermarktet
-            – ließ sie nicht mehr los. Forschen allein reichte ihr nicht.
-          </p>
-          <p class="about-body">
-            Charlotte hat in der internationalen Entwicklungszusammenarbeit gearbeitet
-            und berät internationale Organisationen und Stiftungen zu Strategie und
-            Partnerschaften. Sie kennt aus eigener Erfahrung, wie Privatsektor
-            Partnerschaften echten Wandel bewirken können. Ihr Antrieb: Trade instead
-            of Aid – faire Handelspartnerschaften statt Hilfe von außen.
-          </p>
+          <h2 class="about-headline">{data.storyHeading}</h2>
+          {storyParagraphs.map((paragraph) => (
+            <p class="about-body">{paragraph}</p>
+          ))}
         </section>
 
         <section class="origins-banner">
-          <p class="origins-banner-text">More Info about the Places we work with</p>
+          <p class="origins-banner-text">{data.originsBannerText}</p>
           <a href="/origins" class="btn-origins">
-            <span>Origins</span>
+            <span>{data.originsBannerCtaLabel}</span>
             <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
               <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -110,20 +75,17 @@ const stripItems = [
         </section>
 
         <section class="say-hy">
-          <p class="say-hy-heading">Say Hy:<br /><a href="mailto:info@hycoffee.de" class="say-hy-email">info@hycoffee.de</a></p>
+          <p class="say-hy-heading">{data.sayHiHeading}<br /><a href={`mailto:${data.sayHiEmail}`} class="say-hy-email">{data.sayHiEmail}</a></p>
         </section>
 
         <section class="contact-cards">
-          <div class="contact-card contact-card-yellow">
-            <p class="contact-name">Charlotte Schmidt</p>
-            <a href="mailto:charlotte@hycoffee.de" class="contact-detail">charlotte@hycoffee.de</a>
-            <a href="tel:+490157123456" class="contact-detail">0157123456</a>
-          </div>
-          <div class="contact-card contact-card-green">
-            <p class="contact-name">Sophie von Loeben</p>
-            <a href="mailto:sophie@hycoffee.de" class="contact-detail">sophie@hycoffee.de</a>
-            <a href="tel:+490157123456" class="contact-detail">0157123456</a>
-          </div>
+          {teamMembers.map((member, i) => (
+            <div class={`contact-card ${i === 0 ? 'contact-card-yellow' : 'contact-card-green'}`}>
+              <p class="contact-name">{member.name}</p>
+              <a href={`mailto:${member.email}`} class="contact-detail">{member.email}</a>
+              <a href={telHref(member.phone)} class="contact-detail">{member.phone}</a>
+            </div>
+          ))}
         </section>
 
         <a href="https://www.instagram.com/hycoffeeco/" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>
@@ -142,7 +104,6 @@ const stripItems = [
     filter: grayscale(100%);
     border-bottom: 1px solid var(--warm-dark-grey);
     position: sticky;
-    /* Keep the strip flush with the sticky nav/subbar area. */
     top: 84px;
     z-index: 5;
     margin-top: -1px;
@@ -230,6 +191,7 @@ const stripItems = [
     color: #f5f5f5;
     text-align: center;
     max-width: 700px;
+    white-space: pre-line;
   }
 
   .about-hero-right {

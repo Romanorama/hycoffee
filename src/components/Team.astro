@@ -1,21 +1,22 @@
 ---
 import { Image } from 'astro:assets';
-import team1 from '../assets/images/team-1.webp';
-import team2 from '../assets/images/team-2.webp';
-import team3 from '../assets/images/team-3.webp';
-import team4 from '../assets/images/team-4.webp';
-import team5 from '../assets/images/team-5.webp';
-import team6 from '../assets/images/team-6.webp';
-import team7 from '../assets/images/team-7.webp';
-import team8 from '../assets/images/team-8.webp';
+import type { ImageMetadata } from 'astro';
 
-const teamPhotos = [team5, team1, team8, team3, team6, team4, team7, team2];
+interface Props {
+  images: ImageMetadata[];
+  blurb: string;
+  missionHeading: string;
+  ctaLabel: string;
+}
+
+const { images, blurb, missionHeading, ctaLabel } = Astro.props;
+const doubled = [...images, ...images];
 ---
 
 <section class="team">
   <div class="team-photos">
     <div class="team-photos-track">
-      {[...teamPhotos, ...teamPhotos].map((photo) => (
+      {doubled.map((photo) => (
         <div class="team-photo-frame">
           <Image src={photo} alt="Team" loading="lazy" decoding="async" />
         </div>
@@ -24,18 +25,12 @@ const teamPhotos = [team5, team1, team8, team3, team6, team4, team7, team2];
   </div>
   <div class="team-content">
     <div class="team-text">
-      <p class="team-description">
-        Wir sind Sophie und Charlotte, die Gründerinnen von HyCoffee. Zwischen
-        Ostafrika und Deutschland arbeiten wir mit Produzent:innen, Röstereien und
-        der Wissenschaft zusammen, um klimaresiliente Anbausysteme zu fördern und
-        außergewöhnliche Kaffees auf den Markt zu bringen. Unser Ziel: eine faire
-        Kaffeebranche, die auch im Klimawandel bestehen kann.
-      </p>
+      <p class="team-description">{blurb}</p>
     </div>
     <div class="team-right">
-      <h2 class="team-heading">Unsere Mission</h2>
+      <h2 class="team-heading">{missionHeading}</h2>
       <a href="/ueber-uns" class="btn btn-secondary">
-        <span>Über uns</span>
+        <span>{ctaLabel}</span>
         <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
           <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>

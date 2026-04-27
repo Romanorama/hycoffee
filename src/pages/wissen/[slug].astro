@@ -2,33 +2,64 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
+import { toAbsoluteUrl } from '../../lib/seo';
+import { getAllWissenArticles, type WissenArticle } from '../../lib/wissen';
 
-export function getStaticPaths() {
-  return [
-    {
-      params: { slug: 'klimawandel-kaffeeanbau' },
-      props: {
-        article: {
-          category: 'Klimawandel',
-          date: 'March 25th 2026',
-          readTime: '6 Min Read',
-          title: 'Der Klimawandel und seine Folgen für den Kaffeeanbau',
-          subtitle: 'Bis zum Jahr 2050 könnte der Klimawandel die weltweit für Kaffeeanbau geeigneten Flächen um mehr als die Hälfte reduzieren',
-        },
-      },
-    },
-  ];
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const articles = await getAllWissenArticles();
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article, related: articles.filter((a) => a.slug !== article.slug).slice(0, 2) },
+  }));
 }
 
-const { article } = Astro.props;
+interface Props {
+  article: WissenArticle;
+  related: WissenArticle[];
+}
+const { article, related } = Astro.props;
+
+const articlePath = `/wissen/${article.slug}`;
+const paragraphs = article.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+
+const formatDate = (iso: string) => {
+  if (!iso) return '';
+  const [y, m, d] = iso.split('-');
+  const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  return `${parseInt(d, 10)}. ${months[parseInt(m, 10) - 1]} ${y}`;
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.subtitle,
+  datePublished: article.publishedAt,
+  mainEntityOfPage: toAbsoluteUrl(articlePath),
+  publisher: {
+    '@type': 'Organization',
+    name: 'HyCoffee',
+  },
+  ...(article.image ? { image: [toAbsoluteUrl(article.image.src)] } : {}),
+};
 ---
 
-<BaseLayout title={`${article.title} – HyCoffee`}>
+<BaseLayout
+  title={`${article.title} – HyCoffee`}
+  description={article.subtitle}
+  ogImage={article.image ?? undefined}
+  ogImageAlt={article.title}
+  type="article"
+  schema={articleSchema}
+  publishedTime={article.publishedAt}
+>
   <Navigation />
   <main class="article-page">
     <header class="article-header">
       <p class="article-meta">
-        {article.category} | {article.date} | {article.readTime}
+        {article.categoryLabel} | {formatDate(article.publishedAt)} | {article.readingTimeLabel}
       </p>
       <h1 class="article-title">{article.title}</h1>
       <p class="article-subtitle">{article.subtitle}</p>
@@ -36,76 +67,21 @@ const { article } = Astro.props;
 
     <div class="article-layout">
       <div class="article-body">
-        <p>
-          Die Kaffeepflanze ist stark von stabilen klimatischen Bedingungen abhängig
-          und gedeiht nur innerhalb eines engen Spektrums von Temperatur- und
-          Niederschlagsmustern.
-        </p>
-        <p>
-          Durch den Klimawandel verschieben sich diese Bedingungen jedoch zunehmend:
-          steigende Temperaturen, veränderte Regenzeiten und häufigere
-          Extremwetterereignisse beeinträchtigen Wachstum, Ertrag und Qualität der
-          Kaffeebohnen. Gleichzeitig begünstigen wärmere Klimazonen die Ausbreitung
-          von Schädlingen und Pflanzenkrankheiten, was die Produktion zusätzlich
-          erschwert.² Arabica und Robusta reagieren unterschiedlich auf klimatische
-          Veränderungen, sind jedoch beide stark davon betroffen. Arabica gedeiht
-          optimal bei Temperaturen zwischen 15 und 24 °C. Temperaturen über 24 °C
-          führen zu Stress für die Pflanze und können sie erheblich schädigen.
-          Robusta ist zwar hitzetoleranter als Arabica und wächst idealerweise bei
-          22 bis 28 °C, reagiert jedoch deutlich empfindlicher auf niedrigere
-          Temperaturen.³
-        </p>
-
-        <figure class="article-figure">
-          <div class="article-image-placeholder"></div>
-          <figcaption>Bildunterschrift</figcaption>
-        </figure>
-
-        <p>
-          Beide Arten sind zudem auf ein bestimmtes jährliches Niederschlagsmuster
-          angewiesen – mit einigen Monaten geringer Regenmengen oder sogar relativer
-          Trockenheit. Schon kleine Veränderungen dieser optimalen Bedingungen können
-          Erträge und Qualität direkt negativ beeinflussen. Aktuelle Forschung zeigt,
-          dass sich diese optimalen Anbaubedingungen bereits verändern – und sich in
-          Zukunft weiter verschieben werden. Bis 2050 könnte der Klimawandel die
-          weltweit geeigneten Anbauflächen für Kaffee um mehr als die Hälfte
-          reduzieren.⁴ Gleichzeitig steigt die globale Nachfrage nach Kaffee stetig.
-          Ein großer Teil dieser Belastung trifft Kleinbäuerinnen und Kleinbauern
-          sowie ihre Familien, deren Lebensgrundlage direkt vom Kaffeeanbau abhängt.
-          Grüne Kaffeebohnen, die von Dürre betroffen sind (links), und solche ohne
-          Dürreschäden (rechts).
-        </p>
-        <p>
-          <strong>Wilde und hybride Kaffees für einen klimaresilienten Kaffeesektor</strong><br />
-          Wusstet ihr, dass von über 130 bekannten Coffea-Arten weltweit nur zwei
-          kommerziell genutzt werden – Arabica und Robusta?
-        </p>
-        <p>
-          Das geringe Interesse an wilden Kaffeearten setzt viele von ihnen einem
-          hohen Aussterberisiko aus.⁵ Gleichzeitig können genau diese Arten eine
-          wichtige Rolle dabei spielen, den Kaffeeanbau an den Klimawandel
-          anzupassen. Die genetischen Eigenschaften dieser Pflanzen sind entscheidend,
-          damit Wissenschaftler klimaresiliente Kaffeevarietäten entwickeln können.
-          Einige wilde Kaffeearten – etwa Excelsa oder der erst kürzlich
-          wiederentdeckte Stenophylla-Kaffee – bieten sogar eine geschmacklich
-          interessante und zugleich Dürre-tolerante Alternative zu Arabica und Robusta.
-        </p>
+        {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
       </div>
 
-      <aside class="article-sidebar">
-        <div class="sidebar-divider"></div>
-        <p class="sidebar-label">RELATED</p>
-        <div class="related-article">
-          <a href="#" class="related-title">Titel des Artikels</a>
-          <div class="related-image-placeholder"></div>
-          <p class="related-caption">Bildunterschrift</p>
-        </div>
-        <div class="related-article">
-          <a href="#" class="related-title">Titel des Artikels</a>
-          <div class="related-image-placeholder"></div>
-          <p class="related-caption">Bildunterschrift</p>
-        </div>
-      </aside>
+      {related.length > 0 && (
+        <aside class="article-sidebar">
+          <div class="sidebar-divider"></div>
+          <p class="sidebar-label">RELATED</p>
+          {related.map((other) => (
+            <div class="related-article">
+              <a href={other.href} class="related-title">{other.title}</a>
+              <p class="related-caption">{other.categoryLabel} · {other.readingTimeLabel}</p>
+            </div>
+          ))}
+        </aside>
+      )}
     </div>
   </main>
   <Footer />

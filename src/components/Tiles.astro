@@ -1,37 +1,36 @@
 ---
+interface Tile {
+  category: string;
+  heading: string;
+  body: string;
+  ctaLabel: string;
+  ctaUrl: string;
+  color: 'violet' | 'green';
+}
 
+interface Props {
+  tiles: Tile[];
+}
+
+const { tiles } = Astro.props;
 ---
 
 <section class="tiles">
-  <div class="tile tile-violet">
-    <span class="caption">ROHKAFFEE ANGEBOT</span>
-    <h3>Kaffee,<br />der bleibt</h3>
-    <p class="tile-text">
-      Die Zukunft des Kaffees beginnt mit neuen Arten. Excelsa ist eine seltene,
-      klimaresiliente Kaffeeart mit neuen Geschmacksprofilen und Zukunft für den
-      Kaffeeanbau.
-    </p>
-    <a href="/kaffee" class="btn btn-secondary">
-      <span>Unserer Kaffee</span>
-      <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-        <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </div>
-  <div class="tile tile-green">
-    <span class="caption">ORIGINS</span>
-    <h3>Gemeinsam<br />in die Zukunft</h3>
-    <p class="tile-text">
-      Durch faire Partnerschaften, klimaresiliente Anbausysteme und bessere
-      Marktchancen stärken wir die Zukunft des Kaffeeanbaus.
-    </p>
-    <a href="/origins" class="btn btn-secondary">
-      <span>Unsere Origins</span>
-      <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
-        <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </div>
+  {
+    tiles.map((tile) => (
+      <div class={`tile tile-${tile.color}`}>
+        <span class="caption">{tile.category}</span>
+        <h3>{tile.heading}</h3>
+        <p class="tile-text">{tile.body}</p>
+        <a href={tile.ctaUrl} class="btn btn-secondary">
+          <span>{tile.ctaLabel}</span>
+          <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    ))
+  }
 </section>
 
 <style>
@@ -89,6 +88,7 @@
     line-height: 0.92;
     font-weight: 400;
     margin-top: 8px;
+    white-space: pre-line;
   }
 
   .tile-text {

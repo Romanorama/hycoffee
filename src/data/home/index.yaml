@@ -1,0 +1,46 @@
+heroHeadline: Wir erforschen, entwickeln und liefern klimareslienten Rohkaffee.
+heroImage: ../assets/images/cms/home/hero.webp
+heroCtaLabel: Jetzt Kaffee Kaufen
+heroCtaUrl: /kaffee
+tiles:
+  - category: ROHKAFFEE ANGEBOT
+    heading: |-
+      Kaffee,
+      der bleibt
+    body: Die Zukunft des Kaffees beginnt mit neuen Arten. Excelsa ist eine seltene, klimaresiliente Kaffeeart mit neuen Geschmacksprofilen und Zukunft für den Kaffeeanbau.
+    ctaLabel: Unserer Kaffee
+    ctaUrl: /kaffee
+    color: violet
+  - category: ORIGINS
+    heading: |-
+      Gemeinsam
+      in die Zukunft
+    body: Durch faire Partnerschaften, klimaresiliente Anbausysteme und bessere Marktchancen stärken wir die Zukunft des Kaffeeanbaus.
+    ctaLabel: Unsere Origins
+    ctaUrl: /origins
+    color: green
+valuesHeading: |-
+  Klimaresilienz
+  ist Qualität
+valuesBody: Klimawandel bedroht den Kaffeeanbau. Wir importieren klimaresilienten Spezialitäten Kaffee in langfristigen Partnschaften mit Produzent:innen vor Ort.
+teamStripImages:
+  - ../assets/images/cms/team-strip/team-5.webp
+  - ../assets/images/cms/team-strip/team-1.webp
+  - ../assets/images/cms/team-strip/team-8.webp
+  - ../assets/images/cms/team-strip/team-3.webp
+  - ../assets/images/cms/team-strip/team-6.webp
+  - ../assets/images/cms/team-strip/team-4.webp
+  - ../assets/images/cms/team-strip/team-7.webp
+  - ../assets/images/cms/team-strip/team-2.webp
+teamBlurb: "Wir sind Sophie und Charlotte, die Gründerinnen von HyCoffee. Zwischen Ostafrika und Deutschland arbeiten wir mit Produzent:innen, Röstereien und der Wissenschaft zusammen, um klimaresiliente Anbausysteme zu fördern und außergewöhnliche Kaffees auf den Markt zu bringen. Unser Ziel: eine faire Kaffeebranche, die auch im Klimawandel bestehen kann."
+teamMissionHeading: Unsere Mission
+teamCtaLabel: Über uns
+speciesHeading: Es gibt 130 bekannte Kaffeearten, viele davon werden nicht kommerziell genutzt. Noch nicht.
+speciesExpandedPhoto: ../assets/images/cms/home/species-discovery.jpeg
+speciesExpandedBody: Von über 130 bekannten Coffea-Arten werden heute nur wenige kommerziell genutzt.
+scienceLabel: WISSEN
+scienceHeading: Zwischen Forschung und Markt
+scienceBody: Wir verbinden wissenschaftliche Erkenntnisse mit der Praxis des Kaffeeanbaus. In unseren Artikeln teilen wir neue Erkenntnisse und Perspektiven aus unserer Arbeit.
+scienceCtaLabel: Zu den Artikeln
+scienceFeaturedArticles: []
+pressHeading: HyCoffee in den Medien

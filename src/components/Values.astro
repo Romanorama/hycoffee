@@ -1,17 +1,16 @@
 ---
+interface Props {
+  heading: string;
+  body: string;
+}
 
+const { heading, body } = Astro.props;
 ---
 
 <section class="values">
   <div class="values-inner">
-    <h2 class="values-heading">
-      Klimaresilienz<br />ist Qualität
-    </h2>
-    <p class="values-text">
-      Klimawandel bedroht den Kaffeeanbau. Wir importieren klimaresilienten
-      Spezialitäten Kaffee in langfristigen Partnschaften mit Produzent:innen
-      vor Ort.
-    </p>
+    <h2 class="values-heading">{heading}</h2>
+    <p class="values-text">{body}</p>
   </div>
 </section>
 
@@ -39,6 +38,7 @@
     font-weight: 400;
     color: var(--warm-dark-grey);
     margin-bottom: 32px;
+    white-space: pre-line;
   }
 
   .values-text {
