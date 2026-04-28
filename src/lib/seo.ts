@@ -4,6 +4,8 @@ export const SITE_URL = 'https://hycoffee.de';
 export const SITE_NAME = 'HyCoffee';
 export const DEFAULT_DESCRIPTION =
   'HyCoffee importiert klimaresiliente Spezialitaetenkaffees und verbindet Kaffeehandel mit Klimaanpassung, Forschung und fairen Lieferketten.';
+export const DEFAULT_DESCRIPTION_EN =
+  'HyCoffee imports climate-resilient specialty coffees and connects coffee trade with climate adaptation, research, and fair supply chains.';
 
 export function toAbsoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
@@ -28,13 +30,14 @@ export function getBaseSchemas() {
       '@type': 'WebSite',
       name: SITE_NAME,
       url: SITE_URL,
-      inLanguage: 'de-DE',
+      inLanguage: ['de-DE', 'en-US'],
     },
   ];
 }
 
 export async function getSitemapPaths() {
   const articles = await getAllWissenArticles();
+  const englishArticles = await getAllWissenArticles('en');
   return Array.from(
     new Set([
       '/',
@@ -43,6 +46,12 @@ export async function getSitemapPaths() {
       '/ueber-uns',
       '/wissen',
       ...articles.map((article) => article.href),
+      '/en/',
+      '/en/coffee',
+      '/en/origins',
+      '/en/about',
+      '/en/knowledge',
+      ...englishArticles.map((article) => article.href),
     ]),
   );
 }

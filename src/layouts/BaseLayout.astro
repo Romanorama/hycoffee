@@ -7,6 +7,7 @@ import {
   getBaseSchemas,
   toAbsoluteUrl,
 } from '../lib/seo';
+import { DEFAULT_LANG, getLocalizedPath, locales, type Lang } from '../lib/i18n';
 
 interface Props {
   title: string;
@@ -22,6 +23,7 @@ interface Props {
   schema?: Record<string, unknown> | Record<string, unknown>[];
   publishedTime?: string;
   modifiedTime?: string;
+  lang?: Lang;
 }
 
 const {
@@ -38,6 +40,7 @@ const {
   schema,
   publishedTime,
   modifiedTime,
+  lang = DEFAULT_LANG,
 } = Astro.props;
 
 const preload = preloadImage
@@ -73,9 +76,15 @@ const ogImageUrl = resolvedOgImage
 
 const robots = noindex ? 'noindex,follow' : 'index,follow';
 const schemas = [...getBaseSchemas(), ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
+const alternateDe = Astro.site
+  ? new URL(getLocalizedPath(Astro.url.pathname, 'de'), Astro.site).toString()
+  : toAbsoluteUrl(getLocalizedPath(Astro.url.pathname, 'de'));
+const alternateEn = Astro.site
+  ? new URL(getLocalizedPath(Astro.url.pathname, 'en'), Astro.site).toString()
+  : toAbsoluteUrl(getLocalizedPath(Astro.url.pathname, 'en'));
 ---
 
-<html lang="de">
+<html lang={locales[lang].html}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -86,8 +95,11 @@ const schemas = [...getBaseSchemas(), ...(schema ? (Array.isArray(schema) ? sche
     <meta name="robots" content={robots} />
     <meta name="googlebot" content={robots} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="de" href={alternateDe} />
+    <link rel="alternate" hreflang="en" href={alternateEn} />
+    <link rel="alternate" hreflang="x-default" href={alternateDe} />
     <meta property="og:site_name" content={SITE_NAME} />
-    <meta property="og:locale" content="de_DE" />
+    <meta property="og:locale" content={locales[lang].og} />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

@@ -16,6 +16,7 @@ export const prerender = true;
 
 const home = await reader.singletons.home.read();
 if (!home) throw new Error('Home singleton not found');
+const content = home.contentDe;
 
 const heroImage = resolveCmsImage(home.heroImage);
 if (!heroImage) throw new Error(`Hero image not found: ${home.heroImage}`);
@@ -27,11 +28,11 @@ const teamStripImages = home.teamStripImages
   .map((path) => resolveCmsImage(path))
   .filter((img): img is NonNullable<typeof img> => img !== null);
 
-const tiles = home.tiles.map((tile) => ({
-  category: tile.category,
-  heading: tile.heading,
-  body: tile.body,
-  ctaLabel: tile.ctaLabel,
+const tiles = home.tiles.map((tile, index) => ({
+  category: content.tiles[index]?.category,
+  heading: content.tiles[index]?.heading,
+  body: content.tiles[index]?.body,
+  ctaLabel: content.tiles[index]?.ctaLabel,
   ctaUrl: tile.ctaUrl,
   color: tile.color,
 }));
@@ -41,7 +42,7 @@ const tiles = home.tiles.map((tile) => ({
   title="HyCoffee – Klimaresilienter Rohkaffee"
   description="HyCoffee verbindet klimaresilienten Rohkaffee mit fairen Lieferketten, Forschung und neuen Kaffeearten fuer eine widerstandsfaehigere Zukunft des Kaffees."
   ogImage={heroImage}
-  ogImageAlt={home.heroHeadline}
+  ogImageAlt={content.heroHeadline}
   preloadImage={heroImage}
   preloadImageSizes="(max-width: 768px) 100vw, 50vw"
 >
@@ -49,32 +50,33 @@ const tiles = home.tiles.map((tile) => ({
   <main class="home-main">
     <div class="home-nav-underlay" aria-hidden="true"></div>
     <Hero
-      headline={home.heroHeadline}
+      headline={content.heroHeadline}
       image={heroImage}
-      ctaLabel={home.heroCtaLabel}
+      ctaLabel={content.heroCtaLabel}
       ctaUrl={home.heroCtaUrl}
     />
     <Tiles tiles={tiles} />
-    <Values heading={home.valuesHeading} body={home.valuesBody} />
+    <Values heading={content.valuesHeading} body={content.valuesBody} />
     <Team
       images={teamStripImages}
-      blurb={home.teamBlurb}
-      missionHeading={home.teamMissionHeading}
-      ctaLabel={home.teamCtaLabel}
+      blurb={content.teamBlurb}
+      missionHeading={content.teamMissionHeading}
+      ctaLabel={content.teamCtaLabel}
+      ctaUrl="/ueber-uns"
     />
     <SpeciesDiscovery
-      heading={home.speciesHeading}
+      heading={content.speciesHeading}
       photo={speciesPhoto}
-      body={home.speciesExpandedBody}
+      body={content.speciesExpandedBody}
     />
     <Science
-      label={home.scienceLabel}
-      heading={home.scienceHeading}
-      body={home.scienceBody}
-      ctaLabel={home.scienceCtaLabel}
+      label={content.scienceLabel}
+      heading={content.scienceHeading}
+      body={content.scienceBody}
+      ctaLabel={content.scienceCtaLabel}
     />
     <Banner />
-    <Press heading={home.pressHeading} />
+    <Press heading={content.pressHeading} />
   </main>
   <Footer />
 </BaseLayout>

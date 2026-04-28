@@ -1,20 +1,45 @@
 ---
 import { reader } from '../lib/cms';
+import { DEFAULT_LANG, getLangFromPath, getLocalizedPath, getNavPath, ui, type Lang } from '../lib/i18n';
 
 const pathname = Astro.url.pathname;
-const isWissenRoute = pathname === '/wissen' || pathname.startsWith('/wissen/');
-const isWissenIndex = pathname === '/wissen' || pathname === '/wissen/';
-const isHomeRoute = pathname === '/';
-const isKaffeeRoute = pathname === '/kaffee' || pathname.startsWith('/kaffee/');
-const isOriginsRoute = pathname === '/origins' || pathname.startsWith('/origins/');
-const isUeberUnsRoute = pathname === '/ueber-uns' || pathname.startsWith('/ueber-uns/');
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang ?? getLangFromPath(pathname) ?? DEFAULT_LANG;
+const copy = ui[lang];
+const normalizedPathname = pathname.replace(/\/+$/, '') || '/';
+const isWissenRoute = normalizedPathname === getNavPath('knowledge', lang) || normalizedPathname.startsWith(`${getNavPath('knowledge', lang)}/`);
+const isWissenIndex = normalizedPathname === getNavPath('knowledge', lang);
+const isHomeRoute = normalizedPathname === getNavPath('home', lang).replace(/\/+$/, '') || (lang === 'en' && normalizedPathname === '/en');
+const isKaffeeRoute = normalizedPathname === getNavPath('coffee', lang) || normalizedPathname.startsWith(`${getNavPath('coffee', lang)}/`);
+const isOriginsRoute = normalizedPathname === getNavPath('origins', lang) || normalizedPathname.startsWith(`${getNavPath('origins', lang)}/`);
+const isUeberUnsRoute = normalizedPathname === getNavPath('about', lang) || normalizedPathname.startsWith(`${getNavPath('about', lang)}/`);
 const isWissenArticle = isWissenRoute && !isWissenIndex;
 
 const global = await reader.singletons.global.read();
 const email = global?.email ?? '';
 const phone = global?.phone ?? '';
-const contactLabel = global?.navContactLabel ?? 'KONTAKT';
+const globalContent = lang === 'en' ? (global?.contentEn ?? global?.contentDe) : global?.contentDe;
+const contactLabel = globalContent?.navContactLabel ?? copy.contact.toUpperCase();
 const telHref = phone.replace(/[^+\d]/g, '');
+const dePath = getLocalizedPath(pathname, 'de');
+const enPath = getLocalizedPath(pathname, 'en');
+const langOptions = [
+  { code: 'de' as const, href: dePath, label: 'DE' },
+  { code: 'en' as const, href: enPath, label: 'EN' },
+];
+const filterLabels = lang === 'en'
+  ? ['Climate change', 'Climate-resilient coffee', 'Excelsa']
+  : ['Klimawandel', 'Klimaresilienter Kaffee', 'Excelsa'];
+const navLinks = [
+  { href: getNavPath('home', lang), label: copy.nav.home, active: isHomeRoute },
+  { href: getNavPath('coffee', lang), label: copy.nav.coffee, active: isKaffeeRoute },
+  { href: getNavPath('knowledge', lang), label: copy.nav.knowledge, active: isWissenRoute },
+  { href: getNavPath('origins', lang), label: copy.nav.origins, active: isOriginsRoute },
+  { href: getNavPath('about', lang), label: copy.nav.about, active: isUeberUnsRoute },
+];
 ---
 
 <nav class={`nav${isHomeRoute ? ' nav-home' : ''}${isWissenArticle ? ' nav-light' : ''}`}>
@@ -24,23 +49,17 @@ const telHref = phone.replace(/[^+\d]/g, '');
         <img src="/images/logo-light.svg" alt="HyCoffee" width="127" height="30" decoding="async" />
       </a>
     </div>
-    <div class="nav-lang" role="group" aria-label="Sprache wählen">
-      <button
-        type="button"
-        class="nav-lang-option nav-lang-active"
-        data-lang="de"
-        aria-pressed="true"
-      >
-        <span class="nav-lang-label">DE</span>
-      </button>
-      <button
-        type="button"
-        class="nav-lang-option nav-lang-inactive"
-        data-lang="en"
-        aria-pressed="false"
-      >
-        <span class="nav-lang-label">EN</span>
-      </button>
+    <div class={`nav-lang${lang === 'en' ? ' is-en' : ''}`} role="group" aria-label="Sprache wählen">
+      {langOptions.map((option) => (
+        <a
+          href={option.href}
+          class={`nav-lang-option ${option.code === lang ? 'nav-lang-active' : 'nav-lang-inactive'}`}
+          data-lang={option.code}
+          aria-current={option.code === lang ? 'true' : undefined}
+        >
+          <span class="nav-lang-label">{option.label}</span>
+        </a>
+      ))}
     </div>
   </div>
   <div class="nav-contact-wrap">
@@ -70,86 +89,45 @@ const telHref = phone.replace(/[^+\d]/g, '');
   </div>
   <div class="nav-bottom">
     <div class="nav-links">
-      <a
-        href="/"
-        class={`nav-link${isHomeRoute ? ' nav-link-active' : ''}`}
-        aria-current={isHomeRoute ? 'page' : undefined}
-      >
-        Home
-      </a>
-      <span class="nav-divider"></span>
-      <a
-        href="/kaffee"
-        class={`nav-link${isKaffeeRoute ? ' nav-link-active' : ''}`}
-        aria-current={isKaffeeRoute ? 'page' : undefined}
-      >
-        Kaffee kaufen
-      </a>
-      <span class="nav-divider"></span>
-      <a
-        href="/wissen"
-        class={`nav-link${isWissenRoute ? ' nav-link-active' : ''}`}
-        aria-current={isWissenRoute ? 'page' : undefined}
-      >
-        Wissen
-      </a>
-      <span class="nav-divider"></span>
-      <a
-        href="/origins"
-        class={`nav-link${isOriginsRoute ? ' nav-link-active' : ''}`}
-        aria-current={isOriginsRoute ? 'page' : undefined}
-      >
-        Origins
-      </a>
-      <span class="nav-divider"></span>
-      <a
-        href="/ueber-uns"
-        class={`nav-link${isUeberUnsRoute ? ' nav-link-active' : ''}`}
-        aria-current={isUeberUnsRoute ? 'page' : undefined}
-      >
-        Über Uns
-      </a>
+      {navLinks.map((link, index) => (
+        <>
+          {index > 0 && <span class="nav-divider"></span>}
+          <a
+            href={link.href}
+            class={`nav-link${link.active ? ' nav-link-active' : ''}`}
+            aria-current={link.active ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        </>
+      ))}
     </div>
   </div>
   <div class="nav-mobile-overlay">
     <div class="nav-mobile-links">
-      <a
-        href="/"
-        class={`nav-mobile-link${isHomeRoute ? ' nav-mobile-link-active' : ''}`}
-      >
-        Home
-      </a>
-      <a
-        href="/kaffee"
-        class={`nav-mobile-link${isKaffeeRoute ? ' nav-mobile-link-active' : ''}`}
-      >
-        Kaffee kaufen
-      </a>
-      <a
-        href="/wissen"
-        class={`nav-mobile-link${isWissenRoute ? ' nav-mobile-link-active' : ''}`}
-      >
-        Wissen
-      </a>
-      <a
-        href="/origins"
-        class={`nav-mobile-link${isOriginsRoute ? ' nav-mobile-link-active' : ''}`}
-      >
-        Origins
-      </a>
-      <a
-        href="/ueber-uns"
-        class={`nav-mobile-link${isUeberUnsRoute ? ' nav-mobile-link-active' : ''}`}
-      >
-        Über Uns
-      </a>
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class={`nav-mobile-link${link.active ? ' nav-mobile-link-active' : ''}`}
+        >
+          {link.label}
+        </a>
+      ))}
       <div class="nav-mobile-contact">
         <a href={`mailto:${email}`} class="nav-mobile-contact-item">{email}</a>
         <a href={`tel:${telHref}`} class="nav-mobile-contact-item">{phone}</a>
       </div>
-      <div class="nav-mobile-lang" role="group" aria-label="Sprache wählen">
-        <button type="button" class="nav-mobile-lang-option nav-mobile-lang-active" data-lang="de" aria-pressed="true"><span class="nav-lang-label">DE</span></button>
-        <button type="button" class="nav-mobile-lang-option nav-mobile-lang-inactive" data-lang="en" aria-pressed="false"><span class="nav-lang-label">EN</span></button>
+      <div class={`nav-mobile-lang${lang === 'en' ? ' is-en' : ''}`} role="group" aria-label="Sprache wählen">
+        {langOptions.map((option) => (
+          <a
+            href={option.href}
+            class={`nav-mobile-lang-option ${option.code === lang ? 'nav-mobile-lang-active' : 'nav-mobile-lang-inactive'}`}
+            data-lang={option.code}
+            aria-current={option.code === lang ? 'true' : undefined}
+          >
+            <span class="nav-lang-label">{option.label}</span>
+          </a>
+        ))}
       </div>
     </div>
   </div>
@@ -157,22 +135,12 @@ const telHref = phone.replace(/[^+\d]/g, '');
     <div class="nav-filter">
       <div class="nav-filter-inner">
         <div class="nav-filter-links">
-          <button type="button" class="nav-filter-pill">
-            <span>Klimawandel</span>
-            <span class="pill-close">×</span>
-          </button>
-          <button type="button" class="nav-filter-pill">
-            <span>Klimaresilienter Kaffee</span>
-            <span class="pill-close">×</span>
-          </button>
-          <button type="button" class="nav-filter-pill">
-            <span>Excelsa</span>
-            <span class="pill-close">×</span>
-          </button>
-          <button type="button" class="nav-filter-pill">
-            <span>Lorem Ipsum</span>
-            <span class="pill-close">×</span>
-          </button>
+          {filterLabels.map((label) => (
+            <button type="button" class="nav-filter-pill">
+              <span>{label}</span>
+              <span class="pill-close">×</span>
+            </button>
+          ))}
         </div>
       </div>
     </div>

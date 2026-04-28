@@ -1,8 +1,59 @@
-pageHeading: Rohkaffee Angebot
-pageIntro: 'Vier Kaffees aus Uganda: expressive Arabicas aus regenerativen Anbausystemen und Excelsa als klimaresiliente Alternative mit eigenem sensorischem Profil.'
-samplesSoldOut: true
-soldOutPopupKicker: Samples
-soldOutPopupTitle: Sample Box gerade vergriffen
-soldOutPopupCopy: Unsere Muster sind im Moment ausverkauft. Schreib uns kurz, dann reservieren wir dir die nächste Box und melden uns, sobald neue Samples bereitstehen.
-soldOutPopupPrimaryLabel: Benachrichtige mich
-soldOutPopupPrimaryHref: 'mailto:info@hycoffee.de?subject=Sample%20Box%20Warteliste'
+contentDe:
+  pageHeading: Rohkaffee Angebot
+  pageIntro: >-
+    Vier Kaffees aus Uganda: expressive Arabicas aus regenerativen Anbausystemen
+    und Excelsa als klimaresiliente Alternative mit eigenem sensorischem Profil.
+  tableNameLabel: Name
+  tableSpeciesLabel: Art
+  tableCountryLabel: Land
+  tableScoreLabel: Score
+  tableProcessLabel: Verarbeitung
+  addSampleLabel: Sample hinzufügen
+  addedSampleLabel: Hinzugefügt
+  soldOutLabel: Ausverkauft
+  productSheetLabel: Product Sheet
+  checkoutButtonLabel: Anfragen
+  checkoutEmptyLabel: 0 Samples ausgewählt
+  checkoutSoldOutLabel: Samples ausverkauft
+  checkoutSingleLabel: 1 Sample ausgewählt
+  checkoutMultipleLabel: '{count} Samples ausgewählt'
+  soldOutPopupKicker: Samples
+  soldOutPopupTitle: Sample Box gerade vergriffen
+  soldOutPopupCopy: >-
+    Unsere Muster sind im Moment ausverkauft. Schreib uns kurz, dann reservieren
+    wir dir die nächste Box und melden uns, sobald neue Samples bereitstehen.
+  soldOutPopupPrimaryLabel: Benachrichtige mich
+  soldOutPopupPrimaryHref: mailto:info@hycoffee.de?subject=Sample%20Box%20Warteliste
+contentEn:
+  pageHeading: "Our Green Coffee Selection\_"
+  pageIntro: >-
+    The future of coffee begins with new species, varieties, and
+    climate-resilient cultivation. We focus on the cultivation and trade of
+    climate-resilient coffee. This includes, for example, Arabica grown in
+    climate-resilient farming systems such as agroforestry, as well as Excelsa
+    (Coffea dewevrei)—a rare coffee species that is significantly more resistant
+    to heat, drought, and climate stress. For roasteries, this opens up new
+    flavor profiles and a climate-resilient supply chain—for farmers, a
+    long-term perspective.
+  tableNameLabel: Name
+  tableSpeciesLabel: Species
+  tableCountryLabel: Country
+  tableScoreLabel: Score
+  tableProcessLabel: Process
+  addSampleLabel: Add Sample
+  addedSampleLabel: Added
+  soldOutLabel: Sold out
+  productSheetLabel: Product Sheet
+  checkoutButtonLabel: Check out
+  checkoutEmptyLabel: 0 samples added
+  checkoutSoldOutLabel: Samples sold out
+  checkoutSingleLabel: 1 sample added
+  checkoutMultipleLabel: '{count} samples added'
+  soldOutPopupKicker: Samples
+  soldOutPopupTitle: Sample box currently sold out
+  soldOutPopupCopy: >-
+    Our samples are currently sold out. Send us a quick note and we will reserve
+    the next box for you as soon as new samples are ready.
+  soldOutPopupPrimaryLabel: Notify me
+  soldOutPopupPrimaryHref: mailto:info@hycoffee.de?subject=Sample%20Box%20Waitlist
+samplesSoldOut: false

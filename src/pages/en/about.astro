@@ -1,15 +1,16 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
-import { reader, resolveCmsImage } from '../lib/cms';
+import { reader, resolveCmsImage } from '../../lib/cms';
 
 export const prerender = true;
 
 const data = await reader.singletons.ueberUns.read();
 if (!data) throw new Error('Über-uns singleton not found');
-const content = data.contentDe;
+const content = data.contentEn ?? data.contentDe;
+const fallbackContent = data.contentDe;
 
 const heroImage = resolveCmsImage(data.heroImage);
 if (!heroImage) throw new Error(`Hero image not found: ${data.heroImage}`);
@@ -18,7 +19,8 @@ const stripImages = data.stripImages
   .map((path) => resolveCmsImage(path))
   .filter((img): img is NonNullable<typeof img> => img !== null);
 
-const storyParagraphs = content.storyBody.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+const storyBody = content.storyBody || fallbackContent.storyBody;
+const storyParagraphs = storyBody.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 
 const teamEntries = await reader.collections.team.all();
 const teamMembers = teamEntries
@@ -34,12 +36,13 @@ const telHref = (phone: string) => {
 ---
 
 <BaseLayout
-  title="Über Uns – HyCoffee"
-  description="Lerne das Team hinter HyCoffee kennen und erfahre, wie wir klimaresiliente Kaffees mit Forschung, Partnerschaften und direkter Zusammenarbeit voranbringen."
+  lang="en"
+  title="About – HyCoffee"
+  description="Meet the team behind HyCoffee and learn how we advance climate-resilient coffees through research, partnerships, and direct collaboration."
   ogImage={heroImage}
-  ogImageAlt="Das HyCoffee Team"
+  ogImageAlt="The HyCoffee team"
 >
-  <Navigation />
+  <Navigation lang="en" />
   <main class="about">
     <div class="photo-strip">
       <div class="photo-strip-track">
@@ -53,22 +56,22 @@ const telHref = (phone: string) => {
       <aside class="about-split-left">
         <Image src={heroImage} alt="Sophie und Charlotte" class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
         <div class="about-hero-left-inner">
-          <p class="about-hero-text">{content.heroText}</p>
+          <p class="about-hero-text">{content.heroText || fallbackContent.heroText}</p>
         </div>
       </aside>
 
       <div class="about-split-right">
         <section class="about-hero-right">
-          <h2 class="about-headline">{content.storyHeading}</h2>
+          <h2 class="about-headline">{content.storyHeading || fallbackContent.storyHeading}</h2>
           {storyParagraphs.map((paragraph) => (
             <p class="about-body">{paragraph}</p>
           ))}
         </section>
 
         <section class="origins-banner">
-          <p class="origins-banner-text">{content.originsBannerText}</p>
-          <a href="/origins" class="btn-origins">
-            <span>{content.originsBannerCtaLabel}</span>
+          <p class="origins-banner-text">{content.originsBannerText || fallbackContent.originsBannerText}</p>
+          <a href="/en/origins" class="btn-origins">
+            <span>{content.originsBannerCtaLabel || fallbackContent.originsBannerCtaLabel}</span>
             <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
               <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -76,7 +79,7 @@ const telHref = (phone: string) => {
         </section>
 
         <section class="say-hy">
-          <p class="say-hy-heading">{content.sayHiHeading}<br /><a href={`mailto:${data.sayHiEmail}`} class="say-hy-email">{data.sayHiEmail}</a></p>
+          <p class="say-hy-heading">{content.sayHiHeading || fallbackContent.sayHiHeading}<br /><a href={`mailto:${data.sayHiEmail}`} class="say-hy-email">{data.sayHiEmail}</a></p>
         </section>
 
         <section class="contact-cards">
@@ -94,7 +97,7 @@ const telHref = (phone: string) => {
       </div>
     </div>
   </main>
-  <Footer />
+  <Footer lang="en" />
 </BaseLayout>
 
 <style>

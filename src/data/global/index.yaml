@@ -1,5 +1,5 @@
 email: info@hycoffee.com
-phone: "0049 (0) 157123 45 56"
+phone: 0049 (0) 157123 45 56
 address: |-
   HyCoffee UG
   (haftungsbeschränkt)
@@ -8,7 +8,13 @@ address: |-
   Deutschland
 instagramUrl: https://www.instagram.com/hycoffeeco/
 linkedinUrl: https://de.linkedin.com/company/hycoffee
-footerTagline: Klimaresiliente Kaffeebohnen
-newsletterLabel: HyC monthly Newsletter
-newsletterButton: Anmelden
-navContactLabel: KONTAKT
+contentDe:
+  footerTagline: Klimaresiliente Kaffeebohnen
+  newsletterLabel: HyC monthly Newsletter
+  newsletterButton: Anmelden
+  navContactLabel: KONTAKT
+contentEn:
+  footerTagline: Climate-resilient coffee beans
+  newsletterLabel: HyC monthly newsletter
+  newsletterButton: Sign up
+  navContactLabel: CONTACT

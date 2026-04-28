@@ -1,16 +1,20 @@
 ---
 import { Image } from 'astro:assets';
 import type { WissenArticle } from '../lib/wissen';
+import { DEFAULT_LANG, ui, type Lang } from '../lib/i18n';
 
 interface Props {
   article: WissenArticle;
   imageSizes?: string;
+  lang?: Lang;
 }
 
 const {
   article,
   imageSizes = '(min-width: 1600px) 33vw, (min-width: 1000px) 50vw, 100vw',
+  lang = DEFAULT_LANG,
 } = Astro.props;
+const copy = ui[lang];
 ---
 
 <article class="science-card">
@@ -40,7 +44,7 @@ const {
       <span>{article.readingTimeLabel}</span>
     </div>
     <a href={article.href} class="btn-tertiary">
-      <span>Artikel lesen</span>
+      <span>{copy.knowledge.readArticle}</span>
       <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true">
         <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>

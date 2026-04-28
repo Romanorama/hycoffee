@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Hero from '../../components/Hero.astro';
+import Tiles from '../../components/Tiles.astro';
+import Values from '../../components/Values.astro';
+import Team from '../../components/Team.astro';
+import SpeciesDiscovery from '../../components/SpeciesDiscovery.astro';
+import Science from '../../components/Science.astro';
+import Banner from '../../components/Banner.astro';
+import Press from '../../components/Press.astro';
+import Footer from '../../components/Footer.astro';
+import { reader, resolveCmsImage } from '../../lib/cms';
+
+export const prerender = true;
+
+const home = await reader.singletons.home.read();
+if (!home) throw new Error('Home singleton not found');
+const content = home.contentEn ?? home.contentDe;
+const fallbackContent = home.contentDe;
+
+const heroImage = resolveCmsImage(home.heroImage);
+if (!heroImage) throw new Error(`Hero image not found: ${home.heroImage}`);
+
+const speciesPhoto = resolveCmsImage(home.speciesExpandedPhoto);
+if (!speciesPhoto) throw new Error(`Species photo not found: ${home.speciesExpandedPhoto}`);
+
+const teamStripImages = home.teamStripImages
+  .map((path) => resolveCmsImage(path))
+  .filter((img): img is NonNullable<typeof img> => img !== null);
+
+const tiles = home.tiles.map((tile, index) => ({
+  category: content.tiles[index]?.category ?? fallbackContent.tiles[index]?.category,
+  heading: content.tiles[index]?.heading ?? fallbackContent.tiles[index]?.heading,
+  body: content.tiles[index]?.body ?? fallbackContent.tiles[index]?.body,
+  ctaLabel: content.tiles[index]?.ctaLabel ?? fallbackContent.tiles[index]?.ctaLabel,
+  ctaUrl: tile.ctaUrl === '/kaffee' ? '/en/coffee' : tile.ctaUrl === '/origins' ? '/en/origins' : tile.ctaUrl,
+  color: tile.color,
+}));
+---
+
+<BaseLayout
+  lang="en"
+  title="HyCoffee – Climate-resilient green coffee"
+  description="HyCoffee connects climate-resilient green coffee with fair supply chains, research, and new coffee species for a more resilient future of coffee."
+  ogImage={heroImage}
+  ogImageAlt="Climate-resilient green coffee from HyCoffee"
+  preloadImage={heroImage}
+  preloadImageSizes="(max-width: 768px) 100vw, 50vw"
+>
+  <Navigation lang="en" />
+  <main class="home-main">
+    <div class="home-nav-underlay" aria-hidden="true"></div>
+    <Hero
+      image={heroImage}
+      headline={content.heroHeadline ?? fallbackContent.heroHeadline}
+      ctaLabel={content.heroCtaLabel ?? fallbackContent.heroCtaLabel}
+      ctaUrl="/en/coffee"
+    />
+    <Tiles tiles={tiles} />
+    <Values heading={content.valuesHeading ?? fallbackContent.valuesHeading} body={content.valuesBody ?? fallbackContent.valuesBody} />
+    <Team
+      images={teamStripImages}
+      blurb={content.teamBlurb ?? fallbackContent.teamBlurb}
+      missionHeading={content.teamMissionHeading ?? fallbackContent.teamMissionHeading}
+      ctaLabel={content.teamCtaLabel ?? fallbackContent.teamCtaLabel}
+      ctaUrl="/en/about"
+    />
+    <SpeciesDiscovery
+      heading={content.speciesHeading ?? fallbackContent.speciesHeading}
+      photo={speciesPhoto}
+      body={content.speciesExpandedBody ?? fallbackContent.speciesExpandedBody}
+    />
+    <Science
+      lang="en"
+      label={content.scienceLabel ?? fallbackContent.scienceLabel}
+      heading={content.scienceHeading ?? fallbackContent.scienceHeading}
+      body={content.scienceBody ?? fallbackContent.scienceBody}
+      ctaLabel={content.scienceCtaLabel ?? fallbackContent.scienceCtaLabel}
+    />
+    <Banner />
+    <Press heading={content.pressHeading ?? fallbackContent.pressHeading} lang="en" />
+  </main>
+  <Footer lang="en" />
+</BaseLayout>
+
+<style>
+  .home-main {
+    position: relative;
+  }
+
+  .home-nav-underlay {
+    --home-nav-underlay-height: 278px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--home-nav-underlay-height);
+    transform: translateY(calc(-1 * var(--home-nav-underlay-height)));
+    background: var(--warm-dark-grey);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .home-main > :not(.home-nav-underlay) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

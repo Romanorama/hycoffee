@@ -1,22 +1,23 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
-import { reader, resolveCmsImage } from '../lib/cms';
+import { reader, resolveCmsImage } from '../../lib/cms';
 
 export const prerender = true;
 
 const page = await reader.singletons.originsPage.read();
 if (!page) throw new Error('originsPage singleton not found');
-const pageContent = page.contentDe;
+const pageContent = page.contentEn ?? page.contentDe;
+const fallbackPageContent = page.contentDe;
 
 const allStories = await reader.collections.originStories.all();
 
 type Country = 'uganda' | 'kenia';
 const countries: { code: Country; heading: string }[] = [
-  { code: 'uganda', heading: pageContent.ugandaHeading },
-  { code: 'kenia', heading: pageContent.kenyaHeading },
+  { code: 'uganda', heading: pageContent.ugandaHeading || fallbackPageContent.ugandaHeading },
+  { code: 'kenia', heading: pageContent.kenyaHeading || fallbackPageContent.kenyaHeading },
 ];
 
 const storiesByCountry = countries
@@ -31,8 +32,9 @@ const storiesByCountry = countries
         ...entry,
         image1Resolved: resolveCmsImage(entry.image1),
         image2Resolved: resolveCmsImage(entry.image2),
-        content: entry.contentDe,
-        paragraphs: entry.contentDe.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean),
+        content: entry.contentEn ?? entry.contentDe,
+        fallbackContent: entry.contentDe,
+        paragraphs: (entry.contentEn?.body || entry.contentDe.body).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean),
       })),
   }))
   .filter((c) => c.stories.length > 0);
@@ -42,11 +44,12 @@ const seoImage = storiesByCountry[0]?.stories[0]?.image1Resolved ?? undefined;
 
 <BaseLayout
   title="Origins – HyCoffee"
-  description="Erfahre mehr ueber HyCoffee Projekte in Uganda und ueber klimaresiliente Kaffeearten wie Arabica und Excelsa entlang ihrer Herkunft."
+  lang="en"
+  description="Learn more about HyCoffee projects in Uganda and climate-resilient coffee species like Arabica and Excelsa through their origins."
   ogImage={seoImage}
-  ogImageAlt="Kaffeeherkunft von HyCoffee in Uganda"
+  ogImageAlt="HyCoffee coffee origin in Uganda"
 >
-  <Navigation />
+  <Navigation lang="en" />
   <main class="origins">
     {storiesByCountry.map(({ code, heading, stories }) => (
       <div class="country-section" id={code}>
@@ -59,7 +62,7 @@ const seoImage = storiesByCountry[0]?.stories[0]?.image1Resolved ?? undefined;
             <div class="editorial-origin">
               <div class="editorial-left">
                 <h2 class="editorial-heading">{story.species}</h2>
-                <p class="editorial-location">{story.content.region}</p>
+                <p class="editorial-location">{story.content.region || story.fallbackContent.region}</p>
               </div>
               <div class="editorial-right">
                 {story.paragraphs.map((paragraph) => (
@@ -68,12 +71,12 @@ const seoImage = storiesByCountry[0]?.stories[0]?.image1Resolved ?? undefined;
                 <div class="editorial-images">
                   {story.image1Resolved && (
                     <figure class="editorial-figure">
-                      <Image src={story.image1Resolved} alt={story.content.image1Alt ?? ''} widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
+                      <Image src={story.image1Resolved} alt={story.content.image1Alt || story.fallbackContent.image1Alt || ''} widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
                     </figure>
                   )}
                   {story.image2Resolved && (
                     <figure class="editorial-figure">
-                      <Image src={story.image2Resolved} alt={story.content.image2Alt ?? ''} widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
+                      <Image src={story.image2Resolved} alt={story.content.image2Alt || story.fallbackContent.image2Alt || ''} widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 40vw" format="webp" quality={72} loading="lazy" decoding="async" />
                     </figure>
                   )}
                 </div>
@@ -84,7 +87,7 @@ const seoImage = storiesByCountry[0]?.stories[0]?.image1Resolved ?? undefined;
       </div>
     ))}
   </main>
-  <Footer />
+  <Footer lang="en" />
 </BaseLayout>
 
 <style>

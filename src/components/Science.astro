@@ -1,16 +1,19 @@
 ---
 import WissenCard from './WissenCard.astro';
 import { getRandomWissenArticles } from '../lib/wissen';
+import type { Lang } from '../lib/i18n';
 
 interface Props {
+  lang?: Lang;
   label: string;
   heading: string;
   body: string;
   ctaLabel: string;
 }
 
-const { label, heading, body, ctaLabel } = Astro.props;
-const featuredArticles = await getRandomWissenArticles(3);
+const { lang = 'de', label, heading, body, ctaLabel } = Astro.props;
+const featuredArticles = await getRandomWissenArticles(3, lang);
+const href = lang === 'en' ? '/en/knowledge' : '/wissen';
 ---
 
 <section class="science">
@@ -18,7 +21,7 @@ const featuredArticles = await getRandomWissenArticles(3);
     <span class="caption">{label}</span>
     <h2 class="science-heading">{heading}</h2>
     <p class="science-text">{body}</p>
-    <a href="/wissen" class="science-link">
+    <a href={href} class="science-link">
       <span>{ctaLabel}</span>
       <span class="science-link-arrow" aria-hidden="true">›</span>
     </a>
@@ -28,6 +31,7 @@ const featuredArticles = await getRandomWissenArticles(3);
       featuredArticles.map((article) => (
         <WissenCard
           article={article}
+          lang={lang}
           imageSizes="(min-width: 1201px) 30vw, (min-width: 769px) 50vw, 100vw"
         />
       ))

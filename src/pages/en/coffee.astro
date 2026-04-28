@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Navigation from '../components/Navigation.astro';
-import SampleRow from '../components/SampleRow.astro';
-import { reader, resolveCmsImage } from '../lib/cms';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+import SampleRow from '../../components/SampleRow.astro';
+import { reader, resolveCmsImage } from '../../lib/cms';
 
 export const prerender = true;
 
@@ -20,43 +20,56 @@ const samples = allSamples
   }));
 
 const samplesSoldOut = page.samplesSoldOut;
-const pageContent = page.contentDe;
-const checkoutCopy = samplesSoldOut ? pageContent.checkoutSoldOutLabel : pageContent.checkoutEmptyLabel;
-const seoDescription = pageContent.pageIntro;
+const pageContent = page.contentEn;
+const fallbackPageContent = page.contentDe;
+const pageHeading = pageContent.pageHeading || fallbackPageContent.pageHeading;
+const pageIntro = pageContent.pageIntro || fallbackPageContent.pageIntro;
+const contentLabel = (key: keyof typeof pageContent) => pageContent[key] || fallbackPageContent[key] || '';
+const checkoutCopy = samplesSoldOut ? contentLabel('checkoutSoldOutLabel') : contentLabel('checkoutEmptyLabel');
+const seoDescription =
+  'Explore HyCoffee samples from Uganda: expressive Arabicas from regenerative systems and Excelsa as a climate-resilient alternative with its own sensory profile.';
 const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefined;
+const soldOutPopup = {
+  kicker: pageContent.soldOutPopupKicker || fallbackPageContent.soldOutPopupKicker,
+  title: pageContent.soldOutPopupTitle || fallbackPageContent.soldOutPopupTitle,
+  copy: pageContent.soldOutPopupCopy || fallbackPageContent.soldOutPopupCopy,
+  primaryLabel: pageContent.soldOutPopupPrimaryLabel || fallbackPageContent.soldOutPopupPrimaryLabel,
+  primaryHref: pageContent.soldOutPopupPrimaryHref || fallbackPageContent.soldOutPopupPrimaryHref,
+};
 ---
 
 <BaseLayout
-  title="Kaffee kaufen – HyCoffee"
+  lang="en"
+  title="Buy coffee – HyCoffee"
   description={seoDescription}
   ogImage={seoImage}
-  ogImageAlt="Klimaresiliente Kaffeesamples von HyCoffee"
+  ogImageAlt="Climate-resilient coffee samples from HyCoffee"
 >
-  <Navigation />
+  <Navigation lang="en" />
   <main
     class="shop"
-    data-add-sample-label={pageContent.addSampleLabel}
-    data-added-sample-label={pageContent.addedSampleLabel}
-    data-checkout-empty-label={pageContent.checkoutEmptyLabel}
-    data-checkout-single-label={pageContent.checkoutSingleLabel}
-    data-checkout-multiple-label={pageContent.checkoutMultipleLabel}
+    data-add-sample-label={contentLabel('addSampleLabel')}
+    data-added-sample-label={contentLabel('addedSampleLabel')}
+    data-checkout-empty-label={contentLabel('checkoutEmptyLabel')}
+    data-checkout-single-label={contentLabel('checkoutSingleLabel')}
+    data-checkout-multiple-label={contentLabel('checkoutMultipleLabel')}
   >
     <!-- Yellow offer layout v2: no image, table anchored at bottom -->
     <section class="shop-offer-alt" aria-labelledby="shop-offer-title">
       <div class="shop-offer-copy">
-        <h1 id="shop-offer-title" class="shop-offer-heading">{pageContent.pageHeading}</h1>
-        <p class="shop-offer-intro">{pageContent.pageIntro}</p>
+        <h1 id="shop-offer-title" class="shop-offer-heading">{pageHeading}</h1>
+        <p class="shop-offer-intro">{pageIntro}</p>
       </div>
     </section>
 
     <!-- Table -->
     <section class="shop-table">
       <div class="table-header">
-        <span class="col col-name">{pageContent.tableNameLabel}</span>
-        <span class="col col-species">{pageContent.tableSpeciesLabel}</span>
-        <span class="col col-country">{pageContent.tableCountryLabel}</span>
-        <span class="col col-score">{pageContent.tableScoreLabel}</span>
-        <span class="col col-process">{pageContent.tableProcessLabel}</span>
+        <span class="col col-name">{contentLabel('tableNameLabel')}</span>
+        <span class="col col-species">{contentLabel('tableSpeciesLabel')}</span>
+        <span class="col col-country">{contentLabel('tableCountryLabel')}</span>
+        <span class="col col-score">{contentLabel('tableScoreLabel')}</span>
+        <span class="col col-process">{contentLabel('tableProcessLabel')}</span>
         <span class="col col-action"></span>
       </div>
 
@@ -73,16 +86,17 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
           region={sample.region}
           altitude={sample.altitude}
           flavourNotes={sample.flavourNotes}
-          intro={sample.contentDe.intro}
-          resilienceText={sample.contentDe.resilienceText}
-          socialText={sample.contentDe.socialText}
+          intro={sample.contentEn.intro || sample.contentDe.intro}
+          resilienceText={sample.contentEn.resilienceText || sample.contentDe.resilienceText}
+          socialText={sample.contentEn.socialText || sample.contentDe.socialText}
           heroImage={sample.heroImage}
           pdfDownloadHref={sample.pdfDownload}
           samplesSoldOut={samplesSoldOut}
-          addSampleLabel={pageContent.addSampleLabel}
-          soldOutLabel={pageContent.soldOutLabel}
-          soldOutAriaLabel={pageContent.checkoutSoldOutLabel}
-          productSheetLabel={pageContent.productSheetLabel}
+          lang="en"
+          addSampleLabel={contentLabel('addSampleLabel')}
+          soldOutLabel={contentLabel('soldOutLabel')}
+          soldOutAriaLabel={contentLabel('checkoutSoldOutLabel')}
+          productSheetLabel={contentLabel('productSheetLabel')}
         />
       ))}
     </section>
@@ -93,7 +107,7 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
         <div class="checkout-inner">
           <p class="checkout-count">{checkoutCopy}</p>
           <a href="#" class="btn-checkout" data-sample-checkout data-sample-sold-out={samplesSoldOut ? 'true' : 'false'}>
-            <span>{pageContent.checkoutButtonLabel}</span>
+            <span>{contentLabel('checkoutButtonLabel')}</span>
             <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
               <path d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -104,15 +118,15 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
 
     {!samplesSoldOut && (
       <div class="sample-popup sample-popup-request" data-sample-request-popup hidden>
-        <button type="button" class="sample-popup-backdrop" data-sample-request-close aria-label="Popup schliessen"></button>
+        <button type="button" class="sample-popup-backdrop" data-sample-request-close aria-label="Close popup"></button>
         <aside class="sample-popup-panel sample-popup-panel-request" role="dialog" aria-modal="true" aria-labelledby="sample-request-title" tabindex="-1">
-          <button type="button" class="sample-popup-close" data-sample-request-close aria-label="Popup schliessen">
+          <button type="button" class="sample-popup-close" data-sample-request-close aria-label="Close popup">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
               <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
             </svg>
           </button>
-          <p class="sample-popup-kicker">Sample-Anfrage</p>
-          <h2 id="sample-request-title" class="sample-popup-title">Deine Auswahl</h2>
+          <p class="sample-popup-kicker">Sample request</p>
+          <h2 id="sample-request-title" class="sample-popup-title">Your selection</h2>
           <p class="sample-request-selection" data-sample-request-selection></p>
           <form
             class="sample-request-form"
@@ -123,39 +137,39 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
             data-sample-request-form
           >
             <input type="hidden" name="form-name" value="sample-request" />
-            <p class="sample-request-honeypot"><label>Bitte leer lassen: <input name="bot-field" /></label></p>
+            <p class="sample-request-honeypot"><label>Please leave empty: <input name="bot-field" /></label></p>
             <input type="hidden" name="selectedSamples" data-selected-samples-input />
             <label class="sample-request-field">
-              <span>Vor- und Nachname *</span>
+              <span>Full name *</span>
               <input type="text" name="fullName" required autocomplete="name" />
             </label>
             <label class="sample-request-field">
-              <span>Unternehmen</span>
+              <span>Company</span>
               <input type="text" name="company" autocomplete="organization" />
             </label>
             <label class="sample-request-field">
-              <span>E-Mail *</span>
+              <span>Email *</span>
               <input type="email" name="email" required autocomplete="email" />
             </label>
             <label class="sample-request-field">
-              <span>Telefon</span>
+              <span>Phone</span>
               <input type="tel" name="phone" autocomplete="tel" />
             </label>
             <label class="sample-request-field">
-              <span>Lieferadresse *</span>
+              <span>Shipping address *</span>
               <textarea name="shippingAddress" rows="3" required autocomplete="street-address"></textarea>
             </label>
             <label class="sample-request-field">
-              <span>Nachricht</span>
+              <span>Message</span>
               <textarea name="message" rows="3"></textarea>
             </label>
             <p class="sample-request-status" data-sample-request-status role="status" aria-live="polite"></p>
             <div class="sample-popup-actions sample-request-actions">
               <button type="submit" class="sample-popup-primary" data-sample-request-submit>
-                <span>Sample-Anfrage senden</span>
+                <span>Send sample request</span>
               </button>
               <button type="button" class="sample-popup-secondary" data-sample-request-close>
-                <span>Schliessen</span>
+                <span>Close</span>
               </button>
             </div>
           </form>
@@ -165,22 +179,22 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
 
     {samplesSoldOut && (
       <div class="sample-popup" data-sample-popup hidden>
-        <button type="button" class="sample-popup-backdrop" data-sample-popup-close aria-label="Popup schliessen"></button>
+        <button type="button" class="sample-popup-backdrop" data-sample-popup-close aria-label="Close popup"></button>
         <aside class="sample-popup-panel" role="dialog" aria-modal="true" aria-labelledby="sample-popup-title" aria-describedby="sample-popup-copy" tabindex="-1">
-          <button type="button" class="sample-popup-close" data-sample-popup-close aria-label="Popup schliessen">
+          <button type="button" class="sample-popup-close" data-sample-popup-close aria-label="Close popup">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
               <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
             </svg>
           </button>
-          <p class="sample-popup-kicker">{pageContent.soldOutPopupKicker}</p>
-          <h2 id="sample-popup-title" class="sample-popup-title">{pageContent.soldOutPopupTitle}</h2>
-          <p id="sample-popup-copy" class="sample-popup-copy">{pageContent.soldOutPopupCopy}</p>
+          <p class="sample-popup-kicker">{soldOutPopup.kicker}</p>
+          <h2 id="sample-popup-title" class="sample-popup-title">{soldOutPopup.title}</h2>
+          <p id="sample-popup-copy" class="sample-popup-copy">{soldOutPopup.copy}</p>
           <div class="sample-popup-actions">
-            <a class="sample-popup-primary" href={pageContent.soldOutPopupPrimaryHref}>
-              <span>{pageContent.soldOutPopupPrimaryLabel}</span>
+            <a class="sample-popup-primary" href={soldOutPopup.primaryHref}>
+              <span>{soldOutPopup.primaryLabel}</span>
             </a>
             <button type="button" class="sample-popup-secondary" data-sample-popup-close>
-              <span>Schliessen</span>
+              <span>Close</span>
             </button>
           </div>
         </aside>
@@ -1242,8 +1256,8 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
         const text = button.querySelector('.sample-text');
         if (plus) plus.textContent = isActive ? '✓' : '+';
         const root = document.querySelector('.shop');
-        const addSampleLabel = root?.dataset.addSampleLabel || 'Sample hinzufügen';
-        const addedSampleLabel = root?.dataset.addedSampleLabel || 'Hinzugefügt';
+        const addSampleLabel = root?.dataset.addSampleLabel || 'Add Sample';
+        const addedSampleLabel = root?.dataset.addedSampleLabel || 'Added';
         if (text) text.textContent = isActive ? addedSampleLabel : addSampleLabel;
       });
     }
@@ -1252,9 +1266,9 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
       const count = cart.size;
       if (checkoutCount) {
         const root = document.querySelector('.shop');
-        const emptyLabel = root?.dataset.checkoutEmptyLabel || '0 Samples ausgewählt';
-        const singleLabel = root?.dataset.checkoutSingleLabel || '1 Sample ausgewählt';
-        const multipleLabel = root?.dataset.checkoutMultipleLabel || '{count} Samples ausgewählt';
+        const emptyLabel = root?.dataset.checkoutEmptyLabel || '0 samples added';
+        const singleLabel = root?.dataset.checkoutSingleLabel || '1 sample added';
+        const multipleLabel = root?.dataset.checkoutMultipleLabel || '{count} samples added';
         checkoutCount.textContent = count === 0
           ? emptyLabel
           : count === 1
@@ -1336,7 +1350,7 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
         if (!submitBtn || !statusEl) return;
         submitBtn.setAttribute('disabled', 'true');
         statusEl.classList.remove('is-error');
-        statusEl.textContent = 'Wird gesendet…';
+        statusEl.textContent = 'Sending...';
 
         const data = new FormData(form);
         const body = new URLSearchParams();
@@ -1349,14 +1363,14 @@ const seoImage = samples.find((sample) => sample.heroImage)?.heroImage ?? undefi
             body: body.toString(),
           });
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          statusEl.textContent = 'Danke! Wir melden uns in Kürze bei dir.';
+          statusEl.textContent = 'Thank you. We will get back to you shortly.';
           form.reset();
           cart.clear();
           syncButtons();
           syncCheckout();
         } catch (err) {
           statusEl.classList.add('is-error');
-          statusEl.textContent = 'Senden fehlgeschlagen. Bitte versuche es erneut oder schreib uns direkt.';
+          statusEl.textContent = 'Sending failed. Please try again or contact us directly.';
         } finally {
           submitBtn.removeAttribute('disabled');
         }

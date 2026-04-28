@@ -15,8 +15,8 @@ export default config({
   ui: {
     brand: { name: 'HyCoffee' },
     navigation: {
-      Inhalt: ['home', 'ueberUns', 'originsPage', 'kaffee'],
-      Sammlungen: ['wissen', 'kaffeeSamples', 'originStories', 'press', 'team'],
+      Inhalt: ['home', 'kaffee', 'wissen', 'originsPage', 'ueberUns'],
+      Sammlungen: ['kaffeeSamples', 'originStories', 'press', 'team'],
       Rechtliches: ['impressum', 'agb', 'datenschutz'],
       Global: ['global'],
     },
@@ -24,7 +24,7 @@ export default config({
 
   collections: {
     wissen: collection({
-      label: 'Wissen-Artikel',
+      label: 'Wissen',
       slugField: 'title',
       path: 'src/content/wissen/*',
       schema: {
@@ -38,17 +38,33 @@ export default config({
           ],
           defaultValue: 'klimawandel',
         }),
-        subtitle: fields.text({ label: 'Untertitel', multiline: true }),
+        contentDe: fields.object(
+          {
+            subtitle: fields.text({ label: 'Untertitel', multiline: true }),
+            body: fields.text({
+              label: 'Inhalt',
+              multiline: true,
+              description: 'Absätze durch Leerzeile trennen.',
+            }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            subtitle: fields.text({ label: 'Subtitle', multiline: true }),
+            body: fields.text({
+              label: 'Body',
+              multiline: true,
+              description: 'Separate paragraphs with a blank line.',
+            }),
+          },
+          { label: 'English' },
+        ),
         publishedAt: fields.date({ label: 'Veröffentlicht am' }),
         readingTime: fields.integer({ label: 'Lesezeit (Minuten)', defaultValue: 5 }),
         heroImage: fields.image({
           label: 'Titelbild',
           ...contentImage('wissen'),
-        }),
-        body: fields.text({
-          label: 'Inhalt',
-          multiline: true,
-          description: 'Absätze durch Leerzeile trennen.',
         }),
       },
     }),
@@ -75,7 +91,22 @@ export default config({
         region: fields.text({ label: 'Region' }),
         altitude: fields.text({ label: 'Höhe' }),
         flavourNotes: fields.text({ label: 'Flavour Notes', multiline: true }),
-        intro: fields.text({ label: 'Einleitung', multiline: true }),
+        contentDe: fields.object(
+          {
+            intro: fields.text({ label: 'Einleitung', multiline: true }),
+            resilienceText: fields.text({ label: 'Klimaresilienz-Text', multiline: true }),
+            socialText: fields.text({ label: 'Sozial-Text', multiline: true }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            intro: fields.text({ label: 'Intro', multiline: true }),
+            resilienceText: fields.text({ label: 'Climate resilience text', multiline: true }),
+            socialText: fields.text({ label: 'Social impact text', multiline: true }),
+          },
+          { label: 'English' },
+        ),
         heroImage: fields.image({
           label: 'Produktbild',
           ...contentImage('kaffee'),
@@ -84,8 +115,6 @@ export default config({
           label: 'Product Sheet (PDF)',
           ...publicFile('public/downloads', '/downloads/'),
         }),
-        resilienceText: fields.text({ label: 'Klimaresilienz-Text', multiline: true }),
-        socialText: fields.text({ label: 'Sozial-Text', multiline: true }),
         available: fields.checkbox({ label: 'Verfügbar', defaultValue: true }),
         sortOrder: fields.integer({ label: 'Reihenfolge', defaultValue: 0 }),
       },
@@ -106,7 +135,18 @@ export default config({
           label: 'Feature-Bild',
           ...contentImage('press'),
         }),
-        excerpt: fields.text({ label: 'Beschreibung', multiline: true }),
+        contentDe: fields.object(
+          {
+            excerpt: fields.text({ label: 'Beschreibung', multiline: true }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            excerpt: fields.text({ label: 'Description', multiline: true }),
+          },
+          { label: 'English' },
+        ),
         readingTime: fields.integer({ label: 'Lesezeit (Minuten)', defaultValue: 2 }),
         externalLink: fields.url({ label: 'Link zum Artikel' }),
       },
@@ -126,24 +166,42 @@ export default config({
           ],
           defaultValue: 'uganda',
         }),
-        species: fields.text({ label: 'Art (Arabica / Excelsa)' }),
-        region: fields.text({ label: 'Region' }),
+        species: fields.text({ label: 'Art / Species (Arabica / Excelsa)' }),
+        contentDe: fields.object(
+          {
+            region: fields.text({ label: 'Region' }),
+            image1Alt: fields.text({ label: 'Bild 1 Alt-Text' }),
+            image2Alt: fields.text({ label: 'Bild 2 Alt-Text' }),
+            body: fields.text({
+              label: 'Text',
+              multiline: true,
+              description: 'Absätze durch Leerzeile trennen.',
+            }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            region: fields.text({ label: 'Region' }),
+            image1Alt: fields.text({ label: 'Image 1 alt text' }),
+            image2Alt: fields.text({ label: 'Image 2 alt text' }),
+            body: fields.text({
+              label: 'Text',
+              multiline: true,
+              description: 'Separate paragraphs with a blank line.',
+            }),
+          },
+          { label: 'English' },
+        ),
         image1: fields.image({
           label: 'Bild 1',
           ...contentImage('origins'),
         }),
-        image1Alt: fields.text({ label: 'Bild 1 Alt-Text' }),
         image2: fields.image({
           label: 'Bild 2',
           ...contentImage('origins'),
         }),
-        image2Alt: fields.text({ label: 'Bild 2 Alt-Text' }),
         sortOrder: fields.integer({ label: 'Reihenfolge', defaultValue: 0 }),
-        body: fields.text({
-          label: 'Text',
-          multiline: true,
-          description: 'Absätze durch Leerzeile trennen.',
-        }),
       },
     }),
 
@@ -153,7 +211,18 @@ export default config({
       path: 'src/content/team/*',
       schema: {
         name: fields.slug({ name: { label: 'Name' } }),
-        role: fields.text({ label: 'Rolle' }),
+        contentDe: fields.object(
+          {
+            role: fields.text({ label: 'Rolle' }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            role: fields.text({ label: 'Role' }),
+          },
+          { label: 'English' },
+        ),
         email: fields.text({ label: 'E-Mail' }),
         phone: fields.text({ label: 'Telefon' }),
         portrait: fields.image({
@@ -176,10 +245,24 @@ export default config({
         address: fields.text({ label: 'Adresse', multiline: true }),
         instagramUrl: fields.url({ label: 'Instagram URL' }),
         linkedinUrl: fields.url({ label: 'LinkedIn URL' }),
-        footerTagline: fields.text({ label: 'Footer-Claim' }),
-        newsletterLabel: fields.text({ label: 'Newsletter-Label' }),
-        newsletterButton: fields.text({ label: 'Newsletter-Button' }),
-        navContactLabel: fields.text({ label: 'Navi-Kontakt-Button' }),
+        contentDe: fields.object(
+          {
+            footerTagline: fields.text({ label: 'Footer-Claim' }),
+            newsletterLabel: fields.text({ label: 'Newsletter-Label' }),
+            newsletterButton: fields.text({ label: 'Newsletter-Button' }),
+            navContactLabel: fields.text({ label: 'Navi-Kontakt-Button' }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            footerTagline: fields.text({ label: 'Footer tagline' }),
+            newsletterLabel: fields.text({ label: 'Newsletter label' }),
+            newsletterButton: fields.text({ label: 'Newsletter button' }),
+            navContactLabel: fields.text({ label: 'Nav contact button' }),
+          },
+          { label: 'English' },
+        ),
       },
     }),
 
@@ -188,20 +271,78 @@ export default config({
       path: 'src/data/home/',
       previewUrl: 'http://localhost:4321/',
       schema: {
-        heroHeadline: fields.text({ label: 'Hero-Überschrift', multiline: true }),
+        contentDe: fields.object(
+          {
+            heroHeadline: fields.text({ label: 'Hero-Überschrift', multiline: true }),
+            heroCtaLabel: fields.text({ label: 'Hero-Button' }),
+            tiles: fields.array(
+              fields.object({
+                category: fields.text({ label: 'Kategorie' }),
+                heading: fields.text({ label: 'Überschrift' }),
+                body: fields.text({ label: 'Text', multiline: true }),
+                ctaLabel: fields.text({ label: 'Button-Text' }),
+              }),
+              {
+                label: 'Tiles',
+                itemLabel: (p) => p.fields.heading.value || 'Tile',
+                validation: { length: { min: 2, max: 2 } },
+              },
+            ),
+            valuesHeading: fields.text({ label: 'Values-Überschrift' }),
+            valuesBody: fields.text({ label: 'Values-Text', multiline: true }),
+            teamBlurb: fields.text({ label: 'Team-Einleitung', multiline: true }),
+            teamMissionHeading: fields.text({ label: 'Mission-Überschrift' }),
+            teamCtaLabel: fields.text({ label: 'Team-Button' }),
+            speciesHeading: fields.text({ label: 'Species-Überschrift', multiline: true }),
+            speciesExpandedBody: fields.text({ label: 'Species-Text', multiline: true }),
+            scienceLabel: fields.text({ label: 'Science-Label' }),
+            scienceHeading: fields.text({ label: 'Science-Überschrift' }),
+            scienceBody: fields.text({ label: 'Science-Text', multiline: true }),
+            scienceCtaLabel: fields.text({ label: 'Science-Button' }),
+            pressHeading: fields.text({ label: 'Presse-Überschrift' }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            heroHeadline: fields.text({ label: 'Hero headline', multiline: true }),
+            heroCtaLabel: fields.text({ label: 'Hero button' }),
+            tiles: fields.array(
+              fields.object({
+                category: fields.text({ label: 'Category' }),
+                heading: fields.text({ label: 'Heading' }),
+                body: fields.text({ label: 'Text', multiline: true }),
+                ctaLabel: fields.text({ label: 'Button text' }),
+              }),
+              {
+                label: 'Tiles',
+                itemLabel: (p) => p.fields.heading.value || 'Tile',
+                validation: { length: { min: 2, max: 2 } },
+              },
+            ),
+            valuesHeading: fields.text({ label: 'Values heading' }),
+            valuesBody: fields.text({ label: 'Values text', multiline: true }),
+            teamBlurb: fields.text({ label: 'Team intro', multiline: true }),
+            teamMissionHeading: fields.text({ label: 'Mission heading' }),
+            teamCtaLabel: fields.text({ label: 'Team button' }),
+            speciesHeading: fields.text({ label: 'Species heading', multiline: true }),
+            speciesExpandedBody: fields.text({ label: 'Species text', multiline: true }),
+            scienceLabel: fields.text({ label: 'Science label' }),
+            scienceHeading: fields.text({ label: 'Science heading' }),
+            scienceBody: fields.text({ label: 'Science text', multiline: true }),
+            scienceCtaLabel: fields.text({ label: 'Science button' }),
+            pressHeading: fields.text({ label: 'Press heading' }),
+          },
+          { label: 'English' },
+        ),
         heroImage: fields.image({
           label: 'Hero-Bild',
           ...dataImage('home'),
         }),
-        heroCtaLabel: fields.text({ label: 'Hero-Button' }),
         heroCtaUrl: fields.text({ label: 'Hero-Button-Link' }),
 
         tiles: fields.array(
           fields.object({
-            category: fields.text({ label: 'Kategorie' }),
-            heading: fields.text({ label: 'Überschrift' }),
-            body: fields.text({ label: 'Text', multiline: true }),
-            ctaLabel: fields.text({ label: 'Button-Text' }),
             ctaUrl: fields.text({ label: 'Button-Link' }),
             color: fields.select({
               label: 'Farbe',
@@ -214,13 +355,10 @@ export default config({
           }),
           {
             label: 'Tiles',
-            itemLabel: (p) => p.fields.heading.value || 'Tile',
+            itemLabel: (p) => p.fields.ctaUrl.value || 'Tile',
             validation: { length: { min: 2, max: 2 } },
           },
         ),
-
-        valuesHeading: fields.text({ label: 'Values-Überschrift' }),
-        valuesBody: fields.text({ label: 'Values-Text', multiline: true }),
 
         teamStripImages: fields.array(
           fields.image({
@@ -229,21 +367,10 @@ export default config({
           }),
           { label: 'Team-Fotostreifen', itemLabel: (p) => p.value?.filename ?? 'Bild' },
         ),
-        teamBlurb: fields.text({ label: 'Team-Einleitung', multiline: true }),
-        teamMissionHeading: fields.text({ label: 'Mission-Überschrift' }),
-        teamCtaLabel: fields.text({ label: 'Team-Button' }),
-
-        speciesHeading: fields.text({ label: 'Species-Überschrift', multiline: true }),
         speciesExpandedPhoto: fields.image({
           label: 'Species-Foto',
           ...dataImage('home'),
         }),
-        speciesExpandedBody: fields.text({ label: 'Species-Text', multiline: true }),
-
-        scienceLabel: fields.text({ label: 'Science-Label' }),
-        scienceHeading: fields.text({ label: 'Science-Überschrift' }),
-        scienceBody: fields.text({ label: 'Science-Text', multiline: true }),
-        scienceCtaLabel: fields.text({ label: 'Science-Button' }),
         scienceFeaturedArticles: fields.array(
           fields.relationship({ label: 'Artikel', collection: 'wissen' }),
           {
@@ -252,8 +379,6 @@ export default config({
             validation: { length: { max: 3 } },
           },
         ),
-
-        pressHeading: fields.text({ label: 'Presse-Überschrift' }),
       },
     }),
 
@@ -272,53 +397,146 @@ export default config({
           label: 'Hero-Bild',
           ...dataImage('about'),
         }),
-        heroText: fields.text({ label: 'Hero-Text', multiline: true }),
-        storyHeading: fields.text({ label: 'Story-Überschrift' }),
-        storyBody: fields.text({
-          label: 'Story-Text',
-          multiline: true,
-          description: 'Absätze durch Leerzeile trennen.',
-        }),
-        originsBannerText: fields.text({ label: 'Origins-Banner-Text' }),
-        originsBannerCtaLabel: fields.text({ label: 'Origins-Banner-Button' }),
-        sayHiHeading: fields.text({ label: 'Say-Hi-Überschrift' }),
+        contentDe: fields.object(
+          {
+            heroText: fields.text({ label: 'Hero-Text', multiline: true }),
+            storyHeading: fields.text({ label: 'Story-Überschrift' }),
+            storyBody: fields.text({
+              label: 'Story-Text',
+              multiline: true,
+              description: 'Absätze durch Leerzeile trennen.',
+            }),
+            originsBannerText: fields.text({ label: 'Origins-Banner-Text' }),
+            originsBannerCtaLabel: fields.text({ label: 'Origins-Banner-Button' }),
+            sayHiHeading: fields.text({ label: 'Say-Hi-Überschrift' }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            heroText: fields.text({ label: 'Hero text', multiline: true }),
+            storyHeading: fields.text({ label: 'Story heading' }),
+            storyBody: fields.text({
+              label: 'Story text',
+              multiline: true,
+              description: 'Separate paragraphs with a blank line.',
+            }),
+            originsBannerText: fields.text({ label: 'Origins banner text' }),
+            originsBannerCtaLabel: fields.text({ label: 'Origins banner button' }),
+            sayHiHeading: fields.text({ label: 'Say hi heading' }),
+          },
+          { label: 'English' },
+        ),
         sayHiEmail: fields.text({ label: 'Say-Hi-Email' }),
       },
     }),
 
     originsPage: singleton({
-      label: 'Origins-Seite',
+      label: 'Origin',
       path: 'src/data/origins/',
       schema: {
-        ugandaHeading: fields.text({ label: 'Uganda-Überschrift', defaultValue: 'Uganda' }),
-        kenyaHeading: fields.text({ label: 'Kenia-Überschrift', defaultValue: 'Kenia' }),
+        contentDe: fields.object(
+          {
+            ugandaHeading: fields.text({ label: 'Uganda-Überschrift', defaultValue: 'Uganda' }),
+            kenyaHeading: fields.text({ label: 'Kenia-Überschrift', defaultValue: 'Kenia' }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            ugandaHeading: fields.text({ label: 'Uganda heading', defaultValue: 'Uganda' }),
+            kenyaHeading: fields.text({ label: 'Kenya heading', defaultValue: 'Kenya' }),
+          },
+          { label: 'English' },
+        ),
       },
     }),
 
     kaffee: singleton({
-      label: 'Kaffee-Seite',
+      label: 'Kaffee kaufen',
       path: 'src/data/kaffee/',
       schema: {
-        pageHeading: fields.text({ label: 'Seiten-Überschrift' }),
-        pageIntro: fields.text({ label: 'Seiten-Einleitung', multiline: true }),
+        contentDe: fields.object(
+          {
+            pageHeading: fields.text({ label: 'Seiten-Überschrift' }),
+            pageIntro: fields.text({ label: 'Seiten-Einleitung', multiline: true }),
+            tableNameLabel: fields.text({ label: 'Tabelle: Name', defaultValue: 'Name' }),
+            tableSpeciesLabel: fields.text({ label: 'Tabelle: Art', defaultValue: 'Art' }),
+            tableCountryLabel: fields.text({ label: 'Tabelle: Land', defaultValue: 'Land' }),
+            tableScoreLabel: fields.text({ label: 'Tabelle: Score', defaultValue: 'Score' }),
+            tableProcessLabel: fields.text({ label: 'Tabelle: Verarbeitung', defaultValue: 'Verarbeitung' }),
+            addSampleLabel: fields.text({ label: 'Button: Sample hinzufügen', defaultValue: 'Sample hinzufügen' }),
+            addedSampleLabel: fields.text({ label: 'Button: Hinzugefügt', defaultValue: 'Hinzugefügt' }),
+            soldOutLabel: fields.text({ label: 'Button: Ausverkauft', defaultValue: 'Ausverkauft' }),
+            productSheetLabel: fields.text({ label: 'Button: Product Sheet', defaultValue: 'Product Sheet' }),
+            checkoutButtonLabel: fields.text({ label: 'Checkout-Button', defaultValue: 'Anfragen' }),
+            checkoutEmptyLabel: fields.text({ label: 'Checkout: keine Samples', defaultValue: '0 Samples ausgewählt' }),
+            checkoutSoldOutLabel: fields.text({ label: 'Checkout: ausverkauft', defaultValue: 'Samples ausverkauft' }),
+            checkoutSingleLabel: fields.text({ label: 'Checkout: ein Sample', defaultValue: '1 Sample ausgewählt' }),
+            checkoutMultipleLabel: fields.text({
+              label: 'Checkout: mehrere Samples',
+              defaultValue: '{count} Samples ausgewählt',
+              description: 'Nutze {count} als Platzhalter für die Anzahl.',
+            }),
+            soldOutPopupKicker: fields.text({ label: 'Sold-out-Popup: Kicker', defaultValue: 'Samples' }),
+            soldOutPopupTitle: fields.text({ label: 'Sold-out-Popup: Titel' }),
+            soldOutPopupCopy: fields.text({
+              label: 'Sold-out-Popup: Text',
+              multiline: true,
+            }),
+            soldOutPopupPrimaryLabel: fields.text({
+              label: 'Sold-out-Popup: Primär-Button',
+              defaultValue: 'Benachrichtige mich',
+            }),
+            soldOutPopupPrimaryHref: fields.text({
+              label: 'Sold-out-Popup: Primär-Button-Link (z.B. mailto:...)',
+            }),
+          },
+          { label: 'Deutsch' },
+        ),
+        contentEn: fields.object(
+          {
+            pageHeading: fields.text({ label: 'Page heading' }),
+            pageIntro: fields.text({ label: 'Page intro', multiline: true }),
+            tableNameLabel: fields.text({ label: 'Table: name', defaultValue: 'Name' }),
+            tableSpeciesLabel: fields.text({ label: 'Table: species', defaultValue: 'Species' }),
+            tableCountryLabel: fields.text({ label: 'Table: country', defaultValue: 'Country' }),
+            tableScoreLabel: fields.text({ label: 'Table: score', defaultValue: 'Score' }),
+            tableProcessLabel: fields.text({ label: 'Table: process', defaultValue: 'Process' }),
+            addSampleLabel: fields.text({ label: 'Button: add sample', defaultValue: 'Add Sample' }),
+            addedSampleLabel: fields.text({ label: 'Button: added', defaultValue: 'Added' }),
+            soldOutLabel: fields.text({ label: 'Button: sold out', defaultValue: 'Sold out' }),
+            productSheetLabel: fields.text({ label: 'Button: product sheet', defaultValue: 'Product Sheet' }),
+            checkoutButtonLabel: fields.text({ label: 'Checkout button', defaultValue: 'Check out' }),
+            checkoutEmptyLabel: fields.text({ label: 'Checkout: no samples', defaultValue: '0 samples added' }),
+            checkoutSoldOutLabel: fields.text({ label: 'Checkout: sold out', defaultValue: 'Samples sold out' }),
+            checkoutSingleLabel: fields.text({ label: 'Checkout: one sample', defaultValue: '1 sample added' }),
+            checkoutMultipleLabel: fields.text({
+              label: 'Checkout: multiple samples',
+              defaultValue: '{count} samples added',
+              description: 'Use {count} as the placeholder for the number.',
+            }),
+            soldOutPopupKicker: fields.text({ label: 'Sold-out popup: Kicker', defaultValue: 'Samples' }),
+            soldOutPopupTitle: fields.text({ label: 'Sold-out popup: Title' }),
+            soldOutPopupCopy: fields.text({
+              label: 'Sold-out popup: Text',
+              multiline: true,
+            }),
+            soldOutPopupPrimaryLabel: fields.text({
+              label: 'Sold-out popup: Primary button',
+              defaultValue: 'Notify me',
+            }),
+            soldOutPopupPrimaryHref: fields.text({
+              label: 'Sold-out popup: Primary button link',
+            }),
+          },
+          { label: 'English' },
+        ),
         samplesSoldOut: fields.checkbox({
           label: 'Samples ausverkauft (globaler Schalter)',
           description:
             'Wenn aktiviert: alle "Add Sample"-Buttons werden zu "Sold out" und das Popup erscheint beim Klick.',
           defaultValue: false,
-        }),
-        soldOutPopupKicker: fields.text({ label: 'Sold-out-Popup: Kicker', defaultValue: 'Samples' }),
-        soldOutPopupTitle: fields.text({ label: 'Sold-out-Popup: Titel' }),
-        soldOutPopupCopy: fields.text({
-          label: 'Sold-out-Popup: Text',
-          multiline: true,
-        }),
-        soldOutPopupPrimaryLabel: fields.text({
-          label: 'Sold-out-Popup: Primär-Button',
-          defaultValue: 'Benachrichtige mich',
-        }),
-        soldOutPopupPrimaryHref: fields.text({
-          label: 'Sold-out-Popup: Primär-Button-Link (z.B. mailto:...)',
         }),
       },
     }),

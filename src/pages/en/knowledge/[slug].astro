@@ -1,0 +1,314 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Navigation from '../../../components/Navigation.astro';
+import Footer from '../../../components/Footer.astro';
+import { toAbsoluteUrl } from '../../../lib/seo';
+import { getAllWissenArticles, type WissenArticle } from '../../../lib/wissen';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const articles = await getAllWissenArticles('en');
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article, related: articles.filter((a) => a.slug !== article.slug).slice(0, 2) },
+  }));
+}
+
+interface Props {
+  article: WissenArticle;
+  related: WissenArticle[];
+}
+const { article, related } = Astro.props;
+
+const articlePath = `/en/knowledge/${article.slug}`;
+const paragraphs = article.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+
+const formatDate = (iso: string) => {
+  if (!iso) return '';
+  const [y, m, d] = iso.split('-');
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${months[parseInt(m, 10) - 1]} ${parseInt(d, 10)}, ${y}`;
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.subtitle,
+  datePublished: article.publishedAt,
+  mainEntityOfPage: toAbsoluteUrl(articlePath),
+  publisher: {
+    '@type': 'Organization',
+    name: 'HyCoffee',
+  },
+  ...(article.image ? { image: [toAbsoluteUrl(article.image.src)] } : {}),
+};
+---
+
+<BaseLayout
+  lang="en"
+  title={`${article.title} – HyCoffee`}
+  description={article.subtitle}
+  ogImage={article.image ?? undefined}
+  ogImageAlt={article.title}
+  type="article"
+  schema={articleSchema}
+  publishedTime={article.publishedAt}
+>
+  <Navigation lang="en" />
+  <main class="article-page">
+    <header class="article-header">
+      <p class="article-meta">
+        {article.categoryLabel} | {formatDate(article.publishedAt)} | {article.readingTimeLabel}
+      </p>
+      <h1 class="article-title">{article.title}</h1>
+      <p class="article-subtitle">{article.subtitle}</p>
+    </header>
+
+    <div class="article-layout">
+      <div class="article-body">
+        {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      {related.length > 0 && (
+        <aside class="article-sidebar">
+          <div class="sidebar-divider"></div>
+          <p class="sidebar-label">RELATED</p>
+          {related.map((other) => (
+            <div class="related-article">
+              <a href={other.href} class="related-title">{other.title}</a>
+              <p class="related-caption">{other.categoryLabel} · {other.readingTimeLabel}</p>
+            </div>
+          ))}
+        </aside>
+      )}
+    </div>
+  </main>
+  <Footer lang="en" />
+</BaseLayout>
+
+<style>
+  .article-page {
+    background: var(--white);
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .article-header {
+    text-align: center;
+    padding: 60px 60px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .article-meta {
+    font-family: var(--font-heading);
+    font-size: var(--type-caption);
+    line-height: 1.2;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 32px;
+  }
+
+  .article-title {
+    font-family: var(--font-heading);
+    font-size: var(--type-display);
+    line-height: 1;
+    letter-spacing: -1.15px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 24px;
+  }
+
+  .article-subtitle {
+    font-family: var(--font-heading);
+    font-size: var(--type-copy-intro);
+    line-height: 1.3;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .article-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 80px;
+    max-width: 1520px;
+    margin: 0 auto;
+    padding: 0 60px 80px 160px;
+    align-items: start;
+  }
+
+  .article-body {
+    max-width: none;
+  }
+
+  .article-body p {
+    font-family: var(--font-heading);
+    font-size: var(--type-hal-copy);
+    line-height: 1.6;
+    color: var(--warm-dark-grey);
+    margin-bottom: 20px;
+  }
+
+  .article-body strong {
+    font-weight: 400;
+  }
+
+  .article-figure {
+    margin: 40px 0;
+  }
+
+  .article-image-placeholder {
+    width: 100%;
+    height: 473px;
+    background: #d9d9d9;
+  }
+
+  .article-figure figcaption {
+    font-family: var(--font-ui);
+    font-size: var(--type-caption-sm);
+    line-height: 1.3;
+    letter-spacing: 0.1px;
+    color: var(--warm-dark-grey);
+    margin-top: 12px;
+  }
+
+  .article-sidebar {
+    position: sticky;
+    top: 140px;
+  }
+
+  .sidebar-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--warm-dark-grey);
+    margin-bottom: 24px;
+  }
+
+  .sidebar-label {
+    font-family: var(--font-heading);
+    font-size: var(--type-caption-sm);
+    line-height: 1.2;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin-bottom: 32px;
+  }
+
+  .related-article {
+    margin-bottom: 32px;
+  }
+
+  .related-title {
+    font-family: var(--font-heading);
+    font-size: var(--type-hal-copy);
+    line-height: 1.3;
+    color: var(--warm-dark-grey);
+    text-decoration: underline;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .related-title:hover {
+    opacity: 0.7;
+  }
+
+  .related-image-placeholder {
+    width: 253px;
+    height: 156px;
+    background: #d9d9d9;
+    margin-bottom: 8px;
+  }
+
+  .related-caption {
+    font-family: var(--font-ui);
+    font-size: var(--type-caption-sm);
+    line-height: 1.3;
+    letter-spacing: 0.1px;
+    color: var(--warm-dark-grey);
+  }
+
+  @media (max-width: 768px) {
+    .article-header {
+      text-align: center;
+      padding: 40px 24px 36px;
+      max-width: none;
+      border-bottom: 1px solid var(--warm-dark-grey);
+      margin: 0 24px;
+    }
+
+    .article-meta {
+      font-size: var(--type-caption-sm);
+      letter-spacing: 1.5px;
+      margin-bottom: 24px;
+    }
+
+    .article-title {
+      font-size: var(--type-mobile-display);
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+
+    .article-subtitle {
+      font-size: var(--type-copy-intro);
+      line-height: 1.35;
+      max-width: none;
+      margin: 0 auto;
+      color: rgba(36, 33, 25, 0.7);
+    }
+
+    .article-layout {
+      display: block;
+      max-width: none;
+      padding: 40px 24px 48px;
+    }
+
+    .article-body p {
+      font-size: var(--type-hal-copy);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .article-figure {
+      margin: 24px -16px;
+    }
+
+    .article-image-placeholder {
+      height: 220px;
+    }
+
+    .article-figure figcaption {
+      padding: 0 16px;
+      margin-top: 8px;
+    }
+
+    .article-sidebar {
+      position: static;
+      margin-top: 32px;
+      padding-top: 8px;
+    }
+
+    .sidebar-divider {
+      margin-bottom: 20px;
+    }
+
+    .sidebar-label {
+      margin-bottom: 20px;
+    }
+
+    .related-article {
+      margin-bottom: 24px;
+    }
+
+    .related-image-placeholder {
+      width: 100%;
+      height: 180px;
+    }
+  }
+</style>

@@ -1,33 +1,61 @@
 stripImages:
-  - ../assets/images/cms/strip/strip-1.webp
-  - ../assets/images/cms/strip/strip-2.webp
-  - ../assets/images/cms/strip/strip-3.webp
-  - ../assets/images/cms/strip/strip-4.webp
-  - ../assets/images/cms/strip/strip-5.webp
-  - ../assets/images/cms/strip/strip-6.webp
-  - ../assets/images/cms/strip/strip-7.webp
-  - ../assets/images/cms/strip/strip-8.webp
-  - ../assets/images/cms/strip/origins-arabica-1.webp
-  - ../assets/images/cms/strip/DSC_5180.webp
-  - ../assets/images/cms/strip/excelsa.webp
-  - ../assets/images/cms/strip/DSC_5182.webp
-  - ../assets/images/cms/strip/origins-excelsa-1.webp
-  - ../assets/images/cms/strip/ambe-anaerobic.webp
-  - ../assets/images/cms/strip/origins-excelsa-2.webp
-  - ../assets/images/cms/strip/disco3.webp
-heroImage: ../assets/images/cms/about/about-green-hero.webp
-heroText: |-
-  Wir sind Sophie und Charlotte. Wir haben HyCoffee gegründet, weil der Kaffeesektor vor einer der größten Herausforderungen seiner Zeit steht: dem Klimawandel. Steigende Temperaturen, Dürren und neue Pflanzenkrankheiten setzen den Kaffeeanbau weltweit unter Druck.
-storyHeading: Unsere Geschichte
-storyBody: |-
-  Wir arbeiten zwischen Ostafrika und Deutschland. Unser Fokus liegt auf Klimaresilienz als konkrete Antwort auf die Frage, wie Kaffeeanbau langfristig funktionieren kann. Gemeinsam mit Produzent:innen vor Ort fördern wir widerstandsfähige Anbausysteme wie Agroforst und regenerative Landwirtschaft. Gleichzeitig erschließen wir das Potenzial alternativer Kaffeearten wie Excelsa – bisher kaum auf dem Markt, obwohl seit Generationen angebaut.
+  - ../assets/images/cms/strip/stripImages/0.webp
+  - ../assets/images/cms/strip/stripImages/1.webp
+  - ../assets/images/cms/strip/stripImages/2.webp
+  - ../assets/images/cms/strip/stripImages/3.webp
+  - ../assets/images/cms/strip/stripImages/4.webp
+  - ../assets/images/cms/strip/stripImages/5.webp
+  - ../assets/images/cms/strip/stripImages/6.webp
+  - ../assets/images/cms/strip/stripImages/7.webp
+  - ../assets/images/cms/strip/stripImages/8.webp
+  - ../assets/images/cms/strip/stripImages/9.webp
+  - ../assets/images/cms/strip/stripImages/10.webp
+  - ../assets/images/cms/strip/stripImages/11.webp
+  - ../assets/images/cms/strip/stripImages/12.webp
+  - ../assets/images/cms/strip/stripImages/13.webp
+  - ../assets/images/cms/strip/stripImages/14.webp
+  - ../assets/images/cms/strip/stripImages/15.webp
+heroImage: ../assets/images/cms/about/heroImage.webp
+contentDe:
+  heroText: >-
+    Wir sind Sophie und Charlotte. Wir haben HyCoffee gegründet, weil der
+    Kaffeesektor vor einer der größten Herausforderungen seiner Zeit steht: dem
+    Klimawandel. Steigende Temperaturen, Dürren und neue Pflanzenkrankheiten
+    setzen den Kaffeeanbau weltweit unter Druck.
+  storyHeading: Unsere Geschichte
+  storyBody: >-
+    Wir arbeiten zwischen Ostafrika und Deutschland. Unser Fokus liegt auf
+    Klimaresilienz als konkrete Antwort auf die Frage, wie Kaffeeanbau
+    langfristig funktionieren kann. Gemeinsam mit Produzent:innen vor Ort
+    fördern wir widerstandsfähige Anbausysteme wie Agroforst und regenerative
+    Landwirtschaft. Gleichzeitig erschließen wir das Potenzial alternativer
+    Kaffeearten wie Excelsa – bisher kaum auf dem Markt, obwohl seit
+    Generationen angebaut.
 
-  HyCoffee ist die Brücke zwischen Forschung und Praxis: wissenschaftliche Erkenntnisse direkt auf die Farm, in die Lieferkette und in die Tasse.
 
-  Sophie hat bei den Vereinten Nationen gearbeitet, bevor sie sich auf Forschung zu Kaffee und Klimawandel spezialisierte. Die Entdeckung, dass es längst klimaresiliente Kaffeearten gibt – kaum bekannt, kaum vermarktet – ließ sie nicht mehr los. Forschen allein reichte ihr nicht.
+    HyCoffee ist die Brücke zwischen Forschung und Praxis: wissenschaftliche
+    Erkenntnisse direkt auf die Farm, in die Lieferkette und in die Tasse.
 
-  Charlotte hat in der internationalen Entwicklungszusammenarbeit gearbeitet und berät internationale Organisationen und Stiftungen zu Strategie und Partnerschaften. Sie kennt aus eigener Erfahrung, wie Privatsektor Partnerschaften echten Wandel bewirken können. Ihr Antrieb: Trade instead of Aid – faire Handelspartnerschaften statt Hilfe von außen.
-originsBannerText: More Info about the Places we work with
-originsBannerCtaLabel: Origins
-sayHiHeading: 'Say Hy:'
+
+    Sophie hat bei den Vereinten Nationen gearbeitet, bevor sie sich auf
+    Forschung zu Kaffee und Klimawandel spezialisierte. Die Entdeckung, dass es
+    längst klimaresiliente Kaffeearten gibt – kaum bekannt, kaum vermarktet –
+    ließ sie nicht mehr los. Forschen allein reichte ihr nicht.
+
+
+    Charlotte hat in der internationalen Entwicklungszusammenarbeit gearbeitet
+    und berät internationale Organisationen und Stiftungen zu Strategie und
+    Partnerschaften. Sie kennt aus eigener Erfahrung, wie Privatsektor
+    Partnerschaften echten Wandel bewirken können. Ihr Antrieb: Trade instead of
+    Aid – faire Handelspartnerschaften statt Hilfe von außen.
+  originsBannerText: Mehr Info zu den Orten, mit denen wir arbeiten
+  originsBannerCtaLabel: Origins
+  sayHiHeading: 'Say Hy:'
+contentEn:
+  heroText: "We are Sophie and Charlotte. \LWe founded HyCoffee because the coffee sector is facing one of the greatest challenges of its time: climate change. Rising temperatures, droughts, and new plant diseases are putting coffee cultivation under pressure worldwide."
+  storyHeading: Our story
+  storyBody: "We work between East Africa and Germany. Our focus is climate resilience as a concrete answer to the question of how coffee farming can remain viable in the long term. Together with local producers, we promote resilient farming systems such as agroforestry and regenerative agriculture. At the same time, we are unlocking the potential of alternative coffee species such as Excelsa—still barely present in the market, even though it has been cultivated for generations.\L\n\nHyCoffee is the bridge between research and practice: scientific insights brought directly to the farm, into the supply chain, and into the cup.\L\n\nSophie previously worked at the United Nations before specializing in research on coffee and climate change. The discovery that climate-resilient coffee species already exist—largely unknown and barely commercialized—stayed with her. Research alone was not enough.\L\n\nCharlotte has worked in international development cooperation and advises international organizations and foundations on strategy and partnerships. From her experience, she knows how private sector partnerships can drive real change. Her motivation: trade instead of aid—fair trade partnerships instead of external assistance."
+  originsBannerText: More info about the places we work with
+  originsBannerCtaLabel: Origins
+  sayHiHeading: 'Say Hy:'
 sayHiEmail: info@hycoffee.de

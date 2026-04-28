@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Navigation from '../../../components/Navigation.astro';
+import Footer from '../../../components/Footer.astro';
+import WissenCard from '../../../components/WissenCard.astro';
+import { getAllWissenArticles } from '../../../lib/wissen';
+
+export const prerender = true;
+
+const articles = await getAllWissenArticles('en');
+const featuredArticle = articles[0];
+---
+
+<BaseLayout
+  lang="en"
+  title="Knowledge – HyCoffee"
+  description="Background on climate change, climate-resilient coffee, new species, and scientific developments along the coffee value chain."
+  ogImage={featuredArticle?.image ?? undefined}
+  ogImageAlt={featuredArticle?.title}
+>
+  <Navigation lang="en" />
+  <main class="wissen">
+    <div class="articles-grid">
+      {articles.map((article) => <WissenCard article={article} lang="en" />)}
+    </div>
+  </main>
+  <Footer lang="en" />
+</BaseLayout>
+
+<style>
+  .wissen {
+    background: var(--warm-grey-light);
+    border-bottom: 1px solid var(--warm-dark-grey);
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 32px;
+    padding: calc(25px + (var(--nav-filter-height, 38px) / 2)) 60px 60px;
+  }
+
+  @media (min-width: 1000px) and (max-width: 1599px) {
+    .articles-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .articles-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .articles-grid {
+      gap: 16px;
+      padding: calc(25px + (var(--nav-filter-height, 52px) / 2)) 12px 40px;
+    }
+  }
+</style>

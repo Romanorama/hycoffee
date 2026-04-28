@@ -1,19 +1,27 @@
 ---
 import { Image } from 'astro:assets';
 import { reader, resolveCmsImage } from '../lib/cms';
+import type { Lang } from '../lib/i18n';
 
 interface Props {
   heading: string;
+  lang?: Lang;
 }
 
-const { heading } = Astro.props;
+const { heading, lang = 'de' } = Astro.props;
+const readLabel = lang === 'en' ? 'Read article' : 'Artikel lesen';
+const moreLabel = lang === 'en' ? 'View more from in the media' : 'Mehr aus den Medien';
+const pressLabel = lang === 'en' ? 'PRESS' : 'PRESSE';
+const minuteLabel = lang === 'en' ? 'min' : 'Min';
 
 const entries = await reader.collections.press.all();
 const items = entries.map(({ slug, entry }) => ({
   slug,
   title: entry.title,
   outlet: entry.outlet,
-  excerpt: entry.excerpt,
+  excerpt: lang === 'en'
+    ? (entry.contentEn?.excerpt || entry.contentDe?.excerpt)
+    : entry.contentDe?.excerpt,
   readingTime: entry.readingTime ?? 2,
   externalLink: entry.externalLink ?? '#',
   logoImage: resolveCmsImage(entry.logoImage),
@@ -28,7 +36,7 @@ const items = entries.map(({ slug, entry }) => ({
       items.map((item) => (
         <article class="press-card">
           <div class="press-card-inner">
-            <span class="caption">PRESSE</span>
+            <span class="caption">{pressLabel}</span>
             <div class="press-divider" />
             <h3 class="press-title">{item.title}</h3>
             {item.featureImage && (
@@ -62,12 +70,12 @@ const items = entries.map(({ slug, entry }) => ({
                   <circle cx="11" cy="11" r="10" stroke="#242119" stroke-width="1" />
                   <path d="M11 6v5l3 3" stroke="#242119" stroke-width="1" stroke-linecap="round" />
                 </svg>
-                <span>{item.readingTime} Min</span>
+                <span>{item.readingTime} {minuteLabel}</span>
               </div>
             </div>
             <p class="press-excerpt">{item.excerpt}</p>
             <a href={item.externalLink} class="btn btn-dark" target="_blank" rel="noopener noreferrer">
-              <span>Artikel lesen</span>
+              <span>{readLabel}</span>
               <svg class="arrow" width="14" height="11" viewBox="0 0 14 11" fill="none">
                 <path
                   d="M1 5.5h12m0 0L8.5 1M13 5.5L8.5 10"
@@ -84,7 +92,7 @@ const items = entries.map(({ slug, entry }) => ({
     }
   </div>
   <a href="#" class="press-more-link">
-    <span>View more from In the Media</span>
+    <span>{moreLabel}</span>
     <span class="press-more-arrow" aria-hidden="true">›</span>
   </a>
 </section>

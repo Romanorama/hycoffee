@@ -1,5 +1,13 @@
 ---
 import { reader } from '../lib/cms';
+import { DEFAULT_LANG, getNavPath, ui, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang ?? DEFAULT_LANG;
+const copy = ui[lang];
 
 const global = await reader.singletons.global.read();
 const email = global?.email ?? '';
@@ -7,9 +15,11 @@ const phone = global?.phone ?? '';
 const address = global?.address ?? '';
 const instagramUrl = global?.instagramUrl ?? '';
 const linkedinUrl = global?.linkedinUrl ?? '';
-const footerTagline = global?.footerTagline ?? '';
-const newsletterLabel = global?.newsletterLabel ?? '';
-const newsletterButton = global?.newsletterButton ?? '';
+const globalContent = lang === 'en' ? (global?.contentEn ?? global?.contentDe) : global?.contentDe;
+const fallbackGlobalContent = global?.contentDe;
+const footerTagline = globalContent?.footerTagline ?? fallbackGlobalContent?.footerTagline ?? '';
+const newsletterLabel = globalContent?.newsletterLabel ?? fallbackGlobalContent?.newsletterLabel ?? '';
+const newsletterButton = globalContent?.newsletterButton ?? fallbackGlobalContent?.newsletterButton ?? '';
 const telHref = phone.replace(/[^+\d]/g, '');
 ---
 
@@ -19,11 +29,11 @@ const telHref = phone.replace(/[^+\d]/g, '');
     <form class="footer-alt-form" name="newsletter" method="POST" data-netlify="true">
       <input type="hidden" name="form-name" value="newsletter" />
       <input type="email" name="email" placeholder="Email" class="footer-alt-input" aria-label="Email" required />
-      <button type="submit" class="footer-alt-submit" aria-label="Newsletter abonnieren">
+      <button type="submit" class="footer-alt-submit" aria-label={copy.footer.subscribeLabel}>
         <span>{newsletterButton}</span>
       </button>
     </form>
-    <p class="footer-alt-newsletter-copy">Join the growing community</p>
+    <p class="footer-alt-newsletter-copy">{copy.footer.newsletterCopy}</p>
   </section>
 
   <section class="footer-alt-main">
@@ -34,7 +44,7 @@ const telHref = phone.replace(/[^+\d]/g, '');
 
     <div class="footer-alt-content">
       <div class="footer-alt-col footer-alt-contact">
-        <h3 class="footer-alt-label">Kontakt</h3>
+        <h3 class="footer-alt-label">{copy.footer.contact}</h3>
         <a href={`mailto:${email}`} class="footer-alt-link footer-alt-mono">{email}</a>
         <a href={`tel:${telHref}`} class="footer-alt-link footer-alt-mono">{phone}</a>
 
@@ -42,11 +52,11 @@ const telHref = phone.replace(/[^+\d]/g, '');
       </div>
 
       <nav class="footer-alt-col" aria-label="Footer Navigation">
-        <h3 class="footer-alt-label">Navigation</h3>
-        <a href="/" class="footer-alt-link">Home</a>
-        <a href="/kaffee" class="footer-alt-link">Kaffee kaufen</a>
-        <a href="/wissen" class="footer-alt-link">Wissen</a>
-        <a href="/ueber-uns" class="footer-alt-link">Über Uns</a>
+        <h3 class="footer-alt-label">{copy.footer.navigation}</h3>
+        <a href={getNavPath('home', lang)} class="footer-alt-link">{copy.nav.home}</a>
+        <a href={getNavPath('coffee', lang)} class="footer-alt-link">{copy.nav.coffee}</a>
+        <a href={getNavPath('knowledge', lang)} class="footer-alt-link">{copy.nav.knowledge}</a>
+        <a href={getNavPath('about', lang)} class="footer-alt-link">{copy.nav.about}</a>
         <div class="footer-alt-nav-legal">
           <a href="/agb" class="footer-alt-legal-link">AGB</a>
           <a href="/datenschutz" class="footer-alt-legal-link">Datenschutz</a>
@@ -55,12 +65,12 @@ const telHref = phone.replace(/[^+\d]/g, '');
       </nav>
 
       <div class="footer-alt-col">
-        <h3 class="footer-alt-label">Folge uns</h3>
+        <h3 class="footer-alt-label">{copy.footer.follow}</h3>
         {instagramUrl && <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="footer-alt-link">Instagram</a>}
         {linkedinUrl && <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" class="footer-alt-link">LinkedIn</a>}
       </div>
     </div>
-    <p class="footer-alt-copyright">© 2026 HyCoffee. All rights reserved.</p>
+    <p class="footer-alt-copyright">© 2026 HyCoffee. {copy.footer.rights}</p>
   </section>
 </footer>
 
