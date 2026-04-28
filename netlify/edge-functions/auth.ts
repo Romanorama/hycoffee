@@ -35,8 +35,9 @@ function parseCookies(header: string | null): Record<string, string> {
 export default async (req: Request, _context: Context): Promise<Response | void> => {
   const url = new URL(req.url);
   const path = url.pathname;
+  const normalized = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
 
-  if (PUBLIC_PATHS.has(path)) return;
+  if (PUBLIC_PATHS.has(normalized)) return;
   if (PUBLIC_PREFIXES.some((p) => path.startsWith(p))) return;
 
   const password = Deno.env.get('SITE_PASSWORD') ?? '';
@@ -47,7 +48,10 @@ export default async (req: Request, _context: Context): Promise<Response | void>
 
   if (cookies[COOKIE_NAME] === expected) return;
 
-  const target = `/password?redirect=${encodeURIComponent(path + url.search)}`;
+  const intendedRedirect = path + url.search;
+  const target = intendedRedirect.startsWith('/password')
+    ? '/password'
+    : `/password?redirect=${encodeURIComponent(intendedRedirect)}`;
   return Response.redirect(new URL(target, url.origin), 302);
 };
 
