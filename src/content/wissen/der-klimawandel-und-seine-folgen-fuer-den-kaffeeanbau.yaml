@@ -39,7 +39,7 @@ contentDe:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/der-klimawandel-und-seine-folgen-fuer-den-kaffeeanbau/contentDe/blocks/1/value/image.JPG
+          ../../assets/images/cms/wissen/der-klimawandel-und-seine-folgen-fuer-den-kaffeeanbau/contentDe/blocks/1/value/image.jpg
     - discriminant: subheading
       value:
         text: "Wilde und hybride Kaffees für einen klimaresilienten Kaffeesektor\L"
