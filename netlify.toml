@@ -4,3 +4,13 @@
 
 [build.environment]
   NODE_VERSION = "22.12.0"
+
+[[redirects]]
+  from = "/keytsatic"
+  to = "/keystatic"
+  status = 301
+
+[[redirects]]
+  from = "/keytsatic/*"
+  to = "/keystatic/:splat"
+  status = 301

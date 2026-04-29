@@ -9,14 +9,53 @@ region: West Nile, Uganda
 altitude: 1.480 m
 flavourNotes: Fizzy, Pfirsichschnaps, leicht kräuterig, schwarze Johannisbeere
 contentDe:
-  intro: Ambe Anaerobic ist ein Specialty Arabica einer bäuerlich geführten Kooperative in Ugandas West-Nil-Region, nahe der Grenze zur Demokratischen Republik Kongo. Oft als der Pet-Nat unserer Kaffees beschrieben, durchläuft Ambe eine 36-stündige anaerobe Fermentation, bevor er auf Raised Beds natürlich getrocknet und sorgfältig handsortiert wird. Das Ergebnis ist ein unverkennbar wildes, funky Natural-Profil – weinige Aromen treffen auf regionaltypische Noten von dunklem Kakao und Steinobst.
-  resilienceText: Klimaprojektionen zeigen, dass die Kaffeeproduktion in Ugandas West-Nil-Region besonders stark vom Klimawandel betroffen sein wird. Damit Kaffee eine Einkommensquelle für ländliche Haushalte bleibt, werden Landwirt:innen beim Aufbau regenerativer Anbausysteme unterstützt – für besseren Boden, höhere Wasserretention und mehr Schatten. In einer der heissesten Regionen Ugandas ist regenerative Landwirtschaft eine kritische Anpassungsstrategie und reduziert gleichzeitig die Abhängigkeit von teuren synthetischen Düngemitteln.
-  socialText: Die West-Nil-Region ist historisch stark unterinvestiert. Das Mikrostationssystem hält die Wertschöpfung bei den Bäuerinnen und Bauern – jede Station wird von einem gewählten Komitee betrieben. Die Landwirt:innen verkaufen ihre Kirschen zwei Drittel über dem Living-Income-Referenzpreis für Ugandan Arabica. So entstehen stabile, bezahlte Arbeitsplätze in ländlichen Dörfern, in denen Erwerbsmöglichkeiten rar sind.
+  intro: >-
+    Ambe Anaerobic ist ein Specialty Arabica einer bäuerlich geführten
+    Kooperative in Ugandas West-Nil-Region, nahe der Grenze zur Demokratischen
+    Republik Kongo. Oft als der Pet-Nat unserer Kaffees beschrieben, durchläuft
+    Ambe eine 36-stündige anaerobe Fermentation, bevor er auf Raised Beds
+    natürlich getrocknet und sorgfältig handsortiert wird. Das Ergebnis ist ein
+    unverkennbar wildes, funky Natural-Profil – weinige Aromen treffen auf
+    regionaltypische Noten von dunklem Kakao und Steinobst.
+  resilienceText: >-
+    Klimaprojektionen zeigen, dass die Kaffeeproduktion in Ugandas
+    West-Nil-Region besonders stark vom Klimawandel betroffen sein wird. Damit
+    Kaffee eine Einkommensquelle für ländliche Haushalte bleibt, werden
+    Landwirt:innen beim Aufbau regenerativer Anbausysteme unterstützt – für
+    besseren Boden, höhere Wasserretention und mehr Schatten. In einer der
+    heissesten Regionen Ugandas ist regenerative Landwirtschaft eine kritische
+    Anpassungsstrategie und reduziert gleichzeitig die Abhängigkeit von teuren
+    synthetischen Düngemitteln.
+  socialText: >-
+    Die West-Nil-Region ist historisch stark unterinvestiert. Das
+    Mikrostationssystem hält die Wertschöpfung bei den Bäuerinnen und Bauern –
+    jede Station wird von einem gewählten Komitee betrieben. Die Landwirt:innen
+    verkaufen ihre Kirschen zwei Drittel über dem Living-Income-Referenzpreis
+    für Ugandan Arabica. So entstehen stabile, bezahlte Arbeitsplätze in
+    ländlichen Dörfern, in denen Erwerbsmöglichkeiten rar sind.
 contentEn:
-  intro: Ambe Anaerobic is a specialty Arabica from a farmer-led cooperative in Uganda's West Nile region, near the border with the Democratic Republic of Congo. Often described as the pet-nat of our coffees, Ambe undergoes a 36-hour anaerobic fermentation before being naturally dried on raised beds and carefully hand-sorted. The result is a distinctively wild, funky natural profile where winey aromatics meet regional notes of dark cocoa and stone fruit.
-  resilienceText: Climate projections show that coffee production in Uganda's West Nile region will be strongly affected by climate change. To keep coffee viable as an income source for rural households, farmers are supported in building regenerative growing systems with healthier soils, better water retention, and more shade. In one of Uganda's hottest regions, regenerative agriculture is a critical adaptation strategy and reduces dependence on costly synthetic fertilizers.
-  socialText: The West Nile region has historically seen little investment. The microstation system keeps value creation with farmers, with each station operated by an elected committee. Farmers sell their cherries at two thirds above the living-income reference price for Ugandan Arabica, creating stable paid work in rural villages where employment opportunities are scarce.
-heroImage: ../../assets/images/cms/kaffee/ambe-anaerobic.webp
-pdfDownload: null
+  intro: >-
+    Ambe Anaerobic is a specialty Arabica from a farmer-led cooperative in
+    Uganda's West Nile region, near the border with the Democratic Republic of
+    Congo. Often described as the pet-nat of our coffees, Ambe undergoes a
+    36-hour anaerobic fermentation before being naturally dried on raised beds
+    and carefully hand-sorted. The result is a distinctively wild, funky natural
+    profile where winey aromatics meet regional notes of dark cocoa and stone
+    fruit.
+  resilienceText: >-
+    Climate projections show that coffee production in Uganda's West Nile region
+    will be strongly affected by climate change. To keep coffee viable as an
+    income source for rural households, farmers are supported in building
+    regenerative growing systems with healthier soils, better water retention,
+    and more shade. In one of Uganda's hottest regions, regenerative agriculture
+    is a critical adaptation strategy and reduces dependence on costly synthetic
+    fertilizers.
+  socialText: >-
+    The West Nile region has historically seen little investment. The
+    microstation system keeps value creation with farmers, with each station
+    operated by an elected committee. Farmers sell their cherries at two thirds
+    above the living-income reference price for Ugandan Arabica, creating stable
+    paid work in rural villages where employment opportunities are scarce.
+pdfDownload: /downloads/ambe-anaerobic/pdfDownload.pdf
 available: true
 sortOrder: 1

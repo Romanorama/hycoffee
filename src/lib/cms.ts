@@ -5,7 +5,7 @@ import keystaticConfig from '../../keystatic.config';
 export const reader = createReader(process.cwd(), keystaticConfig);
 
 const cmsImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/**/*.{webp,jpg,jpeg,png,avif}',
+  '/src/assets/**/*.{webp,WEBP,jpg,JPG,jpeg,JPEG,png,PNG,avif,AVIF}',
   { eager: true },
 );
 
