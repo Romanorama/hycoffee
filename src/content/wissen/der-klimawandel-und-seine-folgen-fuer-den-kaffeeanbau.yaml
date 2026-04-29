@@ -56,6 +56,10 @@ contentDe:
           wiederentdeckte Stenophylla-Kaffee –  bieten sogar eine geschmacklich
           interessante und zugleich Dürre-tolerante  Alternative zu Arabica und
           Robusta.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/der-klimawandel-und-seine-folgen-fuer-den-kaffeeanbau/contentDe/blocks/3/value/image.JPG
 contentEn:
   subtitle: >-
     By 2050, climate change could reduce the land suitable for coffee
