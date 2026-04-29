@@ -9,6 +9,49 @@ const contentImage = (section: string) => assetImage(section, '../../');
 const dataImage = (section: string) => assetImage(section, '../');
 const publicFile = (directory: string, publicPath: string) => ({ directory, publicPath });
 
+const articleBlocks = (lang: 'de' | 'en') => fields.blocks(
+  {
+    paragraph: {
+      label: lang === 'de' ? 'Textabsatz' : 'Paragraph',
+      schema: fields.object({
+        text: fields.text({
+          label: lang === 'de' ? 'Text' : 'Text',
+          multiline: true,
+          description: lang === 'de'
+            ? 'Absätze durch Leerzeile trennen.'
+            : 'Separate paragraphs with a blank line.',
+        }),
+      }),
+    },
+    subheading: {
+      label: lang === 'de' ? 'Zwischentitel' : 'Subheading',
+      schema: fields.object({
+        text: fields.text({ label: lang === 'de' ? 'Zwischentitel' : 'Subheading' }),
+      }),
+    },
+    image: {
+      label: lang === 'de' ? 'Bild' : 'Image',
+      schema: fields.object({
+        image: fields.image({
+          label: lang === 'de' ? 'Bild' : 'Image',
+          ...contentImage('wissen'),
+        }),
+        alt: fields.text({ label: lang === 'de' ? 'Alt-Text' : 'Alt text' }),
+        caption: fields.text({
+          label: lang === 'de' ? 'Bildunterschrift' : 'Caption',
+          multiline: true,
+        }),
+      }),
+    },
+  },
+  {
+    label: lang === 'de' ? 'Artikelblöcke' : 'Article blocks',
+    description: lang === 'de'
+      ? 'Absätze, Zwischentitel und Bilder frei kombinieren und sortieren.'
+      : 'Combine and reorder paragraphs, subheadings, and images.',
+  },
+);
+
 export default config({
   storage: import.meta.env.PROD
     ? { kind: 'github', repo: 'Romanorama/hycoffee' }
@@ -46,19 +89,22 @@ export default config({
             body: fields.text({
               label: 'Inhalt',
               multiline: true,
-              description: 'Absätze durch Leerzeile trennen.',
+              description: 'Legacy-Fallback. Für neue Artikel bitte Artikelblöcke verwenden.',
             }),
+            blocks: articleBlocks('de'),
           },
           { label: 'Deutsch' },
         ),
         contentEn: fields.object(
           {
+            title: fields.text({ label: 'Title' }),
             subtitle: fields.text({ label: 'Subtitle', multiline: true }),
             body: fields.text({
               label: 'Body',
               multiline: true,
-              description: 'Separate paragraphs with a blank line.',
+              description: 'Legacy fallback. For new articles, use Article blocks.',
             }),
+            blocks: articleBlocks('en'),
           },
           { label: 'English' },
         ),
