@@ -10,10 +10,9 @@ const dataImage = (section: string) => assetImage(section, '../');
 const publicFile = (directory: string, publicPath: string) => ({ directory, publicPath });
 
 export default config({
-  storage:
-    process.env.NODE_ENV === 'production'
-      ? { kind: 'github', repo: 'Romanorama/hycoffee' }
-      : { kind: 'local' },
+  storage: import.meta.env.PROD
+    ? { kind: 'github', repo: 'Romanorama/hycoffee' }
+    : { kind: 'local' },
 
   ui: {
     brand: { name: 'HyCoffee' },
