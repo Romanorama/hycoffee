@@ -46,7 +46,7 @@ const navLinks = [
   <div class="nav-top">
     <div class="nav-top-inner">
       <a href="/" class="nav-logo">
-        <img src="/images/logo-light.svg" alt="HyCoffee" width="127" height="30" decoding="async" />
+        <img src="/images/Hy_Logo_X.svg" alt="HyCoffee" width="127" height="30" decoding="async" />
       </a>
     </div>
     <div class={`nav-lang${lang === 'en' ? ' is-en' : ''}`} role="group" aria-label="Sprache wählen">
@@ -261,6 +261,7 @@ const navLinks = [
   .nav-logo img {
     height: 30px;
     width: auto;
+    filter: brightness(0) invert(1);
     transition: height 2.2s ease;
   }
 

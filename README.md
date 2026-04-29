@@ -26,5 +26,5 @@ See `docs/image-workflow.md` for export sizes, naming rules, CMS image handling,
 - `public/favicon.svg`
 - `public/favicon.ico`
 - `public/fonts/`
-- `public/images/logo-light.svg`
+- `public/images/Hy_Logo_X.svg`
 - `public/images/inv-Hy-mono.svg`
