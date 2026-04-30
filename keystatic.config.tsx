@@ -109,6 +109,10 @@ export default config({
           { label: 'English' },
         ),
         publishedAt: fields.date({ label: 'Veröffentlicht am' }),
+        updatedAt: fields.date({
+          label: 'Zuletzt aktualisiert am',
+          description: 'Optional. Wenn gesetzt, wird der Artikel als aktualisiert markiert (für SEO und Sitemap).',
+        }),
         readingTime: fields.integer({ label: 'Lesezeit (Minuten)', defaultValue: 5 }),
         heroImage: fields.image({
           label: 'Titelbild',

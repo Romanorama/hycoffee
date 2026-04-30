@@ -24,6 +24,7 @@ export interface WissenArticle {
   title: string;
   subtitle: string;
   publishedAt: string;
+  updatedAt: string;
   readingTime: number;
   readingTimeLabel: string;
   image: ImageMetadata | null;
@@ -99,6 +100,7 @@ export async function getAllWissenArticles(lang: Lang = 'de'): Promise<WissenArt
         title: lang === 'en' ? content?.title || entry.title : entry.title,
         subtitle: content?.subtitle || fallbackContent?.subtitle || '',
         publishedAt: entry.publishedAt ?? '',
+        updatedAt: entry.updatedAt ?? '',
         readingTime: entry.readingTime ?? 5,
         readingTimeLabel: `${entry.readingTime ?? 5} ${lang === 'en' ? 'min' : 'Min'}`,
         image: resolveCmsImage(entry.heroImage),

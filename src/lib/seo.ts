@@ -3,7 +3,7 @@ import { getAllWissenArticles } from './wissen';
 export const SITE_URL = 'https://hycoffee.de';
 export const SITE_NAME = 'HyCoffee';
 export const DEFAULT_DESCRIPTION =
-  'HyCoffee importiert klimaresiliente Spezialitaetenkaffees und verbindet Kaffeehandel mit Klimaanpassung, Forschung und fairen Lieferketten.';
+  'HyCoffee importiert klimaresiliente Spezialitätenkaffees und verbindet Kaffeehandel mit Klimaanpassung, Forschung und fairen Lieferketten.';
 export const DEFAULT_DESCRIPTION_EN =
   'HyCoffee imports climate-resilient specialty coffees and connects coffee trade with climate adaptation, research, and fair supply chains.';
 
@@ -17,7 +17,7 @@ export function getBaseSchemas() {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: SITE_NAME,
-      legalName: 'HyCoffee UG (haftungsbeschraenkt)',
+      legalName: 'HyCoffee UG (haftungsbeschränkt)',
       url: SITE_URL,
       email: 'info@hycoffee.de',
       sameAs: [
@@ -35,23 +35,28 @@ export function getBaseSchemas() {
   ];
 }
 
-export async function getSitemapPaths() {
+export interface SitemapEntry {
+  path: string;
+  lastmod?: string;
+}
+
+export async function getSitemapEntries(): Promise<SitemapEntry[]> {
   const articles = await getAllWissenArticles();
   const englishArticles = await getAllWissenArticles('en');
-  return Array.from(
-    new Set([
-      '/',
-      '/kaffee',
-      '/origins',
-      '/ueber-uns',
-      '/wissen',
-      ...articles.map((article) => article.href),
-      '/en/',
-      '/en/coffee',
-      '/en/origins',
-      '/en/about',
-      '/en/knowledge',
-      ...englishArticles.map((article) => article.href),
-    ]),
-  );
+  const articleEntry = (article: { href: string; publishedAt: string; updatedAt: string }): SitemapEntry => ({
+    path: article.href,
+    lastmod: article.updatedAt || article.publishedAt || undefined,
+  });
+  const seen = new Set<string>();
+  const entries: SitemapEntry[] = [];
+  const push = (entry: SitemapEntry) => {
+    if (seen.has(entry.path)) return;
+    seen.add(entry.path);
+    entries.push(entry);
+  };
+  ['/', '/kaffee', '/origins', '/ueber-uns', '/wissen'].forEach((path) => push({ path }));
+  articles.forEach((article) => push(articleEntry(article)));
+  ['/en/', '/en/coffee', '/en/origins', '/en/about', '/en/knowledge'].forEach((path) => push({ path }));
+  englishArticles.forEach((article) => push(articleEntry(article)));
+  return entries;
 }
