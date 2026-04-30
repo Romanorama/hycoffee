@@ -9,14 +9,57 @@ region: West Nile, Uganda
 altitude: 1.400–1.600 m
 flavourNotes: Kakao, Gewürze, prickelnde Cola, Pfirsich
 contentDe:
-  intro: Disco 3 ist ein Specialty Arabica aus Ugandas West-Nil-Region, gewachsen auf hochgelegenen Hängen nahe der Grenze zur Demokratischen Republik Kongo. Verarbeitet auf der Jukia Mikrostation, wo experimentelle anaerobe Fermentationen die Grenzen des Aromas verschieben, durchläuft Disco 3 eine 72-stündige anaerobe Fermentation. Anschliessend trocknen die Bohnen natürlich auf Raised Beds und werden sorgfältig handsortiert. Das Ergebnis&#58; eine lebendige, expressive Tasse mit sprudelnder Säure und vielschichtiger Komplexität – reicher Kakao, warme Gewürznoten, prickelnde Cola und saftiger Pfirsich.
-  resilienceText: Klimaprojektionen zeigen, dass die Kaffeeproduktion in Ugandas West-Nil-Region besonders stark vom Klimawandel betroffen sein wird. Damit Kaffee eine Einkommensquelle für ländliche Haushalte bleibt, werden Landwirt:innen beim Aufbau regenerativer Anbausysteme unterstützt – für besseren Boden, höhere Wasserretention und mehr Schatten. In einer der heissesten Regionen Ugandas ist regenerative Landwirtschaft eine kritische Anpassungsstrategie und reduziert gleichzeitig die Abhängigkeit von teuren synthetischen Düngemitteln.
-  socialText: Die West-Nil-Region ist historisch stark unterinvestiert. Das Mikrostationssystem hält die Wertschöpfung bei den Bäuerinnen und Bauern – jede Station wird von einem gewählten Komitee betrieben. Die Landwirt:innen verkaufen ihre Kirschen zwei Drittel über dem Living-Income-Referenzpreis für Ugandan Arabica. So entstehen stabile, bezahlte Arbeitsplätze in ländlichen Dörfern, in denen Erwerbsmöglichkeiten rar sind.
+  intro: >-
+    Disco 3 ist ein Specialty Arabica aus Ugandas West-Nil-Region, gewachsen auf
+    hochgelegenen Hängen nahe der Grenze zur Demokratischen Republik Kongo.
+    Verarbeitet auf der Jukia Mikrostation, wo experimentelle anaerobe
+    Fermentationen die Grenzen des Aromas verschieben, durchläuft Disco 3 eine
+    72-stündige anaerobe Fermentation. Anschliessend trocknen die Bohnen
+    natürlich auf Raised Beds und werden sorgfältig handsortiert. Das
+    Ergebnis&#58; eine lebendige, expressive Tasse mit sprudelnder Säure und
+    vielschichtiger Komplexität – reicher Kakao, warme Gewürznoten, prickelnde
+    Cola und saftiger Pfirsich.
+  resilienceText: >-
+    Klimaprojektionen zeigen, dass die Kaffeeproduktion in Ugandas
+    West-Nil-Region besonders stark vom Klimawandel betroffen sein wird. Damit
+    Kaffee eine Einkommensquelle für ländliche Haushalte bleibt, werden
+    Landwirt:innen beim Aufbau regenerativer Anbausysteme unterstützt – für
+    besseren Boden, höhere Wasserretention und mehr Schatten. In einer der
+    heissesten Regionen Ugandas ist regenerative Landwirtschaft eine kritische
+    Anpassungsstrategie und reduziert gleichzeitig die Abhängigkeit von teuren
+    synthetischen Düngemitteln.
+  socialText: >-
+    Die West-Nil-Region ist historisch stark unterinvestiert. Das
+    Mikrostationssystem hält die Wertschöpfung bei den Bäuerinnen und Bauern –
+    jede Station wird von einem gewählten Komitee betrieben. Die Landwirt:innen
+    verkaufen ihre Kirschen zwei Drittel über dem Living-Income-Referenzpreis
+    für Ugandan Arabica. So entstehen stabile, bezahlte Arbeitsplätze in
+    ländlichen Dörfern, in denen Erwerbsmöglichkeiten rar sind.
 contentEn:
-  intro: 'Disco 3 is a specialty Arabica from Uganda''s West Nile region, grown on high-altitude slopes near the border with the Democratic Republic of Congo. Processed at the Jukia microstation, where experimental anaerobic fermentations push aroma boundaries, Disco 3 undergoes a 72-hour anaerobic fermentation. The beans are then naturally dried on raised beds and carefully hand-sorted. The result is a vivid, expressive cup with sparkling acidity and layered complexity: rich cocoa, warm spices, fizzy cola, and juicy peach.'
-  resilienceText: Climate projections show that coffee production in Uganda's West Nile region will be strongly affected by climate change. To keep coffee viable as an income source for rural households, farmers are supported in building regenerative growing systems with healthier soils, better water retention, and more shade. In one of Uganda's hottest regions, regenerative agriculture is a critical adaptation strategy and reduces dependence on costly synthetic fertilizers.
-  socialText: The West Nile region has historically seen little investment. The microstation system keeps value creation with farmers, with each station operated by an elected committee. Farmers sell their cherries at two thirds above the living-income reference price for Ugandan Arabica, creating stable paid work in rural villages where employment opportunities are scarce.
-heroImage: ../../assets/images/cms/kaffee/disco-3/disco3.webp
-pdfDownload: null
+  intro: >-
+    Disco 3 is a specialty Arabica from Uganda's West Nile region, grown on
+    high-altitude slopes near the border with the Democratic Republic of Congo.
+    Processed at the Jukia microstation, where experimental anaerobic
+    fermentations push aroma boundaries, Disco 3 undergoes a 72-hour anaerobic
+    fermentation. The beans are then naturally dried on raised beds and
+    carefully hand-sorted. The result is a vivid, expressive cup with sparkling
+    acidity and layered complexity: rich cocoa, warm spices, fizzy cola, and
+    juicy peach.
+  resilienceText: >-
+    Climate projections show that coffee production in Uganda's West Nile region
+    will be strongly affected by climate change. To keep coffee viable as an
+    income source for rural households, farmers are supported in building
+    regenerative growing systems with healthier soils, better water retention,
+    and more shade. In one of Uganda's hottest regions, regenerative agriculture
+    is a critical adaptation strategy and reduces dependence on costly synthetic
+    fertilizers.
+  socialText: >-
+    The West Nile region has historically seen little investment. The
+    microstation system keeps value creation with farmers, with each station
+    operated by an elected committee. Farmers sell their cherries at two thirds
+    above the living-income reference price for Ugandan Arabica, creating stable
+    paid work in rural villages where employment opportunities are scarce.
+heroImage: ../../assets/images/cms/kaffee/disco-3/heroImage.webp
+pdfDownload: /downloads/disco-3/pdfDownload.pdf
 available: true
 sortOrder: 3
