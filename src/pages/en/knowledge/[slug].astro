@@ -76,6 +76,11 @@ const breadcrumbSchema = {
   <Navigation lang="en" />
   <main class="article-page">
     <header class="article-header">
+      <nav class="article-breadcrumb" aria-label="Breadcrumb">
+        <a href="/en/knowledge">Knowledge</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{article.title}</span>
+      </nav>
       <p class="article-meta">
         {article.categoryLabel} | {formatDate(article.publishedAt)} | {article.readingTimeLabel}
       </p>
@@ -107,6 +112,7 @@ const breadcrumbSchema = {
             </figure>
           ) : null
         ))}
+        <a href="/en/knowledge" class="article-back-link">Back to knowledge overview</a>
       </div>
 
       {related.length > 0 && (
@@ -137,6 +143,38 @@ const breadcrumbSchema = {
     padding: 60px 60px 48px;
     max-width: 1200px;
     margin: 0 auto;
+  }
+
+  .article-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 100%;
+    margin-bottom: 28px;
+    font-family: var(--font-ui);
+    font-size: var(--type-caption-sm);
+    line-height: 1.3;
+    letter-spacing: 0.1px;
+    color: var(--warm-dark-grey);
+  }
+
+  .article-breadcrumb a,
+  .article-back-link {
+    color: var(--warm-dark-grey);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .article-breadcrumb a:hover,
+  .article-back-link:hover {
+    opacity: 0.7;
+  }
+
+  .article-breadcrumb span[aria-current='page'] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .article-meta {
@@ -194,6 +232,15 @@ const breadcrumbSchema = {
 
   .article-body strong {
     font-weight: 400;
+  }
+
+  .article-back-link {
+    display: inline-flex;
+    margin-top: 36px;
+    font-family: var(--font-ui);
+    font-size: var(--type-caption-sm);
+    line-height: 1.3;
+    letter-spacing: 0.1px;
   }
 
   .article-subheading {
@@ -297,6 +344,13 @@ const breadcrumbSchema = {
       margin-bottom: 24px;
     }
 
+    .article-breadcrumb {
+      display: flex;
+      margin-bottom: 22px;
+      justify-content: flex-start;
+      text-align: left;
+    }
+
     .article-title {
       font-size: var(--type-mobile-display);
       line-height: 1.1;
@@ -322,6 +376,10 @@ const breadcrumbSchema = {
       font-size: var(--type-hal-copy);
       line-height: 1.7;
       margin-bottom: 24px;
+    }
+
+    .article-back-link {
+      margin-top: 28px;
     }
 
     .article-subheading {
