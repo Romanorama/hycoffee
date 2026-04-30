@@ -1,5 +1,5 @@
 contentDe:
-  heroHeadline: Wir erforschen, entwickeln und liefern klimareslienten Rohkaffee.
+  heroHeadline: Wir erforschen, entwickeln und liefern klimareslienten Rohkaffee. <3
   heroCtaLabel: Jetzt Kaffee Kaufen
   tiles:
     - category: ROHKAFFEE ANGEBOT
@@ -7,41 +7,45 @@ contentDe:
         Kaffee,
         der bleibt
       body: >-
-        Die Zukunft des Kaffees beginnt mit neuen Arten. Excelsa ist eine seltene,
-        klimaresiliente Kaffeeart mit neuen Geschmacksprofilen und Zukunft für den
-        Kaffeeanbau.
+        Die Zukunft des Kaffees beginnt mit neuen Arten. Excelsa ist eine
+        seltene, klimaresiliente Kaffeeart mit neuen Geschmacksprofilen und
+        Zukunft für den Kaffeeanbau.
       ctaLabel: Unserer Kaffee
     - category: ORIGINS
       heading: |-
         Gemeinsam
         in die Zukunft
       body: >-
-        Durch faire Partnerschaften, klimaresiliente Anbausysteme und bessere Marktchancen
-        stärken wir die Zukunft des Kaffeeanbaus.
+        Durch faire Partnerschaften, klimaresiliente Anbausysteme und bessere
+        Marktchancen stärken wir die Zukunft des Kaffeeanbaus.
       ctaLabel: Unsere Origins
   valuesHeading: |-
     Klimaresilienz
     ist Qualität
   valuesBody: >-
-    Klimawandel bedroht den Kaffeeanbau. Wir importieren klimaresilienten Spezialitäten
-    Kaffee in langfristigen Partnschaften mit Produzent:innen vor Ort.
+    Klimawandel bedroht den Kaffeeanbau. Wir importieren klimaresilienten
+    Spezialitäten Kaffee in langfristigen Partnschaften mit Produzent:innen vor
+    Ort.
   teamBlurb: >-
-    Wir sind Sophie und Charlotte, die Gründerinnen von HyCoffee. Zwischen Ostafrika und
-    Deutschland arbeiten wir mit Produzent:innen, Röstereien und der Wissenschaft
-    zusammen, um klimaresiliente Anbausysteme zu fördern und außergewöhnliche Kaffees auf
-    den Markt zu bringen. Unser Ziel: eine faire Kaffeebranche, die auch im Klimawandel
-    bestehen kann.
+    Wir sind Sophie und Charlotte, die Gründerinnen von HyCoffee. Zwischen
+    Ostafrika und Deutschland arbeiten wir mit Produzent:innen, Röstereien und
+    der Wissenschaft zusammen, um klimaresiliente Anbausysteme zu fördern und
+    außergewöhnliche Kaffees auf den Markt zu bringen. Unser Ziel: eine faire
+    Kaffeebranche, die auch im Klimawandel bestehen kann.
   teamMissionHeading: Unsere Mission
   teamCtaLabel: Über uns
   speciesHeading: >-
-    Es gibt 130 bekannte Kaffeearten, viele davon werden nicht kommerziell genutzt. Noch
-    nicht.
-  speciesExpandedBody: Von über 130 bekannten Coffea-Arten werden heute nur wenige kommerziell genutzt.
+    Es gibt 130 bekannte Kaffeearten, viele davon werden nicht kommerziell
+    genutzt. Noch nicht.
+  speciesExpandedBody: >-
+    Von über 130 bekannten Coffea-Arten werden heute nur wenige kommerziell
+    genutzt.
   scienceLabel: WISSEN
   scienceHeading: Zwischen Forschung und Markt
   scienceBody: >-
-    Wir verbinden wissenschaftliche Erkenntnisse mit der Praxis des Kaffeeanbaus. In
-    unseren Artikeln teilen wir neue Erkenntnisse und Perspektiven aus unserer Arbeit.
+    Wir verbinden wissenschaftliche Erkenntnisse mit der Praxis des
+    Kaffeeanbaus. In unseren Artikeln teilen wir neue Erkenntnisse und
+    Perspektiven aus unserer Arbeit.
   scienceCtaLabel: Zu den Artikeln
   pressHeading: HyCoffee in den Medien
 contentEn:
@@ -51,35 +55,43 @@ contentEn:
     - category: VARIETIES
       heading: Coffee that lasts
       body: >-
-        The future of coffee begins with new species, varieties, and climate-resilient
-        cultivation. HyCoffee's portfolio focuses on climate-resilient coffee.
+        The future of coffee begins with new species, varieties, and
+        climate-resilient cultivation. HyCoffee's portfolio focuses on
+        climate-resilient coffee.
       ctaLabel: Green Coffee Selection
     - category: ORIGINS
       heading: Together into the future
       body: >-
-        Through fair partnerships, climate-resilient farming systems, and improved market
-        opportunities, we are strengthening the future of coffee cultivation.
+        Through fair partnerships, climate-resilient farming systems, and
+        improved market opportunities, we are strengthening the future of coffee
+        cultivation.
       ctaLabel: Our projects
   valuesHeading: |-
     Climate Resilience
     is Quality
   valuesBody: >-
-    Climate change is threatening coffee cultivation. We import climate-resilient
-    specialty coffee through long-term partnerships with local producers.
+    Climate change is threatening coffee cultivation. We import
+    climate-resilient specialty coffee through long-term partnerships with local
+    producers.
   teamBlurb: >-
-    We are Sophie and Charlotte, the founders of HyCoffee. Working between East Africa and
-    Germany, we collaborate with producers, roasteries, and the scientific community to
-    promote climate-resilient farming systems and bring exceptional coffees to market. Our
-    goal: a fair coffee industry that can also thrive in the face of climate change.
+    We are Sophie and Charlotte, the founders of HyCoffee. Working between East
+    Africa and Germany, we collaborate with producers, roasteries, and the
+    scientific community to promote climate-resilient farming systems and bring
+    exceptional coffees to market. Our goal: a fair coffee industry that can
+    also thrive in the face of climate change.
   teamMissionHeading: Who we are
   teamCtaLabel: Learn more
-  speciesHeading: There are 130 known coffee species — many of them are not used commercially. Yet.
-  speciesExpandedBody: Of more than 130 known Coffea species, only a few are commercially used today.
+  speciesHeading: >-
+    There are 130 known coffee species — many of them are not used commercially.
+    Yet.
+  speciesExpandedBody: >-
+    Of more than 130 known Coffea species, only a few are commercially used
+    today.
   scienceLabel: Knowledge & Science
   scienceHeading: Between research and market
   scienceBody: >-
-    We connect scientific insights with the practice of coffee cultivation. In our
-    articles, we share new findings and perspectives from our work.
+    We connect scientific insights with the practice of coffee cultivation. In
+    our articles, we share new findings and perspectives from our work.
   scienceCtaLabel: Articles
   pressHeading: HyCoffee in the media
 heroImage: ../assets/images/cms/home/heroImage.webp
