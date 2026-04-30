@@ -1,0 +1,104 @@
+title: Kaffee im Wandel – Strategien für eine resiliente Zukunft
+category: klimawandel
+contentDe:
+  subtitle: >-
+    Wie alternative Arten, gezielte Züchtung und nachhaltige Anbausysteme die
+    Kaffeeproduktion an den Klimawandel anpassen und langfristig sichern.
+  blocks:
+    - discriminant: paragraph
+      value:
+        text: >
+          Der Klimawandel bedroht die globale Verfügbarkeit von hochqualitativem
+          Kaffee. Steigende Temperaturen, unregelmäßige Niederschläge sowie die
+          Verbreitung von Schädlingen und Krankheiten stellen Kaffeebäuerinnen
+          und -bauern schon heute vor große Herausforderungen.
+
+          Bei HyCoffee verbinden wir praktisches Wissen aus der Landwirtschaft
+          mit wissenschaftlicher Innovation und tragen aktiv dazu bei, den
+          Kaffeemarkt zukunftsfähig zu gestalten. Unser Ziel ist es, Kaffee
+          langfristig als verlässliche Einkommensquelle zu sichern.
+
+          Unsere Kaffees erfüllen mindestens eines der folgenden Kriterien:
+    - discriminant: subheading
+      value:
+        text: 'Alternative      Kaffeearten:'
+    - discriminant: paragraph
+      value:
+        text: >
+          Weltweit gibt es 133 uns bekannte Kaffeearten. Bisher werden jedoch
+          nur Arabica und Robusta kommerziell genutzt. Viele der anderen
+          Kaffeearten sind jedoch von Natur aus resistenter gegen z.B. Hitze
+          oder Schädlinge und bieten damit großes Potenzial für die Anpassung an
+          den Klimawandel. Gleichzeitig spielen sie eine wichtige Rolle für den
+          Erhalt von Biodiversität und genetischer Vielfalt. Gemeinsam mit
+          Forschungsinstituten und Kooperativen vor Ort erforschen gezielt das
+          Marktpotenzial wilder Kaffeearten, investieren in verbesserte
+          Verarbeitungsmethoden und schaffen so Zugang zum europäischen Markt.
+    - discriminant: subheading
+      value:
+        text: 'Klimaresiliente Züchtungen:'
+    - discriminant: paragraph
+      value:
+        text: >-
+          Wir beziehen Kaffeesorten, die gezielt dafür entwickelt wurden, besser
+          mit Klimastress wie Trockenheit, Hitze sowie erhöhtem Schädlings- und
+          Krankheitsdruck umzugehen. Solche Züchtungen entstehen durch
+          langfristige Forschung: Widerstandsfähige Pflanzen werden
+          identifiziert, gezielt gekreuzt und über mehrere Generationen hinweg
+          ausgewählt, bis Sorten entstehen, die sowohl robust als auch
+          qualitativ hochwertig sind. Klimarobuste Züchtungen helfen dabei,
+          Erträge zu stabilisieren, Ernteausfälle zu reduzieren und den Einsatz
+          von Pflanzenschutzmitteln zu verringern. Gleichzeitig sichern sie die
+          Qualität, die für den Markt entscheidend ist.
+    - discriminant: subheading
+      value:
+        text: 'Resiliente Anbausysteme:'
+    - discriminant: paragraph
+      value:
+        text: >-
+          Wir arbeiten mit Kaffeebäuerinnen und -bauern zusammen, die bereits
+          heute auf Anbausysteme setzen, die die Auswirkungen des Klimawandels
+          gezielt abfedern, wie z.B. durch Schattenbäume oder regenerative
+          Landwirtschaft. Gleichzeitig unterstützen wir Betriebe, die sich noch
+          im Übergang befinden, dabei, solche Systeme schrittweise aufzubauen
+          und umzusetzen. Dabei stehen die Bedürfnisse der Produzent:innen im
+          Mittelpunkt: Durch Schulungen, Wissenstransfer und gezielte
+          Investitionen begleiten wir sie auf dem Weg zu widerstandsfähigeren
+          Anbaumethoden. Diese helfen, Ernten besser gegen Hitze, Trockenheit
+          und Starkregen zu schützen, die Bodenfruchtbarkeit langfristig zu
+          sichern.
+    - discriminant: subheading
+      value:
+        text: "Was bedeutet das für die Produzentinnen und Produzenten?\L"
+    - discriminant: paragraph
+      value:
+        text: >
+          Kaffeebäuerinnen und -bauern spüren die Auswirkungen des Klimawandels
+          bereits deutlich. Klimarobuster Kaffee bedeutet, dass sie auch unter
+          veränderten Bedingungen weiterhin erfolgreich Kaffee anbauen können:
+    - discriminant: paragraph
+      value:
+        text: >-
+          Gemeinsame      Projekte für mehr Klimaresilienz: Wir      stärken
+          Produzent:innen      durch Schulungen, Zugang zu Ressourcen und
+          gezielte Investitionen, etwa in neue Anbaumethoden, verbesserte
+          Sorten      oder alternative Kaffeearten-
+    - discriminant: paragraph
+      value:
+        text: >
+          Direkter      Handel und faire Preise: Schwankende und oft      zu
+          niedrige Preise erschweren Planung und machen Betriebe anfällig
+          für      Klimarisiken. Durch direkten Handel stellen wir faire und
+          stabile Preise      sicher und schaffen so die Grundlage für
+          Investitionen und mehr      Sicherheit.
+    - discriminant: paragraph
+      value:
+        text: >
+          Langfristige      Perspektiven sichern: Durch Investitionen      in
+          klimaresiliente Kaffees kann auch in Zukunft erfolgreich Kaffee
+          angebaut werden.
+contentEn:
+  blocks: []
+readingTime: 7
+heroImage: >-
+  ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/heroImage.jpg
