@@ -1,0 +1,15 @@
+title: Kaffee der Zukunft Kopie
+outlet: ZDF
+logoImage: ../../assets/images/cms/press/media-zdf.webp
+featureImage: ../../assets/images/cms/press/press-arte.webp
+contentDe:
+  excerpt: >-
+    Das ZDF begleitet HyCoffee nach Uganda und zeigt, wie klimaresilienter Kaffeeanbau in
+    der Praxis aussieht.
+contentEn:
+  excerpt: >-
+    ZDF accompanies HyCoffee to Uganda and shows what climate-resilient coffee farming
+    looks like in practice.
+readingTime: 2
+externalLink: https://www.zdf.de/
+sortOrder: 12

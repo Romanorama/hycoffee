@@ -86,6 +86,7 @@ export default config({
         contentDe: fields.object(
           {
             subtitle: fields.text({ label: 'Untertitel', multiline: true }),
+            heroImageAlt: fields.text({ label: 'Titelbild Alt-Text' }),
             body: fields.text({
               label: 'Inhalt',
               multiline: true,
@@ -99,6 +100,7 @@ export default config({
           {
             title: fields.text({ label: 'Title' }),
             subtitle: fields.text({ label: 'Subtitle', multiline: true }),
+            heroImageAlt: fields.text({ label: 'Hero image alt text' }),
             body: fields.text({
               label: 'Body',
               multiline: true,
@@ -146,6 +148,7 @@ export default config({
         contentDe: fields.object(
           {
             intro: fields.text({ label: 'Einleitung', multiline: true }),
+            heroImageAlt: fields.text({ label: 'Produktbild Alt-Text' }),
             resilienceText: fields.text({ label: 'Klimaresilienz-Text', multiline: true }),
             socialText: fields.text({ label: 'Sozial-Text', multiline: true }),
           },
@@ -154,6 +157,7 @@ export default config({
         contentEn: fields.object(
           {
             intro: fields.text({ label: 'Intro', multiline: true }),
+            heroImageAlt: fields.text({ label: 'Product image alt text' }),
             resilienceText: fields.text({ label: 'Climate resilience text', multiline: true }),
             socialText: fields.text({ label: 'Social impact text', multiline: true }),
           },
@@ -190,17 +194,26 @@ export default config({
         contentDe: fields.object(
           {
             excerpt: fields.text({ label: 'Beschreibung', multiline: true }),
+            logoAlt: fields.text({ label: 'Medien-Logo Alt-Text' }),
+            featureImageAlt: fields.text({ label: 'Feature-Bild Alt-Text' }),
           },
           { label: 'Deutsch' },
         ),
         contentEn: fields.object(
           {
             excerpt: fields.text({ label: 'Description', multiline: true }),
+            logoAlt: fields.text({ label: 'Media logo alt text' }),
+            featureImageAlt: fields.text({ label: 'Feature image alt text' }),
           },
           { label: 'English' },
         ),
         readingTime: fields.integer({ label: 'Lesezeit (Minuten)', defaultValue: 2 }),
         externalLink: fields.url({ label: 'Link zum Artikel' }),
+        sortOrder: fields.integer({
+          label: 'Reihenfolge',
+          description: 'Niedrige Zahlen erscheinen zuerst. Neue Einträge können damit wie die bestehenden Karten einsortiert werden.',
+          defaultValue: 0,
+        }),
       },
     }),
 
@@ -266,12 +279,14 @@ export default config({
         contentDe: fields.object(
           {
             role: fields.text({ label: 'Rolle' }),
+            portraitAlt: fields.text({ label: 'Portrait Alt-Text' }),
           },
           { label: 'Deutsch' },
         ),
         contentEn: fields.object(
           {
             role: fields.text({ label: 'Role' }),
+            portraitAlt: fields.text({ label: 'Portrait alt text' }),
           },
           { label: 'English' },
         ),
@@ -346,6 +361,15 @@ export default config({
             teamMissionHeading: fields.text({ label: 'Mission-Überschrift' }),
             teamCtaLabel: fields.text({ label: 'Team-Button' }),
             speciesHeading: fields.text({ label: 'Species-Überschrift', multiline: true }),
+            heroImageAlt: fields.text({ label: 'Hero-Bild Alt-Text' }),
+            teamStripImageAlts: fields.array(
+              fields.text({ label: 'Alt-Text' }),
+              {
+                label: 'Team-Fotostreifen Alt-Texte',
+                itemLabel: (p) => p.value || 'Alt-Text',
+              },
+            ),
+            speciesExpandedPhotoAlt: fields.text({ label: 'Species-Foto Alt-Text' }),
             speciesExpandedBody: fields.text({ label: 'Species-Text', multiline: true }),
             scienceLabel: fields.text({ label: 'Science-Label' }),
             scienceHeading: fields.text({ label: 'Science-Überschrift' }),
@@ -378,6 +402,15 @@ export default config({
             teamMissionHeading: fields.text({ label: 'Mission heading' }),
             teamCtaLabel: fields.text({ label: 'Team button' }),
             speciesHeading: fields.text({ label: 'Species heading', multiline: true }),
+            heroImageAlt: fields.text({ label: 'Hero image alt text' }),
+            teamStripImageAlts: fields.array(
+              fields.text({ label: 'Alt text' }),
+              {
+                label: 'Team photo strip alt texts',
+                itemLabel: (p) => p.value || 'Alt text',
+              },
+            ),
+            speciesExpandedPhotoAlt: fields.text({ label: 'Species photo alt text' }),
             speciesExpandedBody: fields.text({ label: 'Species text', multiline: true }),
             scienceLabel: fields.text({ label: 'Science label' }),
             scienceHeading: fields.text({ label: 'Science heading' }),
@@ -419,6 +452,11 @@ export default config({
           }),
           { label: 'Team-Fotostreifen', itemLabel: (p) => p.value?.filename ?? 'Bild' },
         ),
+        speciesVisible: fields.checkbox({
+          label: 'Species-Sektion anzeigen',
+          description: 'Wenn aktiv, wird die "130 Kaffeearten"-Sektion auf der Startseite angezeigt.',
+          defaultValue: false,
+        }),
         speciesExpandedPhoto: fields.image({
           label: 'Species-Foto',
           ...dataImage('home'),
@@ -452,6 +490,14 @@ export default config({
         contentDe: fields.object(
           {
             heroText: fields.text({ label: 'Hero-Text', multiline: true }),
+            heroImageAlt: fields.text({ label: 'Hero-Bild Alt-Text' }),
+            stripImageAlts: fields.array(
+              fields.text({ label: 'Alt-Text' }),
+              {
+                label: 'Fotostreifen Alt-Texte',
+                itemLabel: (p) => p.value || 'Alt-Text',
+              },
+            ),
             storyHeading: fields.text({ label: 'Story-Überschrift' }),
             storyBody: fields.text({
               label: 'Story-Text',
@@ -467,6 +513,14 @@ export default config({
         contentEn: fields.object(
           {
             heroText: fields.text({ label: 'Hero text', multiline: true }),
+            heroImageAlt: fields.text({ label: 'Hero image alt text' }),
+            stripImageAlts: fields.array(
+              fields.text({ label: 'Alt text' }),
+              {
+                label: 'Photo strip alt texts',
+                itemLabel: (p) => p.value || 'Alt text',
+              },
+            ),
             storyHeading: fields.text({ label: 'Story heading' }),
             storyBody: fields.text({
               label: 'Story text',

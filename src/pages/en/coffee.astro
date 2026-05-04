@@ -90,6 +90,7 @@ const soldOutPopup = {
           resilienceText={sample.contentEn.resilienceText || sample.contentDe.resilienceText}
           socialText={sample.contentEn.socialText || sample.contentDe.socialText}
           heroImage={sample.heroImage}
+          heroAlt={sample.contentEn.heroImageAlt || sample.contentDe.heroImageAlt || sample.name}
           pdfDownloadHref={sample.pdfDownload}
           samplesSoldOut={samplesSoldOut}
           lang="en"
@@ -127,7 +128,6 @@ const soldOutPopup = {
           </button>
           <p class="sample-popup-kicker">Sample request</p>
           <h2 id="sample-request-title" class="sample-popup-title">Your selection</h2>
-          <p class="sample-request-selection" data-sample-request-selection></p>
           <form
             class="sample-request-form"
             name="sample-request"
@@ -139,6 +139,7 @@ const soldOutPopup = {
             <input type="hidden" name="form-name" value="sample-request" />
             <p class="sample-request-honeypot"><label>Please leave empty: <input name="bot-field" /></label></p>
             <input type="hidden" name="selectedSamples" data-selected-samples-input />
+            <div class="sample-request-selection-list" data-sample-request-selection></div>
             <label class="sample-request-field">
               <span>Full name *</span>
               <input type="text" name="fullName" required autocomplete="name" />
@@ -512,10 +513,34 @@ const soldOutPopup = {
   }
 
   .sample-request-selection {
-    margin-top: 16px;
     font-family: var(--font-heading);
     font-size: var(--type-copy-fluid);
     line-height: 1.3;
+    color: var(--warm-dark-grey);
+  }
+
+  .sample-request-selection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sample-request-selection-card {
+    display: grid;
+    grid-template-columns: 1fr 140px 160px;
+    gap: 10px;
+    align-items: end;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.38);
+    border: 1px solid rgba(36, 33, 25, 0.24);
+    border-radius: var(--radius-media);
+  }
+
+  .sample-request-selection-name {
+    align-self: center;
+    font-family: var(--font-heading);
+    font-size: var(--type-copy-fluid);
+    line-height: 1.2;
     color: var(--warm-dark-grey);
   }
 
@@ -538,6 +563,7 @@ const soldOutPopup = {
   }
 
   .sample-request-field input,
+  .sample-request-field select,
   .sample-request-field textarea {
     font-family: var(--font-heading);
     font-size: var(--type-copy-fluid);
@@ -553,13 +579,26 @@ const soldOutPopup = {
   }
 
   .sample-request-field input:focus,
+  .sample-request-field select:focus,
   .sample-request-field textarea:focus {
     box-shadow: 0 0 0 2px rgba(36, 33, 25, 0.18);
+  }
+
+  .sample-request-field select {
+    min-height: 45px;
+    appearance: auto;
   }
 
   .sample-request-field textarea {
     resize: vertical;
     min-height: 72px;
+  }
+
+  @media (max-width: 560px) {
+    .sample-request-selection-card {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
   }
 
   .sample-request-honeypot {
@@ -1292,12 +1331,73 @@ const soldOutPopup = {
       syncCheckout();
     }
 
+    function createOption(value, label) {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = label;
+      return option;
+    }
+
+    function renderSelectionFields() {
+      if (!selectionEl) return;
+      selectionEl.innerHTML = '';
+      cart.forEach((name, slug) => {
+        const card = document.createElement('div');
+        card.className = 'sample-request-selection-card';
+
+        const title = document.createElement('p');
+        title.className = 'sample-request-selection-name';
+        title.textContent = name;
+
+        const amountField = document.createElement('label');
+        amountField.className = 'sample-request-field';
+        const amountLabel = document.createElement('span');
+        amountLabel.textContent = 'Amount *';
+        const amountSelect = document.createElement('select');
+        amountSelect.name = `sampleAmount_${slug}`;
+        amountSelect.required = true;
+        amountSelect.dataset.sampleAmount = slug;
+        amountSelect.append(
+          createOption('', 'Please select'),
+          createOption('50g', '50g'),
+          createOption('100g', '100g'),
+        );
+        amountField.append(amountLabel, amountSelect);
+
+        const typeField = document.createElement('label');
+        typeField.className = 'sample-request-field';
+        const typeLabel = document.createElement('span');
+        typeLabel.textContent = 'Coffee type *';
+        const typeSelect = document.createElement('select');
+        typeSelect.name = `coffeeType_${slug}`;
+        typeSelect.required = true;
+        typeSelect.dataset.coffeeType = slug;
+        typeSelect.append(
+          createOption('', 'Please select'),
+          createOption('Green coffee', 'Green coffee'),
+          createOption('Roasted', 'Roasted'),
+        );
+        typeField.append(typeLabel, typeSelect);
+
+        card.append(title, amountField, typeField);
+        selectionEl.append(card);
+      });
+    }
+
+    function syncSelectedSamplesInput() {
+      if (!selectedInput) return;
+      const selections = Array.from(cart.entries()).map(([slug, name]) => {
+        const amount = form?.querySelector(`[data-sample-amount="${CSS.escape(slug)}"]`)?.value || '';
+        const coffeeType = form?.querySelector(`[data-coffee-type="${CSS.escape(slug)}"]`)?.value || '';
+        return `${name} (${slug}): ${amount || 'no amount selected'}, ${coffeeType || 'no coffee type selected'}`;
+      });
+      selectedInput.value = selections.join('\n');
+    }
+
     function openRequestPopup() {
       if (cart.size === 0 || !requestPanel) return;
-      const names = Array.from(cart.values()).join(', ');
-      const slugs = Array.from(cart.keys()).join(', ');
-      if (selectionEl) selectionEl.textContent = names;
-      if (selectedInput) selectedInput.value = slugs;
+      renderSelectionFields();
+      syncSelectedSamplesInput();
       if (statusEl) {
         statusEl.textContent = '';
         statusEl.classList.remove('is-error');
@@ -1345,9 +1445,16 @@ const soldOutPopup = {
     });
 
     if (form) {
+      form.addEventListener('change', event => {
+        if (!(event.target instanceof HTMLSelectElement)) return;
+        if (!event.target.dataset.sampleAmount && !event.target.dataset.coffeeType) return;
+        syncSelectedSamplesInput();
+      });
+
       form.addEventListener('submit', async event => {
         event.preventDefault();
         if (!submitBtn || !statusEl) return;
+        syncSelectedSamplesInput();
         submitBtn.setAttribute('disabled', 'true');
         statusEl.classList.remove('is-error');
         statusEl.textContent = 'Sending...';

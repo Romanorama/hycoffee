@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
-  images: ImageMetadata[];
+  images: { image: ImageMetadata; alt: string }[];
   blurb: string;
   missionHeading: string;
   ctaLabel: string;
@@ -19,7 +19,7 @@ const doubled = [...images, ...images];
     <div class="team-photos-track">
       {doubled.map((photo) => (
         <div class="team-photo-frame">
-          <Image src={photo} alt="Team" loading="lazy" decoding="async" />
+          <Image src={photo.image} alt={photo.alt} loading="lazy" decoding="async" />
         </div>
       ))}
     </div>

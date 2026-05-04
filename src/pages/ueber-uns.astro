@@ -15,7 +15,10 @@ const heroImage = resolveCmsImage(data.heroImage);
 if (!heroImage) throw new Error(`Hero image not found: ${data.heroImage}`);
 
 const stripImages = data.stripImages
-  .map((path) => resolveCmsImage(path))
+  .map((path, index) => {
+    const image = resolveCmsImage(path);
+    return image ? { image, alt: content.stripImageAlts?.[index] ?? '' } : null;
+  })
   .filter((img): img is NonNullable<typeof img> => img !== null);
 
 const storyParagraphs = content.storyBody.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
@@ -37,21 +40,21 @@ const telHref = (phone: string) => {
   title="Über Uns – HyCoffee"
   description="Lerne das Team hinter HyCoffee kennen und erfahre, wie wir klimaresiliente Kaffees mit Forschung, Partnerschaften und direkter Zusammenarbeit voranbringen."
   ogImage={heroImage}
-  ogImageAlt="Das HyCoffee Team"
+  ogImageAlt={content.heroImageAlt || 'Das HyCoffee Team'}
 >
   <Navigation />
   <main class="about">
     <div class="photo-strip">
       <div class="photo-strip-track">
         {[...stripImages, ...stripImages].map((img) => (
-          <Image src={img} alt="" class="strip-img" widths={[200, 400]} sizes="200px" format="webp" quality={72} loading="lazy" decoding="async" />
+          <Image src={img.image} alt={img.alt} class="strip-img" widths={[200, 400]} sizes="200px" format="webp" quality={72} loading="lazy" decoding="async" />
         ))}
       </div>
     </div>
 
     <div class="about-split">
       <aside class="about-split-left">
-        <Image src={heroImage} alt="Sophie und Charlotte" class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
+        <Image src={heroImage} alt={content.heroImageAlt || 'Sophie und Charlotte'} class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
         <div class="about-hero-left-inner">
           <p class="about-hero-text">{content.heroText}</p>
         </div>

@@ -21,11 +21,15 @@ const content = home.contentDe;
 const heroImage = resolveCmsImage(home.heroImage);
 if (!heroImage) throw new Error(`Hero image not found: ${home.heroImage}`);
 
-const speciesPhoto = resolveCmsImage(home.speciesExpandedPhoto);
-if (!speciesPhoto) throw new Error(`Species photo not found: ${home.speciesExpandedPhoto}`);
+const speciesVisible = home.speciesVisible ?? false;
+const speciesPhoto = speciesVisible ? resolveCmsImage(home.speciesExpandedPhoto) : null;
+if (speciesVisible && !speciesPhoto) throw new Error(`Species photo not found: ${home.speciesExpandedPhoto}`);
 
 const teamStripImages = home.teamStripImages
-  .map((path) => resolveCmsImage(path))
+  .map((path, index) => {
+    const image = resolveCmsImage(path);
+    return image ? { image, alt: content.teamStripImageAlts?.[index] ?? '' } : null;
+  })
   .filter((img): img is NonNullable<typeof img> => img !== null);
 
 const tiles = home.tiles.map((tile, index) => ({
@@ -42,7 +46,7 @@ const tiles = home.tiles.map((tile, index) => ({
   title="Klimaresilienter Rohkaffee – HyCoffee"
   description="HyCoffee verbindet klimaresilienten Rohkaffee mit fairen Lieferketten, Forschung und neuen Kaffeearten für eine widerstandsfähigere Zukunft des Kaffees."
   ogImage={heroImage}
-  ogImageAlt={content.heroHeadline}
+  ogImageAlt={content.heroImageAlt || content.heroHeadline}
   preloadImage={heroImage}
   preloadImageSizes="(max-width: 768px) 100vw, 50vw"
 >
@@ -52,6 +56,7 @@ const tiles = home.tiles.map((tile, index) => ({
     <Hero
       headline={content.heroHeadline}
       image={heroImage}
+      imageAlt={content.heroImageAlt}
       ctaLabel={content.heroCtaLabel}
       ctaUrl={home.heroCtaUrl}
     />
@@ -64,11 +69,14 @@ const tiles = home.tiles.map((tile, index) => ({
       ctaLabel={content.teamCtaLabel}
       ctaUrl="/ueber-uns"
     />
-    <SpeciesDiscovery
-      heading={content.speciesHeading}
-      photo={speciesPhoto}
-      body={content.speciesExpandedBody}
-    />
+    {speciesVisible && speciesPhoto && (
+      <SpeciesDiscovery
+        heading={content.speciesHeading}
+        photo={speciesPhoto}
+        photoAlt={content.speciesExpandedPhotoAlt}
+        body={content.speciesExpandedBody}
+      />
+    )}
     <Science
       label={content.scienceLabel}
       heading={content.scienceHeading}

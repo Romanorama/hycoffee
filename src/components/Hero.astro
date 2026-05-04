@@ -5,18 +5,19 @@ import type { ImageMetadata } from 'astro';
 interface Props {
   headline: string;
   image: ImageMetadata;
+  imageAlt?: string;
   ctaLabel: string;
   ctaUrl: string;
 }
 
-const { headline, image, ctaLabel, ctaUrl } = Astro.props;
+const { headline, image, imageAlt = 'Klimaresilienter Kaffeeanbau', ctaLabel, ctaUrl } = Astro.props;
 ---
 
 <section class="hero">
   <div class="hero-image">
     <Image
       src={image}
-      alt="Klimaresilienter Kaffeeanbau"
+      alt={imageAlt}
       widths={[768, 1280, 1920]}
       sizes="(max-width: 768px) 100vw, 50vw"
       format="webp"

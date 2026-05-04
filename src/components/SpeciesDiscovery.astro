@@ -5,10 +5,11 @@ import type { ImageMetadata } from 'astro';
 interface Props {
   heading: string;
   photo: ImageMetadata;
+  photoAlt?: string;
   body: string;
 }
 
-const { heading, photo, body } = Astro.props;
+const { heading, photo, photoAlt = 'Young coffee plants in nursery beds', body } = Astro.props;
 ---
 
 <section class="species-train" data-species-train aria-labelledby="species-train-heading">
@@ -29,7 +30,7 @@ const { heading, photo, body } = Astro.props;
                 <div class="species-wagon-photo">
                   <Image
                     src={photo}
-                    alt="Young coffee plants in nursery beds"
+                    alt={photoAlt}
                     class="species-wagon-image"
                   />
                 </div>

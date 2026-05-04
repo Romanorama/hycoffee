@@ -15,35 +15,62 @@ const pressLabel = lang === 'en' ? 'PRESS' : 'PRESSE';
 const minuteLabel = lang === 'en' ? 'min' : 'Min';
 
 const entries = await reader.collections.press.all();
-const items = entries.map(({ slug, entry }) => ({
-  slug,
-  title: entry.title,
-  outlet: entry.outlet,
-  excerpt: lang === 'en'
-    ? (entry.contentEn?.excerpt || entry.contentDe?.excerpt)
-    : entry.contentDe?.excerpt,
-  readingTime: entry.readingTime ?? 2,
-  externalLink: entry.externalLink ?? '#',
-  logoImage: resolveCmsImage(entry.logoImage),
-  featureImage: resolveCmsImage(entry.featureImage),
-}));
+const items = entries
+  .map(({ slug, entry }) => ({
+    slug,
+    title: entry.title,
+    outlet: entry.outlet,
+    excerpt: lang === 'en'
+      ? (entry.contentEn?.excerpt || entry.contentDe?.excerpt)
+      : entry.contentDe?.excerpt,
+    logoAlt: lang === 'en'
+      ? (entry.contentEn?.logoAlt || entry.contentDe?.logoAlt || entry.outlet)
+      : (entry.contentDe?.logoAlt || entry.outlet),
+    featureImageAlt: lang === 'en'
+      ? (entry.contentEn?.featureImageAlt || entry.contentDe?.featureImageAlt || `${entry.outlet} report`)
+      : (entry.contentDe?.featureImageAlt || `${entry.outlet} Reportage`),
+    readingTime: entry.readingTime ?? 2,
+    externalLink: entry.externalLink ?? '#',
+    logoImage: resolveCmsImage(entry.logoImage),
+    featureImage: resolveCmsImage(entry.featureImage),
+    sortOrder: entry.sortOrder ?? 0,
+  }))
+  .sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title));
+
+const hasMobileMore = items.length > 2;
+const hasDesktopMore = items.length > 4;
 ---
 
-<section class="press">
+<section
+  class:list={[
+    'press',
+    hasMobileMore && 'has-more-mobile',
+    hasDesktopMore && 'has-more-desktop',
+  ]}
+  data-press-section
+>
   <h2 class="press-heading">{heading}</h2>
-  <div class="press-cards">
+  <div class="press-cards" id={`press-cards-${lang}`}>
     {
       items.map((item) => (
         <article class="press-card">
           <div class="press-card-inner">
             <span class="caption">{pressLabel}</span>
             <div class="press-divider" />
-            <h3 class="press-title">{item.title}</h3>
+            <h3
+              class:list={[
+                'press-title',
+                item.title.length > 22 && 'press-title-long',
+                item.title.length > 30 && 'press-title-very-long',
+              ]}
+            >
+              {item.title}
+            </h3>
             {item.featureImage && (
               <div class="press-image">
                 <Image
                   src={item.featureImage}
-                  alt={`${item.outlet} Reportage`}
+                  alt={item.featureImageAlt}
                   widths={[450, 900]}
                   sizes="(max-width: 768px) 100vw, 25vw"
                   loading="lazy"
@@ -56,7 +83,7 @@ const items = entries.map(({ slug, entry }) => ({
                 {item.logoImage && (
                   <Image
                     src={item.logoImage}
-                    alt={item.outlet}
+                    alt={item.logoAlt}
                     class="press-logo"
                     widths={[130, 260]}
                     sizes="130px"
@@ -91,11 +118,29 @@ const items = entries.map(({ slug, entry }) => ({
       ))
     }
   </div>
-  <a href="#" class="press-more-link">
+  <button
+    class="press-more-link"
+    type="button"
+    aria-expanded="false"
+    aria-controls={`press-cards-${lang}`}
+    data-press-more
+  >
     <span>{moreLabel}</span>
     <span class="press-more-arrow" aria-hidden="true">›</span>
-  </a>
+  </button>
 </section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-press-section]').forEach((section) => {
+    const button = section.querySelector<HTMLButtonElement>('[data-press-more]');
+    if (!button) return;
+
+    button.addEventListener('click', () => {
+      section.dataset.expanded = 'true';
+      button.setAttribute('aria-expanded', 'true');
+    });
+  });
+</script>
 
 <style>
   .press {
@@ -118,7 +163,12 @@ const items = entries.map(({ slug, entry }) => ({
   .press-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0;
+    column-gap: 0;
+    row-gap: 64px;
+  }
+
+  .press:not([data-expanded='true']) .press-card:nth-child(n+5) {
+    display: none;
   }
 
   .press-card {
@@ -126,6 +176,7 @@ const items = entries.map(({ slug, entry }) => ({
     min-height: 587px;
   }
 
+  .press-card:nth-child(4n),
   .press-card:last-child {
     border-right: none;
   }
@@ -155,13 +206,26 @@ const items = entries.map(({ slug, entry }) => ({
   }
 
   .press-title {
+    --press-title-size: var(--type-copy-lg);
+    --press-title-block-size: calc(var(--type-copy-lg) * 2.34);
+
     font-family: var(--font-ui);
-    font-size: var(--type-copy-lg);
+    font-size: var(--press-title-size);
     line-height: 1.17;
     font-weight: 400;
     letter-spacing: 0.7px;
     color: var(--warm-dark-grey);
     margin-bottom: 16px;
+    min-height: var(--press-title-block-size);
+    text-wrap: balance;
+  }
+
+  .press-title-long {
+    --press-title-size: clamp(18px, 0.8vw + 11px, 24px);
+  }
+
+  .press-title-very-long {
+    --press-title-size: clamp(17px, 0.65vw + 10px, 22px);
   }
 
   .press-image {
@@ -233,6 +297,44 @@ const items = entries.map(({ slug, entry }) => ({
 
   .press-more-link {
     display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.22em;
+    margin: 54px auto 0;
+    padding: 0;
+    width: auto;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-ui);
+    font-size: var(--type-button-lg);
+    line-height: 1;
+    color: var(--violet);
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.26s ease;
+  }
+
+  .press.has-more-desktop .press-more-link {
+    display: inline-flex;
+  }
+
+  .press[data-expanded='true'] .press-more-link {
+    display: none;
+  }
+
+  .press-more-link:hover,
+  .press-more-link:focus-visible {
+    opacity: 0.86;
+  }
+
+  .press-more-arrow {
+    display: inline-block;
+    transition: transform 0.26s ease;
+  }
+
+  .press-more-link:hover .press-more-arrow,
+  .press-more-link:focus-visible .press-more-arrow {
+    transform: translateX(3px);
   }
 
   @media (max-width: 768px) {
@@ -254,7 +356,7 @@ const items = entries.map(({ slug, entry }) => ({
       min-height: auto;
     }
 
-    .press-card:nth-child(n+3) {
+    .press:not([data-expanded='true']) .press-card:nth-child(n+3) {
       display: none;
     }
 
@@ -262,36 +364,18 @@ const items = entries.map(({ slug, entry }) => ({
       padding: 12px 0;
     }
 
-    .press-more-link {
+    .press-title {
+      min-height: 0;
+    }
+
+    .press.has-more-mobile .press-more-link {
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.24em;
       margin-top: 22px;
       width: 100%;
-      font-family: var(--font-ui);
-      font-size: var(--type-copy);
-      line-height: 1;
-      color: var(--warm-dark-grey);
-      text-decoration: none;
-      transition: opacity 0.2s ease;
     }
 
-    .press-more-link:hover,
-    .press-more-link:focus-visible {
-      opacity: 0.78;
-    }
-
-    .press-more-arrow {
-      display: inline-block;
-      font-size: var(--type-copy-fluid);
-      transform: translateY(-1px);
-      transition: transform 0.2s ease;
-    }
-
-    .press-more-link:hover .press-more-arrow,
-    .press-more-link:focus-visible .press-more-arrow {
-      transform: translate(2px, -1px);
+    .press[data-expanded='true'] .press-more-link {
+      display: none;
     }
 
     .press-logo {

@@ -16,7 +16,13 @@ const heroImage = resolveCmsImage(data.heroImage);
 if (!heroImage) throw new Error(`Hero image not found: ${data.heroImage}`);
 
 const stripImages = data.stripImages
-  .map((path) => resolveCmsImage(path))
+  .map((path, index) => {
+    const image = resolveCmsImage(path);
+    return image ? {
+      image,
+      alt: content.stripImageAlts?.[index] ?? fallbackContent.stripImageAlts?.[index] ?? '',
+    } : null;
+  })
   .filter((img): img is NonNullable<typeof img> => img !== null);
 
 const storyBody = content.storyBody || fallbackContent.storyBody;
@@ -40,21 +46,21 @@ const telHref = (phone: string) => {
   title="About – HyCoffee"
   description="Meet the team behind HyCoffee and learn how we advance climate-resilient coffees through research, partnerships, and direct collaboration."
   ogImage={heroImage}
-  ogImageAlt="The HyCoffee team"
+  ogImageAlt={content.heroImageAlt || fallbackContent.heroImageAlt || 'The HyCoffee team'}
 >
   <Navigation lang="en" />
   <main class="about">
     <div class="photo-strip">
       <div class="photo-strip-track">
         {[...stripImages, ...stripImages].map((img) => (
-          <Image src={img} alt="" class="strip-img" widths={[200, 400]} sizes="200px" format="webp" quality={72} loading="lazy" decoding="async" />
+          <Image src={img.image} alt={img.alt} class="strip-img" widths={[200, 400]} sizes="200px" format="webp" quality={72} loading="lazy" decoding="async" />
         ))}
       </div>
     </div>
 
     <div class="about-split">
       <aside class="about-split-left">
-        <Image src={heroImage} alt="Sophie und Charlotte" class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
+        <Image src={heroImage} alt={content.heroImageAlt || fallbackContent.heroImageAlt || 'Sophie and Charlotte'} class="about-hero-img" widths={[600, 900, 1200]} sizes="(max-width: 768px) 100vw, 50vw" format="webp" quality={74} loading="lazy" decoding="async" />
         <div class="about-hero-left-inner">
           <p class="about-hero-text">{content.heroText || fallbackContent.heroText}</p>
         </div>

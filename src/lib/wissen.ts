@@ -28,6 +28,7 @@ export interface WissenArticle {
   readingTime: number;
   readingTimeLabel: string;
   image: ImageMetadata | null;
+  imageAlt: string;
   body: string;
   blocks: WissenArticleBlock[];
 }
@@ -40,6 +41,7 @@ export type WissenArticleBlock =
 type WissenRawContent = {
   title?: string;
   subtitle?: string;
+  heroImageAlt?: string;
   body?: string;
   blocks?: readonly {
     discriminant: string;
@@ -104,6 +106,7 @@ export async function getAllWissenArticles(lang: Lang = 'de'): Promise<WissenArt
         readingTime: entry.readingTime ?? 5,
         readingTimeLabel: `${entry.readingTime ?? 5} ${lang === 'en' ? 'min' : 'Min'}`,
         image: resolveCmsImage(entry.heroImage),
+        imageAlt: content?.heroImageAlt || fallbackContent?.heroImageAlt || (lang === 'en' ? content?.title : entry.title) || entry.title,
         body,
         blocks: normalizeArticleBlocks(content, fallbackContent?.body),
       };

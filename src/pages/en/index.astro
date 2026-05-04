@@ -26,7 +26,13 @@ const speciesPhoto = resolveCmsImage(home.speciesExpandedPhoto);
 if (!speciesPhoto) throw new Error(`Species photo not found: ${home.speciesExpandedPhoto}`);
 
 const teamStripImages = home.teamStripImages
-  .map((path) => resolveCmsImage(path))
+  .map((path, index) => {
+    const image = resolveCmsImage(path);
+    return image ? {
+      image,
+      alt: content.teamStripImageAlts?.[index] ?? fallbackContent.teamStripImageAlts?.[index] ?? '',
+    } : null;
+  })
   .filter((img): img is NonNullable<typeof img> => img !== null);
 
 const tiles = home.tiles.map((tile, index) => ({
@@ -44,7 +50,7 @@ const tiles = home.tiles.map((tile, index) => ({
   title="Climate-resilient green coffee – HyCoffee"
   description="HyCoffee connects climate-resilient green coffee with fair supply chains, research, and new coffee species for a more resilient future of coffee."
   ogImage={heroImage}
-  ogImageAlt="Climate-resilient green coffee from HyCoffee"
+  ogImageAlt={content.heroImageAlt || fallbackContent.heroImageAlt || 'Climate-resilient green coffee from HyCoffee'}
   preloadImage={heroImage}
   preloadImageSizes="(max-width: 768px) 100vw, 50vw"
 >
@@ -53,6 +59,7 @@ const tiles = home.tiles.map((tile, index) => ({
     <div class="home-nav-underlay" aria-hidden="true"></div>
     <Hero
       image={heroImage}
+      imageAlt={content.heroImageAlt || fallbackContent.heroImageAlt || 'Climate-resilient green coffee from HyCoffee'}
       headline={content.heroHeadline ?? fallbackContent.heroHeadline}
       ctaLabel={content.heroCtaLabel ?? fallbackContent.heroCtaLabel}
       ctaUrl="/en/coffee"
@@ -66,11 +73,12 @@ const tiles = home.tiles.map((tile, index) => ({
       ctaLabel={content.teamCtaLabel ?? fallbackContent.teamCtaLabel}
       ctaUrl="/en/about"
     />
-    <SpeciesDiscovery
-      heading={content.speciesHeading ?? fallbackContent.speciesHeading}
-      photo={speciesPhoto}
-      body={content.speciesExpandedBody ?? fallbackContent.speciesExpandedBody}
-    />
+      <SpeciesDiscovery
+        heading={content.speciesHeading ?? fallbackContent.speciesHeading}
+        photo={speciesPhoto}
+        photoAlt={content.speciesExpandedPhotoAlt || fallbackContent.speciesExpandedPhotoAlt || 'Young coffee plants in nursery beds'}
+        body={content.speciesExpandedBody ?? fallbackContent.speciesExpandedBody}
+      />
     <Science
       lang="en"
       label={content.scienceLabel ?? fallbackContent.scienceLabel}

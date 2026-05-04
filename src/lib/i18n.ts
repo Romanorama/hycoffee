@@ -69,9 +69,9 @@ export const ui = {
       contact: 'Kontakt',
       navigation: 'Navigation',
       follow: 'Folge uns',
-      newsletterCopy: 'Join the growing community',
+      newsletterCopy: '',
       rights: 'All rights reserved.',
-      subscribeLabel: 'Newsletter abonnieren',
+      subscribeLabel: 'Für HyCoffee News anmelden',
     },
     knowledge: {
       readArticle: 'Artikel lesen',
@@ -94,9 +94,9 @@ export const ui = {
       contact: 'Contact',
       navigation: 'Navigation',
       follow: 'Follow us',
-      newsletterCopy: 'Join the growing community',
+      newsletterCopy: '',
       rights: 'All rights reserved.',
-      subscribeLabel: 'Subscribe to newsletter',
+      subscribeLabel: 'Sign up for HyCoffee News',
     },
     knowledge: {
       readArticle: 'Read article',
