@@ -18,7 +18,6 @@ const linkedinUrl = global?.linkedinUrl ?? '';
 const globalContent = lang === 'en' ? (global?.contentEn ?? global?.contentDe) : global?.contentDe;
 const fallbackGlobalContent = global?.contentDe;
 const footerTagline = globalContent?.footerTagline ?? fallbackGlobalContent?.footerTagline ?? '';
-const newsletterLabel = globalContent?.newsletterLabel ?? fallbackGlobalContent?.newsletterLabel ?? '';
 const newsletterButton = globalContent?.newsletterButton ?? fallbackGlobalContent?.newsletterButton ?? '';
 const offerListRecipient = 'info@hycoffee.de';
 const offerListSubject = lang === 'en' ? 'Offer list request' : 'Angebotsliste anfragen';
@@ -28,7 +27,6 @@ const telHref = phone.replace(/[^+\d]/g, '');
 
 <footer class="site-footer footer-alt" aria-label="Footer">
   <section class="footer-alt-newsletter" aria-label="HyCoffee News">
-    <h2 class="footer-alt-newsletter-title">{newsletterLabel}</h2>
     <form
       class="footer-alt-form"
       name="offer-list-request"

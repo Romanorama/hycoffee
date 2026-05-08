@@ -8,8 +8,10 @@ interface Props {
   name: string;
   species: 'arabica' | 'excelsa';
   country: string;
-  score: string;
   process: string;
+  price: string;
+  availability: string;
+  arrival: string;
   variety: string;
   harvest: string;
   region: string;
@@ -34,8 +36,10 @@ const {
   name,
   species,
   country,
-  score,
   process,
+  price,
+  availability,
+  arrival,
   variety,
   harvest,
   region,
@@ -62,6 +66,8 @@ const labels = {
     harvest: 'Ernte',
     origin: 'Herkunft',
     altitude: 'Höhe',
+    price: 'Preis',
+    arrival: 'Ankunft',
     resilience: 'Klimaresilient',
     social: 'Sozial verantwortlich',
     addSample: 'Sample hinzufügen',
@@ -74,6 +80,8 @@ const labels = {
     harvest: 'Harvest',
     origin: 'Origin',
     altitude: 'Altitude',
+    price: 'Price',
+    arrival: 'Arrival',
     resilience: 'Climate resilient',
     social: 'Socially responsible',
     addSample: 'Add Sample',
@@ -104,8 +112,10 @@ const pdfDownloadFilename = `${name.replace(/[\\/:*?"<>|]+/g, '').trim() || 'Pro
     </span>
     <span class="col col-species cell">{speciesLabel}</span>
     <span class="col col-country cell">{country}</span>
-    <span class="col col-score cell">{score}</span>
     <span class="col col-process cell">{process}</span>
+    <span class="col col-price cell">{price || '—'}</span>
+    <span class="col col-availability cell">{availability || '—'}</span>
+    <span class="col col-arrival cell">{arrival || '—'}</span>
     <span class="col col-action cell">
       {pdfDownloadHref && (
         <a class="btn-download-row" href={pdfDownloadHref} download={pdfDownloadFilename} onclick="event.stopPropagation()">
@@ -124,6 +134,8 @@ const pdfDownloadFilename = `${name.replace(/[\\/:*?"<>|]+/g, '').trim() || 'Pro
   <div class="row-details">
     <p class="detail-intro">{intro}</p>
     <div class="row-specs">
+      <div class="spec spec-mobile-only"><span class="spec-label">{labels.price}</span><span class="spec-value">{price || '—'}</span></div>
+      <div class="spec spec-mobile-only"><span class="spec-label">{labels.arrival}</span><span class="spec-value">{arrival || '—'}</span></div>
       <div class="spec"><span class="spec-label">{labels.variety}</span><span class="spec-value">{variety}</span></div>
       <div class="spec"><span class="spec-label">{labels.harvest}</span><span class="spec-value">{harvest}</span></div>
       <div class="spec"><span class="spec-label">{labels.origin}</span><span class="spec-value">{region}</span></div>
@@ -170,7 +182,7 @@ const pdfDownloadFilename = `${name.replace(/[\\/:*?"<>|]+/g, '').trim() || 'Pro
 
   .table-row {
     display: grid;
-    grid-template-columns: 1.8fr 1fr 1fr 0.8fr 1fr 300px;
+    grid-template-columns: 1.7fr 0.8fr 0.9fr 1fr 0.9fr 1fr 0.9fr 260px;
     min-height: 82px;
     padding: 0 60px;
     background: var(--white);
@@ -178,6 +190,10 @@ const pdfDownloadFilename = `${name.replace(/[\\/:*?"<>|]+/g, '').trim() || 'Pro
     justify-items: start;
     cursor: pointer;
     list-style: none;
+  }
+
+  .spec-mobile-only {
+    display: none;
   }
 
   .table-row::-webkit-details-marker {
@@ -425,8 +441,14 @@ const pdfDownloadFilename = `${name.replace(/[\\/:*?"<>|]+/g, '').trim() || 'Pro
   @media (max-width: 768px) {
     .col-country,
     .col-process,
+    .col-price,
+    .col-arrival,
     .col-action {
       display: none;
+    }
+
+    .spec-mobile-only {
+      display: flex;
     }
 
     .table-row {

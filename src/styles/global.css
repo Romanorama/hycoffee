@@ -57,8 +57,8 @@
   --type-hal-copy-lg: 25px;
   --type-copy-intro: clamp(18px, 0.8vw + 12px, 23px);
   --type-copy-fluid: clamp(16px, 0.6vw + 12px, 20px);
-  --type-copy-detail: 15px;
-  --type-hal-copy: 15px;
+  --type-copy-detail: 17px;
+  --type-hal-copy: 17px;
   --type-copy: 16px;
   --type-copy-sm: 14px;
   --type-caption: 15px;

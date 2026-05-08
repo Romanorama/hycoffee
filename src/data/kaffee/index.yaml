@@ -6,8 +6,10 @@ contentDe:
   tableNameLabel: Name
   tableSpeciesLabel: Art
   tableCountryLabel: Land
-  tableScoreLabel: Score
   tableProcessLabel: Verarbeitung
+  tablePriceLabel: Preis
+  tableAvailabilityLabel: Verfügbar
+  tableArrivalLabel: Ankunft
   addSampleLabel: Sample hinzufügen
   addedSampleLabel: Hinzugefügt
   soldOutLabel: Ausverkauft
@@ -38,8 +40,10 @@ contentEn:
   tableNameLabel: Name
   tableSpeciesLabel: Species
   tableCountryLabel: Country
-  tableScoreLabel: Score
   tableProcessLabel: Process
+  tablePriceLabel: Price
+  tableAvailabilityLabel: Available
+  tableArrivalLabel: Arrival
   addSampleLabel: Add Sample
   addedSampleLabel: Added
   soldOutLabel: Sold out

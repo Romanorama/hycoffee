@@ -68,8 +68,10 @@ const soldOutPopup = {
         <span class="col col-name">{contentLabel('tableNameLabel')}</span>
         <span class="col col-species">{contentLabel('tableSpeciesLabel')}</span>
         <span class="col col-country">{contentLabel('tableCountryLabel')}</span>
-        <span class="col col-score">{contentLabel('tableScoreLabel')}</span>
         <span class="col col-process">{contentLabel('tableProcessLabel')}</span>
+        <span class="col col-price">{contentLabel('tablePriceLabel')}</span>
+        <span class="col col-availability">{contentLabel('tableAvailabilityLabel')}</span>
+        <span class="col col-arrival">{contentLabel('tableArrivalLabel')}</span>
         <span class="col col-action"></span>
       </div>
 
@@ -79,8 +81,10 @@ const soldOutPopup = {
           name={sample.name}
           species={sample.species}
           country={sample.country}
-          score={sample.score}
           process={sample.process}
+          price={sample.price}
+          availability={sample.availability}
+          arrival={sample.arrival}
           variety={sample.variety}
           harvest={sample.harvest}
           region={sample.region}
@@ -293,7 +297,7 @@ const soldOutPopup = {
 
   .table-header {
     display: grid;
-    grid-template-columns: 1.8fr 1fr 1fr 0.8fr 1fr 300px;
+    grid-template-columns: 1.7fr 0.8fr 0.9fr 1fr 0.9fr 1fr 0.9fr 260px;
     padding: 16px 60px;
     background: var(--warm-dark-grey);
     justify-items: start;
@@ -307,6 +311,7 @@ const soldOutPopup = {
     font-family: var(--font-ui);
     font-size: var(--type-label);
     letter-spacing: 1.8px;
+    text-transform: uppercase;
     color: #f5f5f5;
     text-align: left;
   }
@@ -317,7 +322,7 @@ const soldOutPopup = {
 
   .table-row {
     display: grid;
-    grid-template-columns: 1.8fr 1fr 1fr 0.8fr 1fr 300px;
+    grid-template-columns: 1.7fr 0.8fr 0.9fr 1fr 0.9fr 1fr 0.9fr 260px;
     padding: 0 60px;
     background: var(--white);
     align-items: center;
@@ -981,9 +986,13 @@ const soldOutPopup = {
 
     .col-country,
     .col-process,
+    .col-price,
+    .col-arrival,
     .col-action,
     .table-header .col-country,
     .table-header .col-process,
+    .table-header .col-price,
+    .table-header .col-arrival,
     .table-header .col-action {
       display: none;
     }
