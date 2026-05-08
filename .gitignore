@@ -34,6 +34,7 @@ pnpm-debug.log*
 /Typography/
 /_contenttxtinfo/
 /frontend-audit-handover-*.html
+/speed-audit-*.md
 
 # Local Netlify folder
 .netlify
