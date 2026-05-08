@@ -22,8 +22,9 @@ const fallbackContent = home.contentDe;
 const heroImage = resolveCmsImage(home.heroImage);
 if (!heroImage) throw new Error(`Hero image not found: ${home.heroImage}`);
 
-const speciesPhoto = resolveCmsImage(home.speciesExpandedPhoto);
-if (!speciesPhoto) throw new Error(`Species photo not found: ${home.speciesExpandedPhoto}`);
+const speciesVisible = home.speciesVisibleEn ?? false;
+const speciesPhoto = speciesVisible ? resolveCmsImage(home.speciesExpandedPhoto) : null;
+if (speciesVisible && !speciesPhoto) throw new Error(`Species photo not found: ${home.speciesExpandedPhoto}`);
 
 const teamStripImages = home.teamStripImages
   .map((path, index) => {
@@ -73,12 +74,14 @@ const tiles = home.tiles.map((tile, index) => ({
       ctaLabel={content.teamCtaLabel ?? fallbackContent.teamCtaLabel}
       ctaUrl="/en/about"
     />
+    {speciesVisible && speciesPhoto && (
       <SpeciesDiscovery
         heading={content.speciesHeading ?? fallbackContent.speciesHeading}
         photo={speciesPhoto}
         photoAlt={content.speciesExpandedPhotoAlt || fallbackContent.speciesExpandedPhotoAlt || 'Young coffee plants in nursery beds'}
         body={content.speciesExpandedBody ?? fallbackContent.speciesExpandedBody}
       />
+    )}
     <Science
       lang="en"
       label={content.scienceLabel ?? fallbackContent.scienceLabel}

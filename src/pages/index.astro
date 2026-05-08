@@ -21,7 +21,7 @@ const content = home.contentDe;
 const heroImage = resolveCmsImage(home.heroImage);
 if (!heroImage) throw new Error(`Hero image not found: ${home.heroImage}`);
 
-const speciesVisible = home.speciesVisible ?? false;
+const speciesVisible = home.speciesVisibleDe ?? false;
 const speciesPhoto = speciesVisible ? resolveCmsImage(home.speciesExpandedPhoto) : null;
 if (speciesVisible && !speciesPhoto) throw new Error(`Species photo not found: ${home.speciesExpandedPhoto}`);
 

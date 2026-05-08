@@ -455,9 +455,14 @@ export default config({
           }),
           { label: 'Team-Fotostreifen', itemLabel: (p) => p.value?.filename ?? 'Bild' },
         ),
-        speciesVisible: fields.checkbox({
-          label: 'Species-Sektion anzeigen',
-          description: 'Wenn aktiv, wird die "130 Kaffeearten"-Sektion auf der Startseite angezeigt.',
+        speciesVisibleDe: fields.checkbox({
+          label: 'Species-Sektion anzeigen (Deutsch)',
+          description: 'Wenn aktiv, wird die "130 Kaffeearten"-Sektion auf der deutschen Startseite angezeigt.',
+          defaultValue: false,
+        }),
+        speciesVisibleEn: fields.checkbox({
+          label: 'Species-Sektion anzeigen (Englisch)',
+          description: 'Wenn aktiv, wird die "130 Kaffeearten"-Sektion auf der englischen Startseite angezeigt.',
           defaultValue: false,
         }),
         speciesExpandedPhoto: fields.image({
