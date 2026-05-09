@@ -5,7 +5,7 @@ score: —
 process: 36h Anaerobic
 price: 13,90 €
 availability: 6x60kg
-arrival: Mai 2026
+arrival: Juni 2026
 variety: SL14/Bourbon
 harvest: 2025/2026
 region: West Nile, Uganda
@@ -59,7 +59,7 @@ contentEn:
     operated by an elected committee. Farmers sell their cherries at two thirds
     above the living-income reference price for Ugandan Arabica, creating stable
     paid work in rural villages where employment opportunities are scarce.
-heroImage: ../../assets/images/cms/kaffee/ambe-anaerobic/ambe-anaerobic.webp
+heroImage: ../../assets/images/cms/kaffee/ambe-anaerobic/heroImage.webp
 pdfDownload: /downloads/ambe-anaerobic/pdfDownload.pdf
 available: true
 sortOrder: 1
