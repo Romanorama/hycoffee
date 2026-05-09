@@ -6,7 +6,7 @@ contentDe:
   tableNameLabel: Name
   tableSpeciesLabel: Art
   tableCountryLabel: Land
-  tableProcessLabel: Verarbeitung
+  tableProcessLabel: 'Verarbeitung '
   tablePriceLabel: Preis
   tableAvailabilityLabel: Verfügbar
   tableArrivalLabel: Ankunft
