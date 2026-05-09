@@ -1,5 +1,5 @@
 contentDe:
-  heroHeadline: Wir erforschen, entwickeln und liefern klimareslienten Rohkaffee. <3
+  heroHeadline: Wir erforschen, entwickeln und liefern klimaresilienten Rohkaffee. <3
   heroCtaLabel: Jetzt Kaffee Kaufen
   tiles:
     - category: ROHKAFFEE ANGEBOT
@@ -19,12 +19,10 @@ contentDe:
         Durch faire Partnerschaften, klimaresiliente Anbausysteme und bessere
         Marktchancen stärken wir die Zukunft des Kaffeeanbaus.
       ctaLabel: Unsere Origins
-  valuesHeading: |-
-    Klimaresilienz
-    ist Qualität
+  valuesHeading: Klimaresilienz ist Qualität
   valuesBody: >-
     Klimawandel bedroht den Kaffeeanbau. Wir importieren klimaresilienten
-    Spezialitäten Kaffee in langfristigen Partnschaften mit Produzent:innen vor
+    Specialty-Kaffee in langfristigen Partnerschaften mit Produzent:innen vor
     Ort.
   teamBlurb: >-
     Wir sind Sophie und Charlotte, die Gründerinnen von HyCoffee. Zwischen
@@ -37,6 +35,7 @@ contentDe:
   speciesHeading: >-
     Es gibt 130 bekannte Kaffeearten, viele davon werden nicht kommerziell
     genutzt. Noch nicht.
+  teamStripImageAlts: []
   speciesExpandedBody: >-
     Von über 130 bekannten Coffea-Arten werden heute nur wenige kommerziell
     genutzt.
@@ -66,24 +65,23 @@ contentEn:
         improved market opportunities, we are strengthening the future of coffee
         cultivation.
       ctaLabel: Our projects
-  valuesHeading: |-
-    Climate Resilience
-    is Quality
+  valuesHeading: Climate Resilience is Quality
   valuesBody: >-
     Climate change is threatening coffee cultivation. We import
-    climate-resilient specialty coffee through long-term partnerships with local
-    producers.
+    climate-resilient speciality coffee through long-term partnerships with
+    local producers.
   teamBlurb: >-
-    We are Sophie and Charlotte, the founders of HyCoffee. Working between East
-    Africa and Germany, we collaborate with producers, roasteries, and the
-    scientific community to promote climate-resilient farming systems and bring
-    exceptional coffees to market. Our goal: a fair coffee industry that can
-    also thrive in the face of climate change.
+    HyCoffee works between East Africa and Germany. We collaborate with
+    producers, roasteries, and the scientific community to promote
+    climate-resilient farming systems and to bring exceptional coffees to
+    market. Our goal: a fair coffee industry that can also thrive in the face of
+    climate change.
   teamMissionHeading: Who we are
   teamCtaLabel: Learn more
   speciesHeading: >-
-    There are 130 known coffee species — many of them are not used commercially.
+    There are 130 known coffee species - many of them are not used commercially.
     Yet.
+  teamStripImageAlts: []
   speciesExpandedBody: >-
     Of more than 130 known Coffea species, only a few are commercially used
     today.
@@ -110,5 +108,7 @@ teamStripImages:
   - ../assets/images/cms/team-strip/teamStripImages/5.webp
   - ../assets/images/cms/team-strip/teamStripImages/6.webp
   - ../assets/images/cms/team-strip/teamStripImages/7.webp
+speciesVisibleDe: false
+speciesVisibleEn: false
 speciesExpandedPhoto: ../assets/images/cms/home/speciesExpandedPhoto.jpeg
 scienceFeaturedArticles: []
