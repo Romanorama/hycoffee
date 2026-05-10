@@ -14,9 +14,10 @@ contentDe:
           und -bauern schon heute vor große Herausforderungen.
 
           Bei HyCoffee verbinden wir praktisches Wissen aus der Landwirtschaft
-          mit wissenschaftlicher Innovation und tragen aktiv dazu bei, den
-          Kaffeemarkt zukunftsfähig zu gestalten. Unser Ziel ist es, Kaffee
-          langfristig als verlässliche Einkommensquelle zu sichern.
+          mit den neusten wissenschaftlichen Erkenntnissen und tragen aktiv dazu
+          bei, den Kaffeemarkt zukunftsfähig zu gestalten. Unser Ziel ist es,
+          Kaffee langfristig als verlässliche Einkommensquelle zu sichern.
+
 
           Unsere Kaffees erfüllen mindestens eines der folgenden Kriterien:
     - discriminant: subheading
@@ -31,25 +32,14 @@ contentDe:
           oder Schädlinge und bieten damit großes Potenzial für die Anpassung an
           den Klimawandel. Gleichzeitig spielen sie eine wichtige Rolle für den
           Erhalt von Biodiversität und genetischer Vielfalt. Gemeinsam mit
-          Forschungsinstituten und Kooperativen vor Ort erforschen gezielt das
-          Marktpotenzial wilder Kaffeearten, investieren in verbesserte
+          Forschungsinstituten und Kooperativen vor Ort erforschen wir gezielt
+          das Marktpotenzial wilder Kaffeearten, investieren in verbesserte
           Verarbeitungsmethoden und schaffen so Zugang zum europäischen Markt.
-    - discriminant: subheading
+    - discriminant: image
       value:
-        text: 'Klimaresiliente Züchtungen:'
-    - discriminant: paragraph
-      value:
-        text: >-
-          Wir beziehen Kaffeesorten, die gezielt dafür entwickelt wurden, besser
-          mit Klimastress wie Trockenheit, Hitze sowie erhöhtem Schädlings- und
-          Krankheitsdruck umzugehen. Solche Züchtungen entstehen durch
-          langfristige Forschung: Widerstandsfähige Pflanzen werden
-          identifiziert, gezielt gekreuzt und über mehrere Generationen hinweg
-          ausgewählt, bis Sorten entstehen, die sowohl robust als auch
-          qualitativ hochwertig sind. Klimarobuste Züchtungen helfen dabei,
-          Erträge zu stabilisieren, Ernteausfälle zu reduzieren und den Einsatz
-          von Pflanzenschutzmitteln zu verringern. Gleichzeitig sichern sie die
-          Qualität, die für den Markt entscheidend ist.
+        image: >-
+          ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/contentDe/blocks/3/value/image.jpg
+        caption: Baum der Spezie Excelsa
     - discriminant: subheading
       value:
         text: 'Resiliente Anbausysteme:'
@@ -67,6 +57,27 @@ contentDe:
           Anbaumethoden. Diese helfen, Ernten besser gegen Hitze, Trockenheit
           und Starkregen zu schützen, die Bodenfruchtbarkeit langfristig zu
           sichern.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/contentDe/blocks/6/value/image.JPG
+        caption: Agroforstsystem in Uganda
+    - discriminant: subheading
+      value:
+        text: 'Klimaresiliente Sorten:'
+    - discriminant: paragraph
+      value:
+        text: >-
+          Wir beziehen Kaffeesorten, die gezielt dafür entwickelt wurden, besser
+          mit Klimastress wie Trockenheit, Hitze sowie erhöhtem Schädlings- und
+          Krankheitsdruck umzugehen. Solche Züchtungen entstehen durch
+          langfristige Forschung: Widerstandsfähige Pflanzen werden
+          identifiziert, gezielt gekreuzt und über mehrere Generationen hinweg
+          ausgewählt, bis Sorten entstehen, die sowohl robust als auch
+          qualitativ hochwertig sind. Klimarobuste Züchtungen helfen dabei,
+          Erträge zu stabilisieren, Ernteausfälle zu reduzieren und den Einsatz
+          von Pflanzenschutzmitteln zu verringern. Gleichzeitig sichern sie die
+          Qualität, die für den Markt entscheidend ist.
     - discriminant: subheading
       value:
         text: "Was bedeutet das für die Produzentinnen und Produzenten?\L"
@@ -81,8 +92,8 @@ contentDe:
         text: >-
           Gemeinsame      Projekte für mehr Klimaresilienz: Wir      stärken
           Produzent:innen      durch Schulungen, Zugang zu Ressourcen und
-          gezielte Investitionen, etwa in neue Anbaumethoden, verbesserte
-          Sorten      oder alternative Kaffeearten-
+          gezielte Investitionen, etwa in neue Anbaumethoden, verbesserte Sorten
+          oder alternative Kaffeearten.
     - discriminant: paragraph
       value:
         text: >
@@ -98,7 +109,111 @@ contentDe:
           klimaresiliente Kaffees kann auch in Zukunft erfolgreich Kaffee
           angebaut werden.
 contentEn:
-  blocks: []
+  title: Coffee in Transition – Strategies for a Resilient Future
+  subtitle: >
+    How alternative species, targeted breeding programmes and climate-resilient
+    farming systems can help to adapt coffee production to climate change to
+    secure a long-term future.
+  blocks:
+    - discriminant: paragraph
+      value:
+        text: >-
+          Climate change is threatening the global supply of high-quality
+          coffee. Rising temperatures, erratic rainfall and the spread of pests
+          and diseases are already posing major challenges for coffee farmers.
+
+          At HyCoffee, we combine practical agricultural knowledge with the
+          latest scientific findings and actively contribute to making the
+          coffee market fit for the future. Our aim is to ensure that coffee
+          remains a reliable source of income for farmers.
+
+
+          Our coffees meet at least one of the following criteria:
+    - discriminant: subheading
+      value:
+        text: Alternative coffee species
+    - discriminant: paragraph
+      value:
+        text: >-
+          There are 133 known coffee species worldwide. Only Arabica and Robusta
+          are currently used commercially. Many of the other coffee species,
+          however, are naturally more resistant to factors such as heat or pests
+          and thus offer great potential for climate change adaptation. At the
+          same time, they play a vital role in preserving the sector's
+          biodiversity and genetic diversity. Working alongside local research
+          institutes and cooperatives, we conduct targeted research into the
+          market potential of wild coffee varieties, invest in improved
+          processing methods and thereby create access to the European market.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/contentEn/blocks/3/value/image.jpg
+        caption: |
+          Excelsa tree 
+    - discriminant: subheading
+      value:
+        text: Resilient production systems
+    - discriminant: paragraph
+      value:
+        text: >
+          We work with coffee farmers who are already using farming methods
+          designed to mitigate the effects of climate change, such as shade
+          trees or regenerative agriculture. At the same time, we support farms
+          that are still in the process of transitioning to help them gradually
+          establish and implement such systems. At the same time, we support
+          farms that are still in the process of transitioning by helping them
+          to gradually develop and implement such systems. The focus is on the
+          needs of the farmers: through training, knowledge-sharing and targeted
+          investment, we support them on their journey towards more resilient
+          farming systems. These help to better protect crops against heat,
+          drought and heavy rain, and to enhance and protect soil fertility.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/contentEn/blocks/6/value/image.JPG
+        caption: Agroforestry system in Uganda
+    - discriminant: subheading
+      value:
+        text: Climate-resilient varieties
+    - discriminant: paragraph
+      value:
+        text: >
+          We source coffee varieties that have been specifically developed to
+          cope better with climate-related stresses such as drought, heat and
+          increased pest and disease pressure. Such cultivars are the result of
+          long-term research: resilient plants are identified, selectively
+          crossed and bred over several generations until varieties emerge that
+          are both robust and of high quality. These climate-resilient varieties
+          help to stabilise yields, reduce crop failures and minimise the use of
+          fertilizer and pestizides. At the same time, they ensure the quality
+          that is crucial for the market.
+    - discriminant: subheading
+      value:
+        text: How this benefits farmers
+    - discriminant: paragraph
+      value:
+        text: >-
+          Coffee farmers are already feeling the effects of climate change .
+          Climate-resilient coffee means that they can continue to grow coffee
+          successfully even under changing conditions and thereby ensure stable
+          incomes:
+    - discriminant: paragraph
+      value:
+        text: >-
+          We jointly implement projects to boost climate resilience: We empower
+          producers through training, access to resources and targeted
+          investments, such as in new farming methods, improved varieties or
+          alternative coffee species.
+    - discriminant: paragraph
+      value:
+        text: >-
+          Direct trade and fair prices: Fluctuating and often excessively low
+          prices make planning difficult and leave farms vulnerable to climate
+          risks. Through direct trade, we ensure fair and stable prices, thereby
+          laying the foundations for investment and greater planning security.
+    - discriminant: paragraph
+      value:
+        text: >-
+          Ensuring long-term viability: Investment in climate-resilient coffee
+          can secure the future of coffee farming.
 readingTime: 7
-heroImage: >-
-  ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/heroImage.jpg
