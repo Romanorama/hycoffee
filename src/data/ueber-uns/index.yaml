@@ -3,7 +3,7 @@ stripImages:
   - ../assets/images/cms/strip/stripImages/1.webp
   - ../assets/images/cms/strip/stripImages/2.webp
   - ../assets/images/cms/strip/stripImages/3.webp
-  - ../assets/images/cms/strip/stripImages/4.webp
+  - ../assets/images/cms/strip/stripImages/4.jpg
   - ../assets/images/cms/strip/stripImages/5.webp
   - ../assets/images/cms/strip/stripImages/6.webp
   - ../assets/images/cms/strip/stripImages/7.webp
@@ -12,10 +12,15 @@ stripImages:
   - ../assets/images/cms/strip/stripImages/10.webp
   - ../assets/images/cms/strip/stripImages/11.webp
   - ../assets/images/cms/strip/stripImages/12.webp
-  - ../assets/images/cms/strip/stripImages/13.webp
+  - ../assets/images/cms/strip/stripImages/13.JPG
   - ../assets/images/cms/strip/stripImages/14.webp
   - ../assets/images/cms/strip/stripImages/15.webp
-heroImage: ../assets/images/cms/about/heroImage.jpeg
+  - ../assets/images/cms/strip/stripImages/16.webp
+  - ../assets/images/cms/strip/stripImages/17.webp
+  - null
+  - ../assets/images/cms/strip/stripImages/19.JPG
+  - ../assets/images/cms/strip/stripImages/20.JPG
+heroImage: ../assets/images/cms/about/heroImage.jpg
 contentDe:
   heroText: >-
     HyCoffee ist ein wissenschaftlich fundiertes, von Frauen geführtes
@@ -26,8 +31,8 @@ contentDe:
   stripImageAlts: []
   storyHeading: Unsere Geschichte
   storyBody: >-
-    Wir arbeiten zwischen Ostafrika und Deutschland – HyCoffee hat seinen Sitz
-    sowohl in Deutschland als auch in Uganda. 
+    Wir arbeiten zwischen Ostafrika und Deutschland mit Büros in Kampala und
+    Berlin. 
 
 
     Unser Fokus liegt auf Klimaresilienz als konkrete Antwort auf die Frage, wie
@@ -67,8 +72,8 @@ contentEn:
   stripImageAlts: []
   storyHeading: Our story
   storyBody: >-
-    We work between East Africa and Germany – HyCoffee is based in both Uganda
-    and Germany.
+    We work between East Africa and Germany with offices in Kampala and Berlin. 
+
 
     Our focus is climate resilience as a concrete answer to the question of how
     coffee farming can work long-term. Together with producers on the ground, we
