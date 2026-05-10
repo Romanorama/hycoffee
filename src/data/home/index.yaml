@@ -74,7 +74,7 @@ contentEn:
     HyCoffee works between East Africa and Germany. We collaborate with
     producers, roasteries, and the scientific community to promote
     climate-resilient farming systems and to bring exceptional coffees to
-    market. Our goal: a fair coffee industry that can also thrive in the face of
+    market. Our goal: a fair coffee industry that can thrive in the face of
     climate change.
   teamMissionHeading: Who we are
   teamCtaLabel: Learn more
@@ -107,7 +107,8 @@ teamStripImages:
   - ../assets/images/cms/team-strip/teamStripImages/4.webp
   - ../assets/images/cms/team-strip/teamStripImages/5.webp
   - ../assets/images/cms/team-strip/teamStripImages/6.webp
-  - ../assets/images/cms/team-strip/teamStripImages/7.webp
+  - ../assets/images/cms/team-strip/teamStripImages/7.jpg
+  - ../assets/images/cms/team-strip/teamStripImages/8.JPG
 speciesVisibleDe: false
 speciesVisibleEn: false
 speciesExpandedPhoto: ../assets/images/cms/home/speciesExpandedPhoto.jpeg
