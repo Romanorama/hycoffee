@@ -38,7 +38,7 @@ contentDe:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/contentDe/blocks/3/value/image.jpg
+          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-fuer-eine-resiliente-zukunft/contentDe/blocks/3/value/image.jpg
         caption: Baum der Spezie Excelsa
     - discriminant: subheading
       value:
@@ -60,7 +60,7 @@ contentDe:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/contentDe/blocks/6/value/image.JPG
+          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-fuer-eine-resiliente-zukunft/contentDe/blocks/6/value/image.JPG
         caption: Agroforstsystem in Uganda
     - discriminant: subheading
       value:
@@ -147,7 +147,7 @@ contentEn:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/contentEn/blocks/3/value/image.jpg
+          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-fuer-eine-resiliente-zukunft/contentEn/blocks/3/value/image.jpg
         caption: |
           Excelsa tree 
     - discriminant: subheading
@@ -170,7 +170,7 @@ contentEn:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/contentEn/blocks/6/value/image.JPG
+          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-fuer-eine-resiliente-zukunft/contentEn/blocks/6/value/image.JPG
         caption: Agroforestry system in Uganda
     - discriminant: subheading
       value:
@@ -219,4 +219,4 @@ contentEn:
 publishedAt: 2026-05-11
 readingTime: 3
 heroImage: >-
-  ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/heroImage.JPG
+  ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-fuer-eine-resiliente-zukunft/heroImage.JPG
