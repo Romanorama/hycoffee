@@ -1,4 +1,4 @@
-title: Kaffee im Wandel – Strategien für eine resiliente Zukunft
+title: 'Unser Ansatz: Kaffee-Sourcing für eine resiliente Zukunft'
 category: klimawandel
 contentDe:
   subtitle: >-
@@ -38,7 +38,7 @@ contentDe:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/contentDe/blocks/3/value/image.jpg
+          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/contentDe/blocks/3/value/image.jpg
         caption: Baum der Spezie Excelsa
     - discriminant: subheading
       value:
@@ -60,7 +60,7 @@ contentDe:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/contentDe/blocks/6/value/image.JPG
+          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/contentDe/blocks/6/value/image.JPG
         caption: Agroforstsystem in Uganda
     - discriminant: subheading
       value:
@@ -109,7 +109,7 @@ contentDe:
           klimaresiliente Kaffees kann auch in Zukunft erfolgreich Kaffee
           angebaut werden.
 contentEn:
-  title: Coffee in Transition – Strategies for a Resilient Future
+  title: HyCoffee's Sourcing Approach – Strategies for a Resilient Future
   subtitle: >
     How alternative species, targeted breeding programmes and climate-resilient
     farming systems can help to adapt coffee production to climate change to
@@ -147,7 +147,7 @@ contentEn:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/contentEn/blocks/3/value/image.jpg
+          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/contentEn/blocks/3/value/image.jpg
         caption: |
           Excelsa tree 
     - discriminant: subheading
@@ -170,7 +170,7 @@ contentEn:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/contentEn/blocks/6/value/image.JPG
+          ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/contentEn/blocks/6/value/image.JPG
         caption: Agroforestry system in Uganda
     - discriminant: subheading
       value:
@@ -218,4 +218,4 @@ contentEn:
           can secure the future of coffee farming.
 readingTime: 7
 heroImage: >-
-  ../../assets/images/cms/wissen/kaffee-im-wandel-strategien-fuer-eine-resiliente-zukunft/heroImage.JPG
+  ../../assets/images/cms/wissen/unser-ansatz-kaffee-sourcing-für-eine-resiliente-zukunft/heroImage.JPG
