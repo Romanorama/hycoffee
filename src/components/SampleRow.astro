@@ -442,9 +442,46 @@ const pdfDownloadFilename = `${name.replace(/[\\/:*?"<>|]+/g, '').trim() || 'Pro
     .col-country,
     .col-process,
     .col-price,
-    .col-arrival,
-    .col-action {
+    .col-arrival {
       display: none;
+    }
+
+    .col-action {
+      display: flex;
+      flex-wrap: wrap;
+      grid-column: 1 / -1;
+      justify-self: stretch;
+      width: 100%;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .col-action .btn-download-row,
+    .col-action .btn-sample {
+      flex: 1 1 0;
+      justify-content: center;
+      min-width: 0;
+      min-height: 44px;
+      padding: 8px 12px;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .col-action .sample-plus {
+      flex-shrink: 0;
+    }
+
+    .col-action .sample-text,
+    .col-action .btn-download-row span {
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    @media (max-width: 360px) {
+      .col-action .btn-download-row,
+      .col-action .btn-sample {
+        flex-basis: 100%;
+      }
     }
 
     .spec-mobile-only {
@@ -490,7 +527,7 @@ const pdfDownloadFilename = `${name.replace(/[\\/:*?"<>|]+/g, '').trim() || 'Pro
     }
 
     .row-details-actions {
-      display: flex;
+      display: none;
       gap: 8px;
       padding: 16px 0 8px;
       order: 2;

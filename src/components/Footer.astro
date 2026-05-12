@@ -20,7 +20,7 @@ const fallbackGlobalContent = global?.contentDe;
 const footerTagline = globalContent?.footerTagline ?? fallbackGlobalContent?.footerTagline ?? '';
 const newsletterButton = globalContent?.newsletterButton ?? fallbackGlobalContent?.newsletterButton ?? '';
 const offerListRecipient = 'info@hycoffee.de';
-const offerListSubject = lang === 'en' ? 'Offer list request' : 'Angebotsliste anfragen';
+const offerListSubject = lang === 'en' ? 'Get Offer Lists' : 'Angebote erhalten';
 const offerListBodyIntro = lang === 'en' ? 'Please send offer lists to:' : 'Bitte Angebotsliste an folgende E-Mail-Adresse senden:';
 const telHref = phone.replace(/[^+\d]/g, '');
 ---
@@ -95,7 +95,7 @@ const telHref = phone.replace(/[^+\d]/g, '');
       }
 
       const recipient = form.dataset.recipient ?? 'info@hycoffee.de';
-      const subject = form.dataset.subject ?? 'Angebotsliste anfragen';
+      const subject = form.dataset.subject ?? 'Angebote erhalten';
       const bodyIntro = form.dataset.bodyIntro ?? 'Bitte Angebotsliste an folgende E-Mail-Adresse senden:';
       const body = `${bodyIntro}\n\n${emailInput.value}`;
 

@@ -37,6 +37,14 @@ const items = entries
   }))
   .sort((a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title));
 
+const maxTitleLength = Math.max(0, ...items.map((item) => item.title.length));
+const sharedTitleSizeClass =
+  maxTitleLength > 30
+    ? 'press-title-size-very-long'
+    : maxTitleLength > 22
+      ? 'press-title-size-long'
+      : undefined;
+
 const hasMobileMore = items.length > 2;
 const hasDesktopMore = items.length > 4;
 ---
@@ -46,6 +54,7 @@ const hasDesktopMore = items.length > 4;
     'press',
     hasMobileMore && 'has-more-mobile',
     hasDesktopMore && 'has-more-desktop',
+    sharedTitleSizeClass,
   ]}
   data-press-section
 >
@@ -57,13 +66,7 @@ const hasDesktopMore = items.length > 4;
           <div class="press-card-inner">
             <span class="caption">{pressLabel}</span>
             <div class="press-divider" />
-            <h3
-              class:list={[
-                'press-title',
-                item.title.length > 22 && 'press-title-long',
-                item.title.length > 30 && 'press-title-very-long',
-              ]}
-            >
+            <h3 class="press-title">
               {item.title}
             </h3>
             {item.featureImage && (
@@ -207,7 +210,7 @@ const hasDesktopMore = items.length > 4;
 
   .press-title {
     --press-title-size: var(--type-copy-lg);
-    --press-title-block-size: calc(var(--type-copy-lg) * 2.34);
+    --press-title-block-size: calc(var(--press-title-size) * 2.34);
 
     font-family: var(--font-ui);
     font-size: var(--press-title-size);
@@ -220,11 +223,11 @@ const hasDesktopMore = items.length > 4;
     text-wrap: balance;
   }
 
-  .press-title-long {
+  .press-title-size-long .press-title {
     --press-title-size: clamp(18px, 0.8vw + 11px, 24px);
   }
 
-  .press-title-very-long {
+  .press-title-size-very-long .press-title {
     --press-title-size: clamp(17px, 0.65vw + 10px, 22px);
   }
 

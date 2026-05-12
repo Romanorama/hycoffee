@@ -988,13 +988,43 @@ const soldOutPopup = {
     .col-process,
     .col-price,
     .col-arrival,
-    .col-action,
     .table-header .col-country,
     .table-header .col-process,
     .table-header .col-price,
     .table-header .col-arrival,
     .table-header .col-action {
       display: none;
+    }
+
+    .table-row .col-action {
+      display: flex;
+      flex-wrap: wrap;
+      grid-column: 1 / -1;
+      justify-self: stretch;
+      width: 100%;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .table-row .col-action .btn-download-row,
+    .table-row .col-action .btn-sample {
+      flex: 1 1 0;
+      justify-content: center;
+      min-width: 0;
+      min-height: 44px;
+      padding: 8px 12px;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .table-row .col-action .sample-plus {
+      flex-shrink: 0;
+    }
+
+    .table-row .col-action .sample-text,
+    .table-row .col-action .btn-download-row span {
+      min-width: 0;
+      overflow-wrap: break-word;
     }
 
     .table-header {
@@ -1041,7 +1071,7 @@ const soldOutPopup = {
     }
 
     .row-details-actions {
-      display: flex;
+      display: none;
       gap: 8px;
       padding: 16px 0 8px;
       order: 2;
@@ -1084,6 +1114,13 @@ const soldOutPopup = {
     .sample-popup-primary,
     .sample-popup-secondary {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .table-row .col-action .btn-download-row,
+    .table-row .col-action .btn-sample {
+      flex-basis: 100%;
     }
   }
 

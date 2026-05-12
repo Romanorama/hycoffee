@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const wissen = defineCollection({
-  loader: glob({ pattern: '**/*.mdoc', base: './src/content/wissen' }),
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/wissen' }),
 });
 
 const kaffeeSamples = defineCollection({
@@ -14,7 +14,7 @@ const press = defineCollection({
 });
 
 const originStories = defineCollection({
-  loader: glob({ pattern: '**/*.mdoc', base: './src/content/origin-stories' }),
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/origin-stories' }),
 });
 
 const team = defineCollection({
