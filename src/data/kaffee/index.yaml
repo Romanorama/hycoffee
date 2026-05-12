@@ -6,7 +6,7 @@ contentDe:
   tableNameLabel: Name
   tableSpeciesLabel: Art
   tableCountryLabel: Land
-  tableProcessLabel: Verarbeitung
+  tableProcessLabel: 'Verarbeitung '
   tablePriceLabel: Preis
   tableAvailabilityLabel: Verfügbar
   tableArrivalLabel: Ankunft
@@ -20,23 +20,18 @@ contentDe:
   checkoutSingleLabel: 1 Sample ausgewählt
   checkoutMultipleLabel: '{count} Samples ausgewählt'
   soldOutPopupKicker: Samples
-  soldOutPopupTitle: Sample Box gerade vergriffen
+  soldOutPopupTitle: Samples nicht verfügbar
   soldOutPopupCopy: >-
-    Unsere Muster sind im Moment ausverkauft. Schreib uns kurz, dann reservieren
-    wir dir die nächste Box und melden uns, sobald neue Samples bereitstehen.
+    Kaffeeproben sind leider gerade nicht verfügbar. Schreib uns kurz, dann
+    melden wir uns, sobald neue Samples eingetroffen sind.
   soldOutPopupPrimaryLabel: Benachrichtige mich
   soldOutPopupPrimaryHref: mailto:info@hycoffee.de?subject=Sample%20Box%20Warteliste
 contentEn:
-  pageHeading: "Our Green Coffee Selection\_"
+  pageHeading: Offer List
   pageIntro: >-
-    The future of coffee begins with new species, varieties, and
-    climate-resilient cultivation. We focus on the cultivation and trade of
-    climate-resilient coffee. This includes, for example, Arabica grown in
-    climate-resilient farming systems such as agroforestry, as well as Excelsa
-    (Coffea dewevrei)—a rare coffee species that is significantly more resistant
-    to heat, drought, and climate stress. For roasteries, this opens up new
-    flavor profiles and a climate-resilient supply chain—for farmers, a
-    long-term perspective.
+    Four coffees from Uganda: expressive Arabicas from regenerative cultivation
+    systems, and Excelsa as a climate-resilient alternative with its own
+    distinct sensory profile.
   tableNameLabel: Name
   tableSpeciesLabel: Species
   tableCountryLabel: Country
@@ -54,10 +49,10 @@ contentEn:
   checkoutSingleLabel: 1 sample added
   checkoutMultipleLabel: '{count} samples added'
   soldOutPopupKicker: Samples
-  soldOutPopupTitle: Sample box currently sold out
+  soldOutPopupTitle: Currently unavailable
   soldOutPopupCopy: >-
-    Our samples are currently sold out. Send us a quick note and we will reserve
-    the next box for you as soon as new samples are ready.
+    Our samples are currently not available. Please send us a quick note, and we
+    will reserve some for you as soon as new samples are available.
   soldOutPopupPrimaryLabel: Notify me
   soldOutPopupPrimaryHref: mailto:info@hycoffee.de?subject=Sample%20Box%20Waitlist
 samplesSoldOut: false
