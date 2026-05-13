@@ -20,7 +20,7 @@ stripImages:
   - null
   - ../assets/images/cms/strip/stripImages/19.JPG
   - ../assets/images/cms/strip/stripImages/20.JPG
-heroImage: ../assets/images/cms/about/heroImage.jpg
+heroImage: ../assets/images/cms/about/heroImage.jpeg
 contentDe:
   heroText: >-
     HyCoffee ist ein wissenschaftlich fundiertes, von Frauen geführtes
