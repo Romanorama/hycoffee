@@ -1,5 +1,5 @@
 contentDe:
-  heroHeadline: Wir erforschen, entwickeln und liefern klimaresilienten Rohkaffee. <3
+  heroHeadline: Wir erforschen, entwickeln und liefern klimaresilienten Rohkaffee.
   heroCtaLabel: Jetzt Kaffee Kaufen
   tiles:
     - category: ROHKAFFEE ANGEBOT
@@ -68,8 +68,8 @@ contentEn:
   valuesHeading: Climate Resilience is Quality
   valuesBody: >-
     Climate change is threatening coffee cultivation. We import
-    climate-resilient speciality coffee through long-term partnerships with
-    local producers.
+    climate-resilient specialty coffee through long-term partnerships with local
+    producers.
   teamBlurb: >-
     HyCoffee works between East Africa and Germany. We collaborate with
     producers, roasteries, and the scientific community to promote
