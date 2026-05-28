@@ -1253,7 +1253,7 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://unpkg.com/html-to-image@1.11.13/dist/html-to-image.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 'use strict';
@@ -3546,22 +3546,46 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   renderAll();
 });
 
-/* ===== Slide rasterisation (html2canvas) =====
+/* ===== Slide rasterisation (html-to-image) =====
    onCanvas(out, slideIdx) is called for each rendered slide. The on-screen
    transform is temporarily stripped so the bitmap is rendered at full
-   1080×1350 regardless of the current preview zoom. */
+   1080×1350 regardless of the current preview zoom.
+
+   We swapped html2canvas → html-to-image: native SVG <foreignObject> capture
+   is faster, honours @import font chains, and avoids the dark-overlay /
+   skewed-layout bugs we hit in the iframe-hosted version of the toolbox. */
+let _fontEmbedCssCache = null;
+async function getFontEmbedCssOnce() {
+  if (_fontEmbedCssCache !== null) return _fontEmbedCssCache;
+  try {
+    _fontEmbedCssCache = await htmlToImage.getFontEmbedCSS(document.body);
+  } catch (_) {
+    _fontEmbedCssCache = '';
+  }
+  return _fontEmbedCssCache;
+}
+
 async function rasterizeAllSlides(onCanvas) {
   const prevSelected = state.selectedElementId;
   state.selectedElementId = null;
 
-  // Convert any library/remote image URLs to same-origin data URLs first,
-  // otherwise html2canvas's toDataURL throws "operation is insecure" on a
-  // tainted canvas (especially when the app is opened via file://).
+  // Convert any library/remote image URLs to same-origin data URLs first so
+  // the captured canvas isn't tainted (and works even when opened via file://).
   await preloadSlideImagesAsDataUrls();
 
   renderAll();
   await waitForImagesLoaded(slidesRow);
+  // Wait for @font-face fonts to be ready before rasterising, otherwise the
+  // capture falls back to system fonts and metrics drift (text reflows, lines
+  // wrap differently, layout looks skewed).
+  if (document.fonts && document.fonts.ready) {
+    try { await document.fonts.ready; } catch (_) { /* ignore */ }
+  }
   await new Promise(r => setTimeout(r, 80));
+
+  // Pre-compute @font-face CSS once; reused for every slide so font files are
+  // only fetched + base64-encoded a single time per export.
+  const fontEmbedCSS = await getFontEmbedCssOnce();
 
   const allWraps = Array.from(slidesRow.querySelectorAll('.slide-wrap'));
 
@@ -3573,9 +3597,9 @@ async function rasterizeAllSlides(onCanvas) {
 
     // Stripping the transform restores the canvas to its native 1080×1350.
     // Each slide-wrap's footprint is only the *scaled* size, so the unscaled
-    // canvas overflows into the next slide-wrap's area and html2canvas picks up
-    // the neighbouring scaled bitmap as a colour bleed. Hide all other slides
-    // for the duration of the capture so only this one is in the document.
+    // canvas overflows into the next slide-wrap's area and the capture would
+    // pick up the neighbouring scaled bitmap as a colour bleed. Hide all other
+    // slides for the duration of the capture so only this one is in the layout.
     const hiddenSiblings = [];
     allWraps.forEach(w => {
       if (w !== wrap) {
@@ -3588,9 +3612,16 @@ async function rasterizeAllSlides(onCanvas) {
     canvasNode.style.transform = '';
     canvasNode.classList.add('exporting'); // hide safe-area guides
     try {
-      const out = await html2canvas(canvasNode, {
-        width: CANVAS_W, height: CANVAS_H, scale: 1,
-        useCORS: true, backgroundColor: null
+      const out = await htmlToImage.toCanvas(canvasNode, {
+        width: CANVAS_W,
+        height: CANVAS_H,
+        canvasWidth: CANVAS_W,
+        canvasHeight: CANVAS_H,
+        pixelRatio: 1,
+        backgroundColor: state.bg,
+        fontEmbedCSS,
+        cacheBust: false,
+        skipAutoScale: true,
       });
       await onCanvas(out, i);
     } catch (err) {
