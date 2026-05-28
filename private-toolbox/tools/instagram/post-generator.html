@@ -3554,12 +3554,30 @@ document.getElementById('resetBtn').addEventListener('click', () => {
    We swapped html2canvas → html-to-image: native SVG <foreignObject> capture
    is faster, honours @import font chains, and avoids the dark-overlay /
    skewed-layout bugs we hit in the iframe-hosted version of the toolbox. */
+// html-to-image's getFontEmbedCSS() walks document.styleSheets and follows
+// @import chains via cssRules, but in this app the fonts live inside an
+// @import'd CI stylesheet — chained URL resolution there is fragile and we'd
+// silently fall back to system fonts. Instead we fetch the .otf files
+// ourselves (same-origin) and assemble the @font-face block by hand.
+const EMBED_FONTS = [
+  { family: 'HAL Timezone', url: '../../assets/hycoffee/fonts/HALTimezone-Regular.otf', format: 'opentype', weight: 400, style: 'normal' },
+  { family: 'DGMSprinter',  url: '../../assets/hycoffee/fonts/DGMSprinter-Regular.otf',  format: 'opentype', weight: 400, style: 'normal' },
+];
+
 let _fontEmbedCssCache = null;
 async function getFontEmbedCssOnce() {
   if (_fontEmbedCssCache !== null) return _fontEmbedCssCache;
   try {
-    _fontEmbedCssCache = await htmlToImage.getFontEmbedCSS(document.body);
-  } catch (_) {
+    const blocks = await Promise.all(EMBED_FONTS.map(async (f) => {
+      const dataUrl = await fetchAsDataUrl(f.url);
+      return "@font-face { font-family: '" + f.family + "'; "
+           + "src: url(" + dataUrl + ") format('" + f.format + "'); "
+           + "font-weight: " + f.weight + "; font-style: " + f.style + "; "
+           + "font-display: block; }";
+    }));
+    _fontEmbedCssCache = blocks.join('\n');
+  } catch (err) {
+    console.warn('Font embed failed:', err);
     _fontEmbedCssCache = '';
   }
   return _fontEmbedCssCache;
