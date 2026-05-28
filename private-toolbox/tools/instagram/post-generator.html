@@ -1121,6 +1121,54 @@
     border-color: var(--navy);
   }
   .push-actions button.primary:hover { background: var(--lila); border-color: var(--lila); }
+
+  /* Export progress overlay: covers the canvas during rasterisation so the
+     slide-wraps' visibility flicker stays hidden behind a calm UI. */
+  .export-progress {
+    position: fixed; inset: 0;
+    background: rgba(13, 15, 73, 0.55);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10000;
+    padding: 24px;
+    animation: pushFade .15s ease-out;
+  }
+  .export-progress-inner {
+    background: white;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 360px;
+    padding: 22px 24px 24px;
+    box-shadow: 0 24px 60px rgba(13,15,73,.28);
+  }
+  .export-progress-inner h2 {
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--navy);
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .export-progress-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 14px;
+  }
+  .export-progress-bar {
+    height: 6px;
+    background: #eef0f5;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .export-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--navy);
+    border-radius: 999px;
+    transition: width .2s ease-out;
+  }
 </style>
 </head>
 <body>
@@ -3655,6 +3703,41 @@ async function rasterizeAllSlides(onCanvas) {
   renderAll();
 }
 
+/* ===== Export progress overlay =====
+   The slide row briefly hides siblings and resets transforms during
+   rasterisation, which looks like the canvas is "jumping". Covering the
+   page with this overlay keeps the UI calm and gives the user a clear
+   per-slide progress signal. */
+function createExportProgress(title) {
+  const root = document.createElement('div');
+  root.className = 'export-progress';
+  root.innerHTML =
+    '<div class="export-progress-inner">' +
+      '<h2></h2>' +
+      '<div class="export-progress-label"></div>' +
+      '<div class="export-progress-bar"><div class="export-progress-fill"></div></div>' +
+    '</div>';
+  document.body.appendChild(root);
+  const titleEl = root.querySelector('h2');
+  const labelEl = root.querySelector('.export-progress-label');
+  const fillEl  = root.querySelector('.export-progress-fill');
+  titleEl.textContent = title;
+  labelEl.textContent = 'Vorbereiten…';
+  return {
+    setLabel(text) { labelEl.textContent = text; },
+    setSlide(current, total) {
+      const pct = total > 0 ? Math.round((current / total) * 100) : 0;
+      fillEl.style.width = pct + '%';
+      labelEl.textContent = 'Slide ' + current + ' / ' + total;
+    },
+    setPacking() {
+      fillEl.style.width = '100%';
+      labelEl.textContent = 'Packe ZIP…';
+    },
+    close() { root.remove(); },
+  };
+}
+
 /* ===== Download all slides as a single ZIP of PNGs =====
    Bundling avoids the browser's per-file download prompt spam and keeps the
    carousel grouped on disk. Each slide is added as PNG; the ZIP is named with
@@ -3663,7 +3746,7 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
   const btn = document.getElementById('downloadBtn');
   const prevLabel = btn.textContent;
   btn.disabled = true;
-  btn.textContent = 'Rendere…';
+  const progress = createExportProgress('Exportiere Slides');
   try {
     if (typeof JSZip === 'undefined') {
       throw new Error('JSZip nicht geladen (Internetverbindung prüfen).');
@@ -3672,13 +3755,13 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
     const slideCount = state.slides.length;
     const pad = n => String(n).padStart(String(slideCount).length, '0');
     await rasterizeAllSlides(async (out, i) => {
-      btn.textContent = 'Slide ' + (i + 1) + '/' + slideCount + '…';
+      progress.setSlide(i + 1, slideCount);
       const blob = await new Promise((resolve, reject) => {
         out.toBlob(b => b ? resolve(b) : reject(new Error('toBlob lieferte null')), 'image/png');
       });
       zip.file('HyCoffee_Post_Slide-' + pad(i + 1) + '.png', blob);
     });
-    btn.textContent = 'Packe ZIP…';
+    progress.setPacking();
     const zipBlob = await zip.generateAsync({ type: 'blob' });
     const url = URL.createObjectURL(zipBlob);
     const a = document.createElement('a');
@@ -3691,6 +3774,7 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
       alert('ZIP-Export fehlgeschlagen: ' + err.message);
     }
   } finally {
+    progress.close();
     btn.disabled = false;
     btn.textContent = prevLabel;
   }
@@ -3728,16 +3812,20 @@ async function openPushModal() {
   const pushBtn = document.getElementById('pushGridBtn');
   const prevLabel = pushBtn.textContent;
   pushBtn.disabled = true;
-  pushBtn.textContent = 'Rendere…';
+  const progress = createExportProgress('Render für Grid');
+  const slideCount = state.slides.length;
   try {
-    await rasterizeAllSlides(async (out) => {
+    await rasterizeAllSlides(async (out, i) => {
+      progress.setSlide(i + 1, slideCount);
       renderedSlides.push(out.toDataURL('image/jpeg', 0.9));
     });
   } catch (_) {
+    progress.close();
     pushBtn.disabled = false;
     pushBtn.textContent = prevLabel;
     return;
   } finally {
+    progress.close();
     pushBtn.disabled = false;
     pushBtn.textContent = prevLabel;
   }
