@@ -1,4 +1,6 @@
 ---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
 export const prerender = false;
 
 const session = Astro.locals.session;
@@ -7,84 +9,98 @@ if (!session) {
 }
 ---
 
-<!doctype html>
-<html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex,nofollow" />
-    <title>Portal — HyCoffee</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preload" href="/fonts/HALTimezone-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/DGMSprinter-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <style>
-      @font-face {
-        font-family: 'HAL Timezone';
-        src: url('/fonts/HALTimezone-Regular.woff2') format('woff2');
-        font-weight: 400;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: 'DGM Sprinter';
-        src: url('/fonts/DGMSprinter-Regular.woff2') format('woff2');
-        font-weight: 400;
-        font-display: swap;
-      }
-      :root { --bg: #fbf8f2; --ink: #242119; --accent: #3a563b; }
-      * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
-      body {
-        background: var(--bg);
-        color: var(--ink);
-        font-family: 'DGM Sprinter', sans-serif;
-        min-height: 100vh;
-        padding: 48px 32px;
-      }
-      .wrap { max-width: 720px; margin: 0 auto; display: grid; gap: 32px; }
-      h1 { font-family: 'HAL Timezone', sans-serif; font-size: 47px; margin: 0; line-height: 1.05; }
-      .beta { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; }
-      .row { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-      .cta {
-        display: inline-block;
-        font: inherit;
-        padding: 14px 20px;
-        background: var(--ink);
-        color: var(--bg);
-        text-decoration: none;
-        border-radius: 3px;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
-      .cta:hover { background: var(--accent); }
-      form { margin: 0; }
-      button.logout {
-        font: inherit;
-        font-size: 13px;
-        background: transparent;
-        border: 1px solid var(--ink);
-        color: var(--ink);
-        padding: 8px 14px;
-        border-radius: 3px;
-        cursor: pointer;
-      }
-      button.logout:hover { background: var(--ink); color: var(--bg); }
-      p { margin: 0; line-height: 1.5; }
-    </style>
-  </head>
-  <body>
-    <main class="wrap">
-      <span class="beta">Beta · HyCoffee Toolbox</span>
-      <h1>Willkommen, {session.name}.</h1>
-      <p>
+<BaseLayout title="Portal — HyCoffee" noindex={true}>
+  <main class="portal">
+    <div class="portal-inner">
+      <span class="portal-eyebrow caption">Beta · HyCoffee Toolbox</span>
+      <h1 class="portal-heading">Willkommen, {session.name}.</h1>
+      <p class="portal-lead">
         Du bist eingeloggt als <strong>{session.email}</strong>. Die Toolbox ist im Beta-Stadium —
         Feedback bitte direkt an Roman.
       </p>
-      <div class="row">
-        <a class="cta" href="/portal/toolbox">Toolbox öffnen</a>
+      <div class="portal-actions">
+        <a class="btn btn-primary" href="/portal/toolbox"><span>Toolbox öffnen</span></a>
         <form method="post" action="/api/logout">
-          <button class="logout" type="submit">Logout</button>
+          <button class="btn-ghost" type="submit">Logout</button>
         </form>
       </div>
-    </main>
-  </body>
-</html>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .portal {
+    min-height: 100vh;
+    background: var(--warm-grey-light);
+    border-bottom: 1px solid var(--warm-dark-grey);
+    display: grid;
+    place-items: center;
+    padding: 80px 24px;
+  }
+
+  .portal-inner {
+    width: 100%;
+    max-width: 720px;
+    display: grid;
+    gap: 24px;
+    color: var(--warm-dark-grey);
+  }
+
+  .portal-eyebrow {
+    color: var(--warm-dark-grey);
+    opacity: 0.7;
+  }
+
+  .portal-heading {
+    font-family: var(--font-heading);
+    font-size: var(--type-display-sm);
+    line-height: 0.94;
+    letter-spacing: -2px;
+    font-weight: 400;
+    color: var(--warm-dark-grey);
+    margin: 0;
+  }
+
+  .portal-lead {
+    font-family: var(--font-heading);
+    font-size: var(--type-hal-copy-lg);
+    line-height: 1.4;
+    color: var(--warm-dark-grey);
+    margin: 0;
+  }
+
+  .portal-lead strong { font-weight: 400; }
+
+  .portal-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .portal-actions form { margin: 0; }
+
+  .btn-ghost {
+    font-family: var(--font-ui);
+    font-size: var(--type-button);
+    background: transparent;
+    border: 1px solid var(--warm-dark-grey);
+    color: var(--warm-dark-grey);
+    padding: 14px 24px 6px;
+    border-radius: var(--radius-control);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1;
+  }
+
+  .btn-ghost:hover {
+    background: var(--warm-dark-grey);
+    color: var(--warm-grey-light);
+  }
+
+  @media (max-width: 600px) {
+    .portal { padding: 48px 20px; }
+    .portal-heading { font-size: var(--type-mobile-display); letter-spacing: -1px; }
+  }
+</style>
