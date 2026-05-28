@@ -38,3 +38,6 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Toolbox source workspace (not for deploy — see private-toolbox/)
+/_Generator_HyCoffee/

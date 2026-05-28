@@ -1,0 +1,298 @@
+/* ============================================================
+   HYCoffee — Pattern Lab
+   Follows CI Guidelines design system.
+   ============================================================ */
+
+@import url('../../assets/ci/ci.css');
+
+:root {
+  --pl-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+}
+
+body {
+  padding: 24px;
+  min-height: 100vh;
+}
+
+/* ---------- Shell ---------- */
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(300px, 340px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.panel-header {
+  display: grid;
+  gap: 6px;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel-header p {
+  margin: 0;
+  font-family: var(--pl-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+.panel-header p:nth-child(2) {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-transform: none;
+}
+
+.panel-header-inline {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.home-link {
+  width: max-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-elev);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background .15s, border-color .15s;
+}
+.home-link:hover,
+.home-link:focus-visible {
+  outline: none;
+  background: var(--bg);
+  border-color: var(--line-strong);
+}
+
+.controls-panel {
+  position: sticky;
+  top: 24px;
+}
+
+.controls {
+  display: grid;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.control {
+  display: grid;
+  gap: 8px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--line);
+}
+.control:last-child { border-bottom: 0; }
+
+.control-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.control-value {
+  min-width: 52px;
+  text-align: right;
+  font-family: var(--pl-mono);
+  font-size: 11px;
+  color: var(--ink-2);
+}
+
+/* ---------- Form controls ---------- */
+button,
+input,
+select {
+  font: inherit;
+  color: var(--ink);
+}
+
+button {
+  appearance: none;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+button:hover,
+button:focus-visible {
+  outline: none;
+  background: var(--bg);
+  border-color: var(--line-strong);
+}
+
+select {
+  appearance: none;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%23111113' d='M5 6L0 0h10z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 30px;
+}
+select:hover,
+select:focus-visible,
+input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--bg-elev);
+  cursor: pointer;
+}
+input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--accent-ink);
+  border-radius: 2px;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 18px;
+  background: transparent;
+  appearance: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--line-strong);
+  border-radius: 2px;
+}
+input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: var(--line-strong);
+  border-radius: 2px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -6px;
+  background: var(--accent);
+  border: 2px solid var(--bg-elev);
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border: 2px solid var(--bg-elev);
+  border-radius: 50%;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--line);
+}
+.button-row button:last-child {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.button-row button:last-child:hover {
+  background: var(--accent-alt);
+  border-color: var(--accent-alt);
+  color: var(--bg);
+}
+
+/* ---------- Preview ---------- */
+.preview-panel { display: grid; }
+
+.canvas-frame {
+  padding: 22px;
+  background: var(--bg);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  padding: 18px 22px;
+  border-top: 1px solid var(--line);
+}
+
+.swatch {
+  display: grid;
+  gap: 6px;
+}
+
+.swatch span {
+  display: block;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+
+.swatch p {
+  margin: 0;
+  font-family: var(--pl-mono);
+  font-size: 10px;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 980px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .controls-panel { position: static; }
+  .controls { max-height: none; }
+  .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

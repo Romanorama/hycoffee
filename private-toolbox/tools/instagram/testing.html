@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Testing – HyCoffee</title>
+    <style>
+        @import url('../../assets/ci/ci.css');
+
+        :root {
+          --navy:   var(--hy-ink);
+          --lila:   var(--accent);
+          --border: var(--line);
+          --bg:     var(--hy-bg);
+          --gray:   var(--ink-2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg); color: var(--ink); min-height: 100vh; overflow-x: hidden;
+        }
+
+        .top-bar {
+            display: flex; align-items: center; gap: 16px; padding: 14px 24px;
+            background: #fff; border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 14px;
+            border: 1px solid var(--border); border-radius: 999px; background: var(--bg-elev);
+            font-size: 12px; font-weight: 500; line-height: 1; text-decoration: none; color: var(--ink);
+            transition: border-color 0.15s, background 0.15s;
+        }
+        .back-btn:hover { border-color: var(--line-strong); background: var(--bg); }
+        .top-bar h1 { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+        .top-bar .hint { font-size: 11px; color: var(--gray); margin-left: auto; }
+
+        /* ---- MAIN LAYOUT ---- */
+        .main-area {
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            height: calc(100vh - 52px); padding: 20px;
+        }
+
+        .mockup-container {
+            position: relative; display: inline-block; height: 100%; aspect-ratio: 958 / 1722;
+        }
+        .mockup-container.hidden { display: none; }
+        .mockup-bg { display: block; height: 100%; width: auto; }
+        .phone-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            display: block;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .grid-layout {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            height: 100%;
+        }
+        .grid-layout.hidden { display: none; }
+        .grid-sidebar {
+            position: absolute; left: 0; top: 0; bottom: 0;
+            width: 220px;
+            display: flex; flex-direction: column; gap: 10px;
+            padding: 20px 24px;
+            background: #fff;
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+        }
+        .grid-sidebar-note {
+            font-size: 11px; line-height: 1.35; color: var(--gray);
+        }
+        .grid-sidebar-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .grid-sidebar-btn .btn-icon {
+            font-size: 14px; line-height: 1; width: 16px; text-align: center;
+        }
+
+        .grid-sidebar hr {
+            border: none; border-top: 1px solid var(--border); margin: 4px 0;
+        }
+        .active-grid-info {
+            font-size: 11px; line-height: 1.4; color: var(--gray);
+            padding: 8px 10px; border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+        }
+        .active-grid-info .ag-name {
+            font-weight: 600; color: var(--navy); display: block;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+        .active-grid-info .ag-meta { font-size: 10px; color: var(--gray); }
+        .grid-post-map-head {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 8px; margin-top: 2px;
+        }
+        .grid-post-map-head h3 {
+            font-family: inherit;
+            font-size: 10px; font-weight: 700; color: var(--gray);
+            text-transform: uppercase; letter-spacing: 1.2px;
+        }
+        .grid-post-map-count {
+            font-size: 10px; color: var(--gray); white-space: nowrap;
+        }
+        .grid-post-map {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 6px; overflow-y: auto; min-height: 0;
+            flex: 1; align-content: start; padding-right: 2px;
+        }
+        .grid-post-map::-webkit-scrollbar { width: 4px; }
+        .grid-post-map::-webkit-scrollbar-thumb {
+            background: rgba(13,15,73,0.14); border-radius: 2px;
+        }
+        .grid-post-thumb {
+            position: relative; aspect-ratio: 4 / 5;
+            border-radius: 6px; overflow: hidden;
+            border: 1.5px solid var(--border);
+            background: var(--bg); cursor: pointer;
+            transition: border-color 0.15s, background 0.15s, transform 0.15s;
+        }
+        .grid-post-thumb:hover,
+        .grid-post-thumb:focus-visible {
+            border-color: var(--lila); background: rgba(58,86,59,0.08);
+            outline: none;
+        }
+        .grid-post-thumb.dragging { opacity: 0.45; transform: scale(0.96); }
+        .grid-post-thumb.drag-over { border-color: var(--lila); }
+        .grid-post-thumb.empty {
+            border-style: dashed; background: #fafafd;
+        }
+        .grid-post-thumb img {
+            width: 100%; height: 100%; display: block; object-fit: cover;
+            pointer-events: none;
+        }
+        .grid-post-thumb .gpt-index,
+        .grid-post-thumb .gpt-count {
+            position: absolute; left: 3px; z-index: 2;
+            border-radius: 3px; background: rgba(13,15,73,0.66);
+            color: #fff; font-size: 8px; line-height: 1;
+            padding: 3px 4px; pointer-events: none;
+        }
+        .grid-post-thumb .gpt-index { bottom: 3px; }
+        .grid-post-thumb .gpt-count { top: 3px; }
+        .grid-post-thumb .gpt-empty-plus {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gray); font-size: 18px; line-height: 1;
+        }
+        .grid-post-thumb.empty:hover .gpt-empty-plus { color: var(--lila); }
+        .grid-post-actions {
+            position: absolute; top: 3px; right: 3px; z-index: 3;
+            display: flex; flex-direction: column; gap: 3px;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        .grid-post-thumb:hover .grid-post-actions,
+        .grid-post-thumb:focus-within .grid-post-actions { opacity: 1; }
+        .grid-post-action {
+            width: 18px; height: 18px; border-radius: 4px;
+            border: none; background: rgba(13,15,73,0.68); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-family: inherit; font-size: 11px; line-height: 1;
+            cursor: pointer;
+        }
+        .grid-post-action:hover { background: rgba(13,15,73,0.92); color: #fff; }
+        .grid-post-action.danger:hover { background: rgba(170,42,42,0.92); }
+
+        /* ---- GRID VIEW ---- */
+        .mockup-grid .grid-slot {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            overflow: hidden;
+        }
+
+        .grid-cell {
+            background: #fafafa;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            aspect-ratio: 4 / 5;
+        }
+        .grid-cell img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .grid-cell .multi-indicator {
+            position: absolute; top: 4px; right: 4px;
+            background: rgba(0,0,0,0.6); border-radius: 3px; padding: 1px 4px;
+            font-size: 7px; color: #fff; pointer-events: none;
+        }
+        .grid-cell .cell-add {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 4px;
+            color: #444; font-size: 10px; transition: all 0.15s;
+        }
+        .grid-cell .cell-add .plus {
+            width: 22px; height: 22px; border-radius: 50%;
+            border: 1.5px solid #444; display: flex; align-items: center;
+            justify-content: center; font-size: 14px; line-height: 1;
+        }
+        .grid-cell:hover .cell-add { color: var(--lila); }
+        .grid-cell:hover .cell-add .plus { border-color: var(--lila); }
+
+        /* ---- IG PROFILE (inside phone mockup, on top of grid) ---- */
+        .mockup-grid .phone-screen {
+            position: absolute;
+            z-index: 2;
+            top: 3.6%; left: 12.2%; right: 11.4%; bottom: 4.5%;
+            background: #fff;
+            overflow: hidden;
+            border-radius: 8% / 3.6%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #000;
+        }
+
+        /* Editable text affordances */
+        [contenteditable="true"] {
+            outline: none;
+        }
+        [contenteditable="true"]:hover:not(:focus) {
+            background: rgba(104, 112, 224, 0.06);
+            border-radius: 3px;
+        }
+        [contenteditable="true"]:focus {
+            background: rgba(104, 112, 224, 0.12);
+            border-radius: 3px;
+            box-shadow: inset 0 0 0 1px rgba(104, 112, 224, 0.5);
+        }
+        .mockup-grid .ig-top-row {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: calc(4.6% + 31px);
+            padding: 4.6% 4% 5px;
+            z-index: 4;
+            display: flex; align-items: flex-end; gap: 10px;
+            background: #fff;
+            color: #000;
+        }
+        .mockup-grid .ig-top-row .back-arrow {
+            font-size: 26px; line-height: 1; cursor: pointer; flex-shrink: 0;
+            font-weight: 400;
+        }
+        .mockup-grid .ig-top-row .ig-username {
+            flex: 1 1 auto;
+            font-size: 19px; font-weight: 600;
+            display: flex; align-items: center; gap: 5px;
+            min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .mockup-grid .ig-top-row .verified-badge { width: 17px; height: 17px; flex-shrink: 0; }
+        .mockup-grid .ig-top-row .right-icons {
+            margin-left: auto; display: flex; gap: 16px;
+            font-size: 19px; color: #000; align-items: center;
+        }
+
+        .mockup-grid .ig-scroll {
+            position: absolute;
+            z-index: 1;
+            top: 0; left: 0; right: 0; bottom: 0;
+            padding-top: calc(4.6% + 51px);
+            background: #fff;
+            overflow-y: auto; overflow-x: hidden;
+            color: #000;
+        }
+        .mockup-grid .ig-scroll::-webkit-scrollbar { width: 4px; }
+        .mockup-grid .ig-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.15); border-radius: 2px;
+        }
+
+        .ig-profile { padding: 14px 16px 0; }
+        .ig-profile-top { display: flex; align-items: center; gap: 20px; }
+
+        .ig-profile-pic-wrap {
+            position: relative; width: 87px; height: 87px; flex-shrink: 0;
+            border-radius: 50%; cursor: pointer; overflow: hidden;
+            background: #c8e96b;
+        }
+        .ig-profile-pic-wrap img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .ig-profile-pic-wrap .pic-default {
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 35% 35%, #d4f078, #8fc940);
+        }
+        .ig-profile-pic-wrap::after {
+            content: '↑ Bild'; position: absolute; inset: 0;
+            background: rgba(0,0,0,0.55); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+            border-radius: 50%;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        .ig-profile-pic-wrap:hover::after { opacity: 1; }
+
+        .ig-profile-stats { display: flex; flex: 1; justify-content: space-around; text-align: center; }
+        .ig-profile-stats .stat strong {
+            display: block; font-size: 18px; font-weight: 700; color: #000;
+            margin-bottom: 2px;
+        }
+        .ig-profile-stats .stat span { font-size: 15px; color: #000; }
+
+        .ig-bio { padding: 12px 16px 4px; font-size: 15px; line-height: 1.35; color: #000; }
+        .ig-bio .bio-name { font-weight: 700; font-size: 16px; }
+        .ig-bio .bio-cat { color: #555; font-size: 14px; margin-bottom: 4px; }
+        .ig-bio .bio-text { white-space: pre-wrap; }
+        .ig-bio .bio-hashtag { color: #00376b; }
+        .ig-bio .bio-address {
+            color: #000; font-size: 14px; margin-top: 6px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .ig-bio .bio-link {
+            color: #00376b; font-size: 15px; margin-top: 4px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .ig-bio .bio-threads {
+            color: #000; font-size: 14px; margin-top: 10px;
+            display: inline-flex; align-items: center; gap: 4px;
+            border: 1px solid #dbdbdb; padding: 4px 12px; border-radius: 999px;
+        }
+
+        .ig-followed-by {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 16px 12px; font-size: 14px; color: #000;
+        }
+        .ig-followed-by .ava-stack { display: flex; }
+        .ig-followed-by .ava-stack .ava {
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 2px solid #fff; margin-left: -8px; flex-shrink: 0;
+        }
+        .ig-followed-by .ava-stack .ava:first-child {
+            margin-left: 0;
+            background: linear-gradient(135deg, #fa7e1e, #d62976);
+        }
+        .ig-followed-by .ava-stack .ava:nth-child(2) {
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+        }
+        .ig-followed-by .ava-stack .ava:nth-child(3) {
+            background: linear-gradient(135deg, #16a085, #f39c12);
+        }
+
+        .ig-actions { display: flex; gap: 6px; padding: 4px 16px 14px; }
+        .ig-action {
+            flex: 1; min-width: 0; height: 38px; padding: 0 8px;
+            font-size: 14px; font-weight: 600;
+            border: 1px solid #dbdbdb; background: #fff; color: #000;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            font-family: inherit;
+        }
+        .ig-action.primary { background: #efefef; }
+
+        .ig-highlights {
+            display: flex; gap: 16px; padding: 4px 16px 16px;
+            overflow-x: auto; scrollbar-width: none;
+        }
+        .ig-highlights::-webkit-scrollbar { display: none; }
+        .ig-highlight {
+            flex-shrink: 0; width: 76px; display: flex; flex-direction: column;
+            align-items: center; gap: 6px; cursor: pointer;
+        }
+        .ig-highlight-circle {
+            width: 72px; height: 72px; border-radius: 50%;
+            border: 1px solid #dbdbdb; overflow: hidden; background: #fff;
+            position: relative;
+        }
+        .ig-highlight-circle img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .ig-highlight-circle .placeholder {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            color: #bbb; font-size: 26px; font-weight: 500;
+            background: #fafafa;
+        }
+        .ig-highlight-circle::after {
+            content: '↑'; position: absolute; inset: 0;
+            background: rgba(0,0,0,0.45); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; border-radius: 50%;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        .ig-highlight:hover .ig-highlight-circle::after { opacity: 1; }
+        .ig-highlight-label {
+            font-size: 12px; color: #000; text-align: center;
+            max-width: 76px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+
+        .ig-tabbar {
+            display: flex; border-top: 1px solid #dbdbdb;
+            background: #fff;
+        }
+        .ig-tabbar .tab {
+            flex: 1; padding: 10px 0; display: flex; align-items: center;
+            justify-content: center; color: #888;
+            border-bottom: 1px solid transparent;
+        }
+        .ig-tabbar .tab svg { width: 24px; height: 24px; display: block; }
+        .ig-tabbar .tab.active { color: #000; border-bottom-color: #000; }
+
+        /* ---- FEED LAYOUT: sidebar fixed left, phone stays centered ---- */
+        .feed-layout {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            height: 100%;
+        }
+        .feed-layout.hidden { display: none; }
+
+        .feed-sidebar {
+            position: absolute; left: 0; top: 0; bottom: 0;
+            width: 220px;
+            display: flex; flex-direction: column; gap: 12px;
+            padding: 20px 24px;
+            background: #fff;
+            border-right: 1px solid var(--border);
+        }
+
+        .feed-sidebar-btn {
+            font-family: inherit; font-size: 13px; font-weight: 500;
+            padding: 10px 16px; border-radius: 8px; cursor: pointer;
+            border: 1px solid var(--border);
+            background: #fff; color: var(--navy);
+            text-align: left; transition: all 0.15s;
+            flex-shrink: 0;
+        }
+        .feed-sidebar-btn:hover { background: rgba(58,86,59,0.06); color: var(--lila); border-color: var(--lila); }
+
+        .feed-sidebar-btn.danger {
+            background: #fff; color: #a04040;
+            border-color: #e0a0a0;
+        }
+        .feed-sidebar-btn.danger:hover { background: #fff0f0; color: #a04040; border-color: #e0a0a0; }
+
+        .feed-sidebar h3 {
+            font-family: inherit;
+            font-size: 10px; font-weight: 700; color: var(--gray);
+            text-transform: uppercase; letter-spacing: 1.2px;
+            flex-shrink: 0;
+        }
+
+        /* Thumb list in sidebar — fills remaining height */
+        .sidebar-thumbs {
+            display: flex; flex-direction: column; gap: 4px;
+            flex: 1; min-height: 0; overflow: hidden;
+        }
+        .sidebar-thumb-wrap {
+            flex: 1; min-height: 0;
+            display: flex; gap: 4px; align-items: stretch;
+        }
+        .sidebar-thumb {
+            flex: 1; min-height: 0; border-radius: 5px; overflow: hidden;
+            border: 2px solid var(--border); cursor: grab;
+            position: relative; background: var(--bg); transition: border-color 0.15s;
+        }
+        .sidebar-thumb:active { cursor: grabbing; }
+        .sidebar-thumb.active { border-color: var(--lila); }
+        .sidebar-thumb.drag-over { border-color: var(--lila); }
+        .sidebar-thumb img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .sidebar-thumb .st-nr {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 2px;
+            font-size: 8px; text-align: center; background: rgba(13,15,73,0.7); color: #fff; pointer-events: none;
+        }
+        /* Replace button on thumb */
+        .sidebar-thumb .st-replace {
+            position: absolute; top: 3px; right: 3px;
+            width: 18px; height: 18px; border-radius: 4px;
+            background: rgba(13,15,73,0.6); border: none; color: #fff;
+            font-size: 10px; cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.15s; pointer-events: auto;
+        }
+        .sidebar-thumb:hover .st-replace { opacity: 1; }
+        .sidebar-thumb .st-replace:hover { background: rgba(13,15,73,0.92); color: #fff; }
+
+        .sidebar-add-btn {
+            flex: 1; min-height: 0; border-radius: 5px;
+            border: 1.5px dashed var(--border); background: transparent;
+            color: var(--gray); font-size: 18px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
+        }
+        .sidebar-add-btn:hover { border-color: var(--lila); color: var(--lila); }
+
+        /* Feed mockup */
+        .feed-mockup-wrap {
+            position: relative; display: inline-block; height: 100%; aspect-ratio: 958 / 1722;
+        }
+        .feed-mockup-wrap .mockup-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .feed-mockup-wrap .image-slot {
+            position: absolute;
+            z-index: 2;
+            left: 12.317%; top: 21.022%; width: 76.514%; height: 57.143%;
+            overflow: hidden; background: #000;
+        }
+
+        .slide-wrapper {
+            display: flex; transition: transform 0.4s ease; height: 100%;
+        }
+        .slide {
+            min-width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center; background: #000;
+        }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+
+        .carousel-dots {
+            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 4px; z-index: 5;
+        }
+        .carousel-dots.hidden { display: none; }
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; }
+        .dot.active { background: #fff; }
+
+        .nav-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 24px; height: 24px; border-radius: 50%;
+            background: rgba(255,255,255,0.85); border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; color: #333; z-index: 5; box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+        }
+        .nav-arrow:hover { background: #fff; }
+        .nav-arrow.hidden { display: none; }
+        .nav-arrow.left { left: 5px; }
+        .nav-arrow.right { right: 5px; }
+
+        /* ---- CROP DIALOG ---- */
+        .crop-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(13, 15, 73, 0.55);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.15s;
+        }
+        .crop-overlay.open { opacity: 1; pointer-events: auto; }
+        .crop-dialog {
+            background: #fff; border-radius: 16px;
+            padding: 24px; width: 380px; max-width: calc(100vw - 32px);
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.35);
+            display: flex; flex-direction: column; gap: 16px;
+            font-family: 'DGMSprinter', -apple-system, sans-serif;
+            color: #242119;
+        }
+        .crop-dialog h3 {
+            font-size: 16px; font-weight: 600; margin: 0;
+        }
+        .crop-stage {
+            position: relative; width: 320px; height: 320px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            overflow: hidden; border-radius: 8px;
+            touch-action: none; cursor: grab;
+            user-select: none;
+        }
+        .crop-stage.dragging { cursor: grabbing; }
+        .crop-stage img {
+            position: absolute; top: 0; left: 0;
+            transform-origin: 0 0;
+            pointer-events: none;
+            max-width: none;
+        }
+        .crop-mask {
+            position: absolute; inset: 0; pointer-events: none;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .crop-zoom-row {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 13px; color: #555;
+        }
+        .crop-zoom-row input[type="range"] {
+            flex: 1; accent-color: #3A563B;
+        }
+        .crop-actions {
+            display: flex; gap: 8px; justify-content: flex-end;
+        }
+        .crop-btn {
+            padding: 8px 16px; border-radius: 8px;
+            font-size: 13px; font-weight: 600;
+            font-family: inherit; cursor: pointer;
+            border: 1px solid #e0e0e0; background: #fff; color: #242119;
+        }
+        .crop-btn:hover { background: #f5f5f5; }
+        .crop-btn.primary {
+            background: #3A563B; color: #fff; border-color: #3A563B;
+        }
+        .crop-btn.primary:hover { background: #555fcc; }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="../../index.html" class="back-btn" aria-label="Zurück zur Startseite">&larr; Home</a>
+        <h1>Instagram Testing</h1>
+        <span class="hint">Klicke auf eine Kachel um einen Post zu erstellen</span>
+    </div>
+
+    <div class="main-area">
+        <!-- GRID VIEW -->
+        <div class="grid-layout" id="grid-layout">
+            <div class="grid-sidebar">
+                <button class="feed-sidebar-btn grid-sidebar-btn" id="grid-save-btn"><span class="btn-icon">💾</span><span class="btn-label">Speichern</span></button>
+                <button class="feed-sidebar-btn grid-sidebar-btn" id="grid-import-btn"><span class="btn-icon">📥</span><span class="btn-label">Importieren</span></button>
+                <input type="file" id="grid-import-input" accept=".json,application/json" style="display:none;">
+                <div class="grid-sidebar-note" id="grid-save-note">Noch kein Grid gespeichert.</div>
+
+                <hr>
+                <div class="active-grid-info" id="active-grid-info" style="display:none;">
+                    <span class="ag-name" id="ag-name"></span>
+                    <span class="ag-meta" id="ag-meta"></span>
+                </div>
+
+                <hr>
+                <div class="grid-post-map-head">
+                    <h3>Grid Posts</h3>
+                    <span class="grid-post-map-count" id="grid-post-count">0 / 24</span>
+                </div>
+                <div class="grid-post-map" id="grid-sidebar-posts" aria-label="Grid Posts steuern"></div>
+            </div>
+            <div class="mockup-container mockup-grid" id="mockup-grid">
+                <img class="phone-frame" src="../../assets/instagram/mockups/Instagram-Phone-Feed-clean.png" alt="Phone frame">
+
+                <div class="phone-screen">
+                <div class="ig-top-row">
+                    <span class="back-arrow">&lsaquo;</span>
+                    <span class="ig-username">
+                        <span contenteditable="true" data-key="username">hycoffee</span>
+                        <svg class="verified-badge" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="#3897f0" d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3.06 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 20.94l3.4 1.52 1.89-3.18 3.61-.82-.34-3.68z"/>
+                            <path fill="#fff" d="M10.5 15.5l-3-3 1.41-1.41L10.5 12.67l5.09-5.09 1.41 1.41z"/>
+                        </svg>
+                    </span>
+                    <div class="right-icons">
+                        <span>⋯</span>
+                    </div>
+                </div>
+
+                <div class="ig-scroll" id="ig-scroll">
+                    <div class="ig-profile">
+                        <div class="ig-profile-top">
+                            <div class="ig-profile-pic-wrap" id="ig-profile-pic" title="Profilbild hochladen">
+                                <div class="pic-default" id="ig-profile-pic-default"></div>
+                                <img id="ig-profile-pic-img" alt="" style="display:none;">
+                            </div>
+                            <div class="ig-profile-stats">
+                                <div class="stat">
+                                    <strong contenteditable="true" data-key="stat-0-val">907</strong>
+                                    <span contenteditable="true" data-key="stat-0-label">Beiträge</span>
+                                </div>
+                                <div class="stat">
+                                    <strong contenteditable="true" data-key="stat-1-val">11 Tsd.</strong>
+                                    <span contenteditable="true" data-key="stat-1-label">Follower</span>
+                                </div>
+                                <div class="stat">
+                                    <strong contenteditable="true" data-key="stat-2-val">1.152</strong>
+                                    <span contenteditable="true" data-key="stat-2-label">Gefolgt</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ig-bio">
+                            <div class="bio-name" contenteditable="true" data-key="bio-name">HyCoffee</div>
+                            <div class="bio-cat" contenteditable="true" data-key="bio-cat">Coffee supplier</div>
+                            <div class="bio-text" contenteditable="true" data-key="bio-text">Climate resilient coffee. Diverse species, transparent sourcing and direct market access.</div>
+                            <div class="bio-address" contenteditable="true" data-key="bio-address">Berlin, Germany</div>
+                            <div class="bio-link" contenteditable="true" data-key="bio-link">hycoffee.com</div>
+                            <div class="bio-threads" contenteditable="true" data-key="bio-threads">@ hycoffee</div>
+                        </div>
+                        <div class="ig-followed-by">
+                            <div class="ava-stack">
+                                <div class="ava"></div>
+                                <div class="ava"></div>
+                                <div class="ava"></div>
+                            </div>
+                            <span contenteditable="true" data-key="followed-by">Gefolgt von ...</span>
+                        </div>
+                        <div class="ig-actions">
+                            <div class="ig-action primary" contenteditable="true" data-key="action-0">Gefolgt</div>
+                            <div class="ig-action" contenteditable="true" data-key="action-1">Nachricht</div>
+                            <div class="ig-action" contenteditable="true" data-key="action-2">Unterstützen</div>
+                        </div>
+                    </div>
+
+                    <div class="ig-highlights" id="ig-highlights"></div>
+
+                    <div class="ig-tabbar">
+                        <div class="tab active" title="Grid">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="1.5"/>
+                                <line x1="3" y1="9" x2="21" y2="9"/>
+                                <line x1="3" y1="15" x2="21" y2="15"/>
+                                <line x1="9" y1="3" x2="9" y2="21"/>
+                                <line x1="15" y1="3" x2="15" y2="21"/>
+                            </svg>
+                        </div>
+                        <div class="tab" title="Reels">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="3"/>
+                                <line x1="3" y1="9" x2="21" y2="9"/>
+                                <line x1="8" y1="3" x2="5" y2="9"/>
+                                <line x1="14" y1="3" x2="11" y2="9"/>
+                                <path d="M10 12.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/>
+                            </svg>
+                        </div>
+                        <div class="tab" title="Repost">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="17 1 21 5 17 9"/>
+                                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                                <polyline points="7 23 3 19 7 15"/>
+                                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                            </svg>
+                        </div>
+                        <div class="tab" title="Tagged">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                                <path d="M7 19c0-2.8 2.2-5 5-5s5 2.2 5 5"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="grid-slot" id="grid-slot"></div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEED VIEW: sidebar + mockup -->
+        <div class="feed-layout hidden" id="feed-layout">
+            <div class="feed-sidebar">
+                <button class="feed-sidebar-btn" id="feed-back-btn">&larr; Zurueck zum Grid</button>
+                <button class="feed-sidebar-btn" id="feed-refresh-btn">↻ Bilder aktualisieren</button>
+                <button class="feed-sidebar-btn danger" id="feed-delete-btn">Post loeschen</button>
+
+                <h3>Bilder</h3>
+                <div class="sidebar-thumbs" id="sidebar-thumbs"></div>
+            </div>
+            <div class="feed-mockup-wrap">
+                <img class="mockup-bg" src="../../assets/instagram/mockups/Instagram-Phone-Feed.png" alt="Feed">
+                <div class="image-slot">
+                    <div class="slide-wrapper" id="slide-wrapper"></div>
+                    <button class="nav-arrow left hidden" id="nav-left">&lsaquo;</button>
+                    <button class="nav-arrow right hidden" id="nav-right">&rsaquo;</button>
+                    <div class="carousel-dots hidden" id="carousel-dots"></div>
+                </div>
+                <img class="phone-frame" src="../../assets/instagram/mockups/Instagram-Phone-Feed-clean.png" alt="" aria-hidden="true">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gridSlot = document.getElementById('grid-slot');
+        const gridLayout = document.getElementById('grid-layout');
+        const gridSaveBtn = document.getElementById('grid-save-btn');
+        const gridImportBtn = document.getElementById('grid-import-btn');
+        const gridImportInput = document.getElementById('grid-import-input');
+        const gridSaveNote = document.getElementById('grid-save-note');
+        const activeGridInfo = document.getElementById('active-grid-info');
+        const agName = document.getElementById('ag-name');
+        const agMeta = document.getElementById('ag-meta');
+        const gridSidebarPosts = document.getElementById('grid-sidebar-posts');
+        const gridPostCount = document.getElementById('grid-post-count');
+        const mockupGrid = document.getElementById('mockup-grid');
+        const feedLayout = document.getElementById('feed-layout');
+        const slideWrapper = document.getElementById('slide-wrapper');
+        const navLeft = document.getElementById('nav-left');
+        const navRight = document.getElementById('nav-right');
+        const carouselDots = document.getElementById('carousel-dots');
+        const sidebarThumbs = document.getElementById('sidebar-thumbs');
+        const feedBackBtn = document.getElementById('feed-back-btn');
+        const feedDeleteBtn = document.getElementById('feed-delete-btn');
+        const feedRefreshBtn = document.getElementById('feed-refresh-btn');
+        const gridSaveBtnLabel = gridSaveBtn.querySelector('.btn-label');
+        const gridImportBtnLabel = gridImportBtn.querySelector('.btn-label');
+
+        const GRID_SIZE = 24;
+        const POSTS_STORAGE_KEY = 'hycoffee-grid-posts';
+        const GRID_SAVE_META_KEY = 'hycoffee-grid-save-meta';
+        let posts = loadStoredPosts();
+        let activeCellIndex = -1;
+        let currentSlide = 0;
+        let gridDragIndex = -1;
+
+        // Store FileSystemFileHandle objects in memory (keyed by cellIndex)
+        // handles[cellIndex] = [FileSystemFileHandle, ...]
+        const handles = {};
+
+        // ---- IndexedDB for persisting file handles across reloads ----
+        const DB_NAME = 'hycoffee-testing';
+        const DB_STORE = 'file-handles';
+        const IMAGE_INPUT_ACCEPT = 'image/*';
+        const IMAGE_NAME_PATTERN = /\.(png|jpe?g|webp|gif|bmp|avif|svg|tiff?|heic|heif)$/i;
+        let db = null;
+
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const req = indexedDB.open(DB_NAME, 2);
+                req.onupgradeneeded = () => {
+                    const idb = req.result;
+                    if (!idb.objectStoreNames.contains(DB_STORE)) {
+                        idb.createObjectStore(DB_STORE);
+                    }
+                };
+                req.onsuccess = () => { db = req.result; resolve(db); };
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function createEmptyPosts() {
+            return new Array(GRID_SIZE).fill(null);
+        }
+
+        function normalizePosts(rawPosts) {
+            const normalized = createEmptyPosts();
+            if (!Array.isArray(rawPosts)) return normalized;
+            for (let i = 0; i < GRID_SIZE; i++) {
+                const post = rawPosts[i];
+                if (!post || !Array.isArray(post.images) || !post.images.length) continue;
+                normalized[i] = { images: post.images.filter((src) => typeof src === 'string' && src.length > 0) };
+                if (!normalized[i].images.length) normalized[i] = null;
+            }
+            return normalized;
+        }
+
+        function loadStoredPosts() {
+            try {
+                const raw = localStorage.getItem(POSTS_STORAGE_KEY);
+                if (!raw) return createEmptyPosts();
+                return normalizePosts(JSON.parse(raw));
+            } catch (err) {
+                return createEmptyPosts();
+            }
+        }
+
+        function saveHandlesToDB(cellIndex, fileHandles) {
+            if (!db) return;
+            const tx = db.transaction(DB_STORE, 'readwrite');
+            tx.objectStore(DB_STORE).put(fileHandles, cellIndex);
+        }
+
+        function loadHandlesFromDB(cellIndex) {
+            if (!db) return Promise.resolve(null);
+            return new Promise((resolve) => {
+                const tx = db.transaction(DB_STORE, 'readonly');
+                const req = tx.objectStore(DB_STORE).get(cellIndex);
+                req.onsuccess = () => resolve(req.result || null);
+                req.onerror = () => resolve(null);
+            });
+        }
+
+        function deleteHandlesFromDB(cellIndex) {
+            if (!db) return;
+            const tx = db.transaction(DB_STORE, 'readwrite');
+            tx.objectStore(DB_STORE).delete(cellIndex);
+        }
+
+        function clearAllHandles() {
+            Object.keys(handles).forEach((key) => { delete handles[key]; });
+            for (let i = 0; i < GRID_SIZE; i++) {
+                deleteHandlesFromDB(i);
+            }
+        }
+
+        async function getHandleList(cellIndex) {
+            if (handles[cellIndex]) return handles[cellIndex];
+            const stored = await loadHandlesFromDB(cellIndex);
+            if (stored) handles[cellIndex] = stored;
+            return stored || null;
+        }
+
+        function storeHandleList(cellIndex, handleList) {
+            if (handleList && handleList.length) {
+                handles[cellIndex] = handleList;
+                saveHandlesToDB(cellIndex, handleList);
+            } else {
+                delete handles[cellIndex];
+                deleteHandlesFromDB(cellIndex);
+            }
+        }
+
+        function setPostFromPicked(cellIndex, picked) {
+            const images = picked.images.slice(0, 10);
+            posts[cellIndex] = { images };
+            const nextHandles = picked.handles
+                ? picked.handles.slice(0, images.length)
+                : new Array(images.length).fill(null);
+            storeHandleList(cellIndex, nextHandles);
+            persist();
+            renderGrid();
+        }
+
+        function deleteGridPost(cellIndex) {
+            posts[cellIndex] = null;
+            storeHandleList(cellIndex, null);
+            persist();
+            if (activeCellIndex === cellIndex) {
+                closeFeed();
+                return;
+            }
+            renderGrid();
+        }
+
+        function persist({ silent = false } = {}) {
+            try {
+                localStorage.setItem(POSTS_STORAGE_KEY, JSON.stringify(posts));
+                return true;
+            } catch (err) {
+                if (!silent) {
+                    gridSaveNote.textContent = 'Lokaler Speicher voll: nutze JSON Export/Import.';
+                }
+                return false;
+            }
+        }
+
+        function cloneGridPosts(sourcePosts) {
+            return sourcePosts.map((post) => {
+                if (!post || !Array.isArray(post.images) || !post.images.length) return null;
+                return { images: [...post.images] };
+            });
+        }
+
+        function countFilledCells(sourcePosts) {
+            return sourcePosts.reduce((count, post) => {
+                if (post && Array.isArray(post.images) && post.images.length) return count + 1;
+                return count;
+            }, 0);
+        }
+
+        function formatSaveDate(isoString) {
+            const d = new Date(isoString);
+            if (Number.isNaN(d.getTime())) return '';
+            return d.toLocaleString('de-DE', {
+                day: '2-digit',
+                month: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function updateGridSaveNote() {
+            const raw = localStorage.getItem(GRID_SAVE_META_KEY);
+            if (!raw) {
+                gridSaveNote.textContent = 'Noch kein JSON-Export gespeichert.';
+                return;
+            }
+
+            try {
+                const saved = JSON.parse(raw);
+                const filledCells = Number(saved.filledCells) || 0;
+                const stamp = formatSaveDate(saved.savedAt);
+                gridSaveNote.textContent = stamp
+                    ? `Letzter Export: ${filledCells}/${GRID_SIZE} belegt (${stamp})`
+                    : `Letzter Export: ${filledCells}/${GRID_SIZE} belegt`;
+            } catch (err) {
+                gridSaveNote.textContent = 'Export-Metadaten sind ungueltig.';
+            }
+        }
+
+        function saveGridConstellation() {
+            const nowIso = new Date().toISOString();
+            const payload = {
+                version: 1,
+                savedAt: nowIso,
+                gridSize: GRID_SIZE,
+                posts: cloneGridPosts(posts)
+            };
+            const json = JSON.stringify(payload, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const stamp = nowIso.slice(0, 19).replace(/[:T]/g, '-');
+            link.href = url;
+            link.download = `hycoffee-grid-${stamp}.json`;
+
+            try {
+                link.click();
+                localStorage.setItem(GRID_SAVE_META_KEY, JSON.stringify({
+                    savedAt: nowIso,
+                    filledCells: countFilledCells(posts)
+                }));
+                updateGridSaveNote();
+                showActiveGrid(link.download, countFilledCells(posts), nowIso);
+                gridSaveBtn.disabled = true;
+                gridSaveBtnLabel.textContent = 'Gespeichert';
+                setTimeout(() => {
+                    gridSaveBtn.disabled = false;
+                    gridSaveBtnLabel.textContent = 'Speichern';
+                }, 1400);
+            } catch (err) {
+                gridSaveBtn.disabled = true;
+                gridSaveBtnLabel.textContent = 'Fehler';
+                gridSaveNote.textContent = 'JSON-Export fehlgeschlagen.';
+                setTimeout(() => {
+                    gridSaveBtn.disabled = false;
+                    gridSaveBtnLabel.textContent = 'Speichern';
+                }, 1800);
+            } finally {
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        async function importGridConstellationFromFile(file) {
+            if (!file) return;
+            try {
+                const text = await file.text();
+                const parsed = JSON.parse(text);
+                const importedPosts = normalizePosts(parsed.posts);
+                posts = importedPosts;
+                clearAllHandles();
+                persist({ silent: true });
+                renderGrid();
+                showActiveGrid(file.name, countFilledCells(posts), parsed.savedAt || null);
+                gridSaveNote.textContent = `Importiert: ${countFilledCells(posts)}/${GRID_SIZE} belegt`;
+                gridImportBtn.disabled = true;
+                gridImportBtnLabel.textContent = 'Importiert';
+                setTimeout(() => {
+                    gridImportBtn.disabled = false;
+                    gridImportBtnLabel.textContent = 'Importieren';
+                }, 1500);
+            } catch (err) {
+                gridImportBtn.disabled = true;
+                gridImportBtnLabel.textContent = 'Fehler';
+                gridSaveNote.textContent = 'JSON konnte nicht gelesen werden.';
+                setTimeout(() => {
+                    gridImportBtn.disabled = false;
+                    gridImportBtnLabel.textContent = 'Importieren';
+                }, 1800);
+            }
+        }
+
+        // ---- Read a FileSystemFileHandle into a dataURL ----
+        async function handleToDataURL(handle) {
+            const file = await handle.getFile();
+            return new Promise((resolve) => {
+                const r = new FileReader();
+                r.onload = (e) => resolve(e.target.result);
+                r.readAsDataURL(file);
+            });
+        }
+
+        function fileToDataURL(file) {
+            return new Promise((resolve) => {
+                const r = new FileReader();
+                r.onload = (e) => resolve(e.target.result);
+                r.readAsDataURL(file);
+            });
+        }
+
+        function isImageFile(file) {
+            if (!file) return false;
+            if (typeof file.type === 'string' && file.type.startsWith('image/')) return true;
+            return IMAGE_NAME_PATTERN.test(file.name || '');
+        }
+
+        async function fileToImageDataURL(file) {
+            const dataURL = await fileToDataURL(file);
+            if (typeof dataURL !== 'string') return null;
+            if (dataURL.startsWith('data:image/')) return dataURL;
+            // Some exporters provide empty/odd MIME types; keep known image extensions.
+            if (isImageFile(file)) return dataURL;
+            return null;
+        }
+
+        function pickFilesWithInput({ multiple }) {
+            return new Promise((resolve) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = IMAGE_INPUT_ACCEPT;
+                input.multiple = multiple;
+                input.style.display = 'none';
+                document.body.appendChild(input);
+
+                let done = false;
+                const finish = (files) => {
+                    if (done) return;
+                    done = true;
+                    input.remove();
+                    resolve(files);
+                };
+
+                input.addEventListener('change', () => finish(Array.from(input.files || [])), { once: true });
+                input.addEventListener('cancel', () => finish([]), { once: true });
+
+                input.click();
+            });
+        }
+
+        async function pickImages({ multiple, preferHandles = true }) {
+            if (!preferHandles) {
+                const files = await pickFilesWithInput({ multiple });
+                if (!files.length) return null;
+
+                const images = [];
+                for (const file of files) {
+                    const imgData = await fileToImageDataURL(file);
+                    if (imgData) images.push(imgData);
+                }
+                if (!images.length) return null;
+                return { images, handles: null };
+            }
+
+            if (typeof window.showOpenFilePicker === 'function') {
+                try {
+                    const fileHandles = await window.showOpenFilePicker({
+                        multiple
+                    });
+                    if (!fileHandles.length) return null;
+
+                    const images = [];
+                    const selectedHandles = [];
+                    for (const h of fileHandles) {
+                        const file = await h.getFile();
+                        const imgData = await fileToImageDataURL(file);
+                        if (!imgData) continue;
+                        images.push(imgData);
+                        selectedHandles.push(h);
+                    }
+                    if (!images.length) return null;
+                    return { images, handles: selectedHandles };
+                } catch (err) {
+                    if (err && err.name === 'AbortError') return null;
+                    console.warn('showOpenFilePicker fehlgeschlagen, nutze Fallback:', err);
+                }
+            }
+
+            const files = await pickFilesWithInput({ multiple });
+            if (!files.length) return null;
+
+            const images = [];
+            for (const file of files) {
+                const imgData = await fileToImageDataURL(file);
+                if (imgData) images.push(imgData);
+            }
+            if (!images.length) return null;
+            return { images, handles: null };
+        }
+
+        function ensureHandleList(cellIndex, imageCount) {
+            if (!handles[cellIndex]) handles[cellIndex] = [];
+            while (handles[cellIndex].length < imageCount) {
+                handles[cellIndex].push(null);
+            }
+            return handles[cellIndex];
+        }
+
+        // ---- ACTIVE GRID INFO ----
+        const ACTIVE_GRID_KEY = 'hycoffee-active-grid';
+
+        function showActiveGrid(name, filled, date) {
+            const displayName = name.replace('.json', '').replace(/^.*\//, '');
+            const dateStr = date ? new Date(date).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+            agName.textContent = displayName;
+            agMeta.textContent = `${filled}/${GRID_SIZE} belegt` + (dateStr ? ` · ${dateStr}` : '');
+            activeGridInfo.style.display = '';
+            localStorage.setItem(ACTIVE_GRID_KEY, JSON.stringify({ name, filled, date }));
+        }
+
+        function restoreActiveGridInfo() {
+            try {
+                const raw = localStorage.getItem(ACTIVE_GRID_KEY);
+                if (!raw) return;
+                const info = JSON.parse(raw);
+                if (info && info.name) showActiveGrid(info.name, info.filled || 0, info.date || null);
+            } catch { /* ignore */ }
+        }
+
+        // ---- GRID ----
+        function renderGrid() {
+            gridSlot.innerHTML = '';
+            for (let i = 0; i < GRID_SIZE; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+
+                if (posts[i] && posts[i].images.length > 0) {
+                    cell.innerHTML = `<img src="${posts[i].images[0]}">`;
+                    if (posts[i].images.length > 1) {
+                        cell.innerHTML += `<div class="multi-indicator">${posts[i].images.length}</div>`;
+                    }
+                    cell.addEventListener('click', () => openFeed(i));
+                } else {
+                    cell.innerHTML = `<div class="cell-add"><div class="plus">+</div></div>`;
+                    cell.addEventListener('click', () => startNewPost(i));
+                }
+
+                gridSlot.appendChild(cell);
+            }
+            renderGridSidebarPosts();
+        }
+
+        function createGridSidebarAction(label, title, className, onClick) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = `grid-post-action ${className || ''}`.trim();
+            button.textContent = label;
+            button.title = title;
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                onClick();
+            });
+            return button;
+        }
+
+        function renderGridSidebarPosts() {
+            gridPostCount.textContent = `${countFilledCells(posts)} / ${GRID_SIZE}`;
+            gridSidebarPosts.innerHTML = '';
+
+            for (let i = 0; i < GRID_SIZE; i++) {
+                const post = posts[i];
+                const thumb = document.createElement('div');
+                thumb.className = 'grid-post-thumb' + (post ? ' filled' : ' empty');
+                thumb.tabIndex = 0;
+                thumb.role = 'button';
+                thumb.dataset.index = i;
+                thumb.title = post ? `Post ${i + 1} oeffnen` : `Post ${i + 1} anlegen`;
+
+                if (post && post.images.length) {
+                    thumb.draggable = true;
+                    const img = document.createElement('img');
+                    img.src = post.images[0];
+                    img.alt = '';
+                    thumb.appendChild(img);
+
+                    const count = document.createElement('span');
+                    count.className = 'gpt-count';
+                    count.textContent = post.images.length > 1 ? String(post.images.length) : '1';
+                    thumb.appendChild(count);
+
+                    const actions = document.createElement('div');
+                    actions.className = 'grid-post-actions';
+                    actions.appendChild(createGridSidebarAction('↻', 'Post-Bilder ersetzen', '', () => replaceGridPost(i)));
+                    actions.appendChild(createGridSidebarAction('×', 'Post loeschen', 'danger', () => deleteGridPost(i)));
+                    thumb.appendChild(actions);
+                } else {
+                    const plus = document.createElement('span');
+                    plus.className = 'gpt-empty-plus';
+                    plus.textContent = '+';
+                    thumb.appendChild(plus);
+                }
+
+                const index = document.createElement('span');
+                index.className = 'gpt-index';
+                index.textContent = String(i + 1).padStart(2, '0');
+                thumb.appendChild(index);
+
+                thumb.addEventListener('click', () => {
+                    if (post && post.images.length) openFeed(i);
+                    else startNewPost(i);
+                });
+                thumb.addEventListener('keydown', (e) => {
+                    if (e.key !== 'Enter' && e.key !== ' ') return;
+                    e.preventDefault();
+                    if (post && post.images.length) openFeed(i);
+                    else startNewPost(i);
+                });
+                thumb.addEventListener('dragstart', gridPostDragStart);
+                thumb.addEventListener('dragover', gridPostDragOver);
+                thumb.addEventListener('dragenter', gridPostDragEnter);
+                thumb.addEventListener('dragleave', gridPostDragLeave);
+                thumb.addEventListener('drop', gridPostDrop);
+                thumb.addEventListener('dragend', gridPostDragEnd);
+
+                gridSidebarPosts.appendChild(thumb);
+            }
+        }
+
+        async function replaceGridPost(cellIndex) {
+            const picked = await pickImages({ multiple: true, preferHandles: false });
+            if (!picked) return;
+            setPostFromPicked(cellIndex, picked);
+            if (activeCellIndex === cellIndex) renderFeed();
+        }
+
+        // ---- NEW POST ----
+        async function startNewPost(cellIndex) {
+            const picked = await pickImages({ multiple: true, preferHandles: false });
+            if (!picked) return;
+
+            setPostFromPicked(cellIndex, picked);
+        }
+
+        async function moveGridPost(fromIndex, toIndex) {
+            if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0) return;
+            if (!posts[fromIndex]) return;
+
+            const fromPost = posts[fromIndex];
+            const toPost = posts[toIndex];
+            const [fromHandles, toHandles] = await Promise.all([
+                getHandleList(fromIndex),
+                getHandleList(toIndex)
+            ]);
+
+            posts[toIndex] = fromPost;
+            posts[fromIndex] = toPost || null;
+            storeHandleList(toIndex, fromHandles);
+            storeHandleList(fromIndex, toHandles);
+            persist();
+            renderGrid();
+        }
+
+        function gridPostDragStart(e) {
+            const thumb = e.currentTarget;
+            const index = parseInt(thumb.dataset.index, 10);
+            if (!posts[index]) {
+                e.preventDefault();
+                return;
+            }
+            gridDragIndex = index;
+            thumb.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', String(index));
+        }
+
+        function gridPostDragOver(e) {
+            if (gridDragIndex < 0) return;
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function gridPostDragEnter(e) {
+            if (gridDragIndex < 0) return;
+            e.currentTarget.classList.add('drag-over');
+        }
+
+        function gridPostDragLeave(e) {
+            e.currentTarget.classList.remove('drag-over');
+        }
+
+        function gridPostDrop(e) {
+            e.preventDefault();
+            const toIndex = parseInt(e.currentTarget.dataset.index, 10);
+            e.currentTarget.classList.remove('drag-over');
+            moveGridPost(gridDragIndex, toIndex);
+        }
+
+        function gridPostDragEnd(e) {
+            e.currentTarget.classList.remove('dragging');
+            gridDragIndex = -1;
+            gridSidebarPosts.querySelectorAll('.grid-post-thumb').forEach((thumb) => {
+                thumb.classList.remove('drag-over');
+            });
+        }
+
+        // ---- FEED VIEW ----
+        function openFeed(cellIndex) {
+            activeCellIndex = cellIndex;
+            currentSlide = 0;
+            gridLayout.classList.add('hidden');
+            feedLayout.classList.remove('hidden');
+            renderFeed();
+        }
+
+        function closeFeed() {
+            feedLayout.classList.add('hidden');
+            gridLayout.classList.remove('hidden');
+            activeCellIndex = -1;
+            renderGrid();
+        }
+
+        gridSaveBtn.addEventListener('click', saveGridConstellation);
+        gridImportBtn.addEventListener('click', () => {
+            gridImportInput.value = '';
+            gridImportInput.click();
+        });
+        gridImportInput.addEventListener('change', (e) => {
+            const file = (e.target.files && e.target.files[0]) ? e.target.files[0] : null;
+            importGridConstellationFromFile(file);
+            e.target.value = '';
+        });
+        feedBackBtn.addEventListener('click', closeFeed);
+
+        feedDeleteBtn.addEventListener('click', () => {
+            if (activeCellIndex < 0) return;
+            deleteGridPost(activeCellIndex);
+        });
+
+        function renderFeed() {
+            const post = posts[activeCellIndex];
+            if (!post) return;
+            const images = post.images;
+
+            // Slides
+            slideWrapper.innerHTML = '';
+            images.forEach(src => {
+                const div = document.createElement('div');
+                div.className = 'slide';
+                div.innerHTML = `<img src="${src}">`;
+                slideWrapper.appendChild(div);
+            });
+            slideWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            // Sidebar thumbs
+            sidebarThumbs.innerHTML = '';
+
+            images.forEach((src, i) => {
+                const wrap = document.createElement('div');
+                wrap.className = 'sidebar-thumb-wrap';
+
+                const t = document.createElement('div');
+                t.className = 'sidebar-thumb' + (i === currentSlide ? ' active' : '');
+                t.draggable = true;
+                t.dataset.index = i;
+                t.innerHTML = `<img src="${src}"><div class="st-nr">${i + 1}</div>`;
+
+                // Replace button (opens picker for single file)
+                const replBtn = document.createElement('button');
+                replBtn.className = 'st-replace';
+                replBtn.title = 'Bild ersetzen';
+                replBtn.textContent = '↻';
+                replBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    replaceImageAtIndex(i);
+                });
+                t.appendChild(replBtn);
+
+                t.addEventListener('click', () => goToSlide(i));
+
+                // Drag
+                t.addEventListener('dragstart', ftDragStart);
+                t.addEventListener('dragover', ftDragOver);
+                t.addEventListener('dragenter', ftDragEnter);
+                t.addEventListener('dragleave', ftDragLeave);
+                t.addEventListener('drop', ftDrop);
+                t.addEventListener('dragend', ftDragEnd);
+
+                wrap.appendChild(t);
+                sidebarThumbs.appendChild(wrap);
+            });
+
+            // Add more button
+            if (images.length < 10) {
+                const wrap = document.createElement('div');
+                wrap.className = 'sidebar-thumb-wrap';
+                const addBtn = document.createElement('button');
+                addBtn.className = 'sidebar-add-btn';
+                addBtn.textContent = '+';
+                addBtn.title = 'Bilder hinzufuegen';
+                addBtn.addEventListener('click', () => addMoreImages());
+                wrap.appendChild(addBtn);
+                sidebarThumbs.appendChild(wrap);
+            }
+
+            updateFeedNav();
+        }
+
+        // ---- ADD MORE IMAGES (in feed view) ----
+        async function addMoreImages() {
+            if (activeCellIndex < 0) return;
+            const picked = await pickImages({ multiple: true, preferHandles: false });
+            if (!picked) return;
+
+            const post = posts[activeCellIndex];
+            if (!post) return;
+            const handleList = ensureHandleList(activeCellIndex, post.images.length);
+
+            for (let i = 0; i < picked.images.length; i++) {
+                if (post.images.length >= 10) break;
+                post.images.push(picked.images[i]);
+                handleList.push(picked.handles ? picked.handles[i] : null);
+            }
+
+            saveHandlesToDB(activeCellIndex, handleList);
+            persist();
+            renderFeed();
+        }
+
+        // ---- REPLACE SINGLE IMAGE ----
+        async function replaceImageAtIndex(i) {
+            if (activeCellIndex < 0) return;
+            const picked = await pickImages({ multiple: false, preferHandles: false });
+            if (!picked || !picked.images.length) return;
+
+            const post = posts[activeCellIndex];
+            if (!post) return;
+            post.images[i] = picked.images[0];
+
+            const handleList = ensureHandleList(activeCellIndex, post.images.length);
+            handleList[i] = picked.handles ? picked.handles[0] : null;
+            saveHandlesToDB(activeCellIndex, handleList);
+            persist();
+            renderFeed();
+        }
+
+        // ---- REFRESH: silently re-read all files via stored handles ----
+        feedRefreshBtn.addEventListener('click', async () => {
+            if (activeCellIndex < 0) return;
+            const cellIndex = activeCellIndex;
+            const post = posts[cellIndex];
+            if (!post) return;
+
+            // Load handles from memory or IndexedDB
+            let h = handles[cellIndex];
+            if (!h) {
+                h = await loadHandlesFromDB(cellIndex);
+                if (h) handles[cellIndex] = h;
+            }
+
+            const readableHandles = (h || [])
+                .map((handle, i) => ({ handle, i }))
+                .filter((entry) => Boolean(entry.handle));
+
+            if (!readableHandles.length) {
+                if (typeof window.showOpenFilePicker === 'function') {
+                    feedRefreshBtn.disabled = true;
+                    feedRefreshBtn.textContent = '… Handles verbinden';
+                    const picked = await pickImages({ multiple: true, preferHandles: true });
+                    if (picked && picked.handles && picked.handles.length) {
+                        const maxCount = Math.min(10, picked.images.length);
+                        post.images = picked.images.slice(0, maxCount);
+                        handles[cellIndex] = picked.handles.slice(0, maxCount);
+                        saveHandlesToDB(cellIndex, handles[cellIndex]);
+                        persist();
+                        renderFeed();
+                        renderGrid();
+                        feedRefreshBtn.textContent = '✓ Handles verbunden';
+                        setTimeout(() => {
+                            feedRefreshBtn.disabled = false;
+                            feedRefreshBtn.textContent = '↻ Bilder aktualisieren';
+                        }, 1600);
+                        return;
+                    }
+                    feedRefreshBtn.textContent = '✗ Keine Auswahl';
+                    setTimeout(() => {
+                        feedRefreshBtn.disabled = false;
+                        feedRefreshBtn.textContent = '↻ Bilder aktualisieren';
+                    }, 1600);
+                    return;
+                }
+
+                // Browser without File System Access API: allow manual re-pick as fallback refresh.
+                feedRefreshBtn.disabled = true;
+                feedRefreshBtn.textContent = '… Dateien neu waehlen';
+                const picked = await pickImages({ multiple: true, preferHandles: false });
+                if (picked && picked.images && picked.images.length) {
+                    const maxCount = Math.min(10, picked.images.length);
+                    post.images = picked.images.slice(0, maxCount);
+                    handles[cellIndex] = new Array(maxCount).fill(null);
+                    saveHandlesToDB(cellIndex, handles[cellIndex]);
+                    persist();
+                    renderFeed();
+                    renderGrid();
+                    feedRefreshBtn.textContent = '✓ Neu geladen';
+                    setTimeout(() => {
+                        feedRefreshBtn.disabled = false;
+                        feedRefreshBtn.textContent = '↻ Bilder aktualisieren';
+                    }, 1600);
+                    return;
+                }
+                feedRefreshBtn.textContent = '✗ Keine Auswahl';
+                setTimeout(() => {
+                    feedRefreshBtn.disabled = false;
+                    feedRefreshBtn.textContent = '↻ Bilder aktualisieren';
+                }, 1600);
+                return;
+            }
+
+            feedRefreshBtn.disabled = true;
+            feedRefreshBtn.textContent = '… Aktualisiere';
+
+            let updated = 0;
+            let checked = 0;
+            let skipped = 0;
+
+            try {
+                // Re-read files with per-handle permission/error handling
+                for (const entry of readableHandles) {
+                    const handle = entry.handle;
+                    const i = entry.i;
+
+                    try {
+                        let permission = 'granted';
+                        if (typeof handle.queryPermission === 'function') {
+                            permission = await handle.queryPermission({ mode: 'read' });
+                        }
+                        if (permission !== 'granted' && typeof handle.requestPermission === 'function') {
+                            permission = await handle.requestPermission({ mode: 'read' });
+                        }
+                        if (permission !== 'granted') {
+                            skipped++;
+                            continue;
+                        }
+
+                        const newData = await handleToDataURL(handle);
+                        checked++;
+                        if (newData !== post.images[i]) {
+                            post.images[i] = newData;
+                            updated++;
+                        }
+                    } catch (err) {
+                        skipped++;
+                        console.warn('Konnte Datei nicht aktualisieren:', err);
+                    }
+                }
+
+                if (updated > 0) {
+                    persist();
+                    renderFeed();
+                    renderGrid();
+                }
+
+                if (updated > 0) {
+                    feedRefreshBtn.textContent = `✓ ${updated} aktualisiert`;
+                } else if (checked > 0 && skipped === 0) {
+                    feedRefreshBtn.textContent = '✓ Alles aktuell';
+                } else if (checked > 0) {
+                    feedRefreshBtn.textContent = '⚠ Teilweise aktualisiert';
+                } else {
+                    feedRefreshBtn.textContent = '✗ Keine Datei lesbar';
+                }
+            } finally {
+                setTimeout(() => {
+                    feedRefreshBtn.disabled = false;
+                    feedRefreshBtn.textContent = '↻ Bilder aktualisieren';
+                }, 1800);
+            }
+        });
+
+        // ---- DRAG REORDER ----
+        let ftDragIdx = -1;
+        function ftDragStart(e) { ftDragIdx = parseInt(e.currentTarget.dataset.index); e.currentTarget.style.opacity = '0.4'; e.dataTransfer.effectAllowed = 'move'; }
+        function ftDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+        function ftDragEnter(e) { e.currentTarget.classList.add('drag-over'); }
+        function ftDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+        function ftDrop(e) {
+            e.preventDefault();
+            const dropIdx = parseInt(e.currentTarget.dataset.index);
+            e.currentTarget.classList.remove('drag-over');
+            if (ftDragIdx === dropIdx || activeCellIndex < 0) return;
+            const post = posts[activeCellIndex];
+            const imgs = post.images;
+            const [moved] = imgs.splice(ftDragIdx, 1);
+            imgs.splice(dropIdx, 0, moved);
+            // Also reorder handles
+            const h = handles[activeCellIndex];
+            if (h) {
+                const [movedH] = h.splice(ftDragIdx, 1);
+                h.splice(dropIdx, 0, movedH);
+                saveHandlesToDB(activeCellIndex, h);
+            }
+            if (currentSlide === ftDragIdx) currentSlide = dropIdx;
+            else if (ftDragIdx < currentSlide && dropIdx >= currentSlide) currentSlide--;
+            else if (ftDragIdx > currentSlide && dropIdx <= currentSlide) currentSlide++;
+            persist();
+            renderFeed();
+        }
+        function ftDragEnd(e) {
+            e.currentTarget.style.opacity = '1';
+            sidebarThumbs.querySelectorAll('.sidebar-thumb').forEach(t => t.classList.remove('drag-over'));
+        }
+
+        // ---- FEED NAV ----
+        function goToSlide(index) {
+            if (activeCellIndex < 0) return;
+            const len = posts[activeCellIndex].images.length;
+            if (index < 0 || index >= len) return;
+            currentSlide = index;
+            slideWrapper.style.transform = `translateX(-${index * 100}%)`;
+            updateFeedNav();
+            sidebarThumbs.querySelectorAll('.sidebar-thumb').forEach((t, i) => t.classList.toggle('active', i === index));
+        }
+
+        function updateFeedNav() {
+            if (activeCellIndex < 0) return;
+            const len = posts[activeCellIndex].images.length;
+            const multi = len > 1;
+            navLeft.classList.toggle('hidden', !multi || currentSlide === 0);
+            navRight.classList.toggle('hidden', !multi || currentSlide === len - 1);
+            carouselDots.classList.toggle('hidden', !multi);
+            carouselDots.innerHTML = '';
+            if (multi) {
+                for (let i = 0; i < len; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+                    dot.addEventListener('click', () => goToSlide(i));
+                    carouselDots.appendChild(dot);
+                }
+            }
+        }
+
+        navLeft.addEventListener('click', () => goToSlide(currentSlide - 1));
+        navRight.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+        document.addEventListener('keydown', (e) => {
+            if (activeCellIndex < 0) return;
+            if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+            if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+            if (e.key === 'Escape') closeFeed();
+        });
+
+        // Touch swipe
+        document.querySelectorAll('.image-slot').forEach(slot => {
+            let sx = 0;
+            slot.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; });
+            slot.addEventListener('touchend', (e) => {
+                const diff = sx - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) goToSlide(currentSlide + 1);
+                    else goToSlide(currentSlide - 1);
+                }
+            });
+        });
+
+        // ---- IMAGE CROP DIALOG (zoom + drag, circular preview) ----
+        function openCropDialog(srcDataURL, { outputSize = 512 } = {}) {
+            return new Promise((resolve) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'crop-overlay';
+                overlay.innerHTML = `
+                    <div class="crop-dialog">
+                        <h3>Bildausschnitt wählen</h3>
+                        <div class="crop-stage">
+                            <img alt="">
+                            <div class="crop-mask"></div>
+                        </div>
+                        <div class="crop-zoom-row">
+                            <span>Zoom</span>
+                            <input type="range" min="1" max="4" step="0.01" value="1">
+                        </div>
+                        <div class="crop-actions">
+                            <button type="button" class="crop-btn" data-act="cancel">Abbrechen</button>
+                            <button type="button" class="crop-btn primary" data-act="ok">Übernehmen</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+
+                const stage = overlay.querySelector('.crop-stage');
+                const imgEl = overlay.querySelector('.crop-stage img');
+                const zoomInput = overlay.querySelector('input[type="range"]');
+                const STAGE = 320;
+
+                let baseScale = 1;     // scale that makes the image cover the stage
+                let zoom = 1;          // extra zoom on top of baseScale
+                let tx = 0, ty = 0;    // image translate in stage pixels
+                let imgW = 0, imgH = 0;
+
+                function effScale() { return baseScale * zoom; }
+
+                function clampTranslate() {
+                    const s = effScale();
+                    const drawW = imgW * s;
+                    const drawH = imgH * s;
+                    const minX = STAGE - drawW;
+                    const minY = STAGE - drawH;
+                    if (tx > 0) tx = 0;
+                    if (ty > 0) ty = 0;
+                    if (tx < minX) tx = minX;
+                    if (ty < minY) ty = minY;
+                }
+
+                function apply() {
+                    clampTranslate();
+                    imgEl.style.transform = `translate(${tx}px, ${ty}px) scale(${effScale()})`;
+                }
+
+                imgEl.onload = () => {
+                    imgW = imgEl.naturalWidth;
+                    imgH = imgEl.naturalHeight;
+                    baseScale = Math.max(STAGE / imgW, STAGE / imgH);
+                    zoom = 1;
+                    zoomInput.value = '1';
+                    // Center the image in the stage
+                    tx = (STAGE - imgW * effScale()) / 2;
+                    ty = (STAGE - imgH * effScale()) / 2;
+                    apply();
+                    requestAnimationFrame(() => overlay.classList.add('open'));
+                };
+                imgEl.src = srcDataURL;
+
+                zoomInput.addEventListener('input', () => {
+                    const newZoom = parseFloat(zoomInput.value);
+                    // Zoom around the stage center to feel natural
+                    const cx = STAGE / 2, cy = STAGE / 2;
+                    const ratio = (baseScale * newZoom) / effScale();
+                    tx = cx - (cx - tx) * ratio;
+                    ty = cy - (cy - ty) * ratio;
+                    zoom = newZoom;
+                    apply();
+                });
+
+                let dragging = false, lastX = 0, lastY = 0;
+                stage.addEventListener('pointerdown', (e) => {
+                    dragging = true;
+                    lastX = e.clientX; lastY = e.clientY;
+                    stage.classList.add('dragging');
+                    stage.setPointerCapture(e.pointerId);
+                });
+                stage.addEventListener('pointermove', (e) => {
+                    if (!dragging) return;
+                    tx += e.clientX - lastX;
+                    ty += e.clientY - lastY;
+                    lastX = e.clientX; lastY = e.clientY;
+                    apply();
+                });
+                const endDrag = (e) => {
+                    if (!dragging) return;
+                    dragging = false;
+                    stage.classList.remove('dragging');
+                    try { stage.releasePointerCapture(e.pointerId); } catch {}
+                };
+                stage.addEventListener('pointerup', endDrag);
+                stage.addEventListener('pointercancel', endDrag);
+
+                function close(result) {
+                    overlay.classList.remove('open');
+                    setTimeout(() => overlay.remove(), 150);
+                    resolve(result);
+                }
+
+                overlay.addEventListener('click', (e) => {
+                    const act = e.target.closest('[data-act]')?.dataset.act;
+                    if (act === 'cancel') close(null);
+                    else if (act === 'ok') {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = outputSize;
+                        canvas.height = outputSize;
+                        const ctx = canvas.getContext('2d');
+                        const s = effScale();
+                        // Map stage (0..STAGE) -> source image pixel coords
+                        const srcX = -tx / s;
+                        const srcY = -ty / s;
+                        const srcSize = STAGE / s;
+                        ctx.drawImage(imgEl, srcX, srcY, srcSize, srcSize, 0, 0, outputSize, outputSize);
+                        close(canvas.toDataURL('image/jpeg', 0.9));
+                    } else if (e.target === overlay) close(null);
+                });
+
+                document.addEventListener('keydown', function onKey(e) {
+                    if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(null); }
+                });
+            });
+        }
+
+        // ---- IG PROFILE: profile pic + story highlights + editable texts ----
+        const PROFILE_STORAGE_KEY = 'hycoffee-ig-profile';
+        const HIGHLIGHT_LABELS = ['Origin', 'Lots', 'Excelsa', 'Uganda', 'Roast'];
+        const DEFAULT_TEXTS = {
+            'username': 'hycoffee',
+            'bio-name': 'HyCoffee',
+            'bio-cat': 'Coffee supplier',
+            'bio-text': 'Climate resilient coffee. Diverse species, transparent sourcing and direct market access.',
+            'bio-address': 'Berlin, Germany',
+            'bio-link': 'hycoffee.com',
+            'bio-threads': '@ hycoffee',
+            'followed-by': 'Gefolgt von ...',
+            'stat-0-val': '907',
+            'stat-0-label': 'Beiträge',
+            'stat-1-val': '11 Tsd.',
+            'stat-1-label': 'Follower',
+            'stat-2-val': '1.152',
+            'stat-2-label': 'Gefolgt',
+            'action-0': 'Gefolgt',
+            'action-1': 'Nachricht',
+            'action-2': 'Unterstützen'
+        };
+
+        function defaultProfileData() {
+            return {
+                profilePic: null,
+                texts: { ...DEFAULT_TEXTS },
+                highlights: HIGHLIGHT_LABELS.map((label) => ({ image: null, label }))
+            };
+        }
+
+        function loadProfileData() {
+            try {
+                const raw = localStorage.getItem(PROFILE_STORAGE_KEY);
+                if (!raw) return defaultProfileData();
+                const parsed = JSON.parse(raw);
+                const texts = { ...DEFAULT_TEXTS };
+                if (parsed.texts && typeof parsed.texts === 'object') {
+                    for (const key of Object.keys(DEFAULT_TEXTS)) {
+                        if (typeof parsed.texts[key] === 'string') texts[key] = parsed.texts[key];
+                    }
+                }
+                return {
+                    profilePic: typeof parsed.profilePic === 'string' ? parsed.profilePic : null,
+                    texts,
+                    highlights: HIGHLIGHT_LABELS.map((label, i) => {
+                        const stored = parsed.highlights && parsed.highlights[i];
+                        return {
+                            image: stored && typeof stored.image === 'string' ? stored.image : null,
+                            label: stored && typeof stored.label === 'string' ? stored.label : label
+                        };
+                    })
+                };
+            } catch {
+                return defaultProfileData();
+            }
+        }
+
+        let profileData = loadProfileData();
+
+        function saveProfileData() {
+            try {
+                localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profileData));
+            } catch { /* quota — ignore */ }
+        }
+
+        const profilePicEl = document.getElementById('ig-profile-pic');
+        const profilePicImg = document.getElementById('ig-profile-pic-img');
+        const profilePicDefault = document.getElementById('ig-profile-pic-default');
+        const highlightsContainer = document.getElementById('ig-highlights');
+
+        function renderProfilePic() {
+            if (profileData.profilePic) {
+                profilePicImg.src = profileData.profilePic;
+                profilePicImg.style.display = 'block';
+                profilePicDefault.style.display = 'none';
+            } else {
+                profilePicImg.removeAttribute('src');
+                profilePicImg.style.display = 'none';
+                profilePicDefault.style.display = 'block';
+            }
+        }
+
+        function renderHighlights() {
+            highlightsContainer.innerHTML = '';
+            profileData.highlights.forEach((h, i) => {
+                const wrap = document.createElement('div');
+                wrap.className = 'ig-highlight';
+
+                const circle = document.createElement('div');
+                circle.className = 'ig-highlight-circle';
+                circle.title = 'Bild hochladen';
+                if (h.image) {
+                    const img = document.createElement('img');
+                    img.src = h.image;
+                    circle.appendChild(img);
+                } else {
+                    const ph = document.createElement('div');
+                    ph.className = 'placeholder';
+                    ph.textContent = h.label.charAt(0);
+                    circle.appendChild(ph);
+                }
+                circle.addEventListener('click', async () => {
+                    const picked = await pickImages({ multiple: false, preferHandles: false });
+                    if (!picked || !picked.images.length) return;
+                    const cropped = await openCropDialog(picked.images[0], { outputSize: 256 });
+                    if (!cropped) return;
+                    profileData.highlights[i].image = cropped;
+                    saveProfileData();
+                    renderHighlights();
+                });
+
+                const label = document.createElement('div');
+                label.className = 'ig-highlight-label';
+                label.textContent = h.label;
+                label.contentEditable = 'true';
+                label.dataset.key = `highlight-${i}-label`;
+
+                wrap.appendChild(circle);
+                wrap.appendChild(label);
+                highlightsContainer.appendChild(wrap);
+            });
+        }
+
+        function renderTexts() {
+            document.querySelectorAll('[data-key]').forEach((el) => {
+                const key = el.dataset.key;
+                if (key.startsWith('highlight-')) return; // highlights handle their own labels
+                if (key in profileData.texts && el.textContent !== profileData.texts[key]) {
+                    el.textContent = profileData.texts[key];
+                }
+            });
+        }
+
+        document.addEventListener('input', (e) => {
+            const el = e.target;
+            if (!(el instanceof HTMLElement) || !el.isContentEditable) return;
+            const key = el.dataset.key;
+            if (!key) return;
+            if (key.startsWith('highlight-') && key.endsWith('-label')) {
+                const i = parseInt(key.split('-')[1], 10);
+                if (profileData.highlights[i]) {
+                    profileData.highlights[i].label = el.textContent;
+                    saveProfileData();
+                }
+            } else if (key in profileData.texts) {
+                profileData.texts[key] = el.textContent;
+                saveProfileData();
+            }
+        });
+
+        document.addEventListener('paste', (e) => {
+            const el = e.target;
+            if (!(el instanceof HTMLElement) || !el.isContentEditable) return;
+            e.preventDefault();
+            const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+            document.execCommand('insertText', false, text);
+        });
+
+        profilePicEl.addEventListener('click', async () => {
+            const picked = await pickImages({ multiple: false, preferHandles: false });
+            if (!picked || !picked.images.length) return;
+            const cropped = await openCropDialog(picked.images[0], { outputSize: 512 });
+            if (!cropped) return;
+            profileData.profilePic = cropped;
+            saveProfileData();
+            renderProfilePic();
+        });
+
+        // ---- INIT ----
+        openDB()
+            .catch(() => null)
+            .then(() => {
+                renderGrid();
+                renderProfilePic();
+                renderTexts();
+                renderHighlights();
+                updateGridSaveNote();
+                restoreActiveGridInfo();
+            });
+    </script>
+
+</body>
+</html>

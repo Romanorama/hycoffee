@@ -9,7 +9,9 @@ import keystatic from '@keystatic/astro';
 export default defineConfig({
   site: 'https://hycoffee.de',
   integrations: [react(), markdoc(), keystatic()],
-  adapter: netlify(),
+  adapter: netlify({
+    includeFiles: ['./private-toolbox/**/*'],
+  }),
   output: 'server',
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },

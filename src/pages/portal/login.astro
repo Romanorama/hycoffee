@@ -1,0 +1,114 @@
+---
+export const prerender = false;
+
+const error = Astro.url.searchParams.get('error') === '1';
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Portal Login — HyCoffee</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/HALTimezone-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/DGMSprinter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      @font-face {
+        font-family: 'HAL Timezone';
+        src: url('/fonts/HALTimezone-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'DGM Sprinter';
+        src: url('/fonts/DGMSprinter-Regular.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      :root {
+        --bg: #fbf8f2;
+        --ink: #242119;
+        --accent: #3a563b;
+        --error: #8a2a2a;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; height: 100%; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'DGM Sprinter', sans-serif;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+      .card {
+        width: 100%;
+        max-width: 420px;
+        display: grid;
+        gap: 24px;
+      }
+      h1 {
+        font-family: 'HAL Timezone', sans-serif;
+        font-size: 36px;
+        line-height: 1.05;
+        margin: 0;
+      }
+      p.lead { margin: 0; font-size: 15px; opacity: 0.75; }
+      form { display: grid; gap: 14px; }
+      label { display: grid; gap: 6px; font-size: 13px; }
+      input {
+        font: inherit;
+        padding: 12px 14px;
+        border: 1px solid var(--ink);
+        border-radius: 3px;
+        background: transparent;
+        color: var(--ink);
+      }
+      input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+      button {
+        font: inherit;
+        padding: 12px 14px;
+        background: var(--ink);
+        color: var(--bg);
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      button:hover { background: var(--accent); }
+      .err {
+        font-size: 13px;
+        color: var(--error);
+        margin: 0;
+      }
+      .beta {
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <span class="beta">Beta · HyCoffee Toolbox</span>
+      <h1>Portal Login</h1>
+      <p class="lead">Zugang nur für Beta-Tester. Bitte E-Mail und Passwort eingeben.</p>
+      {error && <p class="err">E-Mail oder Passwort falsch.</p>}
+      <form method="post" action="/api/login">
+        <label>
+          E-Mail
+          <input type="email" name="email" required autocomplete="email" autofocus />
+        </label>
+        <label>
+          Passwort
+          <input type="password" name="password" required autocomplete="current-password" />
+        </label>
+        <button type="submit">Anmelden</button>
+      </form>
+    </main>
+  </body>
+</html>

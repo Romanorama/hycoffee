@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyCoffee – Product Sheet Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <nav class="ci-nav app-nav">
+        <div class="ci-nav-inner">
+            <a href="../../index.html" class="ci-nav-home" aria-label="Zurück zur Toolbox">
+                <span class="arrow">&larr;</span>
+                <span class="ci-nav-brand ci-display">HYCoffee Toolbox</span>
+            </a>
+            <span class="app-nav-context">Product Sheets</span>
+        </div>
+    </nav>
+
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="ci-badge">Generator</div>
+                <h2 class="sidebar-title">Product Sheets</h2>
+            </div>
+
+            <div class="form-sections">
+
+                <div class="form-section">
+                    <h3 class="section-label">Sorte auswählen</h3>
+                    <select id="bean-select" class="form-input"></select>
+                    <div class="btn-row btn-row-top-gap">
+                        <button id="btn-new" class="btn btn-secondary" type="button">+ Neue Sorte</button>
+                        <button id="btn-delete" class="btn btn-ghost" type="button">Löschen</button>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-label">Name</h3>
+                    <input id="f-name" class="form-input" type="text" placeholder="z.B. Amizi Rock">
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-label">Seitenlayout</h3>
+                    <select id="f-layout" class="form-input">
+                        <option value="three-images">Layout mit 3 Bildern</option>
+                        <option value="classic">Textlayout</option>
+                    </select>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-label">Stammdaten</h3>
+                    <div class="grid-2">
+                        <label class="field">
+                            <span>Species</span>
+                            <input id="f-species" class="form-input" type="text" placeholder="Arabica">
+                        </label>
+                        <label class="field">
+                            <span>Country</span>
+                            <input id="f-country" class="form-input" type="text" placeholder="Uganda">
+                        </label>
+                        <label class="field">
+                            <span>Score</span>
+                            <input id="f-score" class="form-input" type="text" placeholder="—">
+                        </label>
+                        <label class="field">
+                            <span>Process</span>
+                            <input id="f-process" class="form-input" type="text" placeholder="Fully Washed">
+                        </label>
+                        <label class="field">
+                            <span>Varietät</span>
+                            <input id="f-variety" class="form-input" type="text" placeholder="SL14/Bourbon">
+                        </label>
+                        <label class="field">
+                            <span>Ernte</span>
+                            <input id="f-harvest" class="form-input" type="text" placeholder="2025/2026">
+                        </label>
+                        <label class="field">
+                            <span>Herkunft</span>
+                            <input id="f-region" class="form-input" type="text" placeholder="West Nile, Uganda">
+                        </label>
+                        <label class="field">
+                            <span>Höhe</span>
+                            <input id="f-altitude" class="form-input" type="text" placeholder="1.495 m">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-label">Flavour Notes</h3>
+                    <input id="f-flavour" class="form-input" type="text" placeholder="kräftig, nussig, Lakritze, Limette, Zuckersirup">
+                </div>
+
+                <div class="form-section" id="image-form-section" hidden>
+                    <h3 class="section-label">Bilder</h3>
+                    <div class="image-upload-grid">
+                        <div class="image-upload-item">
+                            <button class="image-upload-slot" type="button" data-image-asset-button="0">
+                                <span class="image-thumb" data-image-thumb="0"></span>
+                                <span class="image-slot-label" data-image-label="0">Bild 1 aus Assets wählen</span>
+                            </button>
+                            <div class="image-actions">
+                                <button class="image-action-btn" type="button" data-image-button="0">Upload</button>
+                                <button class="image-action-btn image-remove" type="button" data-image-remove="0">Entfernen</button>
+                            </div>
+                            <input id="f-image-0" type="file" accept="image/*" data-image-input="0" hidden>
+                        </div>
+                        <div class="image-upload-item">
+                            <button class="image-upload-slot" type="button" data-image-asset-button="1">
+                                <span class="image-thumb" data-image-thumb="1"></span>
+                                <span class="image-slot-label" data-image-label="1">Bild 2 aus Assets wählen</span>
+                            </button>
+                            <div class="image-actions">
+                                <button class="image-action-btn" type="button" data-image-button="1">Upload</button>
+                                <button class="image-action-btn image-remove" type="button" data-image-remove="1">Entfernen</button>
+                            </div>
+                            <input id="f-image-1" type="file" accept="image/*" data-image-input="1" hidden>
+                        </div>
+                        <div class="image-upload-item">
+                            <button class="image-upload-slot" type="button" data-image-asset-button="2">
+                                <span class="image-thumb" data-image-thumb="2"></span>
+                                <span class="image-slot-label" data-image-label="2">Bild 3 aus Assets wählen</span>
+                            </button>
+                            <div class="image-actions">
+                                <button class="image-action-btn" type="button" data-image-button="2">Upload</button>
+                                <button class="image-action-btn image-remove" type="button" data-image-remove="2">Entfernen</button>
+                            </div>
+                            <input id="f-image-2" type="file" accept="image/*" data-image-input="2" hidden>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-label">Intro</h3>
+                    <textarea id="f-intro" class="form-textarea" rows="6" placeholder="Beschreibung der Bohne, Verarbeitung und Geschmack."></textarea>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-label">Klimaresilient</h3>
+                    <textarea id="f-climate" class="form-textarea" rows="5" placeholder="Wie ist diese Bohne klimaresilient?"></textarea>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-label">Sozial verantwortlich</h3>
+                    <textarea id="f-social" class="form-textarea" rows="5" placeholder="Soziale Verantwortung in der Lieferkette."></textarea>
+                </div>
+
+            </div>
+
+            <div class="sidebar-actions">
+                <button id="btn-save" class="btn btn-primary">Sorte speichern</button>
+                <button id="btn-export" class="btn btn-primary btn-export">PDF exportieren</button>
+                <div class="btn-row">
+                    <button id="btn-export-all" class="btn btn-secondary">Alle als PDF</button>
+                    <button id="btn-export-json" class="btn btn-secondary">JSON Export</button>
+                </div>
+                <label class="btn btn-secondary btn-import">
+                    JSON importieren
+                    <input type="file" id="btn-import" accept=".json" hidden>
+                </label>
+            </div>
+        </aside>
+
+        <main class="preview-area">
+            <div class="preview-header">
+                <span class="preview-label">Vorschau · A4</span>
+                <div class="zoom-controls">
+                    <button id="zoom-out" class="zoom-btn" type="button">&minus;</button>
+                    <span id="zoom-level">75%</span>
+                    <button id="zoom-in" class="zoom-btn" type="button">+</button>
+                    <button id="zoom-reset" class="zoom-btn" type="button">Reset</button>
+                </div>
+            </div>
+            <div class="preview-scroll">
+                <div id="preview-container" class="preview-container">
+
+                    <div id="pdf-page" class="pdf-page">
+
+                        <header class="pdf-header">
+                            <img id="pdf-logo" alt="HyCoffee" class="pdf-logo">
+                            <div class="pdf-kicker">PRODUCT SHEET</div>
+                        </header>
+
+                        <section id="pdf-images" class="pdf-images" hidden>
+                            <figure class="pdf-image-frame"><img id="pdf-image-0" alt=""></figure>
+                            <figure class="pdf-image-frame"><img id="pdf-image-1" alt=""></figure>
+                            <figure class="pdf-image-frame"><img id="pdf-image-2" alt=""></figure>
+                        </section>
+
+                        <h1 id="pdf-name" class="pdf-name">Amizi Rock</h1>
+                        <div id="pdf-flavour" class="pdf-flavour">kräftig, nussig, Lakritze, Limette, Zuckersirup</div>
+
+                        <section class="pdf-specs">
+                            <div class="spec"><span class="spec-label">Species</span><span id="pdf-species" class="spec-value">Arabica</span></div>
+                            <div class="spec"><span class="spec-label">Country</span><span id="pdf-country" class="spec-value">Uganda</span></div>
+                            <div class="spec"><span class="spec-label">Score</span><span id="pdf-score" class="spec-value">—</span></div>
+                            <div class="spec"><span class="spec-label">Process</span><span id="pdf-process" class="spec-value">Fully Washed</span></div>
+                            <div class="spec"><span class="spec-label">Varietät</span><span id="pdf-variety" class="spec-value">SL14/Bourbon</span></div>
+                            <div class="spec"><span class="spec-label">Ernte</span><span id="pdf-harvest" class="spec-value">2025/2026</span></div>
+                            <div class="spec"><span class="spec-label">Herkunft</span><span id="pdf-region" class="spec-value">West Nile, Uganda</span></div>
+                            <div class="spec"><span class="spec-label">Höhe</span><span id="pdf-altitude" class="spec-value">1.495 m</span></div>
+                        </section>
+
+                        <div class="pdf-copy-grid">
+                            <section class="pdf-block">
+                                <p id="pdf-intro" class="pdf-intro"></p>
+                            </section>
+
+                            <section class="pdf-block">
+                                <h2 class="pdf-h2">Klimaresilient</h2>
+                                <p id="pdf-climate" class="pdf-text"></p>
+                            </section>
+
+                            <section class="pdf-block">
+                                <h2 class="pdf-h2">Sozial verantwortlich</h2>
+                                <p id="pdf-social" class="pdf-text"></p>
+                            </section>
+                        </div>
+
+                        <footer class="pdf-footer">
+                            <div class="pdf-footer-row">
+                                <span>HyCoffee UG</span>
+                                <span>info@hycoffee.de</span>
+                                <span>hycoffee.de</span>
+                            </div>
+                        </footer>
+
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="asset-picker" class="asset-picker" hidden>
+        <div class="asset-picker-panel" role="dialog" aria-modal="true" aria-labelledby="asset-picker-title">
+            <div class="asset-picker-header">
+                <div>
+                    <h3 id="asset-picker-title" class="asset-picker-title">Bild aus Assets wählen</h3>
+                    <p id="asset-picker-slot" class="asset-picker-slot">Bild 1</p>
+                </div>
+                <button id="asset-picker-close" class="asset-picker-close" type="button" aria-label="Schließen">&times;</button>
+            </div>
+            <div class="asset-picker-controls">
+                <select id="asset-category" class="form-input"></select>
+                <input id="asset-search" class="form-input" type="search" placeholder="Dateiname suchen">
+            </div>
+            <div id="asset-grid" class="asset-grid"></div>
+        </div>
+    </div>
+
+    <script src="logos-base64.js"></script>
+    <script src="beans-data.js"></script>
+    <script src="asset-images.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

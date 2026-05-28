@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYCoffee — E-Mail Signatur</title>
+<link rel="stylesheet" href="../../assets/ci/ci.css">
+<style>
+  .page-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 22px 64px;
+  }
+
+  .page-head {
+    margin-bottom: 28px;
+  }
+  .page-head h1 {
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin: 0 0 8px;
+  }
+  .page-head p {
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    max-width: 680px;
+    margin: 0;
+  }
+
+  .builder {
+    display: grid;
+    grid-template-columns: 360px minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .builder { grid-template-columns: 1fr; }
+  }
+
+  .form-card,
+  .preview-card,
+  .help-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 22px;
+  }
+
+  .form-card h2,
+  .preview-card h2,
+  .help-card h2 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 18px;
+  }
+
+  .form-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .form-field {
+    display: grid;
+    gap: 5px;
+  }
+  .form-field label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .form-field input,
+  .form-field select {
+    appearance: none;
+    width: 100%;
+    padding: 9px 12px;
+    font: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    transition: border-color .2s;
+  }
+  .form-field input:focus,
+  .form-field select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .form-field-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .download-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .btn {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color .2s, transform .2s, background .2s;
+  }
+  .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .btn.is-primary {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .btn.is-primary:hover { background: var(--accent-alt); border-color: var(--accent-alt); }
+  .btn.is-copied { border-color: var(--accent); background: var(--accent-soft); }
+
+  .preview-frame {
+    background: #ECECEE;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    padding: 32px 24px;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+  }
+
+  .email-mock {
+    width: 100%;
+    max-width: 620px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 28px rgba(0,0,0,0.08);
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    color: #1d1d1f;
+  }
+  .email-mock-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #F5F5F7;
+    border-bottom: 1px solid #E5E5E7;
+  }
+  .email-mock-bar .dot {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: #D8D8DA;
+  }
+  .email-mock-bar .dot.r { background: #FF5F57; }
+  .email-mock-bar .dot.y { background: #FEBC2E; }
+  .email-mock-bar .dot.g { background: #28C840; }
+  .email-mock-bar .title {
+    margin-left: 12px;
+    font-size: 12px;
+    color: #6E6E73;
+    letter-spacing: 0.01em;
+  }
+  .email-mock-meta {
+    padding: 14px 22px 10px;
+    border-bottom: 1px solid #ECECEE;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #3a3a3c;
+  }
+  .email-mock-meta .subject {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 6px;
+  }
+  .email-mock-meta .meta-row {
+    display: flex;
+    gap: 6px;
+  }
+  .email-mock-meta .meta-row .lbl {
+    color: #8e8e93;
+    min-width: 44px;
+  }
+  .email-mock-body {
+    padding: 22px 22px 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1d1d1f;
+  }
+  .email-mock-body p { margin: 0 0 14px; }
+  .email-mock-signature {
+    padding: 4px 22px 26px;
+  }
+  .email-mock-signature > * { max-width: 100%; }
+
+  .preview-status {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .help-card { margin-top: 24px; }
+  .help-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .help-item {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px;
+  }
+  .help-item h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  .help-item ol {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .help-item ol li + li { margin-top: 5px; }
+  .help-item code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 11.5px;
+    background: rgba(17,17,19,0.05);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="ci-nav">
+  <div class="ci-nav-inner">
+    <a href="../../index.html" class="ci-nav-home">
+      <span class="arrow">&larr;</span>
+      <span class="ci-nav-brand ci-display">HYCoffee Toolbox</span>
+    </a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <header class="page-head">
+    <h1>E-Mail Signatur</h1>
+    <p>Erstelle eine konsistente HyCoffee E-Mail-Signatur mit Logo und Markenfarben. Felder ausfüllen, Vorschau prüfen und als HTML-Datei herunterladen.</p>
+  </header>
+
+  <div class="builder">
+    <section class="form-card">
+      <h2>Daten</h2>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="sig-name">Name</label>
+          <input id="sig-name" type="text" value="Roman Roth" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-role">Position</label>
+          <input id="sig-role" type="text" value="Founder" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-company">Unternehmen</label>
+          <input id="sig-company" type="text" value="" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-email">E-Mail</label>
+          <input id="sig-email" type="email" value="roman@hycoffee.de" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-phone">Telefon</label>
+          <input id="sig-phone" type="text" value="+49 170 0000000" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-website">Website</label>
+          <input id="sig-website" type="text" value="hycoffee.de" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-address">Adresse</label>
+          <input id="sig-address" type="text" value="Berlin · Germany" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-module">Aktions-Modul (optional)</label>
+          <input id="sig-module" type="text" value="" placeholder="z. B. Neue Ernte verfügbar — jetzt vorbestellen" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-module-link">Modul-Link (optional)</label>
+          <input id="sig-module-link" type="text" value="" placeholder="https://hycoffee.de/aktion" autocomplete="off">
+        </div>
+        <div class="form-field">
+          <label for="sig-logo">Logo-Variante</label>
+          <select id="sig-logo">
+            <option value="../../assets/hycoffee/logos/png/Hy/Hy_Logo_3K.png">Hy Monogramm (ohne „Coffee“)</option>
+            <option value="../../assets/hycoffee/logos/png/HyCoffee/HyCoffee_Logo_3K.png">HyCoffee Logo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="download-row">
+        <button class="btn is-primary" type="button" id="download-btn">HTML herunterladen</button>
+        <button class="btn" type="button" id="copy-btn">HTML kopieren</button>
+      </div>
+      <p class="preview-status" id="status-msg">Logo wird beim Download eingebettet (Base64) — die Datei ist eigenständig.</p>
+    </section>
+
+    <section class="preview-card">
+      <h2>Vorschau</h2>
+      <div class="preview-frame" id="preview-frame"></div>
+    </section>
+  </div>
+
+  <section class="help-card">
+    <h2>Signatur in das E-Mail-Programm einbinden</h2>
+    <div class="help-grid">
+
+      <div class="help-item">
+        <h3>Apple Mail (macOS)</h3>
+        <ol>
+          <li>HTML-Datei im Browser (Safari) öffnen.</li>
+          <li>Inhalt mit <code>⌘ + A</code> markieren, <code>⌘ + C</code> kopieren.</li>
+          <li>In Mail: <code>Mail → Einstellungen → Signaturen</code>.</li>
+          <li>Account wählen, <code>+</code> klicken und Signatur einfügen mit <code>⌘ + V</code>.</li>
+          <li>Häkchen bei „Standardschriftart immer verwenden“ <strong>entfernen</strong>.</li>
+        </ol>
+      </div>
+
+      <div class="help-item">
+        <h3>Outlook (Windows / Mac)</h3>
+        <ol>
+          <li>HTML-Datei im Browser öffnen.</li>
+          <li>Inhalt markieren und kopieren.</li>
+          <li>Outlook öffnen: <code>Datei → Optionen → E-Mail → Signaturen…</code> (Win) bzw. <code>Outlook → Einstellungen → Signaturen</code> (Mac).</li>
+          <li>Neue Signatur anlegen, in das Feld einfügen und speichern.</li>
+          <li>Unter „Neue Nachrichten“ und „Antworten/Weiterleitungen“ als Standard auswählen.</li>
+        </ol>
+      </div>
+
+      <div class="help-item">
+        <h3>Gmail (Web)</h3>
+        <ol>
+          <li>HTML-Datei im Browser öffnen, Inhalt kopieren.</li>
+          <li>In Gmail: <code>Einstellungen (Zahnrad) → Alle Einstellungen anzeigen</code>.</li>
+          <li>Tab „Allgemein“ → Abschnitt „Signatur“ → „Neu erstellen“.</li>
+          <li>Signatur einfügen, einen Namen vergeben, speichern.</li>
+          <li>Unten unter „Signaturstandards“ als Standard für neue Mails & Antworten setzen.</li>
+        </ol>
+      </div>
+
+      <div class="help-item">
+        <h3>Thunderbird</h3>
+        <ol>
+          <li>HTML-Datei lokal speichern (z. B. unter <code>~/Dokumente/Signatur</code>).</li>
+          <li>In Thunderbird: <code>Konten-Einstellungen</code> öffnen, Account auswählen.</li>
+          <li>Häkchen bei „Signatur aus einer Datei anhängen“ setzen.</li>
+          <li>Auf <code>Auswählen…</code> klicken und die HTML-Datei laden.</li>
+          <li>Speichern — Logo wird über die Base64-Einbettung mitgeschickt.</li>
+        </ol>
+      </div>
+
+      <div class="help-item">
+        <h3>iOS / iPadOS Mail</h3>
+        <ol>
+          <li>HTML-Datei per AirDrop oder Mail an dich selbst senden.</li>
+          <li>Mail öffnen, Inhalt der Signatur per Antippen & Halten markieren und kopieren.</li>
+          <li><code>Einstellungen → Mail → Signatur</code> öffnen.</li>
+          <li>Vorhandenen Text löschen, Signatur einfügen.</li>
+          <li>Auf „Schütteln und Rückgängig“ achten — nicht erneut auf „Markierter Text“ tippen, sonst gehen Stile verloren.</li>
+        </ol>
+      </div>
+
+      <div class="help-item">
+        <h3>Hinweise</h3>
+        <ol>
+          <li>Logo wird beim Download als <code>Base64</code> in die HTML eingebettet — es funktioniert offline und ohne Hosting.</li>
+          <li>E-Mail-Clients ignorieren benutzerdefinierte Schriften (HAL Timezone). Es werden Web-Safe-Fonts verwendet, die im Stil dem CD nahekommen.</li>
+          <li>Bei Outlook (alte Versionen) ggf. Logo-Größe halbieren, falls es zu groß angezeigt wird.</li>
+          <li>Farbtreue ist garantiert (Inline-Styles, kein externes CSS).</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<footer class="ci-footer">
+  <div class="ci-wrap">
+    <div>HYCoffee × CJX Studio · E-Mail Signatur</div>
+    <div>2026</div>
+  </div>
+</footer>
+
+<script>
+  const fields = {
+    name:    document.getElementById('sig-name'),
+    role:    document.getElementById('sig-role'),
+    company: document.getElementById('sig-company'),
+    email:   document.getElementById('sig-email'),
+    phone:   document.getElementById('sig-phone'),
+    website: document.getElementById('sig-website'),
+    address: document.getElementById('sig-address'),
+    promo:   document.getElementById('sig-module'),
+    promoLink: document.getElementById('sig-module-link'),
+    logo:    document.getElementById('sig-logo'),
+  };
+  const previewFrame = document.getElementById('preview-frame');
+  const downloadBtn = document.getElementById('download-btn');
+  const copyBtn = document.getElementById('copy-btn');
+  const statusMsg = document.getElementById('status-msg');
+
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+
+  const HY_INK    = '#3F3B33';
+  const HY_GREY   = '#7E766B';
+  const HY_LINE   = '#D9D5CC';
+  const HY_ACCENT = '#3F3B33';
+
+  const ensureProtocol = (url) => /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  const websiteHref = (url) => ensureProtocol(url.trim());
+
+  function buildSignatureHTML(logoSrc) {
+    const v = Object.fromEntries(Object.entries(fields).map(([k, el]) => [k, el.value.trim()]));
+    const logo = logoSrc || v.logo;
+
+    // Email clients ignore custom fonts, but where Timezone is available
+    // (preview + clients that allow webfonts) it will render. Otherwise the
+    // serif fallback keeps the same display feel.
+    const fontTZ = "'HAL Timezone', Georgia, 'Times New Roman', serif";
+
+    const line = (value, href) => {
+      if (!value) return '';
+      const inner = href
+        ? `<a href="${escapeHtml(href)}" style="color:${HY_GREY};text-decoration:none;font-family:${fontTZ};">${escapeHtml(value)}</a>`
+        : escapeHtml(value);
+      return `
+        <tr>
+          <td style="padding:1px 0;font:14px ${fontTZ};color:${HY_GREY};vertical-align:top;">${inner}</td>
+        </tr>`;
+    };
+
+    const promoBlock = v.promo ? `
+  <tr>
+    <td colspan="2" style="padding:18px 0 0;">
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:100%;">
+        <tr>
+          <td style="padding:12px 16px;background:#F4F0E6;border-left:3px solid ${HY_ACCENT};border-radius:2px;font:13px ${fontTZ};color:${HY_INK};letter-spacing:0.01em;line-height:1.45;">
+            ${v.promoLink
+              ? `<a href="${escapeHtml(websiteHref(v.promoLink))}" style="color:${HY_INK};text-decoration:none;font-family:${fontTZ};">${escapeHtml(v.promo)} &rsaquo;</a>`
+              : escapeHtml(v.promo)}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>` : '';
+
+    // Hy monogram is roughly square — render smaller so it doesn't overpower the text column.
+    const isHyMonogram = /\/Hy\//.test(v.logo);
+    const logoW = isHyMonogram ? 48 : 120;
+
+    return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:${fontTZ};color:${HY_INK};">
+  <tr>
+    <td style="padding-right:22px;border-right:1px solid ${HY_LINE};vertical-align:top;">
+      <img src="${escapeHtml(logo)}" alt="${escapeHtml(v.company)}" width="${logoW}" style="display:block;width:${logoW}px;height:auto;border:0;outline:none;text-decoration:none;">
+    </td>
+    <td style="padding-left:22px;vertical-align:top;">
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 0 2px;font:400 14px ${fontTZ};color:${HY_INK};letter-spacing:0;line-height:1.25;">${escapeHtml(v.name)}</td>
+        </tr>
+        <tr>
+          <td style="padding:0 0 10px;font:14px ${fontTZ};color:${HY_GREY};letter-spacing:0;">${escapeHtml(v.role)}${v.company ? ` &middot; ${escapeHtml(v.company)}` : ''}</td>
+        </tr>
+        <tr>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+              ${line(v.email, v.email ? `mailto:${v.email}` : '')}
+              ${line(v.phone, v.phone ? `tel:${v.phone.replace(/\s+/g,'')}` : '')}
+              ${line(v.website, v.website ? websiteHref(v.website) : '')}
+              ${line(v.address, '')}
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  ${promoBlock}
+</table>`;
+  }
+
+  function buildFullDocument(signatureHTML) {
+    return `<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>HyCoffee Signatur</title>
+</head>
+<body style="margin:0;padding:24px;background:#FFFFFF;">
+${signatureHTML}
+</body>
+</html>`;
+  }
+
+  function updatePreview() {
+    const v = Object.fromEntries(Object.entries(fields).map(([k, el]) => [k, el.value.trim()]));
+    const fromName = v.name || 'Roman Roth';
+    const fromMail = v.email || 'roman@hycoffee.de';
+    previewFrame.innerHTML = `
+      <div class="email-mock">
+        <div class="email-mock-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="title">Neue Nachricht</span>
+        </div>
+        <div class="email-mock-meta">
+          <div class="subject">Schöne Grüße aus Berlin</div>
+          <div class="meta-row"><span class="lbl">Von:</span><span>${escapeHtml(fromName)} &lt;${escapeHtml(fromMail)}&gt;</span></div>
+          <div class="meta-row"><span class="lbl">An:</span><span>kontakt@beispiel.de</span></div>
+        </div>
+        <div class="email-mock-body">
+          <p>Hallo zusammen,</p>
+          <p>vielen Dank für die Nachricht — anbei findet ihr die Unterlagen wie besprochen.</p>
+          <p>Viele Grüße</p>
+        </div>
+        <div class="email-mock-signature">${buildSignatureHTML()}</div>
+      </div>`;
+  }
+
+  async function fetchLogoAsBase64(src) {
+    const response = await fetch(src);
+    if (!response.ok) throw new Error('Logo konnte nicht geladen werden');
+    const blob = await response.blob();
+    return await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function buildDownloadableHTML() {
+    let logoSrc = fields.logo.value;
+    try {
+      logoSrc = await fetchLogoAsBase64(fields.logo.value);
+      statusMsg.textContent = 'Logo erfolgreich eingebettet.';
+    } catch (err) {
+      console.warn('Logo embed failed, using URL', err);
+      statusMsg.textContent = 'Logo konnte nicht eingebettet werden — relativer Pfad wird verwendet.';
+    }
+    const signature = buildSignatureHTML(logoSrc);
+    return buildFullDocument(signature);
+  }
+
+  function triggerDownload(content, filename) {
+    const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function fileSafeName() {
+    const base = fields.name.value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return `hycoffee-signatur-${base || 'signature'}.html`;
+  }
+
+  downloadBtn.addEventListener('click', async () => {
+    downloadBtn.disabled = true;
+    downloadBtn.textContent = 'Wird erstellt…';
+    try {
+      const html = await buildDownloadableHTML();
+      triggerDownload(html, fileSafeName());
+    } catch (err) {
+      console.error(err);
+      statusMsg.textContent = 'Fehler beim Erstellen — bitte erneut versuchen.';
+    } finally {
+      downloadBtn.disabled = false;
+      downloadBtn.textContent = 'HTML herunterladen';
+    }
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      const html = await buildDownloadableHTML();
+      await navigator.clipboard.writeText(html);
+      copyBtn.classList.add('is-copied');
+      copyBtn.textContent = 'Kopiert';
+      setTimeout(() => {
+        copyBtn.classList.remove('is-copied');
+        copyBtn.textContent = 'HTML kopieren';
+      }, 1400);
+    } catch (err) {
+      console.warn('Copy failed', err);
+      statusMsg.textContent = 'Kopieren fehlgeschlagen — bitte Download benutzen.';
+    }
+  });
+
+  Object.values(fields).forEach(el => {
+    el.addEventListener('input', updatePreview);
+    el.addEventListener('change', updatePreview);
+  });
+
+  updatePreview();
+</script>
+
+</body>
+</html>

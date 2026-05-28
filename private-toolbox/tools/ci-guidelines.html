@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HYCoffee — Brand Dashboard</title>
+<style>
+  @font-face {
+    font-family: 'HAL Timezone';
+    src: url('../assets/hycoffee/fonts/HALTimezone-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'DGMSprinter';
+    src: url('../assets/hycoffee/fonts/DGMSprinter-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root {
+    /* Neutral monochrome system + purple accent (from HY palette 04) */
+    --hy-white:    #FFFFFF;
+    --hy-bg:       #F5F5F7;   /* page background */
+    --hy-ink:      #111113;   /* near-black */
+    --hy-grey-1:   #3A3A3D;
+    --hy-grey-2:   #6E6E73;
+    --hy-grey-3:   #A1A1A6;
+    --hy-purple:   #AB9FF2;   /* sole accent */
+    --hy-purple-d: #6F5BD9;   /* deeper purple for ink on light bg if needed */
+
+    --bg: var(--hy-bg);
+    --bg-elev: var(--hy-white);
+    --ink: var(--hy-ink);
+    --ink-2: var(--hy-grey-2);
+    --ink-3: var(--hy-grey-3);
+    --line: rgba(17,17,19,0.08);
+    --line-strong: rgba(17,17,19,0.16);
+    --accent: var(--hy-purple);
+    --accent-ink: var(--hy-ink);
+    --accent-soft: rgba(171,159,242,0.16);
+    --accent-alt:  var(--hy-purple-d);
+    --radius-lg: 22px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+    --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.05);
+    --shadow-hover: 0 1px 2px rgba(0,0,0,0.06), 0 14px 40px rgba(0,0,0,0.09);
+    --header-blur: saturate(180%) blur(20px);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'DGMSprinter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-weight: 400;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.005em;
+    line-height: 1.5;
+    /* Both fonts ship only Regular — disable synthetic bold/italic
+       so 500/600/700 declarations render at true Regular instead of being faked. */
+    font-synthesis: none;
+    -webkit-font-synthesis: none;
+  }
+  /* HALTimezone for display / headings */
+  h1, h2, h3, h4,
+  .hero-title, .sec-head h2, .nav-brand,
+  .card-feature h3, .quote, .lockup .logo {
+    font-family: 'HAL Timezone', 'DGMSprinter', serif;
+    letter-spacing: -0.01em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* HEADER */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(245,245,247,0.78);
+    -webkit-backdrop-filter: var(--header-blur);
+    backdrop-filter: var(--header-blur);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 22px;
+    height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px;
+  }
+  .nav-brand { font-weight: 500; letter-spacing: -0.02em; }
+  .nav-home {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--ink); text-decoration: none; opacity: 0.75;
+    transition: opacity .2s;
+  }
+  .nav-home:hover { opacity: 1; }
+  .nav-home .arrow { font-size: 14px; line-height: 1; }
+  .nav ul { list-style: none; display: flex; gap: 28px; padding: 0; margin: 0; }
+  .nav a { color: var(--ink); opacity: 0.85; transition: opacity .2s; }
+  .nav a:hover { opacity: 1; }
+  .nav-lang {
+    display: flex; gap: 4px;
+    background: rgba(17,17,19,0.05);
+    padding: 3px; border-radius: 999px;
+    font-size: 11px; font-weight: 500;
+  }
+  .nav-lang span { padding: 4px 10px; border-radius: 999px; color: var(--ink-2); cursor: pointer; }
+  .nav-lang span.active { background: var(--bg-elev); color: var(--ink); }
+
+  /* CONTAINER */
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 22px; }
+
+  /* HERO */
+  .hero {
+    padding: 90px 22px 64px;
+    text-align: center;
+    max-width: 980px; margin: 0 auto;
+  }
+  .eyebrow {
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-2);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6.8vw, 80px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+    margin: 0 0 22px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--hy-purple);
+  }
+  .hero p {
+    font-size: 21px; line-height: 1.4; color: var(--ink-2);
+    max-width: 720px; margin: 0 auto;
+  }
+  .hero-meta {
+    margin-top: 28px;
+    display: inline-flex; gap: 8px; align-items: center;
+    font-size: 13px; color: var(--ink-3);
+  }
+  .hero-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-3); }
+
+  /* SECTION */
+  section { padding: 160px 0 48px; }
+  section:first-of-type { padding-top: 120px; }
+  .sec-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin: 0 0 48px; gap: 16px;
+    padding-top: 32px;
+  }
+  .sec-head h2 {
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600; letter-spacing: -0.025em;
+    margin: 0;
+  }
+  .sec-head .sec-kicker {
+    font-size: 13px; color: var(--ink-3); font-weight: 500;
+  }
+
+  /* GRID */
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-elev);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--line);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+  .card h3 {
+    font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+    margin: 0 0 8px;
+  }
+  .card p { color: var(--ink-2); margin: 0; font-size: 15px; line-height: 1.5; }
+  .card .badge {
+    display: inline-flex; align-items: center;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--ink-2);
+    margin-bottom: 12px;
+  }
+
+  .card-feature {
+    grid-column: span 2;
+    padding: 44px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
+  }
+  @media (max-width: 900px) { .card-feature { grid-column: span 1; } }
+  .card-feature h3 {
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.08;
+    margin-bottom: 14px;
+  }
+  .card-feature .tag {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 12px; font-weight: 500;
+    padding: 5px 11px; border-radius: 999px;
+    margin-bottom: 18px;
+  }
+
+  /* PROMISE PILLARS */
+  .promise {
+    background: var(--bg-elev);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .promise .num {
+    font-size: 56px; font-weight: 600; letter-spacing: -0.04em;
+    line-height: 1; color: var(--ink);
+  }
+  .promise h3 { font-size: 22px; font-weight: 600; margin: 0; letter-spacing: -0.02em; }
+  .promise p { color: var(--ink-2); margin: 0; font-size: 15px; }
+  .promise ul { padding-left: 18px; margin: 4px 0 0; color: var(--ink-2); font-size: 14px; }
+  .promise ul li { margin-bottom: 4px; }
+  .promise .claim {
+    margin-top: auto;
+    padding: 10px 14px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    align-self: flex-start;
+  }
+
+  /* CHANNEL CARDS */
+  .channel { padding: 30px; }
+  .channel .icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(17,17,19,0.05);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    font-size: 20px;
+  }
+  .channel .role { font-size: 14px; color: var(--ink-2); margin: 8px 0 16px; }
+  .channel .dolist {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    border-top: 1px solid var(--line); padding-top: 16px;
+  }
+  .channel .dolist h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); margin: 0 0 6px; font-weight: 500; }
+  .channel .dolist ul { margin: 0; padding-left: 16px; font-size: 13px; color: var(--ink-2); }
+  .channel .dolist li { margin-bottom: 2px; }
+
+  /* TONALITY split */
+  .tone {
+    background: var(--bg-elev); border-radius: var(--radius-lg);
+    border: 1px solid var(--line); box-shadow: var(--shadow-card);
+    padding: 40px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px;
+  }
+  @media (max-width: 900px) { .tone { grid-template-columns: 1fr; padding: 28px; } }
+  .tone .lead { font-size: 18px; line-height: 1.5; color: var(--ink); }
+  .tone .lead strong { font-weight: 600; }
+  .tone .check {
+    background: var(--accent); color: var(--accent-ink);
+    padding: 22px; border-radius: var(--radius-md);
+    font-size: 17px; line-height: 1.4; font-weight: 500;
+  }
+  .tone .examples { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .tone .examples div { font-size: 14px; color: var(--ink-2); }
+  .tone .examples div strong { color: var(--ink); font-weight: 600; }
+
+  /* TEXTBAUSTEINE */
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 900px) { .quotes { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .quotes { grid-template-columns: 1fr; } }
+  .quote {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    font-size: 17px; font-weight: 500; letter-spacing: -0.015em;
+    line-height: 1.3;
+    color: var(--ink);
+    min-height: 96px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: background .2s, transform .2s;
+  }
+  .quote:hover { background: var(--accent); color: var(--accent-ink); transform: translateY(-2px); }
+  .quote .lang { font-size: 10px; font-weight: 500; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 14px; }
+  .quote:hover .lang { color: var(--accent-ink); opacity: 0.6; }
+
+  /* LOGO LOCKUP */
+  .lockup {
+    background: var(--bg-elev); border-radius: var(--radius-lg);
+    border: 1px solid var(--line); padding: 50px; text-align: center;
+    box-shadow: var(--shadow-card);
+  }
+  .lockup .logo {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: clamp(80px, 14vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .lockup .logo sub {
+    font-size: 0.25em;
+    vertical-align: baseline;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    margin-left: -0.1em;
+  }
+  .lockup .sub {
+    margin-top: 14px;
+    font-size: 18px; font-weight: 600; color: var(--ink);
+  }
+  .lockup .note { font-size: 13px; color: var(--ink-3); margin-top: 6px; }
+
+  /* CONTENT CALENDAR */
+  .cal {
+    background: var(--bg-elev);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line); box-shadow: var(--shadow-card);
+    padding: 26px;
+  }
+  .cal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px;
+  }
+  .cal-head h3 { margin: 0; font-size: 20px; font-weight: 600; }
+  .cal-nav { display: flex; gap: 6px; align-items: center; }
+  .cal-nav button {
+    width: 30px; height: 30px; border-radius: 50%;
+    border: none; background: rgba(17,17,19,0.05); color: var(--ink);
+    font-size: 14px; cursor: pointer;
+  }
+  .cal-nav .today {
+    background: var(--bg-elev); border: 1px solid var(--line);
+    width: auto; padding: 0 14px; height: 30px; border-radius: 999px;
+    font-size: 12px; font-weight: 500;
+  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal-dow { font-size: 11px; text-transform: uppercase; color: var(--ink-3); padding: 4px 6px; font-weight: 500; letter-spacing: 0.04em; }
+  .cal-cell {
+    aspect-ratio: 1.6 / 1;
+    border-radius: 8px;
+    background: transparent;
+    padding: 6px 8px;
+    font-size: 11px; color: var(--ink-3);
+    display: flex; flex-direction: column; gap: 4px;
+    border: 1px solid transparent;
+    position: relative;
+  }
+  .cal-cell.in { border-color: var(--line); color: var(--ink-2); }
+  .cal-cell .pill {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 6px;
+    padding: 4px 6px;
+    font-size: 10px; font-weight: 500;
+    line-height: 1.15;
+  }
+
+  /* GUIDELINES (caption / hashtag etc.) */
+  .panel {
+    background: var(--bg-elev); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-card);
+  }
+  .panel h3 { margin: 0 0 18px; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .panel .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  @media (max-width: 900px) { .panel .row { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .panel .row { grid-template-columns: 1fr; } }
+  .panel h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); font-weight: 500; margin: 0 0 8px; }
+  .panel ul { margin: 0; padding-left: 16px; font-size: 14px; color: var(--ink-2); }
+  .panel ul li { margin-bottom: 4px; }
+  .panel code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 12.5px; color: var(--ink);
+  }
+
+  /* MERCH */
+  .merch-rule {
+    background: var(--ink); color: var(--bg);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    font-size: 24px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.3;
+  }
+  .merch-rule small {
+    display: block; margin-top: 14px; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6;
+    font-weight: 500;
+  }
+
+  /* ROMAN'S PART — open / placeholder boxes (Pendant zu den grünen Boxen im PDF) */
+  .roman-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-card);
+    display: flex; flex-direction: column; gap: 16px;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .roman-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+  .roman-card h3 { margin: 0; font-size: 22px; letter-spacing: -0.02em; }
+  .roman-card .role { font-size: 14px; color: var(--ink-2); margin: -4px 0 0; }
+  .roman-note {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    font-size: 15px; line-height: 1.45;
+    text-align: center;
+    min-height: 140px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .roman-note.lg { font-size: 17px; min-height: 170px; }
+  .roman-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    align-self: flex-start;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .roman-tag::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+  }
+  /* Layout-skizze für „Mehrere Visuals in one" */
+  .visuals-grid {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    background: var(--bg);
+  }
+  .visuals-grid .v-cell {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .visuals-grid .v-box {
+    width: 100%; aspect-ratio: 1/1;
+    border: 1px solid var(--ink); border-radius: 4px;
+  }
+  .visuals-grid .v-cell span { font-size: 13px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--line);
+    margin-top: 60px; padding: 28px 0 40px;
+    font-size: 12px; color: var(--ink-3);
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  /* small util */
+  .pillrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .pillrow span {
+    font-size: 12px; color: var(--ink-2);
+    background: rgba(17,17,19,0.05); padding: 5px 10px; border-radius: 999px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-home" aria-label="Zurück zur Toolbox">
+      <span class="arrow">&larr;</span>
+      <span class="nav-brand">HYCoffee Toolbox</span>
+    </a>
+    <ul>
+      <li><a href="#markenkern">Markenkern</a></li>
+      <li><a href="#versprechen">Versprechen</a></li>
+      <li><a href="#tonalitaet">Tonalität</a></li>
+      <li><a href="#kanaele">Kanäle</a></li>
+      <li><a href="#bausteine">Textbausteine</a></li>
+      <li><a href="#plan">Content Plan</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- MARKENKERN -->
+<section id="markenkern" class="wrap">
+  <div class="sec-head">
+    <h2>Markenkern</h2>
+    <div class="sec-kicker">01 — Foundation</div>
+  </div>
+  <div class="grid grid-2">
+    <div class="card card-feature">
+      <span class="tag">Markenidee</span>
+      <h3>Wir machen Kaffee, der bleibt.</h3>
+      <p>Kaffee muss nicht nur gut sein — er muss unter neuen klimatischen Bedingungen bestehen können. Resilientere Varietäten, angepasste Anbausysteme, stabile Lieferketten.</p>
+    </div>
+    <div class="card">
+      <div class="badge">Leitsatz</div>
+      <h3>Wir zeigen, wofür wir stehen — anstatt zu viel darüber zu reden.</h3>
+      <p style="margin-top:14px;">Klar, direkt, informativ. Smart und nahbar. Nie aufgesetzt.</p>
+    </div>
+    <div class="card">
+      <div class="badge">What we do</div>
+      <h3>We research, develop and import climate‑resilient green coffee.</h3>
+      <p style="margin-top:14px;">From research to roastery — wir übersetzen wissenschaftliche Erkenntnisse in marktfähigen, zugänglichen Rohkaffee.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VERSPRECHEN -->
+<section id="versprechen" class="wrap">
+  <div class="sec-head">
+    <h2>Markenversprechen</h2>
+    <div class="sec-kicker">02 — Quality that lasts</div>
+  </div>
+  <div class="grid grid-3">
+    <div class="promise">
+      <div class="num">01</div>
+      <h3>Qualität braucht Klimafestigkeit.</h3>
+      <p>Kaffee muss nicht nur gut sein — er muss unter neuen klimatischen Bedingungen bestehen.</p>
+      <ul>
+        <li>Resilientere Varietäten</li>
+        <li>Angepasste Anbausysteme</li>
+        <li>Stabile Lieferketten</li>
+      </ul>
+      <div class="claim">„Here for the long brew."</div>
+    </div>
+    <div class="promise">
+      <div class="num">02</div>
+      <h3>Qualität beginnt beim Farmer.</h3>
+      <p>HY stellt den Farmer ins Zentrum. Ohne wirtschaftliche Perspektive gibt es keine nachhaltige Qualität.</p>
+      <ul>
+        <li>Farmer können langfristig planen</li>
+        <li>Anbau bleibt unter Klimawandel möglich</li>
+        <li>Qualität nicht auf Kosten der Menschen</li>
+      </ul>
+      <div class="claim">„Your coffee, their future."</div>
+    </div>
+    <div class="promise">
+      <div class="num">03</div>
+      <h3>Qualität entsteht durch umsetzbares Wissen.</h3>
+      <p>HY nutzt Erkenntnisse aus Forschung und Praxis — und übersetzt sie in marktfähigen, zugänglichen Rohkaffee.</p>
+      <ul>
+        <li>Science → Roastery</li>
+        <li>Komplexes verständlich machen</li>
+        <li>Insights statt Buzzwords</li>
+      </ul>
+      <div class="claim">„From Research to Roastery."</div>
+    </div>
+  </div>
+</section>
+
+<!-- TONALITÄT -->
+<section id="tonalitaet" class="wrap">
+  <div class="sec-head">
+    <h2>Tonalität</h2>
+    <div class="sec-kicker">03 — Voice</div>
+  </div>
+  <div class="tone">
+    <div>
+      <div class="lead">
+        Die Tonalität von <strong>HYCoffee</strong> ist grundsätzlich <strong>informativ und klar</strong>.
+        In der Phase des Markenaufbaus steht im Vordergrund, unserer Zielgruppe verständlich zu vermitteln,
+        wer wir sind, wofür wir stehen und was HYCoffee ausmacht.
+        <br/><br/>
+        Gleichzeitig darf HYCoffee in gezielten Momenten Charakter zeigen: punktuell mit einer frechen,
+        selbstbewussten und charmanten Note — insbesondere in Headlines, Key Messages oder Highlights.
+      </div>
+      <div class="examples">
+        <div><strong>Informativ:</strong> Wir erforschen, entwickeln und liefern klimaresilienten Rohkaffee.</div>
+        <div><strong>Frech:</strong> Im Kaffeekontext: Ist das Wort Innovation noch ein zeitgemäßes?</div>
+      </div>
+    </div>
+    <div>
+      <div class="check">
+        Egal was wir schreiben, wir checken immer gegen:<br/>
+        <em style="font-style:normal;">Würden wir das auch so sagen?</em><br/>
+        Wenn ja — GUT.
+      </div>
+      <div class="pillrow">
+        <span>nahbar</span><span>smart</span><span>klar</span><span>selbstbewusst</span><span>nie aufgesetzt</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KANÄLE -->
+<section id="kanaele" class="wrap">
+  <div class="sec-head">
+    <h2>Kanäle</h2>
+    <div class="sec-kicker">04 — Channels &amp; Roles</div>
+  </div>
+
+  <div class="grid grid-2">
+    <!-- Website -->
+    <div class="card channel">
+      <div class="icon">🌐</div>
+      <h3>Website</h3>
+      <div class="role">Zentrale Informationsplattform. Schafft Verständnis, Orientierung und Vertrauen — Nutzer:innen sollen in Sekunden erfassen, was HYCoffee macht.</div>
+      <div class="dolist">
+        <div>
+          <h4>Do</h4>
+          <ul>
+            <li>„HYCoffee macht …"</li>
+            <li>„So funktioniert …"</li>
+            <li>„Darum ist das relevant …"</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Don't</h4>
+          <ul>
+            <li>Unklare Buzzwords</li>
+            <li>Übertriebene Werbesprache</li>
+            <li>Zu verspielte Kommunikation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instagram -->
+    <div class="card channel">
+      <div class="icon">📸</div>
+      <h3>Instagram</h3>
+      <div class="role">Zeigt die Persönlichkeit der Marke. Lauter, mutiger, emotionaler. Schafft Aufmerksamkeit, Wiedererkennung und Nähe. <strong>Sprache: Englisch.</strong></div>
+      <div class="dolist">
+        <div>
+          <h4>Do</h4>
+          <ul>
+            <li>Unerwartete Formulierungen</li>
+            <li>Starke Headlines</li>
+            <li>Humor &amp; Persönlichkeit</li>
+            <li>„Coffee first. Questions later."</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Don't</h4>
+          <ul>
+            <li>Corporate-Floskeln</li>
+            <li>Rein produktbezogen</li>
+            <li>Überladene Botschaften</li>
+            <li>DE/EN gemischt im selben Post</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="card channel">
+      <div class="icon">💼</div>
+      <h3>LinkedIn</h3>
+      <div class="role">Positioniert HYCoffee als relevante Stimme — eine Marke, der Leute folgen, weil sie etwas mitnehmen. <strong>Sprache: Deutsch.</strong></div>
+      <div class="dolist">
+        <div>
+          <h4>Do</h4>
+          <ul>
+            <li>„Wusstest du, dass …?"</li>
+            <li>Menschliche Geschichten</li>
+            <li>Unerwartete Perspektiven</li>
+            <li>Lerninhalte mit Persönlichkeit</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Don't</h4>
+          <ul>
+            <li>Reine Eigenwerbung</li>
+            <li>Klassische Erfolgspostings</li>
+            <li>Zu formell / distanziert</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Merch -->
+    <div class="card channel">
+      <div class="icon">🎁</div>
+      <h3>Merch</h3>
+      <div class="role">Alles, was verteilt wird, soll Menschen so gefallen, dass sie es zuhause aufhängen, am Schreibtisch liegen lassen oder sichtbar hinstellen.</div>
+      <div class="dolist">
+        <div>
+          <h4>Do</h4>
+          <ul>
+            <li>Charmante Aussagen mit Persönlichkeit</li>
+            <li>Schöne, reduzierte Designs</li>
+            <li>Nachhaltig produziert</li>
+            <li>Logo GROß einsetzen</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Don't</h4>
+          <ul>
+            <li>Reine Werbebotschaften</li>
+            <li>Überladene Gestaltung</li>
+            <li>Wegwerfcharakter</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="merch-rule" style="margin-top:16px;">
+    „Wenn es nach dem Event direkt im Müll landet, erfüllt es seinen Zweck nicht."
+    <small>Merch‑Regel</small>
+  </div>
+</section>
+
+<!-- TEXTBAUSTEINE -->
+<section id="bausteine" class="wrap">
+  <div class="sec-head">
+    <h2>Textbausteine</h2>
+    <div class="sec-kicker">06 — Vielfältig anwendbar · DE ↔ EN</div>
+  </div>
+  <div class="quotes">
+    <div class="quote">Qualität, die bleibt.<span class="lang">DE</span></div>
+    <div class="quote">Kaffee, der bleibt.<span class="lang">DE</span></div>
+    <div class="quote">Unser Kaffee ist gekommen, um zu bleiben.<span class="lang">DE</span></div>
+    <div class="quote">Wissenschaft trifft Geschmack, Geschmack trifft Qualität, Qualität trifft Zukunft.<span class="lang">DE</span></div>
+    <div class="quote">Wie lange reicht mein Arabica noch?<span class="lang">DE · Frage</span></div>
+    <div class="quote">Ist Nachhaltigkeit Buzzword oder Strategie?<span class="lang">DE · Frage</span></div>
+    <div class="quote">Was kostet Stillstand wirklich?<span class="lang">DE · Frage</span></div>
+    <div class="quote">Fairness für Farmer: Gefühl oder Geschäftsmodell?<span class="lang">DE · Frage</span></div>
+    <div class="quote">Coffee, powered by science.<span class="lang">EN</span></div>
+    <div class="quote">Beans off the beaten path.<span class="lang">EN</span></div>
+    <div class="quote">Your coffee, their future.<span class="lang">EN</span></div>
+    <div class="quote">Here for the long brew.<span class="lang">EN</span></div>
+    <div class="quote">Rooted in farming, grounded in the future.<span class="lang">EN</span></div>
+    <div class="quote">Roasting coffee, nobody else.<span class="lang">EN</span></div>
+    <div class="quote">Keeping coffee awake.<span class="lang">EN</span></div>
+  </div>
+</section>
+
+<!-- SOCIAL HOW-TO -->
+<section class="wrap">
+  <div class="sec-head">
+    <h2>Caption &amp; Hashtags</h2>
+    <div class="sec-kicker">07 — How to write</div>
+  </div>
+
+  <div class="panel">
+    <h3>Aufbau einer Caption</h3>
+    <div class="row">
+      <div>
+        <h4>1 · Hook</h4>
+        <ul>
+          <li>Aufmerksamkeit erzeugen</li>
+          <li>Neugier wecken</li>
+          <li>Frage stellen</li>
+          <li>Überraschen / provozieren</li>
+        </ul>
+      </div>
+      <div>
+        <h4>2 · Inhalt</h4>
+        <ul>
+          <li>Eine kurze Information</li>
+          <li>Ein Fakt</li>
+          <li>Eine Perspektive</li>
+          <li>Eine kleine Geschichte</li>
+        </ul>
+      </div>
+      <div>
+        <h4>3 · Interaktion</h4>
+        <ul>
+          <li>What do you think?</li>
+          <li>Agree or disagree?</li>
+          <li>Would you choose differently?</li>
+          <li>Tell us your take.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Prinzip</h4>
+        <ul>
+          <li><strong>Ein Post = eine Botschaft.</strong></li>
+          <li>Ein Gedanke pro Caption.</li>
+          <li>Kein Sprachwechsel im Post.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:16px;">
+    <h3>Hashtags</h3>
+    <div class="row">
+      <div>
+        <h4>Groß · Reichweite</h4>
+        <ul>
+          <li><code>#coffee</code></li>
+          <li><code>#coffeetime</code></li>
+          <li><code>#specialtycoffee</code></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Mittel · gezielter</h4>
+        <ul>
+          <li><code>#coffeeculture</code></li>
+          <li><code>#morningcoffee</code></li>
+          <li><code>#coffeelover</code></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Nische · Community</h4>
+        <ul>
+          <li><code>#coffeecommunity</code></li>
+          <li><code>#coffeeritual</code></li>
+          <li><code>#coffeeinsights</code></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Regel</h4>
+        <ul>
+          <li>Mischung aus groß / mittel / Nische</li>
+          <li>Thematisch passend statt generisch</li>
+          <li>Nicht überladen — gezielt</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT PLAN -->
+<section id="plan" class="wrap">
+  <div class="sec-head">
+    <h2>Content Plan</h2>
+    <div class="sec-kicker">08 — 2 Wochen Juni 2026</div>
+  </div>
+
+  <div class="cal">
+    <div class="cal-head">
+      <h3>Juni 2026</h3>
+      <div class="cal-nav">
+        <button>‹</button>
+        <button class="today">Heute</button>
+        <button>›</button>
+      </div>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-dow">Mo</div><div class="cal-dow">Di</div><div class="cal-dow">Mi</div><div class="cal-dow">Do</div><div class="cal-dow">Fr</div><div class="cal-dow">Sa</div><div class="cal-dow">So</div>
+
+      <div class="cal-cell in">1<div class="pill">What We do</div></div>
+      <div class="cal-cell in">2</div>
+      <div class="cal-cell in">3<div class="pill">Introducing Sophie</div></div>
+      <div class="cal-cell in">4<div class="pill">Highlight Q</div></div>
+      <div class="cal-cell in">5<div class="pill">Introducing Charlotte</div></div>
+      <div class="cal-cell in">6<div class="pill">Are you a coffee roaster?</div></div>
+      <div class="cal-cell in">7</div>
+
+      <div class="cal-cell in">8<div class="pill">About: Our coffees</div></div>
+      <div class="cal-cell in">9<div class="pill">Excelsa Interview</div></div>
+      <div class="cal-cell in">10</div>
+      <div class="cal-cell in">11<div class="pill">Did you know?</div></div>
+      <div class="cal-cell in">12</div>
+      <div class="cal-cell in">13<div class="pill">Story</div></div>
+      <div class="cal-cell in">14<div class="pill">Story</div></div>
+    </div>
+  </div>
+
+  <p style="margin-top:18px; font-size:14px; color:var(--ink-2);">
+    Ongoing &amp; ungefiltert: <strong>Stories posten</strong> (auch Homeoffice‑Situationen, Behind the Scenes).
+    Alles, was gepostet wird, wird auch gerepostet.
+  </p>
+</section>
+
+<!-- GUIDELINES NOTE -->
+<section class="wrap">
+  <div class="merch-rule" style="background:var(--accent); color:var(--accent-ink);">
+    Keine Regeln, die unbedingt so passieren müssen — Guidelines, die euch helfen sollen.
+    Social Media funktioniert am besten, wenn ihr Spaß habt. Don't overthink. Don't overbrand.
+    <small>Generell</small>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div>HYCoffee × CJX Studio · Roman Roth · Text &amp; Social Media Guidelines</div>
+    <div>Mai 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Tiny lang toggle
+  document.querySelectorAll('.nav-lang span').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.nav-lang span').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+    });
+  });
+  // Smooth-scroll for nav links
+  document.querySelectorAll('.nav a').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id && id.startsWith('#')) {
+        const target = document.querySelector(id);
+        if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HyCoffee Pattern Lab</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="panel controls-panel">
+        <header class="panel-header">
+          <a class="home-link" href="../../index.html" aria-label="Back to Home">&larr; HOME</a>
+          <p>PATTERN LAB</p>
+          <p>PURPLE / GREEN / YELLOW / WHITE / BLACK STROKE</p>
+        </header>
+
+        <section id="controls" class="controls" aria-label="Pattern controls"></section>
+
+        <div class="button-row">
+          <button id="randomizeButton" type="button">RANDOMIZE</button>
+          <button id="saveButton" type="button">SAVE PNG</button>
+        </div>
+      </aside>
+
+      <section class="panel preview-panel">
+        <header class="panel-header panel-header-inline">
+          <p>LIVE OUTPUT</p>
+          <p id="modeLabel">CELL FIELD</p>
+        </header>
+
+        <div class="canvas-frame">
+          <canvas id="patternCanvas" width="1400" height="1400" aria-label="Pattern preview"></canvas>
+        </div>
+
+        <footer class="legend">
+          <div class="swatch"><span style="background:#ab9ff2"></span><p>#AB9FF2</p></div>
+          <div class="swatch"><span style="background:#3a563b"></span><p>#3A563B</p></div>
+          <div class="swatch"><span style="background:#fae34c"></span><p>#FAE34C</p></div>
+          <div class="swatch"><span style="background:#ffffff"></span><p>#FFFFFF</p></div>
+          <div class="swatch"><span style="background:#000000"></span><p>#000000</p></div>
+        </footer>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

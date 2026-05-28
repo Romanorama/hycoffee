@@ -1,0 +1,275 @@
+/* ============================================================
+   HYCoffee — CI Design System
+   Single source of truth. Mirrors tools/ci-guidelines.html.
+   Light only. Purple is the only accent.
+   Font path is relative to this file: ../hycoffee/fonts/*
+   ============================================================ */
+
+@font-face {
+  font-family: 'HAL Timezone';
+  src: url('../hycoffee/fonts/HALTimezone-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DGMSprinter';
+  src: url('../hycoffee/fonts/DGMSprinter-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Neutral monochrome system + purple accent */
+  --hy-white:    #FFFFFF;
+  --hy-bg:       #F5F5F7;
+  --hy-ink:      #111113;
+  --hy-grey-1:   #3A3A3D;
+  --hy-grey-2:   #6E6E73;
+  --hy-grey-3:   #A1A1A6;
+  --hy-purple:   #AB9FF2;
+  --hy-purple-d: #6F5BD9;
+
+  --bg:        var(--hy-bg);
+  --bg-elev:   var(--hy-white);
+  --ink:       var(--hy-ink);
+  --ink-2:     var(--hy-grey-2);
+  --ink-3:     var(--hy-grey-3);
+  --line:        rgba(17,17,19,0.08);
+  --line-strong: rgba(17,17,19,0.16);
+
+  --accent:      var(--hy-purple);
+  --accent-ink:  var(--hy-ink);
+  --accent-soft: rgba(171,159,242,0.16);
+  --accent-alt:  var(--hy-purple-d);
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --shadow-card:  0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.05);
+  --shadow-hover: 0 1px 2px rgba(0,0,0,0.06), 0 14px 40px rgba(0,0,0,0.09);
+  --header-blur: saturate(180%) blur(20px);
+
+  --font-display: 'HAL Timezone', 'DGMSprinter', serif;
+  --font-body:    'DGMSprinter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+  font-synthesis: none;
+  -webkit-font-synthesis: none;
+}
+
+h1, h2, h3, h4,
+.ci-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- NAV ---------- */
+.ci-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(245,245,247,0.78);
+  -webkit-backdrop-filter: var(--header-blur);
+  backdrop-filter: var(--header-blur);
+  border-bottom: 1px solid var(--line);
+}
+.ci-nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 22px;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px;
+  gap: 18px;
+}
+.ci-nav-brand { font-weight: 500; letter-spacing: -0.02em; }
+.ci-nav-home {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ink); opacity: 0.75;
+  transition: opacity .2s;
+}
+.ci-nav-home:hover { opacity: 1; }
+.ci-nav-home .arrow { font-size: 14px; line-height: 1; }
+.ci-nav ul { list-style: none; display: flex; gap: 28px; padding: 0; margin: 0; }
+.ci-nav a { color: var(--ink); opacity: 0.85; transition: opacity .2s; }
+.ci-nav a:hover, .ci-nav a.active { opacity: 1; }
+
+/* ---------- CONTAINER / SECTIONS ---------- */
+.ci-wrap { max-width: 1200px; margin: 0 auto; padding: 0 22px; }
+
+.ci-hero {
+  padding: 90px 22px 64px;
+  text-align: center;
+  max-width: 980px; margin: 0 auto;
+}
+.ci-eyebrow {
+  font-size: 13px; font-weight: 500;
+  color: var(--ink-2);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+.ci-hero h1 {
+  font-size: clamp(40px, 6.8vw, 80px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  margin: 0 0 22px;
+}
+.ci-hero h1 em {
+  font-style: normal;
+  color: var(--hy-purple);
+}
+.ci-hero p {
+  font-size: 21px; line-height: 1.4; color: var(--ink-2);
+  max-width: 720px; margin: 0 auto;
+}
+
+section.ci-section { padding: 96px 0 48px; }
+.ci-sec-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin: 0 0 48px; gap: 16px;
+  padding-top: 16px;
+}
+.ci-sec-head h2 {
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 600; letter-spacing: -0.025em;
+  margin: 0;
+}
+.ci-sec-kicker { font-size: 13px; color: var(--ink-3); font-weight: 500; }
+
+/* ---------- GRID ---------- */
+.ci-grid { display: grid; gap: 16px; }
+.ci-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.ci-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.ci-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.ci-grid-5 { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 900px) {
+  .ci-grid-2, .ci-grid-3, .ci-grid-4, .ci-grid-5 { grid-template-columns: 1fr; }
+}
+
+/* ---------- CARDS ---------- */
+.ci-card {
+  background: var(--bg-elev);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--line);
+  transition: transform .25s ease, box-shadow .25s ease;
+  color: var(--ink);
+}
+.ci-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.ci-card h3 {
+  font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+.ci-card p { color: var(--ink-2); margin: 0; font-size: 15px; line-height: 1.5; }
+
+.ci-badge {
+  display: inline-flex; align-items: center;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--ink-2);
+}
+.ci-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 12px; font-weight: 500;
+  padding: 5px 11px; border-radius: 999px;
+}
+
+/* ---------- BUTTONS ---------- */
+.ci-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+  text-decoration: none;
+  line-height: 1;
+}
+.ci-btn:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+.ci-btn-primary {
+  background: var(--ink); color: var(--bg);
+  border-color: var(--ink);
+}
+.ci-btn-primary:hover { background: #000; border-color: #000; color: var(--bg); }
+.ci-btn-accent {
+  background: var(--accent); color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.ci-btn-accent:hover { background: var(--accent-alt); border-color: var(--accent-alt); color: var(--bg); }
+.ci-btn-ghost { background: transparent; }
+
+/* ---------- INPUTS ---------- */
+.ci-input, .ci-textarea, .ci-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--bg-elev);
+  transition: border-color .15s, box-shadow .15s;
+}
+.ci-input:focus, .ci-textarea:focus, .ci-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.ci-textarea { resize: vertical; }
+.ci-select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23111113' d='M6 8L0 0h12z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.ci-label {
+  display: block;
+  font-size: 11px; font-weight: 500;
+  color: var(--ink-3);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+/* ---------- PILL ROW ---------- */
+.ci-pillrow { display: flex; flex-wrap: wrap; gap: 6px; }
+.ci-pillrow span {
+  font-size: 12px; color: var(--ink-2);
+  background: rgba(17,17,19,0.05); padding: 5px 10px; border-radius: 999px;
+}
+
+/* ---------- PANEL ---------- */
+.ci-panel {
+  background: var(--bg-elev); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-card);
+}
+
+/* ---------- FOOTER ---------- */
+.ci-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 60px; padding: 28px 0 40px;
+  font-size: 12px; color: var(--ink-3);
+}
+.ci-footer .ci-wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }

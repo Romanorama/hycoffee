@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYCoffee — CD Assets</title>
+<link rel="stylesheet" href="../../assets/ci/ci.css">
+<style>
+  .page-layout {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 22px 64px;
+  }
+
+  .sidebar-nav {
+    position: sticky;
+    top: 72px;
+    align-self: start;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .sidebar-nav a {
+    display: block;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: var(--ink-2);
+    border-left: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  .sidebar-nav a:hover { color: var(--ink); }
+  .sidebar-nav a.active {
+    color: var(--ink);
+    border-left-color: var(--accent);
+  }
+
+  section { scroll-margin-top: 80px; margin-bottom: 72px; }
+  section h2 {
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin: 0 0 8px;
+  }
+  .section-sub {
+    font-size: 15px;
+    color: var(--ink-2);
+    margin: 0 0 28px;
+    max-width: 680px;
+    line-height: 1.5;
+  }
+
+  /* COLOR GRID */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .color-card {
+    appearance: none;
+    width: 100%;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    padding: 0;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .color-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+  .color-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .color-card.is-copied { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft, rgba(171,159,242,.35)), var(--shadow-hover); }
+  .color-card.is-copied .color-info code { color: var(--accent); font-weight: 600; }
+  .color-swatch { position: relative; height: 120px; border-bottom: 1px solid var(--line); }
+  .color-swatch::after {
+    content: 'Kopiert ✓';
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font: 600 14px/1 ui-sans-serif, system-ui, sans-serif;
+    color: #fff;
+    background: rgba(0,0,0,.45);
+    opacity: 0;
+    transition: opacity .15s;
+    pointer-events: none;
+  }
+  .color-card.is-copied .color-swatch::after { opacity: 1; }
+  .color-info { padding: 14px 16px 16px; }
+  .color-info strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .color-info code {
+    display: block;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-bottom: 2px;
+  }
+  .meta {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+  }
+
+  /* STRUCTURE */
+  .structure-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .structure-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+  .structure-card header {
+    padding: 16px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.01em;
+  }
+  .tone-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    min-height: 110px;
+  }
+  .tone {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 3px;
+    padding: 12px;
+    font-size: 11px;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .tone strong { font-size: 12px; font-weight: 600; }
+  .tone.dark { color: #fff; }
+
+  /* FONTS */
+  .font-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 36px;
+    margin-bottom: 16px;
+  }
+  .font-name {
+    font-size: 11px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .font-sample-hal {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  .font-sample-dgm {
+    font-family: var(--font-body);
+    font-size: 22px;
+    line-height: 1.45;
+    max-width: 780px;
+    color: var(--ink);
+  }
+
+  /* LOGOS */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .logo-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    min-height: 200px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .logo-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+  .logo-card.dark {
+    background: var(--hy-ink);
+    border-color: var(--hy-ink);
+    color: var(--bg);
+  }
+  .logo-card img {
+    display: block;
+    width: 100%;
+    max-height: 100px;
+    object-fit: contain;
+  }
+  .logo-card-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .logo-title {
+    font-size: 13px;
+    color: var(--ink-2);
+    letter-spacing: -0.005em;
+  }
+  .logo-card.dark .logo-title { color: rgba(255,255,255,0.72); }
+  .logo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .logo-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 34px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 11px;
+    color: var(--ink);
+    background: rgba(255,255,255,0.6);
+    transition: border-color .2s, transform .2s;
+  }
+  .logo-actions a:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .logo-card.dark .logo-actions a {
+    color: var(--bg);
+    border-color: rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* FILES */
+  .file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .file-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 20px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    color: var(--ink);
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .file-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+  }
+  .file-link span { font-size: 14px; font-weight: 500; }
+  .file-link code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    color: var(--ink-3);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+
+  /* IMAGES */
+  .image-collection-grid {
+    display: grid;
+    gap: 18px;
+  }
+  .image-collection {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 24px;
+  }
+  .image-collection-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 18px;
+  }
+  .image-collection h3 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
+  }
+  .image-collection p {
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.45;
+    margin: 0;
+  }
+  .image-count {
+    flex: 0 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink-2);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+  .image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .image-preview {
+    appearance: none;
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--bg);
+    font: inherit;
+    text-align: left;
+    cursor: zoom-in;
+  }
+  .image-preview img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .25s;
+  }
+  .image-preview:hover img { transform: scale(1.035); }
+  .image-preview:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .image-preview.is-broken {
+    cursor: default;
+    color: var(--ink-2);
+  }
+  .image-preview.is-broken img { display: none; }
+  .image-preview.is-broken::after {
+    content: 'Vorschau nicht geladen';
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 14px;
+    color: var(--ink-2);
+    font-size: 12px;
+    line-height: 1.25;
+    text-align: center;
+  }
+  .image-preview span {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    overflow: hidden;
+    padding: 5px 7px;
+    border-radius: var(--radius-sm);
+    background: rgba(36,33,25,0.74);
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .image-preview-more {
+    display: grid;
+    place-items: center;
+    gap: 4px;
+    padding: 14px;
+    background: var(--accent-soft);
+    color: var(--ink);
+  }
+  .image-preview-more strong,
+  .image-preview-more span {
+    position: static;
+    display: block;
+    overflow: visible;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    text-align: center;
+    text-overflow: clip;
+    white-space: normal;
+  }
+  .image-preview-more strong {
+    font-size: 24px;
+    line-height: 1;
+  }
+  .image-preview-more span {
+    max-width: 90px;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .image-file-details summary {
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .image-file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px;
+    max-height: 360px;
+    overflow: auto;
+    padding: 12px 4px 2px 0;
+  }
+  .image-file-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    background: rgba(255,255,255,0.48);
+    transition: border-color .2s, transform .2s;
+  }
+  .image-file-link:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .image-file-link span {
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .image-file-link code {
+    flex: 0 0 auto;
+    color: var(--ink-3);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+  body.preview-open {
+    overflow: hidden;
+  }
+  .image-preview-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(36,33,25,0.78);
+    backdrop-filter: blur(8px);
+  }
+  .image-preview-modal[hidden] {
+    display: none;
+  }
+  .image-preview-dialog {
+    width: min(760px, calc(100vw - 48px));
+    max-height: calc(100vh - 48px);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.32);
+  }
+  .image-preview-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .image-preview-title-wrap {
+    min-width: 0;
+  }
+  .image-preview-title-wrap strong,
+  .image-preview-title-wrap span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .image-preview-title-wrap strong {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .image-preview-title-wrap span {
+    margin-top: 2px;
+    color: var(--ink-2);
+    font-size: 12px;
+  }
+  .image-preview-title-wrap em {
+    display: block;
+    margin-top: 1px;
+    color: var(--ink-3);
+    font-size: 11px;
+    font-style: normal;
+  }
+  .image-preview-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+  .image-preview-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.64);
+    color: var(--ink);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color .2s, transform .2s;
+  }
+  .image-preview-close {
+    width: 36px;
+    padding: 0;
+  }
+  .image-preview-close:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .image-preview-body {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .image-preview-strip {
+    display: grid;
+    align-content: start;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    overflow-y: auto;
+    min-height: 0;
+    max-height: 100%;
+    padding: 16px;
+    background: rgba(255,255,255,0.72);
+    scroll-padding: 14px 0;
+  }
+  .image-preview-thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .image-preview-thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  @media (max-width: 760px) {
+    .ci-nav-inner { justify-content: flex-start; }
+    .ci-nav ul { display: none; }
+    .page-layout { grid-template-columns: 1fr; gap: 16px; padding: 24px 16px 48px; }
+    .sidebar-nav { display: none; }
+    .image-collection { padding: 18px; }
+    .image-collection-head { flex-direction: column; gap: 10px; }
+    .image-preview-grid { grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); }
+    .image-preview-modal { padding: 12px; }
+    .image-preview-dialog {
+      width: calc(100vw - 24px);
+      max-height: calc(100vh - 24px);
+    }
+    .image-preview-bar {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .image-preview-actions {
+      width: 100%;
+    }
+    .image-preview-close { margin-left: auto; }
+    .image-preview-strip {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      padding: 12px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="ci-nav">
+  <div class="ci-nav-inner">
+    <a href="../../index.html" class="ci-nav-home">
+      <span class="arrow">&larr;</span>
+      <span class="ci-nav-brand ci-display">HYCoffee Toolbox</span>
+    </a>
+    <ul>
+      <li><a href="#logos">Logos</a></li>
+      <li><a href="#farben">Farben</a></li>
+      <li><a href="#strukturfarben">Struktur</a></li>
+      <li><a href="#schriften">Schriften</a></li>
+      <li><a href="#bilder">Bilder</a></li>
+      <li><a href="#dateien">Dateien</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-layout">
+  <nav class="sidebar-nav" id="sidebar-nav">
+    <a href="#logos">Logos</a>
+    <a href="#farben">Farben</a>
+    <a href="#strukturfarben">Strukturfarben</a>
+    <a href="#schriften">Schriften</a>
+    <a href="#bilder">Bilder</a>
+    <a href="#dateien">Dateien</a>
+  </nav>
+
+  <main>
+    <section id="logos">
+      <h2>Logo Downloads</h2>
+      <p class="section-sub">Alle HYCoffee-Logos als direkte Downloads in SVG, PNG 3K und EPS.</p>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <img src="../../assets/hycoffee/logos/svg/HyCoffee/HyCoffee_Logo.svg" alt="HyCoffee Logo">
+          <div class="logo-card-head">
+            <div class="logo-title">HyCoffee Logo</div>
+            <div class="logo-actions">
+              <a href="../../assets/hycoffee/logos/svg/HyCoffee/HyCoffee_Logo.svg" download>SVG</a>
+              <a href="../../assets/hycoffee/logos/png/HyCoffee/HyCoffee_Logo_3K.png" download>PNG</a>
+              <a href="../../assets/hycoffee/logos/eps/HyCoffee/HyCoffee_Logo.eps" download>EPS</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card dark">
+          <img src="../../assets/hycoffee/logos/svg/HyCoffee/HyCoffee_Logo_Invert.svg" alt="HyCoffee Logo invertiert">
+          <div class="logo-card-head">
+            <div class="logo-title">HyCoffee Logo invertiert</div>
+            <div class="logo-actions">
+              <a href="../../assets/hycoffee/logos/svg/HyCoffee/HyCoffee_Logo_Invert.svg" download>SVG</a>
+              <a href="../../assets/hycoffee/logos/png/HyCoffee/HyCoffee_Logo_Invert_3K.png" download>PNG</a>
+              <a href="../../assets/hycoffee/logos/eps/HyCoffee/HyCoffee_Logo_Invert.eps" download>EPS</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <img src="../../assets/hycoffee/logos/svg/HyCoffee_Subline/HyCoffee_Logo_Subline.svg" alt="HyCoffee Logo mit Subline">
+          <div class="logo-card-head">
+            <div class="logo-title">HyCoffee mit Subline</div>
+            <div class="logo-actions">
+              <a href="../../assets/hycoffee/logos/svg/HyCoffee_Subline/HyCoffee_Logo_Subline.svg" download>SVG</a>
+              <a href="../../assets/hycoffee/logos/png/HyCoffee_Subline/HyCoffee_Logo_Subline_3K.png" download>PNG</a>
+              <a href="../../assets/hycoffee/logos/eps/HyCoffee_Subline/HyCoffee_Logo_Subline.eps" download>EPS</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card dark">
+          <img src="../../assets/hycoffee/logos/svg/HyCoffee_Subline/HyCoffee_Logo_Subline_Invert.svg" alt="HyCoffee Logo mit Subline invertiert">
+          <div class="logo-card-head">
+            <div class="logo-title">HyCoffee mit Subline invertiert</div>
+            <div class="logo-actions">
+              <a href="../../assets/hycoffee/logos/svg/HyCoffee_Subline/HyCoffee_Logo_Subline_Invert.svg" download>SVG</a>
+              <a href="../../assets/hycoffee/logos/png/HyCoffee_Subline/HyCoffee_Logo_Subline_Invert_3K.png" download>PNG</a>
+              <a href="../../assets/hycoffee/logos/eps/HyCoffee_Subline/HyCoffee_Logo_Subline_Invert.eps" download>EPS</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <img src="../../assets/hycoffee/logos/svg/Hy/Hy_Logo.svg" alt="Hy Logo">
+          <div class="logo-card-head">
+            <div class="logo-title">Hy Logo</div>
+            <div class="logo-actions">
+              <a href="../../assets/hycoffee/logos/svg/Hy/Hy_Logo.svg" download>SVG</a>
+              <a href="../../assets/hycoffee/logos/png/Hy/Hy_Logo_3K.png" download>PNG</a>
+              <a href="../../assets/hycoffee/logos/eps/Hy/Hy_Logo.eps" download>EPS</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card dark">
+          <img src="../../assets/hycoffee/logos/svg/Hy/Hy_Logo_Invert.svg" alt="Hy Logo invertiert">
+          <div class="logo-card-head">
+            <div class="logo-title">Hy Logo invertiert</div>
+            <div class="logo-actions">
+              <a href="../../assets/hycoffee/logos/svg/Hy/Hy_Logo_Invert.svg" download>SVG</a>
+              <a href="../../assets/hycoffee/logos/png/Hy/Hy_Logo_Invert_3K.png" download>PNG</a>
+              <a href="../../assets/hycoffee/logos/eps/Hy/Hy_Logo_Invert.eps" download>EPS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="farben">
+      <h2>Farben</h2>
+      <p class="section-sub">Primärwerte aus RGB_Colors.ase, CMYK_Colors.ase und der HyCoffee-Farbübersicht.</p>
+      <div class="color-grid">
+        <button class="color-card" type="button" data-hex="#242119" aria-label="Hex #242119 kopieren"><div class="color-swatch" style="background:#242119;"></div><div class="color-info"><strong>Hy Neutral</strong><code>#242119</code><span class="meta">RGB 36 / 33 / 25</span><span class="meta">CMYK 70% / 67% / 77% / 78%</span></div></button>
+        <button class="color-card" type="button" data-hex="#3A563B" aria-label="Hex #3A563B kopieren"><div class="color-swatch" style="background:#3A563B;"></div><div class="color-info"><strong>Hy Grün</strong><code>#3A563B</code><span class="meta">RGB 58 / 86 / 59</span><span class="meta">CMYK 75% / 45% / 76% / 38%</span></div></button>
+        <button class="color-card" type="button" data-hex="#AB9FF2" aria-label="Hex #AB9FF2 kopieren"><div class="color-swatch" style="background:#AB9FF2;"></div><div class="color-info"><strong>Hy Lila</strong><code>#AB9FF2</code><span class="meta">RGB 171 / 159 / 242</span><span class="meta">CMYK 39% / 41% / 0% / 0%</span></div></button>
+        <button class="color-card" type="button" data-hex="#FAE34C" aria-label="Hex #FAE34C kopieren"><div class="color-swatch" style="background:#FAE34C;"></div><div class="color-info"><strong>Hy Gelb</strong><code>#FAE34C</code><span class="meta">RGB 250 / 227 / 76</span><span class="meta">CMYK 5% / 5% / 78% / 0%</span></div></button>
+        <button class="color-card" type="button" data-hex="#FBF8F2" aria-label="Hex #FBF8F2 kopieren"><div class="color-swatch" style="background:#FBF8F2;"></div><div class="color-info"><strong>Warm Paper</strong><code>#FBF8F2</code><span class="meta">RGB 251 / 248 / 242</span><span class="meta">CMYK 2% / 2% / 6% / 0%</span></div></button>
+        <button class="color-card" type="button" data-hex="#3F3B33" aria-label="Hex #3F3B33 kopieren"><div class="color-swatch" style="background:#3F3B33;"></div><div class="color-info"><strong>Warm Dark Grey</strong><code>#3F3B33</code><span class="meta">RGB 63 / 59 / 51</span><span class="meta">CMYK 66% / 61% / 66% / 54%</span></div></button>
+        <button class="color-card" type="button" data-hex="#FFFFFF" aria-label="Hex #FFFFFF kopieren"><div class="color-swatch" style="background:#FFFFFF;"></div><div class="color-info"><strong>Weiß</strong><code>#FFFFFF</code><span class="meta">RGB 255 / 255 / 255</span><span class="meta">CMYK 0% / 0% / 0% / 0%</span></div></button>
+      </div>
+    </section>
+
+    <section id="strukturfarben">
+      <h2>Strukturfarben</h2>
+      <p class="section-sub">Strukturton, Mittelton und lesbarer Satt- bzw. Dark-Ton aus dem Strukturfarben-PDF.</p>
+      <div class="structure-grid">
+        <div class="structure-card">
+          <header>Lila</header>
+          <div class="tone-row">
+            <div class="tone" style="background:#F3F0FF;"><strong>Struktur</strong><span>#F3F0FF</span></div>
+            <div class="tone" style="background:#AB9FF2;"><strong>Mittel</strong><span>#AB9FF2</span></div>
+            <div class="tone dark" style="background:#5639E6;"><strong>Satt</strong><span>#5639E6</span></div>
+          </div>
+        </div>
+        <div class="structure-card">
+          <header>Gelb</header>
+          <div class="tone-row">
+            <div class="tone" style="background:#FFF7CC;"><strong>Struktur</strong><span>#FFF7CC</span></div>
+            <div class="tone" style="background:#FAE34C;"><strong>Mittel</strong><span>#FAE34C</span></div>
+            <div class="tone dark" style="background:#765700;"><strong>Dark</strong><span>#765700</span></div>
+          </div>
+        </div>
+        <div class="structure-card">
+          <header>Grün</header>
+          <div class="tone-row">
+            <div class="tone" style="background:#EEF6EA;"><strong>Struktur</strong><span>#EEF6EA</span></div>
+            <div class="tone" style="background:#83A86F;"><strong>Mittel</strong><span>#83A86F</span></div>
+            <div class="tone dark" style="background:#3A563B;"><strong>Dark</strong><span>#3A563B</span></div>
+          </div>
+        </div>
+        <div class="structure-card">
+          <header>Neutral</header>
+          <div class="tone-row">
+            <div class="tone" style="background:#FBF8F2;"><strong>Struktur</strong><span>#FBF8F2</span></div>
+            <div class="tone dark" style="background:#7E766B;"><strong>Mittel</strong><span>#7E766B</span></div>
+            <div class="tone dark" style="background:#242119;"><strong>Dark</strong><span>#242119</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="schriften">
+      <h2>Schriften</h2>
+      <p class="section-sub">HYCoffee nutzt HAL Timezone als markante Display-Schrift und DGM Sprinter für laufende UI- und Informationstexte.</p>
+      <div class="font-card">
+        <div class="font-name">HAL Timezone · Display</div>
+        <div class="font-sample-hal">Climate resilient coffee</div>
+      </div>
+      <div class="font-card">
+        <div class="font-name">DGM Sprinter · Body</div>
+        <div class="font-sample-dgm">HYCoffee verbindet klimaresiliente Kaffeesorten mit transparenten Lieferketten und direktem Marktzugang für Produzent:innen.</div>
+      </div>
+    </section>
+
+    <section id="bilder">
+      <h2>Bilder</h2>
+      <p class="section-sub">Bildfundus aus <code>assets/images</code>, gruppiert nach Herkunft und Einsatzgebiet. JPG-, JPEG-, PNG-, WEBP- und GIF-Dateien werden als Vorschau gezeigt.</p>
+      <div id="image-assets" class="image-collection-grid"></div>
+    </section>
+
+    <section id="dateien">
+      <h2>Dateien</h2>
+      <p class="section-sub">Die Rohdaten aus dem CD-Asset-Bestand liegen jetzt ebenfalls innerhalb der Guide-Software.</p>
+      <div class="file-grid">
+        <a class="file-link" href="../../assets/hycoffee/colors/_Hy_Farbuebersicht_Primär.pdf" download><span>Farbübersicht Primär</span><code>PDF</code></a>
+        <a class="file-link" href="../../assets/hycoffee/colors/Hy_Strukturfarben.pdf" download><span>Strukturfarben</span><code>PDF</code></a>
+        <a class="file-link" href="../../assets/hycoffee/colors/RGB_Colors.ase" download><span>RGB Colors</span><code>ASE</code></a>
+        <a class="file-link" href="../../assets/hycoffee/colors/CMYK_Colors.ase" download><span>CMYK Colors</span><code>ASE</code></a>
+        <a class="file-link" href="../../assets/hycoffee/logos/svg/HyCoffee/HyCoffee_Logo.svg" download><span>HyCoffee Logo</span><code>SVG</code></a>
+        <a class="file-link" href="../../assets/hycoffee/logos/png/HyCoffee/HyCoffee_Logo_3K.png" download><span>HyCoffee Logo 3K</span><code>PNG</code></a>
+        <a class="file-link" href="../../assets/hycoffee/fonts/HALTimezone-Regular.otf" download><span>HAL Timezone Regular</span><code>OTF</code></a>
+        <a class="file-link" href="../../assets/hycoffee/fonts/DGMSprinter-Regular.otf" download><span>DGM Sprinter Regular</span><code>OTF</code></a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="ci-footer">
+  <div class="ci-wrap">
+    <div>HYCoffee × CJX Studio · CD Assets</div>
+    <div>2026</div>
+  </div>
+</footer>
+
+<div id="image-preview-modal" class="image-preview-modal" role="dialog" aria-modal="true" aria-labelledby="image-preview-title" hidden>
+  <div class="image-preview-dialog">
+    <div class="image-preview-bar">
+      <div class="image-preview-title-wrap">
+        <strong id="image-preview-title"></strong>
+        <span id="image-preview-meta"></span>
+      </div>
+      <div class="image-preview-actions">
+        <button id="image-preview-close" class="image-preview-close" type="button" aria-label="Vorschau schließen">&times;</button>
+      </div>
+    </div>
+    <div class="image-preview-body">
+      <div id="image-preview-strip" class="image-preview-strip" aria-label="Bildergalerie"></div>
+    </div>
+  </div>
+</div>
+
+<script src="../product-sheets/asset-images.js"></script>
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  const colorCards = document.querySelectorAll('.color-card[data-hex]');
+  // execCommand fallback for file:// or older Safari where navigator.clipboard
+  // is unavailable. Returns true on success.
+  const copyHexFallback = (hex) => {
+    const field = document.createElement('textarea');
+    field.value = hex;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.top = '-999px';
+    document.body.appendChild(field);
+    field.select();
+    field.setSelectionRange(0, hex.length);
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
+    document.body.removeChild(field);
+    return ok;
+  };
+  const copyHex = async (hex) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(hex);
+        return true;
+      } catch (_) { /* fall through to execCommand */ }
+    }
+    return copyHexFallback(hex);
+  };
+
+  colorCards.forEach(card => {
+    card.addEventListener('click', async () => {
+      const hex = card.dataset.hex;
+      const ok = await copyHex(hex);
+      if (!ok) {
+        window.prompt('Hex kopieren:', hex);
+        return;
+      }
+      colorCards.forEach(item => item.classList.remove('is-copied'));
+      card.classList.add('is-copied');
+      window.clearTimeout(card.copyTimeout);
+      card.copyTimeout = window.setTimeout(() => {
+        card.classList.remove('is-copied');
+      }, 1200);
+    });
+  });
+
+  const imageAssetCollectionMeta = [
+    {
+      title: 'Arabica Coffee Uganda',
+      folder: 'Arabica Coffee Uganda',
+      description: 'Arabica-Bildmaterial aus Uganda.'
+    },
+    {
+      title: 'Excelsa Coffee Uganda',
+      folder: 'Excelsa Coffee Uganda',
+      description: 'Excelsa- und Liberica-Bildmaterial aus Uganda.'
+    },
+    {
+      title: 'HyCoffee in Germany',
+      folder: 'HyCoffee in Germany',
+      description: 'HyCoffee-Motive aus Deutschland.'
+    }
+  ];
+
+  const imageAssetsRoot = document.getElementById('image-assets');
+  const previewModal = document.getElementById('image-preview-modal');
+  const previewTitle = document.getElementById('image-preview-title');
+  const previewMeta = document.getElementById('image-preview-meta');
+  const previewClose = document.getElementById('image-preview-close');
+  const previewStrip = document.getElementById('image-preview-strip');
+  const previewExtensions = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif']);
+  const teaserLimit = 5;
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
+  const getFileExtension = (filename) => filename.split('.').pop().toLowerCase();
+  const imageAssetPath = (folder, filename) => `../../assets/images/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`;
+  const getAssetManifest = () => (typeof ASSET_IMAGE_PATHS !== 'undefined' ? ASSET_IMAGE_PATHS : []);
+  const getAssetParts = (src) => {
+    const parts = src.split('/');
+    return {
+      filename: decodeURIComponent(parts.pop() || ''),
+      folder: decodeURIComponent(parts.pop() || '')
+    };
+  };
+  const imageAssetCollections = imageAssetCollectionMeta.map(meta => ({
+    ...meta,
+    files: getAssetManifest()
+      .map(getAssetParts)
+      .filter(asset => asset.folder === meta.folder)
+      .map(asset => asset.filename)
+  })).map(collection => ({
+    ...collection,
+    previewFiles: collection.files.filter(file => previewExtensions.has(getFileExtension(file)))
+  })).filter(collection => collection.files.length);
+  let activePreviewTrigger = null;
+  let activeCollectionIndex = 0;
+
+  const renderImageAssets = () => {
+    if (!imageAssetsRoot) return;
+
+    imageAssetsRoot.innerHTML = imageAssetCollections.map((collection, collectionIndex) => {
+      const teasers = collection.previewFiles.slice(0, teaserLimit);
+      const hiddenPreviewCount = Math.max(0, collection.previewFiles.length - teasers.length);
+      const previewMarkup = teasers.map((file, imageIndex) => {
+        const href = imageAssetPath(collection.folder, file);
+        return `
+          <button class="image-preview" type="button" data-collection-index="${collectionIndex}" data-image-index="${imageIndex}" aria-label="${escapeHtml(file)} ansehen">
+            <img src="${href}" alt="${escapeHtml(collection.title)}: ${escapeHtml(file)}" loading="lazy" decoding="async">
+            <span>${escapeHtml(file)}</span>
+          </button>
+        `;
+      }).join('');
+      const moreMarkup = hiddenPreviewCount > 0 ? `
+        <button class="image-preview image-preview-more" type="button" data-collection-index="${collectionIndex}" data-image-index="${teaserLimit}" aria-label="Alle ${collection.previewFiles.length} Bilder aus ${escapeHtml(collection.title)} ansehen">
+          <strong>+${hiddenPreviewCount}</strong>
+          <span>Alle Bilder ansehen</span>
+        </button>
+      ` : '';
+      return `
+        <article class="image-collection">
+          <div class="image-collection-head">
+            <div>
+              <h3>${escapeHtml(collection.title)}</h3>
+              <p>${escapeHtml(collection.description)}</p>
+            </div>
+            <span class="image-count">${collection.files.length} Dateien</span>
+          </div>
+          <div class="image-preview-grid">${previewMarkup}${moreMarkup}</div>
+        </article>
+      `;
+    }).join('');
+  };
+
+  renderImageAssets();
+
+  const getCollection = (index) => imageAssetCollections[index] || imageAssetCollections[0];
+  const renderPreviewStrip = () => {
+    if (!previewStrip) return;
+    const collection = getCollection(activeCollectionIndex);
+    previewStrip.innerHTML = collection.previewFiles.map((file, imageIndex) => {
+      const href = imageAssetPath(collection.folder, file);
+      const loading = imageIndex < 18 ? 'eager' : 'lazy';
+      const priority = imageIndex < 18 ? 'high' : 'low';
+      return `
+        <div class="image-preview-thumb" data-image-index="${imageIndex}">
+          <img src="${href}" alt="${escapeHtml(collection.title)}: ${escapeHtml(file)}" loading="${loading}" fetchpriority="${priority}" decoding="async">
+        </div>
+      `;
+    }).join('');
+  };
+  const openImagePreview = (button) => {
+    if (!previewModal || !previewTitle || !previewMeta) return;
+    activePreviewTrigger = button;
+    activeCollectionIndex = Number(button.dataset.collectionIndex || 0);
+    const collection = getCollection(activeCollectionIndex);
+
+    previewTitle.textContent = collection.title;
+    previewMeta.textContent = `${collection.previewFiles.length} Bilder`;
+    renderPreviewStrip();
+    previewModal.hidden = false;
+    document.body.classList.add('preview-open');
+    previewClose?.focus();
+  };
+  const closeImagePreview = () => {
+    if (!previewModal || previewModal.hidden) return;
+    previewModal.hidden = true;
+    if (previewStrip) previewStrip.innerHTML = '';
+    document.body.classList.remove('preview-open');
+    activePreviewTrigger?.focus();
+  };
+
+  imageAssetsRoot?.addEventListener('click', (event) => {
+    const button = event.target.closest('.image-preview');
+    if (!button || button.classList.contains('is-broken')) return;
+    openImagePreview(button);
+  });
+  imageAssetsRoot?.addEventListener('error', (event) => {
+    const image = event.target;
+    if (!(image instanceof HTMLImageElement)) return;
+    image.closest('.image-preview')?.classList.add('is-broken');
+  }, true);
+  previewClose?.addEventListener('click', closeImagePreview);
+  previewModal?.addEventListener('click', (event) => {
+    if (event.target === previewModal) closeImagePreview();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (!previewModal || previewModal.hidden) return;
+    if (event.key === 'Escape') {
+      closeImagePreview();
+    }
+  });
+
+  const assetDownloadLinks = document.querySelectorAll('.logo-actions a[download], .file-link[download], .image-file-link[download]');
+  const mimeTypes = {
+    svg: 'image/svg+xml',
+    png: 'image/png',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    heic: 'image/heic',
+    eps: 'application/postscript',
+    pdf: 'application/pdf',
+    ase: 'application/octet-stream',
+    otf: 'font/otf'
+  };
+
+  const getDownloadName = (link) => {
+    const downloadName = link.getAttribute('download');
+    if (downloadName) return downloadName;
+    return decodeURIComponent(new URL(link.href, window.location.href).pathname.split('/').pop());
+  };
+
+  const saveAssetFile = async (link) => {
+    const filename = getDownloadName(link);
+    const extension = filename.split('.').pop().toLowerCase();
+    const picker = await window.showSaveFilePicker({
+      suggestedName: filename,
+      types: [
+        {
+          description: `${extension.toUpperCase()} file`,
+          accept: { [mimeTypes[extension] || 'application/octet-stream']: [`.${extension}`] }
+        }
+      ]
+    });
+    const response = await fetch(link.href);
+    if (!response.ok) throw new Error(`Download failed: ${response.status}`);
+    const writable = await picker.createWritable();
+    await writable.write(await response.blob());
+    await writable.close();
+  };
+
+  const runNativeDownload = (link) => {
+    const fallback = document.createElement('a');
+    fallback.href = link.href;
+    fallback.download = getDownloadName(link);
+    document.body.appendChild(fallback);
+    fallback.click();
+    document.body.removeChild(fallback);
+  };
+
+  assetDownloadLinks.forEach(link => {
+    link.addEventListener('click', async (event) => {
+      if (!window.showSaveFilePicker) return;
+      event.preventDefault();
+
+      try {
+        await saveAssetFile(link);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        console.warn('Save picker download failed, using native download fallback', error);
+        runNativeDownload(link);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
