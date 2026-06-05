@@ -4,7 +4,7 @@ country: 'Uganda '
 score: /
 process: natural
 price: 10,90
-availability: '23'
+availability: 23x60
 arrival: Oktober
 variety: excelsa
 harvest: '2026 '
@@ -64,5 +64,6 @@ contentEn:
     traditionally played only a small role. HyCoffee pays producers 200 percent
     of the price they previously received for Excelsa, supporting higher
     incomes, more diversified production, and a more resilient future.
+heroImage: ../../assets/images/cms/kaffee/excelsa/heroImage.JPG
 available: true
 sortOrder: 0
