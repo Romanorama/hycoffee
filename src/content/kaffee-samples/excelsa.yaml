@@ -5,7 +5,7 @@ score: /
 process: natural
 price: 10,90
 availability: 23x60kg
-arrival: Oktober
+arrival: Oktober 26
 variety: excelsa
 harvest: '2026 '
 region: Zirobwe
@@ -66,4 +66,4 @@ contentEn:
     incomes, more diversified production, and a more resilient future.
 heroImage: ../../assets/images/cms/kaffee/excelsa/heroImage.JPG
 available: true
-sortOrder: 6
+sortOrder: 5
