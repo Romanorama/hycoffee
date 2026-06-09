@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HYCoffee — CD Assets</title>
 <link rel="stylesheet" href="../../assets/ci/ci.css">
+<link rel="stylesheet" href="../../assets/ci/ci-nav.css">
 <style>
   .page-layout {
     display: grid;
@@ -627,18 +628,24 @@
 
 <nav class="ci-nav">
   <div class="ci-nav-inner">
-    <a href="../../index.html" class="ci-nav-home">
-      <span class="arrow">&larr;</span>
-      <span class="ci-nav-brand ci-display">HYCoffee Toolbox</span>
-    </a>
-    <ul>
-      <li><a href="#logos">Logos</a></li>
-      <li><a href="#farben">Farben</a></li>
-      <li><a href="#strukturfarben">Struktur</a></li>
-      <li><a href="#schriften">Schriften</a></li>
-      <li><a href="#bilder">Bilder</a></li>
-      <li><a href="#dateien">Dateien</a></li>
-    </ul>
+    <div class="ci-nav-group">
+      <a href="../../index.html" class="ci-pill ci-pill--home" aria-label="Zurück zur Toolbox" title="Zurück zur Toolbox">
+        <span class="ci-pill__arrow" aria-hidden="true">&larr;</span>
+        Toolbox
+      </a>
+      <span class="ci-nav-divider" aria-hidden="true"></span>
+      <span class="ci-nav-title">CD Assets</span>
+    </div>
+    <div class="ci-nav-group ci-nav-group--end">
+      <span class="ci-nav-links">
+        <a href="#logos" class="ci-nav-link">Logos</a>
+        <a href="#farben" class="ci-nav-link">Farben</a>
+        <a href="#strukturfarben" class="ci-nav-link">Struktur</a>
+        <a href="#schriften" class="ci-nav-link">Schriften</a>
+        <a href="#bilder" class="ci-nav-link">Bilder</a>
+        <a href="#dateien" class="ci-nav-link">Dateien</a>
+      </span>
+    </div>
   </div>
 </nav>
 

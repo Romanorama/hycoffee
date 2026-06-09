@@ -1,0 +1,264 @@
+/* =====================================================================
+   HyCoffee Toolbox — Unified Nav Bar
+   One nav, one style, across every tool. Clean system UI, pill shapes.
+   Single source of truth — edit here, every tool updates.
+
+   Self-contained: defines its own --ci-* tokens, so it works even on
+   pages that don't load ci.css.
+
+   Markup pattern:
+   <nav class="ci-nav">
+     <div class="ci-nav-inner">
+       <div class="ci-nav-group">
+         <a href="../../index.html" class="ci-pill ci-pill--home">
+           <span class="ci-pill__arrow" aria-hidden="true">&larr;</span> Toolbox
+         </a>
+         <span class="ci-nav-divider" aria-hidden="true"></span>
+         <span class="ci-nav-title">Tool-Name</span>
+       </div>
+       <div class="ci-nav-group ci-nav-group--end">
+         ... optional .ci-pill / .ci-nav-badge / .ci-nav-meta / .ci-nav-links ...
+       </div>
+     </div>
+   </nav>
+   ===================================================================== */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ci-nav-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
+  --ci-nav-h: 52px;
+  --ci-ink: #111113;
+  --ci-ink-2: #6E6E73;
+  --ci-line: rgba(17, 17, 19, 0.10);
+  --ci-line-strong: rgba(17, 17, 19, 0.18);
+  --ci-accent: #AB9FF2;   /* HyCoffee purple */
+  --ci-accent-d: #6F5BD9;
+}
+
+/* ---------- BAR ---------- */
+.ci-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245, 245, 247, 0.78);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--ci-line);
+  font-family: var(--ci-nav-font);
+}
+.ci-nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--ci-nav-h);
+  padding: 0 22px;
+}
+/* Optional centered nav for pages that align with a 1200px content wrap */
+.ci-nav-inner--wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.ci-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.ci-nav-group--end {
+  margin-left: auto;
+}
+
+/* ---------- TEXT ---------- */
+.ci-nav-brand {
+  font-family: var(--ci-nav-font);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ci-ink);
+  white-space: nowrap;
+}
+.ci-nav-title {
+  font-family: var(--ci-nav-font);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ci-ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ci-nav-meta {
+  font-family: var(--ci-nav-font);
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--ci-ink-2);
+  opacity: 0.8;
+  white-space: nowrap;
+}
+.ci-nav-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--ci-line-strong);
+  flex-shrink: 0;
+}
+
+/* ---------- PILLS ---------- */
+.ci-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ci-line);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ci-ink);
+  font-family: var(--ci-nav-font);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease, color .15s ease;
+}
+.ci-pill:hover {
+  background: #ffffff;
+  border-color: var(--ci-line-strong);
+  transform: translateY(-1px);
+}
+.ci-pill:active { transform: translateY(0); }
+.ci-pill:focus-visible {
+  outline: 2px solid var(--ci-ink);
+  outline-offset: 2px;
+}
+.ci-pill[disabled],
+.ci-pill:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ci-pill__arrow {
+  font-size: 15px;
+  line-height: 1;
+}
+.ci-pill--home { padding-left: 14px; }
+
+/* Primary action — solid ink */
+.ci-pill--primary {
+  background: var(--ci-ink);
+  color: #ffffff;
+  border-color: var(--ci-ink);
+}
+.ci-pill--primary:hover {
+  background: #000000;
+  border-color: #000000;
+  color: #ffffff;
+}
+
+/* Brand accent — purple */
+.ci-pill--accent {
+  background: var(--ci-accent);
+  color: var(--ci-ink);
+  border-color: rgba(17, 17, 19, 0.08);
+}
+.ci-pill--accent:hover {
+  background: var(--ci-accent-d);
+  color: #ffffff;
+  border-color: var(--ci-accent-d);
+}
+
+/* ---------- BADGE (non-interactive label pill) ---------- */
+.ci-nav-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 17, 19, 0.08);
+  background: var(--ci-accent);
+  color: var(--ci-ink);
+  font-family: var(--ci-nav-font);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------- IN-NAV TEXT LINKS (section jumps) ---------- */
+.ci-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.ci-nav-link {
+  font-family: var(--ci-nav-font);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--ci-ink-2);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .15s ease;
+}
+.ci-nav-link:hover,
+.ci-nav-link.is-active {
+  color: var(--ci-ink);
+}
+
+/* ---------- PILL TABS (in-page tab navigation) ---------- */
+.ci-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ci-tab {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ci-line);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ci-ink-2);
+  font-family: var(--ci-nav-font);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.ci-tab:hover {
+  background: #ffffff;
+  border-color: var(--ci-line-strong);
+  color: var(--ci-ink);
+}
+.ci-tab.is-active,
+.ci-tab[aria-selected="true"] {
+  background: var(--ci-ink);
+  border-color: var(--ci-ink);
+  color: #ffffff;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .ci-nav-links { display: none; }
+}
+@media (max-width: 680px) {
+  .ci-nav-inner { gap: 8px; padding: 0 14px; }
+  .ci-nav-title { font-size: 14px; }
+  .ci-nav-group { gap: 8px; }
+  .ci-pill { padding: 0 13px; font-size: 13px; }
+}

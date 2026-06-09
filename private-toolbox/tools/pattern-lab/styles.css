@@ -4,14 +4,19 @@
    ============================================================ */
 
 @import url('../../assets/ci/ci.css');
+@import url('../../assets/ci/ci-nav.css');
 
 :root {
   --pl-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
 }
 
 body {
-  padding: 24px;
   min-height: 100vh;
+}
+
+/* App content sits below the unified nav, in a centred gutter */
+.app-shell {
+  padding: 24px;
 }
 
 /* ---------- Shell ---------- */
@@ -49,7 +54,7 @@ body {
 }
 
 .panel-header p:nth-child(2) {
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
   font-size: 22px;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -89,7 +94,7 @@ body {
 
 .controls-panel {
   position: sticky;
-  top: 24px;
+  top: calc(var(--ci-nav-h, 52px) + 24px);
 }
 
 .controls {

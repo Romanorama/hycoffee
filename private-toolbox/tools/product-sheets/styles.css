@@ -5,6 +5,7 @@
    ============================================================ */
 
 @import url('../../assets/ci/ci.css');
+@import url('../../assets/ci/ci-nav.css');
 
 :root {
   --sidebar-width: 420px;
@@ -65,7 +66,7 @@ body {
 }
 
 .sidebar-title {
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
   font-size: 28px;
   font-weight: 600;
   letter-spacing: 0;
@@ -90,7 +91,7 @@ body {
 }
 
 .section-label {
-  font-family: var(--font-body);
+  font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 500;
   color: var(--ink-3);
@@ -144,7 +145,7 @@ select.form-input {
 }
 
 .field span {
-  font-family: var(--font-body);
+  font-family: var(--font-ui);
   font-size: 10px;
   font-weight: 500;
   color: var(--ink-3);
@@ -409,7 +410,7 @@ select.form-input {
 
 .asset-picker-title {
   margin: 0 0 4px;
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
   font-size: 22px;
   font-weight: 600;
   letter-spacing: 0;
@@ -555,7 +556,7 @@ select.form-input {
 }
 
 .preview-label {
-  font-family: var(--font-body);
+  font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 500;
   color: var(--ink-3);

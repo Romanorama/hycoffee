@@ -19,6 +19,13 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Neutral monochrome system + purple accent */
@@ -51,15 +58,18 @@
   --shadow-hover: 0 1px 2px rgba(0,0,0,0.06), 0 14px 40px rgba(0,0,0,0.09);
   --header-blur: saturate(180%) blur(20px);
 
+  /* Brand fonts — for content/specimens/output INSIDE tools only */
   --font-display: 'HAL Timezone', 'DGMSprinter', serif;
   --font-body:    'DGMSprinter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  /* UI font — toolbox chrome: nav, tiles, buttons, headings, labels */
+  --font-ui:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 
 body {
-  font-family: var(--font-body);
+  font-family: var(--font-ui);
   font-weight: 400;
   background: var(--bg);
   color: var(--ink);
@@ -71,7 +81,11 @@ body {
   -webkit-font-synthesis: none;
 }
 
-h1, h2, h3, h4,
+h1, h2, h3, h4 {
+  font-family: var(--font-ui);
+  letter-spacing: -0.01em;
+}
+/* Explicit opt-in for the brand display font (wordmarks, specimens, output) */
 .ci-display {
   font-family: var(--font-display);
   letter-spacing: -0.01em;
@@ -79,33 +93,9 @@ h1, h2, h3, h4,
 
 a { color: inherit; text-decoration: none; }
 
-/* ---------- NAV ---------- */
-.ci-nav {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(245,245,247,0.78);
-  -webkit-backdrop-filter: var(--header-blur);
-  backdrop-filter: var(--header-blur);
-  border-bottom: 1px solid var(--line);
-}
-.ci-nav-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0 22px;
-  height: 52px;
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 13px;
-  gap: 18px;
-}
-.ci-nav-brand { font-weight: 500; letter-spacing: -0.02em; }
-.ci-nav-home {
-  display: inline-flex; align-items: center; gap: 8px;
-  color: var(--ink); opacity: 0.75;
-  transition: opacity .2s;
-}
-.ci-nav-home:hover { opacity: 1; }
-.ci-nav-home .arrow { font-size: 14px; line-height: 1; }
-.ci-nav ul { list-style: none; display: flex; gap: 28px; padding: 0; margin: 0; }
-.ci-nav a { color: var(--ink); opacity: 0.85; transition: opacity .2s; }
-.ci-nav a:hover, .ci-nav a.active { opacity: 1; }
+/* ---------- NAV ----------
+   The unified toolbar lives in ci-nav.css (single source of truth).
+   Every page links assets/ci/ci-nav.css for the .ci-nav / .ci-pill system. */
 
 /* ---------- CONTAINER / SECTIONS ---------- */
 .ci-wrap { max-width: 1200px; margin: 0 auto; padding: 0 22px; }

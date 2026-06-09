@@ -6,6 +6,7 @@
 <title>HyCoffee Post Generator</title>
 <style>
   @import url('../../assets/ci/ci.css');
+  @import url('../../assets/ci/ci-nav.css');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -26,7 +27,7 @@
 
   html, body { height: 100%; }
   body {
-    font-family: var(--font-body);
+    font-family: var(--font-ui);
     background: var(--bg);
     color: var(--ink);
     overflow: hidden;
@@ -99,11 +100,37 @@
   }
   .topbar button.primary:hover { background: #000; border-color: #000; color: var(--bg); }
 
+  /* Output-format toggle (Post 4:5 ↔ Story 9:16) */
+  .format-switch {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-elev);
+    overflow: hidden;
+  }
+  .format-switch button {
+    border: none;
+    background: transparent;
+    padding: 7px 14px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .format-switch button.active {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .format-switch button:not(.active):hover { background: var(--bg); color: var(--ink); }
+
   /* ===== Workspace ===== */
   .workspace {
     display: grid;
     grid-template-columns: 220px 1fr 300px;
-    height: calc(100vh - 56px);
+    height: calc(100vh - var(--ci-nav-h, 52px));
   }
 
   /* ===== Toolbar ===== */
@@ -1173,19 +1200,31 @@
 </head>
 <body>
 
-<header class="topbar">
-  <a href="../../index.html" class="back" title="Zurück zur Startseite" aria-label="Zurück zur Startseite">← Home</a>
-  <h1>HyCoffee Post Generator</h1>
-  <span class="badge">Drag & Drop · Beta</span>
-  <span id="slideCount" style="font-size:11px;color:var(--gray);font-weight:600">1 Slide</span>
-  <div class="actions">
-    <button id="resetBtn">Zurücksetzen</button>
-    <button id="loadBtn" title="Gespeicherten Post als JSON laden">Laden…</button>
-    <button id="saveBtn" title="Alle Slides als JSON-Datei sichern">Speichern</button>
-    <button id="pushGridBtn" title="Alle Slides als Carousel-Post in den Instagram Grid (testing.html) ablegen">→ In Grid</button>
-    <button id="downloadBtn" class="primary" title="Alle Slides als ZIP mit PNG-Dateien herunterladen">Alle als ZIP</button>
+<nav class="ci-nav">
+  <div class="ci-nav-inner">
+    <div class="ci-nav-group">
+      <a href="../../index.html" class="ci-pill ci-pill--home" title="Zurück zur Toolbox" aria-label="Zurück zur Toolbox">
+        <span class="ci-pill__arrow" aria-hidden="true">&larr;</span>
+        Toolbox
+      </a>
+      <span class="ci-nav-divider" aria-hidden="true"></span>
+      <span class="ci-nav-title">Instagram Post</span>
+      <span class="ci-nav-badge">Beta</span>
+      <span id="slideCount" class="ci-nav-meta">1 Slide</span>
+    </div>
+    <div class="ci-nav-group ci-nav-group--end">
+      <div class="format-switch" id="formatSwitch" title="Ausgabeformat wählen">
+        <button type="button" data-format="post" class="active">Post · 4:5</button>
+        <button type="button" data-format="story">Story · 9:16</button>
+      </div>
+      <button id="resetBtn" class="ci-pill" type="button">Zurücksetzen</button>
+      <button id="loadBtn" class="ci-pill" type="button" title="Gespeicherten Post als JSON laden">Laden…</button>
+      <button id="saveBtn" class="ci-pill" type="button" title="Alle Slides als JSON-Datei sichern">Speichern</button>
+      <button id="pushGridBtn" class="ci-pill" type="button" title="Alle Slides als Carousel-Post in den Instagram Grid (testing.html) ablegen">→ In Grid</button>
+      <button id="downloadBtn" class="ci-pill ci-pill--primary" type="button" title="Alle Slides als ZIP mit PNG-Dateien herunterladen">Alle als ZIP</button>
+    </div>
   </div>
-</header>
+</nav>
 <input type="file" id="loadInput" accept="application/json,.json" hidden>
 
 <main class="workspace">
@@ -1202,6 +1241,7 @@
       <span>Theme</span>
     </div>
 
+    <!-- Grid-Baustein vorerst ausgeblendet (Logik bleibt erhalten, nur die Kachel ist versteckt).
     <div class="tool" draggable="true" data-type="grid" title="Grid-Template auf den aktiven Slide ziehen">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
         <rect x="2.5"  y="2.5"  width="6" height="6" rx="1" fill="currentColor" stroke="none"/>
@@ -1219,6 +1259,7 @@
       </svg>
       <span>Grid</span>
     </div>
+    -->
 
     <div class="tool" draggable="true" data-type="headline">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1270,7 +1311,7 @@
     </div>
 
     <div class="hint-tool">
-      Grid/Theme anklicken. Bausteine auf einen Slide ziehen. Mit dem <b>+</b> rechts neue Slides ergänzen.
+      Theme anklicken. Bausteine auf einen Slide ziehen. Mit dem <b>+</b> rechts neue Slides ergänzen.
     </div>
   </aside>
 
@@ -1544,25 +1585,89 @@ const LOGOS = [
 ];
 const getLogoById = id => LOGOS.find(l => l.id === id) || LOGOS[0];
 
+// ===== Output format =====
+// The canvas is always 1080 wide; only the height changes between the feed
+// post (4:5) and the story (9:16). CANVAS_H and every height-derived metric
+// below are therefore mutable and get recomputed by applyFormat().
+const FORMATS = {
+  post:  { h: 1350, label: 'Post',  noun: 'Slide' },
+  story: { h: 1920, label: 'Story', noun: 'Story' },
+};
+let currentFormat = 'post';
+
 const CANVAS_W = 1080;
-const CANVAS_H = 1350;
+let   CANVAS_H = FORMATS[currentFormat].h;
 
 // 5% safe-area inset for text elements
 const SAFE_PCT = 0.05;
 const SAFE_X = CANVAS_W * SAFE_PCT;          //  54
-const SAFE_Y = CANVAS_H * SAFE_PCT;          //  67.5
+let   SAFE_Y = CANVAS_H * SAFE_PCT;          //  67.5 (post)
 const SAFE_W = CANVAS_W - 2 * SAFE_X;        // 972
-const SAFE_H = CANVAS_H - 2 * SAFE_Y;        // 1215
+let   SAFE_H = CANVAS_H - 2 * SAFE_Y;        // 1215 (post)
 
 // image expansion step (10% of canvas width per shift)
 const EXPAND_STEP = CANVAS_W * 0.1;          // 108
 const MAX_EXPAND = 3;                        // up to +30% per side
 
-// Logo width presets (canvas px); height derives from each variant's ratio.
-const LOGO_SIZES = { S: 160, M: 240, L: 360 };
+// Logo size presets as a target HEIGHT (canvas px); width derives from each
+// variant's ratio so S/M/L read at the same height regardless of variant.
+// The wide HyCoffee wordmark keeps its previous ~160/240/360 widths; the
+// near-square "Hy" mark is scaled to the same height instead of the same width
+// (matching by width previously made it look ~2.5× oversized).
+const LOGO_HEIGHTS = { S: 47, M: 71, L: 106 };
 const LOGO_MARGIN_PCT = 0.03;
 const LOGO_MARGIN_X = CANVAS_W * LOGO_MARGIN_PCT;
-const LOGO_MARGIN_Y = CANVAS_H * LOGO_MARGIN_PCT;
+let   LOGO_MARGIN_Y = CANVAS_H * LOGO_MARGIN_PCT;
+
+const formatLabel = () => FORMATS[currentFormat].label;
+const slideNoun   = () => FORMATS[currentFormat].noun;
+
+// Recompute every height-derived metric after CANVAS_H changes.
+function recomputeFormatMetrics() {
+  SAFE_Y = CANVAS_H * SAFE_PCT;
+  SAFE_H = CANVAS_H - 2 * SAFE_Y;
+  LOGO_MARGIN_Y = CANVAS_H * LOGO_MARGIN_PCT;
+}
+
+/* Switch between feed-post (4:5) and story (9:16) output.
+   rescale:true  → user toggled in the UI; existing elements are re-fitted to
+                   the new height (full-canvas media stretched, manually placed
+                   elements moved proportionally so they keep their relative spot).
+   rescale:false → loading a saved file already authored at fmt; leave geometry. */
+function applyFormat(fmt, { rescale = true } = {}) {
+  if (!FORMATS[fmt]) fmt = 'post';
+  const oldH = CANVAS_H;
+  currentFormat = fmt;
+  CANVAS_H = FORMATS[fmt].h;
+  recomputeFormatMetrics();
+
+  if (rescale && oldH !== CANVAS_H) {
+    const r = CANVAS_H / oldH;
+    state.slides.forEach(slide => slide.elements.forEach(el => {
+      if (el.type === 'image' && !el.props.freeMode) {
+        el.w = CANVAS_W; el.h = CANVAS_H; el.y = 0;   // full-tile media follows the canvas
+      } else if (el.type === 'grid') {
+        el.x = 0; el.y = 0; el.w = CANVAS_W; el.h = CANVAS_H;
+      } else {
+        if (el.type === 'image') el.h = Math.round(el.h * r); // free-mode image box
+        el.y = Math.round(el.y * r);
+        el.y = Math.max(0, Math.min(CANVAS_H - el.h, el.y));
+      }
+    }));
+  }
+
+  syncFormatUI();
+  renderAll();
+}
+
+// Reflect the active format in the topbar toggle + post-only controls.
+function syncFormatUI() {
+  document.querySelectorAll('#formatSwitch button').forEach(b =>
+    b.classList.toggle('active', b.dataset.format === currentFormat));
+  const pushBtn = document.getElementById('pushGridBtn');
+  // The Instagram feed grid is 4:5 only — pushing a 9:16 story there makes no sense.
+  if (pushBtn) pushBtn.style.display = (currentFormat === 'story') ? 'none' : '';
+}
 
 const GRID_ITEM_COUNT = 9;
 const GRID_DEFAULT_TEXT = 'Text';
@@ -1616,12 +1721,17 @@ function ensureGridItems(el) {
 }
 
 const SVG_CACHE = {};
-LOGOS.filter(l => l.tintable).forEach(async l => {
-  try {
-    const r = await fetch(l.src);
-    SVG_CACHE[l.src] = await r.text();
-    renderAll();
-  } catch (e) { /* fallback to <img> tag */ }
+/* Logo SVGs are embedded inline (not fetched) so per-instance recolouring works
+   even under file://, where fetch() of a local file is blocked and the logo would
+   otherwise fall back to an un-tintable <img>. paintSvg() strips the embedded
+   <style>/class colouring and paints each shape's fill directly. */
+const EMBEDDED_LOGO_SVG = {
+  'hycoffee': `<svg id="uuid-0f360089-0596-44d0-bc79-05bacfb89107" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 654.21 193.2"> <defs> <style> .uuid-acfb8676-18b0-4686-b789-7262e827d178 { fill: #242119; } </style> </defs> <path class="uuid-acfb8676-18b0-4686-b789-7262e827d178" d="M176.2,80.9c-3.84,7.82-6.98,15.26-10.51,24.29-8.44,6.38-16.74,12.45-23.77,17.64-11.67,8.65-18.56,13.68-22.13,13.92-1.57.11-2.45-.94-2.48-2.66h-.03c-.18-9.11,13.11-22.27,32.33-32.53l-6-14.05c-12.74,6.87-23.7,14.98-31.35,23.72l-2.84-14.49c5.58-13.43,11.16-27,16.33-40.08l-14.83-6.39c-6.51,16.63-13.59,33.93-20.53,50.9-15.35,3.87-31.55,7.48-48.04,10.8,11.01-20.08,21.72-41.69,29.34-60.45l-14.97-5.9c-8.84,21.67-21.74,47.83-34.14,70.05l-.02.02c-6.54,1.07-13.08,2.14-19.63,3.22l1.6,16.08c2.42-.48,4.84-.81,7.39-1.29-4.28,6.73-8.31,12.82-11.93,17.46l11.47,9.59c6.12-7.96,13.33-18.66,20.51-30.78,17.22-3.22,34.27-6.89,50.75-10.83-5.05,11.65-10.1,22.84-14.75,32.9l13.99,7.22c6.3-13.47,13.13-28.87,20.09-45.05,3.38-1,6.74-1.86,10.1-2.86-7.29,8.38-11.54,17.34-11.36,26.37.19,9.73,4.46,15.89,15.16,15.16,8.12-.55,18.14-6.09,32.5-16.66,2.53-1.89,5.35-3.98,8.15-6.21-.67,1.93-1.49,4.04-2.16,6.12-7.97,22.86-18.19,39.58-34.02,40.66-8.55.58-15.66-4.76-18.48-17.76l-16.3,6.3c4.54,19.49,15.57,28.96,32.83,27.79,21.1-1.43,38.78-16.78,50.38-50.73,3.79-10.95,7.15-20.76,10.26-29.62,6.47-5,12.8-9.83,18.56-14.31l-8.23-11.7-13.25-5.86Z"/> <path class="uuid-acfb8676-18b0-4686-b789-7262e827d178" d="M645.97,79.43c-14.02,12.43-30.3,19.5-44.27,20.45-8.84.6-13.89-2.04-14.05-10.05-.02-1.11.1-2.22.22-3.32,6.75,1.74,13.76,2.69,21.32,2.17,19.67-1.33,35.57-13.09,35.21-30.83-.22-10.98-7.64-17.87-21.47-16.93-17.11,1.16-32.73,12.44-42.31,25.66-1.45-.69-3.03-1.53-4.48-2.37-15.53,22.58-38.51,37.34-58.9,38.72-5.99.41-9.46-1.56-9.56-6.89-.04-2.2.61-4.75,1.7-7.51,5.15.61,10.15.73,15.28.38,18.96-1.29,32.88-11.66,32.57-27.03-.18-8.95-6.42-14.18-17.82-13.41-14.26.97-27.9,11.17-37.08,23.42v-.03c-2.95-.64-6-1.53-8.98-2.44v-.62c-9.14.62-18.39,1.56-27.23,2.47,9.98-14.98,17.01-20.48,23.71-20.94,2.85-.19,4.88,1.24,5.38,5.29l16.49-3.17c-.55-13-8.09-18.93-19.35-18.17-11.97.81-25.53,8.18-45.03,39.19-10.92,1.41-20.68,2.98-28.08,4.63h0c-8.12,1.17-14.81,2.25-20.93,3.15,2.06-4.22,4.26-8.14,6.19-11.9,36.79-9.11,63.22-29.75,62.77-52.2-.21-10.67-5.06-17.88-16.61-17.1-16.82,1.14-36,19.89-56.54,55.86-6.11,1.19-12.39,1.93-18.52,2.35-13.12.89-29.85-.49-39.75-2.96l-3.84,15.34c1.58.37,3.15.73,4.88,1.09,1.66,4.76,2.61,8.94,2.73,15.06.37,18.36-15.27,36.39-30.95,37.45-4.85.33-8.46-1.63-8.59-8.22h.01c-.19-9.58,7.61-19.22,25.18-25.92l-3.87-14.67c-20.34,7.57-34.22,21.45-37.1,37.64-18.26,11.27-32.31,16.41-47.6,17.45-14.11.96-19.68-5.89-19.9-16.88-.53-26.52,31.99-56.39,56.08-58.03,5.56-.38,8.87,1.13,8.94,4.27h-.01c.06,3.13-2.87,6.47-8.06,11.07l10.5,10.76c10.37-9.5,14.36-17.31,14.21-24.69-.2-10.04-6.51-18.58-22.76-17.47-37.63,2.7-76.81,42.61-76.13,76.67.41,20.56,11.21,32.08,36.02,30.4,15.87-1.08,32.55-6.2,50.33-16.59,3.31,6.99,10.28,10.76,19.93,10.11,23.95-1.62,50.03-24.92,49.43-54.9-.08-3.77-.58-7.67-1.51-11.37,7.16.46,14.43.59,20.99.15,3.42-.23,6.7-.62,9.98-.99-1.65,3.42-3.43,7-5.22,10.57-2.42.31-4.98.65-7.69.99l.71,14.26c-8.75,19.13-17.45,41.25-26.38,66.07l14.51,4.84c9.46-26.42,19.54-50.83,29.53-72.1,9.54-.96,18.52-2.2,30.18-4.25l-.03-.4c4.82-.99,10.62-2.03,17.14-3.01-9.5,17.15-20.48,39.59-33.17,68.58l13.41,7.11c16.27-35.37,28.62-60.56,38.55-78.2,10.31-1.12,21.81-2.2,33.97-3.07,1.3.42,2.6.82,3.89,1.2-2.32,5.5-3.64,10.78-3.55,15.49.24,11.92,7.94,19.11,23.06,18.08,18.54-1.26,39.35-10.36,57.42-27.15.33,16.33,9.78,25.12,30.45,23.72,15.83-1.07,37.06-10.2,52.64-23.68l-8.25-12.64ZM621.11,56.76c4.56-.31,6.61,1.6,6.67,4.74.13,6.28-7.35,11.03-16.76,11.67-5.13.35-10.29-.1-15.59-1.31,6.69-7.99,16.42-14.47,25.68-15.1ZM541.34,65.95c.12,5.96-7.41,8.04-16.25,8.64-1.99.13-3.99.11-6.13-.06,5.73-6.04,12.77-10.76,18.61-11.15,2.56-.17,3.73,1,3.76,2.57ZM447.86,16.27c2.29-.16,3.6,1.16,3.66,4.15.24,11.94-15.24,22.73-35.81,29.78,13.14-21.01,24.59-33.42,32.15-33.93Z"/> </svg>`,
+  'hy': `<svg id="uuid-5249e767-0ad3-4e38-9f44-4a9f0bd13c8f" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 197.68 147.58"> <defs> <style> .uuid-3da48f43-ba1e-40df-8911-cd59e5654b8a { fill: #242119; } </style> </defs> <path class="uuid-3da48f43-ba1e-40df-8911-cd59e5654b8a" d="M176.2,35.28c-3.84,7.82-6.98,15.26-10.51,24.29-8.44,6.38-16.74,12.45-23.77,17.64-11.67,8.65-18.56,13.68-22.13,13.92-1.57.11-2.45-.94-2.48-2.66h-.03c-.18-9.11,13.11-22.27,32.33-32.53l-6-14.05c-12.74,6.87-23.7,14.98-31.35,23.72l-2.84-14.49c5.58-13.43,11.16-27,16.33-40.08l-14.83-6.39c-6.51,16.63-13.59,33.93-20.53,50.9-15.35,3.87-31.55,7.48-48.04,10.8,11.01-20.08,21.72-41.69,29.34-60.45L56.72,0c-8.84,21.67-21.74,47.83-34.14,70.05l-.02.02c-6.54,1.07-13.08,2.14-19.63,3.22l1.6,16.08c2.42-.48,4.84-.81,7.39-1.29-4.28,6.73-8.31,12.82-11.93,17.46l11.47,9.59c6.12-7.96,13.33-18.66,20.51-30.78,17.22-3.22,34.27-6.89,50.75-10.83-5.05,11.65-10.1,22.84-14.75,32.9l13.99,7.22c6.3-13.47,13.13-28.87,20.09-45.05,3.38-1,6.74-1.86,10.1-2.86-7.29,8.38-11.54,17.34-11.36,26.37.19,9.73,4.46,15.89,15.16,15.16,8.12-.55,18.14-6.09,32.5-16.66,2.53-1.89,5.35-3.98,8.15-6.21-.67,1.93-1.49,4.04-2.16,6.12-7.97,22.86-18.19,39.58-34.02,40.66-8.55.58-15.66-4.76-18.48-17.76l-16.3,6.3c4.54,19.49,15.57,28.96,32.83,27.79,21.1-1.43,38.78-16.78,50.38-50.73,3.79-10.95,7.15-20.76,10.26-29.62,6.47-5,12.8-9.83,18.56-14.31l-8.23-11.7-13.25-5.86Z"/> </svg>`,
+};
+LOGOS.filter(l => l.tintable).forEach(l => {
+  const svg = EMBEDDED_LOGO_SVG[l.id];
+  if (svg) SVG_CACHE[l.src] = svg;
 });
 
 /* Recolour an inline SVG in place. The HyCoffee logo SVGs paint themselves
@@ -1709,6 +1819,9 @@ function makeDefault(type, x, y) {
         // === default mode (full canvas) ===
         expandLeft: 0,
         expandRight: 0,
+        // Story-only band height: 100 (full-bleed) | 75 | 50 | 25 — anchored to
+        // the bottom edge, the remaining top area showing the slide background.
+        coverage: 100,
         // === image content transform (works in both modes) ===
         imgScale: 100,        // % — zoom of the image inside its frame
         imgOffsetX: 0,        // px shift (canvas units) within frame
@@ -1730,7 +1843,7 @@ function makeDefault(type, x, y) {
       }};
     case 'logo': {
       const def = LOGOS[0];
-      const w = LOGO_SIZES.M;
+      const w = Math.round(LOGO_HEIGHTS.M * def.ratio);
       return { ...base, w, h: Math.round(w / def.ratio), props: {
         variant: def.id,
         size: 'M',                // 'S' | 'M' | 'L' — width preset
@@ -1762,15 +1875,17 @@ function renderElement(el) {
       if (r) node.style.transform = 'rotate(' + r + 'deg)';
       node.style.cursor = 'move';
     } else {
-      // default: full-tile + 10% expand shifts
+      // default: full-width (+10% expand shifts). In Story mode the image can
+      // shrink to a band anchored to the bottom; the top stays background.
       const expL = el.props.expandLeft || 0;
       const expR = el.props.expandRight || 0;
       const w = CANVAS_W + (expL + expR) * EXPAND_STEP;
       const x = -expL * EXPAND_STEP;
+      const h = Math.round(CANVAS_H * imageBandFrac(el));
       node.style.left = x + 'px';
-      node.style.top = '0px';
+      node.style.top = (CANVAS_H - h) + 'px';
       node.style.width = w + 'px';
-      node.style.height = CANVAS_H + 'px';
+      node.style.height = h + 'px';
       node.style.cursor = 'pointer';
     }
   } else {
@@ -2185,20 +2300,21 @@ function renderPhantomImage(el, sourceIdx, targetIdx) {
   const globalLeft = sourceIdx * CANVAS_W - expL * EXPAND_STEP;
   const localLeft = globalLeft - targetIdx * CANVAS_W;
   const w = CANVAS_W + (expL + expR) * EXPAND_STEP;
+  const h = Math.round(CANVAS_H * imageBandFrac(el));
 
   const node = document.createElement('div');
   node.className = 'el image phantom';
   node.dataset.phantomOf = el.id;
   node.style.left = localLeft + 'px';
-  node.style.top = '0px';
+  node.style.top = (CANVAS_H - h) + 'px';
   node.style.width = w + 'px';
-  node.style.height = CANVAS_H + 'px';
+  node.style.height = h + 'px';
   node.style.pointerEvents = 'none';
 
   const img = document.createElement('img');
   img.src = resolveImageSrc(el.props.src);
   img.alt = '';
-  img.style.transform = computeImgTransform(el.props, { w, h: CANVAS_H });
+  img.style.transform = computeImgTransform(el.props, { w, h });
   node.appendChild(img);
   appendMaskOverlay(node, el.props);
   return node;
@@ -2250,6 +2366,15 @@ function liveUpdateImageMask(el) {
   });
 }
 
+/* Story-only "image band": a non-full default-mode image covers this fraction
+   of the canvas height, anchored to the bottom (top stays background). Returns 1
+   (full-bleed) for the Post format or any value other than 75/50/25. */
+function imageBandFrac(el) {
+  if (currentFormat !== 'story' || (el.props && el.props.freeMode)) return 1;
+  const c = Number(el.props && el.props.coverage);
+  return (c === 75 || c === 50 || c === 25) ? c / 100 : 1;
+}
+
 /* ===== Inner image transform (scale / offset / rotate of the <img>) =====
    Offsets are clamped so the image always covers its frame — no empty borders
    show when the user pans past the image edge. ===== */
@@ -2257,7 +2382,7 @@ function getImageFrameSize(el) {
   if (el.props.freeMode) return { w: el.w, h: el.h };
   const expL = el.props.expandLeft || 0;
   const expR = el.props.expandRight || 0;
-  return { w: CANVAS_W + (expL + expR) * EXPAND_STEP, h: CANVAS_H };
+  return { w: CANVAS_W + (expL + expR) * EXPAND_STEP, h: Math.round(CANVAS_H * imageBandFrac(el)) };
 }
 function clampImageOffset(props, frame) {
   const sx = (props.imgScale ?? 100) / 100;
@@ -2311,7 +2436,7 @@ function snapTextToSafe(slide, safe) {
       // Logo geometry is fully declarative: size preset + variant ratio give
       // w/h, and it is locked to the bottom-right corner with a 3% margin.
       const variant = getLogoById(el.props.variant);
-      el.w = LOGO_SIZES[el.props.size] || LOGO_SIZES.M;
+      el.w = Math.round((LOGO_HEIGHTS[el.props.size] || LOGO_HEIGHTS.M) * variant.ratio);
       el.h = Math.round(el.w / variant.ratio);
       el.x = CANVAS_W - LOGO_MARGIN_X - el.w;
       el.y = CANVAS_H - LOGO_MARGIN_Y - el.h;
@@ -2375,16 +2500,14 @@ function getStackAnchor(slide) {
   return (subline && subline.props && subline.props.vAnchor) || 'center';
 }
 
-// Sublines sitting on a slide *without* an image get this top margin —
-// 3% of the canvas height — and inherit the headline's horizontal alignment.
-const SUBLINE_TOP_MARGIN_NO_IMG = CANVAS_H * 0.03;
-
 function slideHasImage(slide) {
   return slide.elements.some(e => e.type === 'image');
 }
 
 function gapBetween(prevItem, item, slide) {
-  if (!slideHasImage(slide) && item.type === 'subline') return SUBLINE_TOP_MARGIN_NO_IMG;
+  // Sublines on an image-less slide get a 3% (of canvas height) top margin and
+  // inherit the headline's horizontal alignment.
+  if (!slideHasImage(slide) && item.type === 'subline') return CANVAS_H * 0.03;
   return prevItem.type === 'headline' ? 24 : 12;
 }
 
@@ -2556,7 +2679,7 @@ function renderSlides() {
 
     const label = document.createElement('div');
     label.className = 'slide-label';
-    label.innerHTML = '<span class="num"><span class="dot"></span>Slide ' + (idx + 1) + '</span>';
+    label.innerHTML = '<span class="num"><span class="dot"></span>' + slideNoun() + ' ' + (idx + 1) + '</span>';
     if (state.slides.length > 1) {
       const del = document.createElement('button');
       del.className = 'slide-delete';
@@ -2643,13 +2766,13 @@ function renderSlides() {
   const add = document.createElement('button');
   add.className = 'add-slide-btn';
   add.id = 'addSlideBtn';
-  add.innerHTML = '<div>+<small>Slide</small></div>';
-  add.title = 'Neuen Slide hinzufügen';
+  add.innerHTML = '<div>+<small>' + slideNoun() + '</small></div>';
+  add.title = 'Neue ' + slideNoun() + ' hinzufügen';
   add.style.height = (CANVAS_H * _scale) + 'px';
   add.addEventListener('click', addSlide);
   slidesRow.appendChild(add);
 
-  slideCountEl.textContent = state.slides.length + (state.slides.length === 1 ? ' Slide' : ' Slides');
+  slideCountEl.textContent = state.slides.length + ' ' + slideNoun() + (state.slides.length === 1 ? '' : 's');
   renderProperties();
 }
 
@@ -3103,6 +3226,10 @@ function renderProperties() {
         expandSegHTML(el.props.expandLeft || 0, 'expandLeft'));
       html += group('Erweitern nach rechts',
         expandSegHTML(el.props.expandRight || 0, 'expandRight'));
+      // Story only: shrink the image into a bottom band, freeing the top for text.
+      if (currentFormat === 'story') {
+        html += group('Bildhöhe (Story)', coverageSegHTML(el.props.coverage));
+      }
     } else {
       // Free mode: drag to move, corner handle to resize, slider to rotate
       html += '<div class="warning"><b>Achtung — freie Positionierung</b> ist nicht der empfohlene Workflow. ' +
@@ -3161,6 +3288,9 @@ function renderProperties() {
     } else if (el.type === 'image') {
       const totalPct = 100 + ((el.props.expandLeft || 0) + (el.props.expandRight || 0)) * 10;
       sizeReadout = 'Bild füllt die Tile zu ' + totalPct + '% Breite.<br>Standard: 100%, pro Klick +10% nach links/rechts.';
+      if (currentFormat === 'story' && imageBandFrac(el) < 1) {
+        sizeReadout += '<br>Höhe: ' + el.props.coverage + '% — unten verankert, oben Hintergrund.';
+      }
     } else if (el.type === 'grid') {
       sizeReadout = '3 × 3 Template · 9 individuelle Bildfelder.<br>Template füllt den kompletten Slide.';
     }
@@ -3262,6 +3392,15 @@ function expandSegHTML(current, prop) {
   return '<div class="seg-group cols-4" data-prop="' + prop + '" data-numeric="1">' +
     labels.map((lbl, i) =>
       '<button data-value="' + i + '" class="' + (i === Number(current) ? 'active' : '') + '">' + lbl + '</button>'
+    ).join('') + '</div>';
+}
+// Story-only image-height band: Voll (full-bleed) / 75 / 50 / 25 %, bottom-anchored.
+function coverageSegHTML(current) {
+  const opts = [[100, 'Voll'], [75, '75%'], [50, '50%'], [25, '25%']];
+  const cur = Number(current) || 100;
+  return '<div class="seg-group cols-4" data-prop="coverage" data-numeric="1">' +
+    opts.map(([v, lbl]) =>
+      '<button data-value="' + v + '" class="' + (v === cur ? 'active' : '') + '">' + lbl + '</button>'
     ).join('') + '</div>';
 }
 function logoVariantHTML(currentId) {
@@ -3401,6 +3540,13 @@ function bindPropertyControls(el) {
           el.props.entries[Number(entryIdx)][prop] = val;
         } else {
           el.props[prop] = val;
+        }
+        // Shrinking the Story band changes the image frame — re-clamp the pan
+        // offset so no empty border shows.
+        if (el.type === 'image' && prop === 'coverage') {
+          const c = clampImageOffset(el.props, getImageFrameSize(el));
+          el.props.imgOffsetX = c.ox;
+          el.props.imgOffsetY = c.oy;
         }
         renderAll();
       });
@@ -3596,8 +3742,8 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 
 /* ===== Slide rasterisation (html-to-image) =====
    onCanvas(out, slideIdx) is called for each rendered slide. The on-screen
-   transform is temporarily stripped so the bitmap is rendered at full
-   1080×1350 regardless of the current preview zoom.
+   transform is temporarily stripped so the bitmap is rendered at the full
+   native canvas size (1080×CANVAS_H) regardless of the current preview zoom.
 
    We swapped html2canvas → html-to-image: native SVG <foreignObject> capture
    is faster, honours @import font chains, and avoids the dark-overlay /
@@ -3661,7 +3807,7 @@ async function rasterizeAllSlides(onCanvas) {
     if (!wrap) continue;
     const canvasNode = wrap.querySelector('.canvas');
 
-    // Stripping the transform restores the canvas to its native 1080×1350.
+    // Stripping the transform restores the canvas to its native 1080×CANVAS_H.
     // Each slide-wrap's footprint is only the *scaled* size, so the unscaled
     // canvas overflows into the next slide-wrap's area and the capture would
     // pick up the neighbouring scaled bitmap as a colour bleed. Hide all other
@@ -3759,14 +3905,14 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
       const blob = await new Promise((resolve, reject) => {
         out.toBlob(b => b ? resolve(b) : reject(new Error('toBlob lieferte null')), 'image/png');
       });
-      zip.file('HyCoffee_Post_Slide-' + pad(i + 1) + '.png', blob);
+      zip.file('HyCoffee_' + formatLabel() + '_' + slideNoun() + '-' + pad(i + 1) + '.png', blob);
     });
     progress.setPacking();
     const zipBlob = await zip.generateAsync({ type: 'blob' });
     const url = URL.createObjectURL(zipBlob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'HyCoffee_Post_' + timestampForFilename() + '.zip';
+    a.download = 'HyCoffee_' + formatLabel() + '_' + timestampForFilename() + '.zip';
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   } catch (err) {
@@ -3909,6 +4055,15 @@ async function openPushModal() {
 
 document.getElementById('pushGridBtn').addEventListener('click', () => openPushModal());
 
+/* ===== Output-format toggle (Post 4:5 ↔ Story 9:16) =====
+   Switching is non-destructive: existing slides are re-fitted to the new
+   canvas height. The choice rides along in the saved JSON. */
+document.getElementById('formatSwitch').addEventListener('click', e => {
+  const btn = e.target.closest('button[data-format]');
+  if (!btn || btn.dataset.format === currentFormat) return;
+  applyFormat(btn.dataset.format, { rescale: true });
+});
+
 /* ===== Save / Load (JSON) =====
    File schema: { version, kind, savedAt, nextSlideId, nextElId, state }
    state contains bg/fg/themeIdx/slides — selectedElementId is reset on load. */
@@ -3926,6 +4081,7 @@ function buildSavePayload() {
       bg: state.bg,
       fg: state.fg,
       themeIdx: state.themeIdx,
+      format: currentFormat,
       activeSlideId: state.activeSlideId,
       slides: state.slides,
     },
@@ -3946,7 +4102,7 @@ document.getElementById('saveBtn').addEventListener('click', () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'HyCoffee_Post_' + timestampForFilename() + '.json';
+    a.download = 'HyCoffee_' + formatLabel() + '_' + timestampForFilename() + '.json';
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   } catch (err) {
@@ -3976,7 +4132,9 @@ function loadFromPayload(payload) {
   state.activeSlideId = s.slides.find(sl => sl.id === s.activeSlideId)
     ? s.activeSlideId : s.slides[0].id;
   state.selectedElementId = null;
-  renderAll();
+  // Restore the output format; the saved slides are already authored at its
+  // dimensions, so don't re-fit them. applyFormat() also renders.
+  applyFormat(s.format || 'post', { rescale: false });
 }
 
 document.getElementById('loadBtn').addEventListener('click', () => {

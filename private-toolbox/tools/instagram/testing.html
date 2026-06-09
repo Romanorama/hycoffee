@@ -6,6 +6,7 @@
     <title>Instagram Testing – HyCoffee</title>
     <style>
         @import url('../../assets/ci/ci.css');
+        @import url('../../assets/ci/ci-nav.css');
 
         :root {
           --navy:   var(--hy-ink);
@@ -17,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: var(--font-body);
+            font-family: var(--font-ui);
             background: var(--bg); color: var(--ink); min-height: 100vh; overflow-x: hidden;
         }
 
@@ -553,7 +554,7 @@
             padding: 24px; width: 380px; max-width: calc(100vw - 32px);
             box-shadow: 0 16px 60px rgba(0, 0, 0, 0.35);
             display: flex; flex-direction: column; gap: 16px;
-            font-family: 'DGMSprinter', -apple-system, sans-serif;
+            font-family: var(--font-ui);
             color: #242119;
         }
         .crop-dialog h3 {
@@ -605,11 +606,21 @@
 </head>
 <body>
 
-    <div class="top-bar">
-        <a href="../../index.html" class="back-btn" aria-label="Zurück zur Startseite">&larr; Home</a>
-        <h1>Instagram Testing</h1>
-        <span class="hint">Klicke auf eine Kachel um einen Post zu erstellen</span>
-    </div>
+    <nav class="ci-nav">
+        <div class="ci-nav-inner">
+            <div class="ci-nav-group">
+                <a href="../../index.html" class="ci-pill ci-pill--home" aria-label="Zurück zur Toolbox" title="Zurück zur Toolbox">
+                    <span class="ci-pill__arrow" aria-hidden="true">&larr;</span>
+                    Toolbox
+                </a>
+                <span class="ci-nav-divider" aria-hidden="true"></span>
+                <span class="ci-nav-title">Instagram Testing</span>
+            </div>
+            <div class="ci-nav-group ci-nav-group--end">
+                <span class="ci-nav-meta">Klicke auf eine Kachel um einen Post zu erstellen</span>
+            </div>
+        </div>
+    </nav>
 
     <div class="main-area">
         <!-- GRID VIEW -->

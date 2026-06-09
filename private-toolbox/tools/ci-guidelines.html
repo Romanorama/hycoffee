@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HYCoffee — Brand Dashboard</title>
+<link rel="stylesheet" href="../assets/ci/ci-nav.css">
 <style>
   @font-face {
     font-family: 'HAL Timezone';
@@ -51,7 +52,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    font-family: 'DGMSprinter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     font-weight: 400;
     background: var(--bg);
     color: var(--ink);
@@ -64,50 +65,20 @@
     font-synthesis: none;
     -webkit-font-synthesis: none;
   }
-  /* HALTimezone for display / headings */
-  h1, h2, h3, h4,
-  .hero-title, .sec-head h2, .nav-brand,
-  .card-feature h3, .quote, .lockup .logo {
+  /* UI headings — Inter (toolbox chrome) */
+  h1, h2, h3, h4, .sec-head h2 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+  /* Brand-voice specimens keep the HALTimezone display font */
+  .hero-title, .card-feature h3, .quote, .lockup .logo {
     font-family: 'HAL Timezone', 'DGMSprinter', serif;
     letter-spacing: -0.01em;
   }
 
   a { color: inherit; text-decoration: none; }
 
-  /* HEADER */
-  .nav {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(245,245,247,0.78);
-    -webkit-backdrop-filter: var(--header-blur);
-    backdrop-filter: var(--header-blur);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-inner {
-    max-width: 1200px; margin: 0 auto;
-    padding: 0 22px;
-    height: 52px;
-    display: flex; align-items: center; justify-content: space-between;
-    font-size: 13px;
-  }
-  .nav-brand { font-weight: 500; letter-spacing: -0.02em; }
-  .nav-home {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: var(--ink); text-decoration: none; opacity: 0.75;
-    transition: opacity .2s;
-  }
-  .nav-home:hover { opacity: 1; }
-  .nav-home .arrow { font-size: 14px; line-height: 1; }
-  .nav ul { list-style: none; display: flex; gap: 28px; padding: 0; margin: 0; }
-  .nav a { color: var(--ink); opacity: 0.85; transition: opacity .2s; }
-  .nav a:hover { opacity: 1; }
-  .nav-lang {
-    display: flex; gap: 4px;
-    background: rgba(17,17,19,0.05);
-    padding: 3px; border-radius: 999px;
-    font-size: 11px; font-weight: 500;
-  }
-  .nav-lang span { padding: 4px 10px; border-radius: 999px; color: var(--ink-2); cursor: pointer; }
-  .nav-lang span.active { background: var(--bg-elev); color: var(--ink); }
+  /* HEADER — unified nav lives in assets/ci/ci-nav.css */
 
   /* CONTAINER */
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 22px; }
@@ -474,20 +445,26 @@
 <body>
 
 <!-- NAV -->
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="nav-home" aria-label="Zurück zur Toolbox">
-      <span class="arrow">&larr;</span>
-      <span class="nav-brand">HYCoffee Toolbox</span>
-    </a>
-    <ul>
-      <li><a href="#markenkern">Markenkern</a></li>
-      <li><a href="#versprechen">Versprechen</a></li>
-      <li><a href="#tonalitaet">Tonalität</a></li>
-      <li><a href="#kanaele">Kanäle</a></li>
-      <li><a href="#bausteine">Textbausteine</a></li>
-      <li><a href="#plan">Content Plan</a></li>
-    </ul>
+<nav class="ci-nav">
+  <div class="ci-nav-inner ci-nav-inner--wrap">
+    <div class="ci-nav-group">
+      <a href="../index.html" class="ci-pill ci-pill--home" aria-label="Zurück zur Toolbox" title="Zurück zur Toolbox">
+        <span class="ci-pill__arrow" aria-hidden="true">&larr;</span>
+        Toolbox
+      </a>
+      <span class="ci-nav-divider" aria-hidden="true"></span>
+      <span class="ci-nav-title">CI Guidelines</span>
+    </div>
+    <div class="ci-nav-group ci-nav-group--end">
+      <span class="ci-nav-links">
+        <a href="#markenkern" class="ci-nav-link">Markenkern</a>
+        <a href="#versprechen" class="ci-nav-link">Versprechen</a>
+        <a href="#tonalitaet" class="ci-nav-link">Tonalität</a>
+        <a href="#kanaele" class="ci-nav-link">Kanäle</a>
+        <a href="#bausteine" class="ci-nav-link">Textbausteine</a>
+        <a href="#plan" class="ci-nav-link">Content Plan</a>
+      </span>
+    </div>
   </div>
 </nav>
 
@@ -893,7 +870,7 @@
     });
   });
   // Smooth-scroll for nav links
-  document.querySelectorAll('.nav a').forEach(a => {
+  document.querySelectorAll('.ci-nav a').forEach(a => {
     a.addEventListener('click', e => {
       const id = a.getAttribute('href');
       if (id && id.startsWith('#')) {

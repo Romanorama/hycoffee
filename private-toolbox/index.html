@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HYCoffee — Toolbox</title>
 <link rel="stylesheet" href="assets/ci/ci.css">
+<link rel="stylesheet" href="assets/ci/ci-nav.css">
 <style>
   .tile-grid {
     display: grid;
@@ -51,7 +52,7 @@
   }
 
   .tile-title {
-    font-family: var(--font-display);
+    font-family: var(--font-ui);
     font-size: 26px;
     font-weight: 600;
     letter-spacing: -0.025em;
@@ -88,30 +89,36 @@
     border: 1px solid var(--line);
   }
 
+  /* Section head: small brand mark sitting inline next to the title */
+  .ci-sec-title { display: flex; align-items: center; gap: 14px; }
   .home-logo {
     display: block;
-    width: min(180px, 42vw);
+    width: 40px;
     height: auto;
-    margin: 0 auto;
+    flex: none;
   }
+  @media (max-width: 560px) { .home-logo { width: 34px; } }
 </style>
 </head>
 <body>
 
 <nav class="ci-nav">
-  <div class="ci-nav-inner">
-    <span class="ci-nav-brand ci-display">HYCoffee Toolbox</span>
-    <span class="ci-nav-home" style="opacity:.6;">v · 2026</span>
+  <div class="ci-nav-inner ci-nav-inner--wrap">
+    <div class="ci-nav-group">
+      <span class="ci-nav-brand">HyCoffee CI Portal</span>
+    </div>
+    <div class="ci-nav-group ci-nav-group--end">
+      <span class="ci-nav-meta">v1.3 · 2026-06-09</span>
+    </div>
   </div>
 </nav>
 
-<header class="ci-hero">
-  <img class="home-logo" src="assets/hycoffee/logos/svg/Hy/Hy_Logo.svg" alt="Hy">
-</header>
-
-<section class="ci-wrap" style="padding-bottom: 80px;">
+<section class="ci-wrap" style="padding-top: 48px; padding-bottom: 80px;">
   <div class="ci-sec-head">
-    <h2>Tools</h2>
+    <div class="ci-sec-title">
+      <img class="home-logo" src="assets/hycoffee/logos/svg/Hy/Hy_Logo.svg" alt="HyCoffee">
+      <h2>Tools</h2>
+    </div>
   </div>
 
   <div class="tile-grid">
@@ -214,8 +221,8 @@
 
 <footer class="ci-footer">
   <div class="ci-wrap">
-    <div>HYCoffee × CJX Studio · Internal Toolbox</div>
-    <div>2026</div>
+    <div>HyCoffee CI Portal</div>
+    <div>v1.3 · 2026-06-09</div>
   </div>
 </footer>
 
