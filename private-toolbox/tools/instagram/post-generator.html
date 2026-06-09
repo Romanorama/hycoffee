@@ -4336,12 +4336,12 @@ document.getElementById('loadInput').addEventListener('change', e => {
 });
 
 /* ===== Init =====
-   Bootstrap with the canonical starter template (HyCoffee_Post_20260520-1825):
-   3 slides — cover (headline + subline), full-bleed image, paragraph slide. */
+   Bootstrap with a single cover slide — green theme, headline + subline.
+   Users build out the rest of the carousel from there. */
 const DEFAULT_TEMPLATE = {
   "version": 1,
   "kind": "hycoffee-post",
-  "nextSlideId": 4,
+  "nextSlideId": 2,
   "nextElId": 9,
   "state": {
     "bg": "#3A563B",
@@ -4354,17 +4354,6 @@ const DEFAULT_TEMPLATE = {
           "props": { "text": "Climate resilient coffee.", "size": "M", "color": "#F3F0FF", "align": "left", "vAnchor": "bottom" } },
         { "id": "el-8", "type": "subline", "x": 54, "y": 1036.5, "w": 756, "h": 246,
           "props": { "text": "Specialty lots, diverse species, transparent sourcing.", "size": "M", "color": "#F3F0FF", "align": "left" } }
-      ]},
-      { "id": "s-2", "elements": [
-        { "id": "el-4", "type": "image", "x": 0, "y": 0, "w": 1080, "h": 1350,
-          "props": { "src": "../../assets/images/Arabica%20Coffee%20Uganda/IMG_9058.jpeg",
-            "expandLeft": 2, "expandRight": 2, "imgScale": 100, "imgOffsetX": 0, "imgOffsetY": 0, "imgRotate": 0,
-            "freeMode": false, "rotate": 0, "mask": "none", "maskSide": "bottom", "maskSize": 50, "maskOpacity": 80 } }
-      ]},
-      { "id": "s-3", "elements": [
-        { "id": "el-6", "type": "paragraph", "x": 270, "y": 538, "w": 756, "h": 100,
-          "props": { "text": "HyCoffee verbindet klimaresiliente Kaffeesorten mit transparenten Lieferketten und direktem Marktzugang für Produzent:innen.",
-            "size": "M", "color": "#F3F0FF", "align": "left", "font": "sprinter", "outline": "none" } }
       ]}
     ]
   }
