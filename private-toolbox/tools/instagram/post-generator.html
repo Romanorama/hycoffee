@@ -544,6 +544,81 @@
     color: white;
   }
 
+  /* image "expand over the edge" control — interactive filmstrip:
+     a center tile (this slide) flanked by clickable +10/+20/+30 steps that
+     visibly grow the image into the neighbouring carousel slides. */
+  .xpand {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 12px 11px;
+    background: var(--bg);
+  }
+  .xpand-strip { display: flex; align-items: stretch; gap: 6px; }
+  .xpand-sec { display: flex; flex-direction: column; min-width: 0; }
+  .xpand-sec.side { flex: 1; }
+  .xpand-sec.mid { flex: 0 0 48px; }
+  .xpand-lbl {
+    height: 13px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 7px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .xpand-sec.left  .xpand-lbl { text-align: left; }
+  .xpand-sec.right .xpand-lbl { text-align: right; }
+  .xpand-sec.mid   .xpand-lbl { text-align: center; color: var(--navy); }
+
+  .xpand-grp {
+    display: flex;
+    height: 58px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .xpand-seg {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    border-left: 1px dashed #d4d3de;
+    background: transparent;
+    color: var(--gray);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .xpand-grp .xpand-seg:first-child { border-left: none; }
+  .xpand-seg:hover { background: #ecebf7; }
+  .xpand-seg.on { background: var(--lila); color: #fff; }
+
+  /* slim "this slide" marker sitting between the two step groups */
+  .xpand-now {
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--navy);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color .15s, color .15s;
+  }
+  .xpand-now:hover { border-color: var(--lila); color: var(--lila); }
+
+  .xpand-cap { font-size: 11px; color: var(--gray); line-height: 1.5; margin-top: 10px; }
+  .xpand-reset { color: var(--lila); cursor: pointer; font-weight: 700; }
+  .xpand-reset:hover { text-decoration: underline; }
+
   .slider-row {
     display: flex;
     align-items: center;
@@ -3222,10 +3297,7 @@ function renderProperties() {
 
     if (!el.props.freeMode) {
       // Default mode: full-canvas tile with the 10% expand shifts
-      html += group('Erweitern nach links',
-        expandSegHTML(el.props.expandLeft || 0, 'expandLeft'));
-      html += group('Erweitern nach rechts',
-        expandSegHTML(el.props.expandRight || 0, 'expandRight'));
+      html += group('Über den Rand erweitern', expandControlHTML(el));
       // Story only: shrink the image into a bottom band, freeing the top for text.
       if (currentFormat === 'story') {
         html += group('Bildhöhe (Story)', coverageSegHTML(el.props.coverage));
@@ -3387,12 +3459,56 @@ function sliderHTML(value, prop, min, max, suffix) {
     '<span class="value">' + value + (suffix || '') + '</span>' +
     '</div>';
 }
-function expandSegHTML(current, prop) {
-  const labels = ['0', '+10%', '+20%', '+30%'];
-  return '<div class="seg-group cols-4" data-prop="' + prop + '" data-numeric="1">' +
-    labels.map((lbl, i) =>
-      '<button data-value="' + i + '" class="' + (i === Number(current) ? 'active' : '') + '">' + lbl + '</button>'
-    ).join('') + '</div>';
+// Interactive image-expand control. The image lives in the centre tile (this
+// slide) and can grow into the neighbouring carousel slides. Each side shows
+// three clickable steps (+10/+20/+30) that fill cumulatively from the centre
+// outwards, so the control literally pictures the image spilling over the edge.
+// Steps are ordered outer→inner on the left (+30,+20,+10) and inner→outer on
+// the right (+10,+20,+30) so the lit blocks always hug the centre tile.
+// The whole panel rebuilds on every click (renderAll → renderProperties), so
+// the lit state and the % readout stay in sync without extra wiring.
+function expandControlHTML(el) {
+  const expL = el.props.expandLeft || 0;
+  const expR = el.props.expandRight || 0;
+  const totalPct = 100 + (expL + expR) * 10;
+
+  const seg = (side, level, lit) =>
+    '<button class="xpand-seg' + (lit ? ' on' : '') + '" data-side="' + side + '" data-level="' + level + '"' +
+    ' title="' + (lit ? 'Klick zum Zurücknehmen' : 'Bild ' + (level * 10) + '% nach ' + (side === 'left' ? 'links' : 'rechts')) + '">' +
+    '+' + (level * 10) + '</button>';
+
+  const leftSegs = [3, 2, 1].map(l => seg('left', l, l <= expL)).join('');
+  const rightSegs = [1, 2, 3].map(l => seg('right', l, l <= expR)).join('');
+
+  let cap;
+  if (expL === 0 && expR === 0) {
+    cap = 'Bild füllt genau diese Slide. Tippe links/rechts, um es in die Nachbar-Slide zu ziehen.';
+  } else {
+    const parts = [];
+    if (expL) parts.push('+' + (expL * 10) + '% links');
+    if (expR) parts.push('+' + (expR * 10) + '% rechts');
+    cap = 'Bild ragt ' + parts.join(' und ') + ' über den Rand — gesamt <b>' + totalPct + '%</b>. ' +
+      '<span class="xpand-reset">Zurücksetzen</span>';
+  }
+
+  return '' +
+    '<div class="xpand">' +
+      '<div class="xpand-strip">' +
+        '<div class="xpand-sec side left">' +
+          '<div class="xpand-lbl">◀ Links</div>' +
+          '<div class="xpand-grp">' + leftSegs + '</div>' +
+        '</div>' +
+        '<div class="xpand-sec mid">' +
+          '<div class="xpand-lbl">&nbsp;</div>' +
+          '<div class="xpand-now" title="Beide Seiten zurücksetzen">' + totalPct + '%</div>' +
+        '</div>' +
+        '<div class="xpand-sec side right">' +
+          '<div class="xpand-lbl">Rechts ▶</div>' +
+          '<div class="xpand-grp">' + rightSegs + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="xpand-cap">' + cap + '</div>' +
+    '</div>';
 }
 // Story-only image-height band: Voll (full-bleed) / 75 / 50 / 25 %, bottom-anchored.
 function coverageSegHTML(current) {
@@ -3461,6 +3577,43 @@ function readFileAsDataUrl(file) {
   });
 }
 
+// Upload reader that downscales oversized photos before storing them.
+// Phone photos are routinely 3000–6000px / several MB. The ZIP export
+// serialises each slide into an SVG <foreignObject> (html-to-image); a raster
+// that large blows past the browser's SVG-image size limit and silently drops
+// out of the exported PNG — the picture shows on screen but is missing from the
+// download. The canvas tops out at ~1728px wide (1080 + 60% expand), so we cap
+// the longest side well above that and re-encode. This also keeps saved JSON
+// and localStorage small. PNGs keep their alpha; everything else becomes JPEG.
+const UPLOAD_MAX_DIM = 2400;
+
+function readImageFileScaled(file, maxDim = UPLOAD_MAX_DIM) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(reader.error || new Error('Datei konnte nicht gelesen werden.'));
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      const img = new Image();
+      img.onload = () => {
+        const w = img.naturalWidth, h = img.naturalHeight;
+        const scale = Math.min(1, maxDim / Math.max(w, h));
+        if (scale === 1) { resolve(dataUrl); return; } // already small enough
+        const cw = Math.max(1, Math.round(w * scale));
+        const ch = Math.max(1, Math.round(h * scale));
+        const canvas = document.createElement('canvas');
+        canvas.width = cw; canvas.height = ch;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, cw, ch);
+        const isPng = /^image\/png$/i.test(file.type) || /^data:image\/png/i.test(dataUrl);
+        resolve(isPng ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', 0.92));
+      };
+      img.onerror = () => reject(new Error('Bild konnte nicht geladen werden.'));
+      img.src = dataUrl;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function openGridImageUpload(el, mode) {
   ensureGridItems(el);
   const inp = document.getElementById('fileInput');
@@ -3473,12 +3626,12 @@ function openGridImageUpload(el, mode) {
       if (mode === 'all') {
         const limit = Math.min(GRID_ITEM_COUNT, files.length);
         for (let i = 0; i < limit; i++) {
-          el.props.items[i].src = await readFileAsDataUrl(files[i]);
+          el.props.items[i].src = await readImageFileScaled(files[i]);
         }
         el.props.activeItem = 0;
       } else {
         const idx = el.props.activeItem || 0;
-        el.props.items[idx].src = await readFileAsDataUrl(files[0]);
+        el.props.items[idx].src = await readImageFileScaled(files[0]);
       }
       renderAll();
     } catch (err) {
@@ -3550,6 +3703,24 @@ function bindPropertyControls(el) {
         }
         renderAll();
       });
+    });
+  });
+  // image-expand filmstrip: clicking a step sets that side's level; clicking the
+  // step that already marks the current level toggles the side back off.
+  propsPanel.querySelectorAll('.xpand-seg').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prop = btn.dataset.side === 'left' ? 'expandLeft' : 'expandRight';
+      const level = Number(btn.dataset.level);
+      el.props[prop] = (Number(el.props[prop] || 0) === level) ? 0 : level;
+      renderAll();
+    });
+  });
+  // centre tile and the caption link both reset both sides to 0
+  propsPanel.querySelectorAll('.xpand-now, .xpand-reset').forEach(node => {
+    node.addEventListener('click', () => {
+      el.props.expandLeft = 0;
+      el.props.expandRight = 0;
+      renderAll();
     });
   });
   // sliders — live update, no rebuild so the slider keeps pointer capture during drag
@@ -3630,12 +3801,15 @@ function bindPropertyControls(el) {
       const inp = document.getElementById('fileInput');
       inp.value = '';
       inp.multiple = false;
-      inp.onchange = () => {
+      inp.onchange = async () => {
         const f = inp.files[0];
         if (!f) return;
-        const reader = new FileReader();
-        reader.onload = () => { el.props.src = reader.result; renderAll(); };
-        reader.readAsDataURL(f);
+        try {
+          el.props.src = await readImageFileScaled(f);
+          renderAll();
+        } catch (err) {
+          alert('Bildimport fehlgeschlagen: ' + err.message);
+        }
       };
       inp.click();
     });
