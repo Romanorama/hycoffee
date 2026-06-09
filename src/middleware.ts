@@ -18,8 +18,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect('/portal/login');
   }
 
-  if (pathname === '/portal/login' && session) {
-    return context.redirect('/portal');
+  if ((pathname === '/portal/login' || pathname === '/portal') && session) {
+    return context.redirect('/portal/toolbox');
   }
 
   return next();

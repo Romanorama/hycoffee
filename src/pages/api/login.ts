@@ -28,5 +28,5 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const token = await createSession(user);
   cookies.set(SESSION_COOKIE, token, sessionCookieOptions);
 
-  return redirect('/portal', 303);
+  return redirect('/portal/toolbox', 303);
 };
