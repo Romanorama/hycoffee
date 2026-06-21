@@ -1,13 +1,15 @@
 heading: Impressum
 sections:
-  - heading: Angaben gemäß § 5 TMG
+  - heading: Angaben gemäß §5 DDG
     body: |-
       HyCoffee UG (haftungsbeschränkt)
       Tassilostraße 15
       82166 Gräfelfing
       Deutschland
   - heading: Vertreten durch
-    body: Sophie von Loeben & Charlotte Schmidt
+    body: |-
+      Sophie von Loeben & Charlotte Schmidt
+      Geschäftsführerinnen
   - heading: Kontakt
     body: |-
       Telefon: +49 151 24026103
@@ -20,7 +22,8 @@ sections:
       USt-IdNr. – DE341379888
   - heading: Redaktionell verantwortlich
     body: |-
-      Sophie von Loeben 
+      Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
+      Sophie von Loeben & Charlotte Schmidt
       Tassilostraße 15
       82166 Gräfelfing
       Deutschland
@@ -37,9 +40,9 @@ sections:
       einer Verbraucherschlichtungsstelle teilzunehmen.
   - heading: Haftung für Inhalte
     body: >-
-      Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf
+      Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf
       diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis
-      10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet,
+      10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet,
       übermittelte oder gespeicherte fremde Informationen zu überwachen oder
       nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit
       hinweisen.
@@ -59,7 +62,6 @@ sections:
       verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung
       auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum
       Zeitpunkt der Verlinkung nicht erkennbar.
-
 
       Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch
       ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei
