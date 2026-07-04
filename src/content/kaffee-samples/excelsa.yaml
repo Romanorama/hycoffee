@@ -3,7 +3,7 @@ species: excelsa
 country: 'Uganda '
 score: /
 process: Natural
-price: 10,90
+price: 10,90€
 availability: 23x60kg
 arrival: Oktober 2026
 variety: excelsa
@@ -35,7 +35,7 @@ contentDe:
     Gemeinsam mit den Produzent:innen verbessern wir Qualität und erproben neue,
     experimentelle Verarbeitungsmethoden. Wir schaffen einen direkten
     Marktzugang nach Europa, wo Excelsa traditionell kaum eine Rolle gespielt
-    hat. HyCoffee zahlt Produzent:innen 200 % des Preises, den sie bislang für
+    hat. HyCoffee zahlt Produzent:innen 200% des Preises, den sie bislang für
     Excelsa erhalten haben – für höhere Einkommen, eine diversifiziertere
     Produktion und eine resilientere Zukunft.
 contentEn:
@@ -65,5 +65,6 @@ contentEn:
     of the price they previously received for Excelsa, supporting higher
     incomes, more diversified production, and a more resilient future.
 heroImage: ../../assets/images/cms/kaffee/excelsa/heroImage.JPG
+pdfDownload: /downloads/excelsa/pdfDownload.pdf
 available: true
 sortOrder: 5
