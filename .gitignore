@@ -41,8 +41,3 @@ pnpm-debug.log*
 
 # Toolbox source workspace (not for deploy — see private-toolbox/)
 /_Generator_HyCoffee/
-
-# Heavy product-photo library — 229MB, blows the Netlify function size limit.
-# Kept in the source workspace only; cd-assets + product-sheets pickers are
-# empty online as a result. Serve via CDN/public if they're needed in the beta.
-/private-toolbox/assets/images/
