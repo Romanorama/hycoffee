@@ -171,7 +171,11 @@ export default config({
           ...contentImage('kaffee'),
         }),
         pdfDownload: fields.file({
-          label: 'Product Sheet (PDF)',
+          label: 'Product Sheet (PDF, Deutsch)',
+          ...publicFile('public/downloads', '/downloads/'),
+        }),
+        pdfDownloadEn: fields.file({
+          label: 'Product Sheet (PDF, English) — auf der englischen Seite verlinkt; fehlt es, fällt sie auf das deutsche PDF zurück',
           ...publicFile('public/downloads', '/downloads/'),
         }),
         available: fields.checkbox({ label: 'Verfügbar', defaultValue: true }),

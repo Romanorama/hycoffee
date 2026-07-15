@@ -6,8 +6,24 @@ const LAYOUT_CLASSIC = 'classic';
 const LAYOUT_THREE_IMAGES = 'three-images';
 const DEFAULT_LAYOUT = LAYOUT_THREE_IMAGES;
 const LAYOUTS = [LAYOUT_THREE_IMAGES, LAYOUT_CLASSIC];
-const FIELDS = ['layout', 'name', 'species', 'country', 'score', 'process', 'variety',
+const FIELDS = ['layout', 'lang', 'name', 'species', 'country', 'score', 'process', 'variety',
                 'harvest', 'region', 'altitude', 'flavour', 'intro', 'climate', 'social'];
+
+// PDF template chrome per sheet language. Only the labels printed on the PDF
+// switch; the tool UI itself stays German.
+const SHEET_LANGS = ['de', 'en'];
+const SHEET_LABELS = {
+    de: {
+        species: 'Species', country: 'Country', score: 'Score', process: 'Process',
+        variety: 'Varietät', harvest: 'Ernte', region: 'Herkunft', altitude: 'Höhe',
+        headingClimate: 'Klimaresilient', headingSocial: 'Sozial verantwortlich',
+    },
+    en: {
+        species: 'Species', country: 'Country', score: 'Score', process: 'Process',
+        variety: 'Variety', harvest: 'Harvest', region: 'Origin', altitude: 'Altitude',
+        headingClimate: 'Climate resilient', headingSocial: 'Socially responsible',
+    },
+};
 const IMAGE_LIMIT = 3;
 const IMAGE_MAX_DIMENSION = 1400;
 const IMAGE_JPEG_QUALITY = 0.86;
@@ -73,6 +89,20 @@ function cssUrl(src) {
     return `url("${String(src).replace(/"/g, '\\"')}")`;
 }
 
+function normalizeImagePos(imagePos) {
+    const normalized = [];
+    for (let i = 0; i < IMAGE_LIMIT; i++) {
+        const pos = Array.isArray(imagePos) ? imagePos[i] : null;
+        const x = Number(pos?.x);
+        const y = Number(pos?.y);
+        normalized.push({
+            x: Number.isFinite(x) ? Math.max(0, Math.min(100, x)) : 50,
+            y: Number.isFinite(y) ? Math.max(0, Math.min(100, y)) : 50,
+        });
+    }
+    return normalized;
+}
+
 function normalizeBean(bean) {
     const obj = {};
     FIELDS.forEach(f => {
@@ -80,8 +110,12 @@ function normalizeBean(bean) {
     });
     obj.id = typeof bean?.id === 'string' && bean.id ? bean.id : slugify(obj.name || 'sorte');
     obj.images = normalizeImages(bean?.images);
+    obj.imagePos = normalizeImagePos(bean?.imagePos);
     if (!LAYOUTS.includes(obj.layout)) {
         obj.layout = DEFAULT_LAYOUT;
+    }
+    if (!SHEET_LANGS.includes(obj.lang)) {
+        obj.lang = 'de';
     }
     return obj;
 }
@@ -111,8 +145,10 @@ function emptyBean() {
     const obj = { id: uniqueId('neue-sorte') };
     FIELDS.forEach(f => obj[f] = '');
     obj.layout = DEFAULT_LAYOUT;
+    obj.lang = 'de';
     obj.name = 'Neue Sorte';
     obj.images = normalizeImages();
+    obj.imagePos = normalizeImagePos();
     return obj;
 }
 
@@ -139,7 +175,6 @@ const els = {
     imageRemoves: Array.from(document.querySelectorAll('[data-image-remove]')),
     pdfImages: document.getElementById('pdf-images'),
     pdfImageFrames: Array.from(document.querySelectorAll('.pdf-image-frame')),
-    pdfImageEls: Array.from(document.querySelectorAll('[id^="pdf-image-"]')),
     pdfFooter: document.querySelector('.pdf-footer'),
     assetPicker: document.getElementById('asset-picker'),
     assetPickerClose: document.getElementById('asset-picker-close'),
@@ -208,6 +243,7 @@ function readForm() {
         obj[f] = el ? el.value : '';
     });
     obj.images = normalizeImages(getBean(currentId)?.images);
+    obj.imagePos = normalizeImagePos(getBean(currentId)?.imagePos);
     return obj;
 }
 
@@ -215,6 +251,7 @@ function readForm() {
 
 function renderPreview(bean) {
     renderLayoutControls(bean);
+    applySheetLanguage(bean);
     Object.entries(FIELD_TO_PREVIEW).forEach(([field, targetId]) => {
         const el = document.getElementById(targetId);
         if (!el) return;
@@ -222,6 +259,16 @@ function renderPreview(bean) {
         el.textContent = value || (field === 'name' ? 'Sortenname' : '');
     });
     renderPreviewImages(bean);
+}
+
+// Swap the printed template labels (spec names + section headings) to the
+// bean's sheet language.
+function applySheetLanguage(bean) {
+    const labels = SHEET_LABELS[SHEET_LANGS.includes(bean?.lang) ? bean.lang : 'de'];
+    document.querySelectorAll('[data-label]').forEach(el => {
+        const text = labels[el.dataset.label];
+        if (text) el.textContent = text;
+    });
 }
 
 function isThreeImageLayout(bean) {
@@ -257,18 +304,16 @@ function renderPreviewImages(bean) {
     els.page.classList.toggle('has-images', showImages && hasFilledImage(images));
     els.pdfImages.style.setProperty('--image-count', String(IMAGE_LIMIT));
 
+    const imagePos = normalizeImagePos(bean?.imagePos);
     els.pdfImageFrames.forEach((frame, i) => {
         const src = showImages ? images[i] || '' : '';
         frame.hidden = !showImages;
         frame.classList.toggle('is-empty', !src);
+        frame.classList.toggle('has-photo', Boolean(src));
         frame.dataset.placeholder = `Bild ${i + 1}`;
-        const img = els.pdfImageEls[i];
-        if (!img) return;
-        if (src) {
-            img.src = src;
-        } else {
-            img.removeAttribute('src');
-        }
+        frame.style.backgroundImage = src ? cssUrl(src) : '';
+        frame.style.backgroundPosition = `${imagePos[i].x}% ${imagePos[i].y}%`;
+        if (src) prefetchImageDims(src);
     });
 
     fitImageRowToPage(showImages);
@@ -311,6 +356,68 @@ function getPageContentBottom() {
     return Array.from(els.page.querySelectorAll(selectors.join(',')))
         .filter(el => !el.hidden)
         .reduce((bottom, el) => Math.max(bottom, el.getBoundingClientRect().bottom), 0);
+}
+
+// ---------- Image crop (drag the preview to pan the visible section) ----------
+// background-size: cover crops the image to the frame; background-position
+// (0–100% per axis) picks WHICH section shows. Dragging maps pointer movement
+// onto that range using the actual overflow (scaled image minus frame), so the
+// image follows the cursor 1:1.
+
+const _imgDimCache = {};
+function prefetchImageDims(src) {
+    if (!src || _imgDimCache[src]) return;
+    const img = new Image();
+    img.onload = () => { _imgDimCache[src] = { w: img.naturalWidth, h: img.naturalHeight }; };
+    img.src = src;
+}
+
+function initImageCrop() {
+    els.pdfImageFrames.forEach((frame, i) => {
+        frame.addEventListener('pointerdown', (e) => {
+            const bean = getBean(currentId);
+            if (!bean || !isThreeImageLayout(bean)) return;
+            const src = normalizeImages(bean.images)[i];
+            if (!src) return;
+            e.preventDefault();
+
+            const rect = frame.getBoundingClientRect();
+            const dims = _imgDimCache[src];
+            // Fallback before natural dimensions are known: a full-frame drag
+            // sweeps the whole 0–100% range.
+            let overflowX = rect.width;
+            let overflowY = rect.height;
+            if (dims && dims.w > 0 && dims.h > 0) {
+                const scale = Math.max(rect.width / dims.w, rect.height / dims.h);
+                overflowX = dims.w * scale - rect.width;
+                overflowY = dims.h * scale - rect.height;
+            }
+
+            bean.imagePos = normalizeImagePos(bean.imagePos);
+            const start = { x: e.clientX, y: e.clientY, px: bean.imagePos[i].x, py: bean.imagePos[i].y };
+            // Capture keeps the drag alive when the cursor leaves the frame;
+            // if it fails (synthetic events, exotic browsers) drag still works
+            // as long as the pointer stays inside.
+            try { frame.setPointerCapture(e.pointerId); } catch (_) {}
+
+            const onMove = (ev) => {
+                const dx = ev.clientX - start.x;
+                const dy = ev.clientY - start.y;
+                const nx = overflowX > 1 ? Math.max(0, Math.min(100, start.px - (dx / overflowX) * 100)) : start.px;
+                const ny = overflowY > 1 ? Math.max(0, Math.min(100, start.py - (dy / overflowY) * 100)) : start.py;
+                bean.imagePos[i] = { x: Math.round(nx * 10) / 10, y: Math.round(ny * 10) / 10 };
+                frame.style.backgroundPosition = `${bean.imagePos[i].x}% ${bean.imagePos[i].y}%`;
+            };
+            const onUp = () => {
+                frame.removeEventListener('pointermove', onMove);
+                frame.removeEventListener('pointerup', onUp);
+                frame.removeEventListener('pointercancel', onUp);
+            };
+            frame.addEventListener('pointermove', onMove);
+            frame.addEventListener('pointerup', onUp);
+            frame.addEventListener('pointercancel', onUp);
+        });
+    });
 }
 
 function readFileAsDataURL(file) {
@@ -569,7 +676,8 @@ function flashButton(btn, text) {
 // ---------- PDF export ----------
 
 function pdfFilename(bean) {
-    return `HyCoffee_${slugify(bean.name).replace(/-/g, '_')}.pdf`;
+    const langSuffix = bean.lang === 'en' ? '_EN' : '';
+    return `HyCoffee_${slugify(bean.name).replace(/-/g, '_')}${langSuffix}.pdf`;
 }
 
 async function exportPDF(bean) {
@@ -680,4 +788,5 @@ renderSelect();
 loadIntoForm(getBean(currentId) || beans[0]);
 initAssetPicker();
 attachFormListeners();
+initImageCrop();
 applyZoom();

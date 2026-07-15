@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HyCoffee – Product Sheet Generator</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Vendored locally — the CDN copy was blocked by ad-blockers/tracking
+         protection for some users, which silently broke the PDF export. -->
+    <script src="../../assets/vendor/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -55,6 +57,15 @@
                 </div>
 
                 <div class="form-section">
+                    <h3 class="section-label">Sprache des Sheets</h3>
+                    <select id="f-lang" class="form-input">
+                        <option value="de">Deutsch</option>
+                        <option value="en">English</option>
+                    </select>
+                    <p class="field-hint">Übersetzt die Überschriften und Feldbezeichnungen auf dem PDF. Die Texte selbst kommen aus den Feldern unten.</p>
+                </div>
+
+                <div class="form-section">
                     <h3 class="section-label">Stammdaten</h3>
                     <div class="grid-2">
                         <label class="field">
@@ -99,6 +110,7 @@
 
                 <div class="form-section" id="image-form-section" hidden>
                     <h3 class="section-label">Bilder</h3>
+                    <p class="field-hint">Bildausschnitt anpassen: Bild direkt in der Vorschau mit der Maus verschieben.</p>
                     <div class="image-upload-grid">
                         <div class="image-upload-item">
                             <button class="image-upload-slot" type="button" data-image-asset-button="0">
@@ -187,24 +199,28 @@
                             <div class="pdf-kicker">PRODUCT SHEET</div>
                         </header>
 
+                        <!-- Images are painted as background-image (cover) instead of <img> with
+                             object-fit: the html2canvas build inside html2pdf ignores object-fit,
+                             so <img> exports came out distorted. Backgrounds also carry the
+                             draggable crop (background-position). -->
                         <section id="pdf-images" class="pdf-images" hidden>
-                            <figure class="pdf-image-frame"><img id="pdf-image-0" alt=""></figure>
-                            <figure class="pdf-image-frame"><img id="pdf-image-1" alt=""></figure>
-                            <figure class="pdf-image-frame"><img id="pdf-image-2" alt=""></figure>
+                            <figure class="pdf-image-frame" data-frame="0"></figure>
+                            <figure class="pdf-image-frame" data-frame="1"></figure>
+                            <figure class="pdf-image-frame" data-frame="2"></figure>
                         </section>
 
                         <h1 id="pdf-name" class="pdf-name">Amizi Rock</h1>
                         <div id="pdf-flavour" class="pdf-flavour">kräftig, nussig, Lakritze, Limette, Zuckersirup</div>
 
                         <section class="pdf-specs">
-                            <div class="spec"><span class="spec-label">Species</span><span id="pdf-species" class="spec-value">Arabica</span></div>
-                            <div class="spec"><span class="spec-label">Country</span><span id="pdf-country" class="spec-value">Uganda</span></div>
-                            <div class="spec"><span class="spec-label">Score</span><span id="pdf-score" class="spec-value">—</span></div>
-                            <div class="spec"><span class="spec-label">Process</span><span id="pdf-process" class="spec-value">Fully Washed</span></div>
-                            <div class="spec"><span class="spec-label">Varietät</span><span id="pdf-variety" class="spec-value">SL14/Bourbon</span></div>
-                            <div class="spec"><span class="spec-label">Ernte</span><span id="pdf-harvest" class="spec-value">2025/2026</span></div>
-                            <div class="spec"><span class="spec-label">Herkunft</span><span id="pdf-region" class="spec-value">West Nile, Uganda</span></div>
-                            <div class="spec"><span class="spec-label">Höhe</span><span id="pdf-altitude" class="spec-value">1.495 m</span></div>
+                            <div class="spec"><span class="spec-label" data-label="species">Species</span><span id="pdf-species" class="spec-value">Arabica</span></div>
+                            <div class="spec"><span class="spec-label" data-label="country">Country</span><span id="pdf-country" class="spec-value">Uganda</span></div>
+                            <div class="spec"><span class="spec-label" data-label="score">Score</span><span id="pdf-score" class="spec-value">—</span></div>
+                            <div class="spec"><span class="spec-label" data-label="process">Process</span><span id="pdf-process" class="spec-value">Fully Washed</span></div>
+                            <div class="spec"><span class="spec-label" data-label="variety">Varietät</span><span id="pdf-variety" class="spec-value">SL14/Bourbon</span></div>
+                            <div class="spec"><span class="spec-label" data-label="harvest">Ernte</span><span id="pdf-harvest" class="spec-value">2025/2026</span></div>
+                            <div class="spec"><span class="spec-label" data-label="region">Herkunft</span><span id="pdf-region" class="spec-value">West Nile, Uganda</span></div>
+                            <div class="spec"><span class="spec-label" data-label="altitude">Höhe</span><span id="pdf-altitude" class="spec-value">1.495 m</span></div>
                         </section>
 
                         <div class="pdf-copy-grid">
@@ -213,12 +229,12 @@
                             </section>
 
                             <section class="pdf-block">
-                                <h2 class="pdf-h2">Klimaresilient</h2>
+                                <h2 class="pdf-h2" data-label="headingClimate">Klimaresilient</h2>
                                 <p id="pdf-climate" class="pdf-text"></p>
                             </section>
 
                             <section class="pdf-block">
-                                <h2 class="pdf-h2">Sozial verantwortlich</h2>
+                                <h2 class="pdf-h2" data-label="headingSocial">Sozial verantwortlich</h2>
                                 <p id="pdf-social" class="pdf-text"></p>
                             </section>
                         </div>

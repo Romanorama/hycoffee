@@ -813,6 +813,42 @@
     transition: all .1s;
   }
   .asset-modal-grid img:hover { border-color: var(--lila); transform: scale(1.02); }
+
+  /* ===== Drafts modal ===== */
+  .drafts-save-btn { width: 100%; justify-content: center; margin-bottom: 10px; }
+  .drafts-hint {
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.5;
+    margin: 0 0 16px;
+  }
+  .drafts-list { display: flex; flex-direction: column; gap: 8px; }
+  .draft-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+  }
+  .draft-row-meta { flex: 1; min-width: 0; }
+  .draft-row-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .draft-row-date { font-size: 11px; color: var(--gray); margin-top: 2px; }
+  .draft-row .ci-pill { flex-shrink: 0; }
+  .drafts-empty {
+    font-size: 13px;
+    color: var(--gray);
+    text-align: center;
+    padding: 18px 0;
+  }
   .asset-modal-grid img.active { border-color: var(--lila); box-shadow: 0 0 0 2px white inset; }
 
   .asset-btn {
@@ -1293,6 +1329,7 @@
         <button type="button" data-format="story">Story · 9:16</button>
       </div>
       <button id="resetBtn" class="ci-pill" type="button">Zurücksetzen</button>
+      <button id="draftsBtn" class="ci-pill" type="button" title="Entwürfe im Browser speichern und laden">Entwürfe</button>
       <button id="loadBtn" class="ci-pill" type="button" title="Gespeicherten Post als JSON laden">Laden…</button>
       <button id="saveBtn" class="ci-pill" type="button" title="Alle Slides als JSON-Datei sichern">Speichern</button>
       <button id="pushGridBtn" class="ci-pill" type="button" title="Alle Slides als Carousel-Post in den Instagram Grid (testing.html) ablegen">→ In Grid</button>
@@ -1417,8 +1454,24 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/html-to-image@1.11.13/dist/html-to-image.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<div class="asset-modal" id="drafts-modal" role="dialog" aria-modal="true">
+  <div class="asset-modal-card">
+    <div class="asset-modal-head">
+      <h3>Entwürfe</h3>
+      <button type="button" class="asset-modal-close" id="drafts-modal-close" aria-label="Schließen">×</button>
+    </div>
+    <div class="asset-modal-body">
+      <button type="button" class="ci-pill ci-pill--primary drafts-save-btn" id="draft-save-btn">+ Aktuellen Stand als Entwurf speichern</button>
+      <p class="drafts-hint">Entwürfe liegen nur in diesem Browser (localStorage). Für dauerhafte Sicherung oder Weitergabe «Speichern» (JSON-Datei) nutzen.</p>
+      <div id="drafts-list" class="drafts-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Vendored locally (assets/vendor) — CDN copies were blocked by ad-blockers /
+     Firefox tracking protection for some users, which broke export and ZIP. -->
+<script src="../../assets/vendor/html-to-image.js"></script>
+<script src="../../assets/vendor/jszip.min.js"></script>
 <script>
 'use strict';
 
@@ -2508,16 +2561,30 @@ function liveUpdateImageTransform(el) {
    Runs on every render so existing elements re-align when guides change
    (e.g. an image is added on a neighbouring slide and the safe area shrinks). ===== */
 function snapTextToSafe(slide, safe) {
+  // Paragraphs sharing a vAnchor stack as one block (12px gaps) instead of
+  // overlapping at the same anchor position — needed since a slide may hold
+  // more than one paragraph.
+  const paraGroups = {};
   slide.elements.forEach(el => {
-    if (el.type === 'paragraph') {
-      // Paragraph is anchored to the safe area like the headline stack:
-      // full safe width, vertical position driven by its vAnchor.
+    if (el.type !== 'paragraph') return;
+    const key = el.props.vAnchor || 'center';
+    (paraGroups[key] = paraGroups[key] || []).push(el);
+  });
+  Object.entries(paraGroups).forEach(([anchor, group]) => {
+    const gap = 12;
+    const heights = group.map(el => measureWrappedHeight(el, safe.w));
+    const totalH = heights.reduce((s, h) => s + h, 0) + gap * (group.length - 1);
+    let y = anchorY(anchor, safe, totalH);
+    group.forEach((el, i) => {
       el.x = safe.x;
       el.w = safe.w;
-      const h = measureWrappedHeight(el, safe.w);
-      el.h = h;
-      el.y = anchorY(el.props.vAnchor || 'center', safe, h);
-    } else if (el.type === 'interview') {
+      el.h = heights[i];
+      el.y = y;
+      y += heights[i] + gap;
+    });
+  });
+  slide.elements.forEach(el => {
+    if (el.type === 'interview') {
       el.x = safe.x;
       el.w = safe.w;
       // y stays where the user put it, but keep it inside the safe area
@@ -2744,16 +2811,32 @@ function reflowBottomStackDOM(canvas, slide, safe) {
 /* Live-reflow an anchored paragraph in the DOM without touching innerHTML
    (so the caret survives during in-place editing). */
 function reflowParagraphDOM(canvas, el, safe) {
-  const node = canvas.querySelector('.el[data-id="' + el.id + '"]');
-  if (!node) return;
-  const h = node.offsetHeight;
-  el.h = h;
-  el.x = safe.x;
-  el.w = safe.w;
-  el.y = anchorY(el.props.vAnchor || 'center', safe, h);
-  node.style.left = safe.x + 'px';
-  node.style.top = el.y + 'px';
-  node.style.width = safe.w + 'px';
+  // Reflow the whole anchor group, not just the edited paragraph — multiple
+  // paragraphs sharing a vAnchor stack as one block (mirror of snapTextToSafe).
+  const slideId = canvas.dataset.slideId;
+  const slide = state.slides.find(s => s.id === slideId);
+  const anchor = el.props.vAnchor || 'center';
+  const group = slide
+    ? slide.elements.filter(e => e.type === 'paragraph' && (e.props.vAnchor || 'center') === anchor)
+    : [el];
+  const gap = 12;
+  const nodes = group.map(e => canvas.querySelector('.el[data-id="' + e.id + '"]'));
+  const heights = group.map((e, i) => nodes[i] ? nodes[i].offsetHeight : measureWrappedHeight(e, safe.w));
+  const totalH = heights.reduce((s, h) => s + h, 0) + gap * (group.length - 1);
+  let y = anchorY(anchor, safe, totalH);
+  group.forEach((e, i) => {
+    e.h = heights[i];
+    e.x = safe.x;
+    e.w = safe.w;
+    e.y = y;
+    const node = nodes[i];
+    if (node) {
+      node.style.left = safe.x + 'px';
+      node.style.top = y + 'px';
+      node.style.width = safe.w + 'px';
+    }
+    y += heights[i] + gap;
+  });
 }
 
 /* ===== Stage scaling + slide rendering ===== */
@@ -2887,6 +2970,7 @@ function computeScale() {
 function renderAll() {
   _scale = computeScale();
   renderSlides();
+  scheduleAutosave();
 }
 window.addEventListener('resize', renderAll);
 
@@ -2956,10 +3040,10 @@ function addGridTemplate() {
 }
 
 /* ===== Canvas-level handlers (drag-drop add, click-select, mouse move) ===== */
-/* A slide holds at most two text elements (headline / subline / paragraph /
+/* A slide holds at most four text elements (headline / subline / paragraph /
    interview). Images and the logo don't count toward this limit. */
 const TEXT_TYPES = ['headline', 'subline', 'paragraph', 'interview'];
-const MAX_TEXT_PER_SLIDE = 2;
+const MAX_TEXT_PER_SLIDE = 4;
 function textElementCount(slide) {
   return slide.elements.filter(e => TEXT_TYPES.includes(e.type)).length;
 }
@@ -2995,7 +3079,7 @@ function bindCanvasHandlers(canvas, slide) {
       addGridTemplate();
       return;
     }
-    // Cap: at most two text elements per slide.
+    // Cap: at most MAX_TEXT_PER_SLIDE text elements per slide.
     if (TEXT_TYPES.includes(type) && textElementCount(slide) >= MAX_TEXT_PER_SLIDE) {
       flashDropReject(canvas);
       return;
@@ -4078,36 +4162,68 @@ function createExportProgress(title) {
    Bundling avoids the browser's per-file download prompt spam and keeps the
    carousel grouped on disk. Each slide is added as PNG; the ZIP is named with
    the same timestamp scheme used by the JSON save. */
+// Trigger a browser download for a Blob. The anchor is attached to the DOM
+// before the click (Firefox ignores clicks on detached anchors in some
+// versions) and the object URL stays alive long enough for slow download
+// managers to open it — revoking too early cancels the download in Firefox.
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    a.remove();
+    URL.revokeObjectURL(url);
+  }, 30000);
+}
+
 document.getElementById('downloadBtn').addEventListener('click', async () => {
   const btn = document.getElementById('downloadBtn');
   const prevLabel = btn.textContent;
   btn.disabled = true;
   const progress = createExportProgress('Exportiere Slides');
+  const slideCount = state.slides.length;
+  const pad = n => String(n).padStart(String(slideCount).length, '0');
+  const pngs = []; // { name, blob } — kept so a ZIP failure can fall back to single files
   try {
-    if (typeof JSZip === 'undefined') {
-      throw new Error('JSZip nicht geladen (Internetverbindung prüfen).');
-    }
-    const zip = new JSZip();
-    const slideCount = state.slides.length;
-    const pad = n => String(n).padStart(String(slideCount).length, '0');
     await rasterizeAllSlides(async (out, i) => {
       progress.setSlide(i + 1, slideCount);
       const blob = await new Promise((resolve, reject) => {
         out.toBlob(b => b ? resolve(b) : reject(new Error('toBlob lieferte null')), 'image/png');
       });
-      zip.file('HyCoffee_' + formatLabel() + '_' + slideNoun() + '-' + pad(i + 1) + '.png', blob);
+      pngs.push({ name: 'HyCoffee_' + formatLabel() + '_' + slideNoun() + '-' + pad(i + 1) + '.png', blob });
     });
-    progress.setPacking();
-    const zipBlob = await zip.generateAsync({ type: 'blob' });
-    const url = URL.createObjectURL(zipBlob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'HyCoffee_' + formatLabel() + '_' + timestampForFilename() + '.zip';
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
   } catch (err) {
-    if (err && err.message && !/fehlgeschlagen/.test(err.message)) {
-      alert('ZIP-Export fehlgeschlagen: ' + err.message);
+    progress.close();
+    btn.disabled = false;
+    btn.textContent = prevLabel;
+    return; // rasterizeAllSlides already alerted
+  }
+  try {
+    if (typeof JSZip === 'undefined') {
+      throw new Error('JSZip nicht geladen.');
+    }
+    progress.setPacking();
+    const zip = new JSZip();
+    pngs.forEach(p => zip.file(p.name, p.blob));
+    const zipBlob = await zip.generateAsync({ type: 'blob', mimeType: 'application/zip' });
+    downloadBlob(zipBlob, 'HyCoffee_' + formatLabel() + '_' + timestampForFilename() + '.zip');
+  } catch (err) {
+    // ZIP packing/download failed (blocked ZIP, quota, …) — fall back to
+    // downloading each slide as its own PNG so the export isn't lost.
+    const single = confirm(
+      'ZIP-Export fehlgeschlagen (' + (err && err.message ? err.message : 'unbekannt') + ').\n' +
+      'Stattdessen alle Slides als einzelne PNG-Dateien herunterladen?'
+    );
+    if (single) {
+      for (const p of pngs) {
+        downloadBlob(p.blob, p.name);
+        // small pause so browsers don't block multi-download
+        await new Promise(r => setTimeout(r, 400));
+      }
     }
   } finally {
     progress.close();
@@ -4351,6 +4467,162 @@ document.getElementById('loadInput').addEventListener('change', e => {
   reader.readAsText(f);
 });
 
+/* ===== Drafts (localStorage) =====
+   Browser-local drafts so work in progress survives a closed tab without the
+   JSON-file round trip. One rolling autosave slot plus named manual drafts.
+   Uploaded images live as (downscaled) data URLs inside the payload, so a
+   handful of drafts fits the ~5MB localStorage budget; quota errors surface
+   on manual saves and stay silent for the autosave. */
+const DRAFTS_KEY = 'hycoffee-postgen-drafts-v1';
+const AUTOSAVE_KEY = 'hycoffee-postgen-autosave-v1';
+const AUTOSAVE_DEBOUNCE_MS = 2500;
+
+function loadDraftList() {
+  try {
+    const raw = localStorage.getItem(DRAFTS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_) { return []; }
+}
+function persistDraftList(drafts) {
+  localStorage.setItem(DRAFTS_KEY, JSON.stringify(drafts));
+}
+
+// Autosave only when the state actually changed since the last load/save —
+// otherwise opening the app would overwrite last session's autosave with the
+// default template before the user touched anything.
+let _lastPersistedState = null;
+function currentStateJson() {
+  return JSON.stringify(buildSavePayload().state);
+}
+let _autosaveTimer = null;
+function scheduleAutosave() {
+  clearTimeout(_autosaveTimer);
+  _autosaveTimer = setTimeout(() => {
+    const json = currentStateJson();
+    if (json === _lastPersistedState) return;
+    try {
+      localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({
+        savedAt: Date.now(),
+        payload: buildSavePayload(),
+      }));
+      _lastPersistedState = json;
+    } catch (err) {
+      console.warn('Autosave übersprungen (localStorage voll?):', err);
+    }
+  }, AUTOSAVE_DEBOUNCE_MS);
+}
+
+function draftDateLabel(ts) {
+  try {
+    return new Date(ts).toLocaleString('de-DE', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    });
+  } catch (_) { return ''; }
+}
+
+const draftsModal = document.getElementById('drafts-modal');
+const draftsList = document.getElementById('drafts-list');
+
+function renderDraftsList() {
+  const rows = [];
+  let autosave = null;
+  try {
+    const raw = localStorage.getItem(AUTOSAVE_KEY);
+    if (raw) autosave = JSON.parse(raw);
+  } catch (_) {}
+  if (autosave && autosave.payload) {
+    rows.push({ id: '__autosave__', name: 'Automatisch gesichert', savedAt: autosave.savedAt, payload: autosave.payload, auto: true });
+  }
+  loadDraftList().forEach(d => rows.push(d));
+
+  draftsList.innerHTML = '';
+  if (!rows.length) {
+    draftsList.innerHTML = '<div class="drafts-empty">Noch keine Entwürfe.</div>';
+    return;
+  }
+  rows.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'draft-row';
+    const meta = document.createElement('div');
+    meta.className = 'draft-row-meta';
+    const name = document.createElement('div');
+    name.className = 'draft-row-name';
+    name.textContent = d.name + (d.auto ? ' · rollierend' : '');
+    const date = document.createElement('div');
+    date.className = 'draft-row-date';
+    const slides = d.payload && d.payload.state && d.payload.state.slides;
+    date.textContent = draftDateLabel(d.savedAt) + (Array.isArray(slides) ? ' · ' + slides.length + (slides.length === 1 ? ' Slide' : ' Slides') : '');
+    meta.append(name, date);
+
+    const loadBtn = document.createElement('button');
+    loadBtn.type = 'button';
+    loadBtn.className = 'ci-pill';
+    loadBtn.textContent = 'Laden';
+    loadBtn.addEventListener('click', () => {
+      const hasContent = state.slides.some(s => s.elements.length > 0) || state.slides.length > 1;
+      if (hasContent && !confirm('Aktuelle Slides werden durch den Entwurf ersetzt. Fortfahren?')) return;
+      try {
+        loadFromPayload(d.payload);
+        _lastPersistedState = currentStateJson();
+        closeDraftsModal();
+      } catch (err) {
+        alert('Entwurf konnte nicht geladen werden: ' + err.message);
+      }
+    });
+    row.append(meta, loadBtn);
+
+    if (!d.auto) {
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'ci-pill';
+      delBtn.textContent = 'Löschen';
+      delBtn.addEventListener('click', () => {
+        if (!confirm('Entwurf «' + d.name + '» löschen?')) return;
+        persistDraftList(loadDraftList().filter(x => x.id !== d.id));
+        renderDraftsList();
+      });
+      row.append(delBtn);
+    }
+    draftsList.appendChild(row);
+  });
+}
+
+function openDraftsModal() {
+  renderDraftsList();
+  draftsModal.classList.add('open');
+}
+function closeDraftsModal() {
+  draftsModal.classList.remove('open');
+}
+
+document.getElementById('draftsBtn').addEventListener('click', openDraftsModal);
+document.getElementById('drafts-modal-close').addEventListener('click', closeDraftsModal);
+draftsModal.addEventListener('click', e => { if (e.target === draftsModal) closeDraftsModal(); });
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && draftsModal.classList.contains('open')) closeDraftsModal(); });
+
+document.getElementById('draft-save-btn').addEventListener('click', () => {
+  const suggestion = 'Entwurf ' + draftDateLabel(Date.now());
+  const name = prompt('Name für den Entwurf:', suggestion);
+  if (name === null) return;
+  const drafts = loadDraftList();
+  drafts.unshift({
+    id: 'd-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    name: (name || suggestion).trim() || suggestion,
+    savedAt: Date.now(),
+    payload: buildSavePayload(),
+  });
+  try {
+    persistDraftList(drafts);
+    _lastPersistedState = currentStateJson();
+    renderDraftsList();
+  } catch (err) {
+    alert('Entwurf konnte nicht gespeichert werden — der Browser-Speicher ist voll. ' +
+      'Tipp: alte Entwürfe löschen oder den Post als JSON-Datei sichern («Speichern»).');
+  }
+});
+
 /* ===== Init =====
    Bootstrap with a single cover slide — green theme, headline + subline.
    Users build out the rest of the carousel from there. */
@@ -4381,6 +4653,9 @@ try {
   console.warn('Default template failed to load, falling back to empty canvas:', err);
   renderAll();
 }
+// Baseline for the autosave differ: opening the app untouched must not
+// overwrite last session's autosave with the default template.
+_lastPersistedState = currentStateJson();
 </script>
 
 </body>

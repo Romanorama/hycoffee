@@ -731,7 +731,10 @@ select.form-input {
   height: var(--image-row-height, 132px);
   border-radius: 4px;
   overflow: hidden;
-  background: var(--pdf-paper);
+  background-color: var(--pdf-paper);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
   position: relative;
 }
 
@@ -739,11 +742,12 @@ select.form-input {
   display: none;
 }
 
-.pdf-image-frame img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
+.pdf-image-frame.has-photo {
+  cursor: grab;
+}
+
+.pdf-image-frame.has-photo:active {
+  cursor: grabbing;
 }
 
 .pdf-image-frame.is-empty {
@@ -763,8 +767,11 @@ select.form-input {
   text-transform: uppercase;
 }
 
-.pdf-image-frame.is-empty img {
-  display: none;
+.field-hint {
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(36, 33, 25, 0.55);
+  margin: 6px 0 10px;
 }
 
 .pdf-copy-grid {
