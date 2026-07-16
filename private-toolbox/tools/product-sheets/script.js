@@ -14,16 +14,22 @@ const FIELDS = ['layout', 'lang', 'name', 'species', 'country', 'score', 'proces
 const SHEET_LANGS = ['de', 'en'];
 const SHEET_LABELS = {
     de: {
-        species: 'Species', country: 'Country', score: 'Score', process: 'Process',
+        species: 'Art', country: 'Land', score: 'Score', process: 'Aufbereitung',
         variety: 'Varietät', harvest: 'Ernte', region: 'Herkunft', altitude: 'Höhe',
         headingClimate: 'Klimaresilient', headingSocial: 'Sozial verantwortlich',
+        imagePlaceholder: 'Bild', namePlaceholder: 'Sortenname',
     },
     en: {
         species: 'Species', country: 'Country', score: 'Score', process: 'Process',
         variety: 'Variety', harvest: 'Harvest', region: 'Origin', altitude: 'Altitude',
         headingClimate: 'Climate resilient', headingSocial: 'Socially responsible',
+        imagePlaceholder: 'Image', namePlaceholder: 'Variety name',
     },
 };
+
+function sheetLabels(bean) {
+    return SHEET_LABELS[SHEET_LANGS.includes(bean?.lang) ? bean.lang : 'de'];
+}
 const IMAGE_LIMIT = 3;
 const IMAGE_MAX_DIMENSION = 1400;
 const IMAGE_JPEG_QUALITY = 0.86;
@@ -256,7 +262,7 @@ function renderPreview(bean) {
         const el = document.getElementById(targetId);
         if (!el) return;
         const value = bean[field] || '';
-        el.textContent = value || (field === 'name' ? 'Sortenname' : '');
+        el.textContent = value || (field === 'name' ? sheetLabels(bean).namePlaceholder : '');
     });
     renderPreviewImages(bean);
 }
@@ -264,7 +270,7 @@ function renderPreview(bean) {
 // Swap the printed template labels (spec names + section headings) to the
 // bean's sheet language.
 function applySheetLanguage(bean) {
-    const labels = SHEET_LABELS[SHEET_LANGS.includes(bean?.lang) ? bean.lang : 'de'];
+    const labels = sheetLabels(bean);
     document.querySelectorAll('[data-label]').forEach(el => {
         const text = labels[el.dataset.label];
         if (text) el.textContent = text;
@@ -310,7 +316,7 @@ function renderPreviewImages(bean) {
         frame.hidden = !showImages;
         frame.classList.toggle('is-empty', !src);
         frame.classList.toggle('has-photo', Boolean(src));
-        frame.dataset.placeholder = `Bild ${i + 1}`;
+        frame.dataset.placeholder = `${sheetLabels(bean).imagePlaceholder} ${i + 1}`;
         frame.style.backgroundImage = src ? cssUrl(src) : '';
         frame.style.backgroundPosition = `${imagePos[i].x}% ${imagePos[i].y}%`;
         if (src) prefetchImageDims(src);
