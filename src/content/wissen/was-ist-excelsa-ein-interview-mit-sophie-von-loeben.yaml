@@ -72,6 +72,10 @@ contentDe:
           und teilweise auch Robusta hier an ihre Grenzen stoßen. Gleichzeitig
           erzielt die Pflanze durch ihre Größe pro Baum Erträge von bis zu 300
           kg.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentDe/blocks/7/value/image.JPG
     - discriminant: subheading
       value:
         text: Was sind die größten Hürden, Excelsa marktfähig zu machen?
