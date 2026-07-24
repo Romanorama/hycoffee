@@ -300,6 +300,10 @@ contentEn:
           longer dry spells, conditions under which Arabica, and to some extent
           Robusta, struggle. At the same time, thanks to height, the plant can
           produce up to 300 kg of coffee per tree.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentEn/blocks/7/value/image.JPG
     - discriminant: subheading
       value:
         text: What are the biggest obstacles to making Excelsa marketable?
