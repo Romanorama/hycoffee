@@ -397,6 +397,10 @@ contentEn:
           the world as well. HyCoffee provides market access in Europe and pays
           cooperatives prices that are 200% above the market price for Excelsa,
           plus an additional profit share for anaerobic coffees.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentEn/blocks/18/value/image.JPG
     - discriminant: subheading
       value:
         text: What is the difference between Liberica and Excelsa?
