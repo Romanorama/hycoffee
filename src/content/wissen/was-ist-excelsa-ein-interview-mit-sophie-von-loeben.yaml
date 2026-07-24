@@ -183,6 +183,10 @@ contentDe:
           HyCoffee ermöglicht den Marktzugang in Europa und bezahlt den
           Kooperativen Preise, die 200% über dem Marktpreis von Excelsa liegen,
           sowie eine zusätzliche Gewinnbeteiligung für anaerobe Kaffees.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentDe/blocks/18/value/image.JPG
     - discriminant: subheading
       value:
         text: Was ist der Unterschied zwischen Liberica und Excelsa?
