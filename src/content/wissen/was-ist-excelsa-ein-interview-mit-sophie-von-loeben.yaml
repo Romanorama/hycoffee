@@ -313,6 +313,111 @@ contentEn:
           Lower outturn: Compared to Arabica and Robusta, the share of usable
           coffee after processing is lower, leading to higher losses and
           affecting overall profitability.
+    - discriminant: subheading
+      value:
+        text: Why has Excelsa been consumed so little so far?
+    - discriminant: paragraph
+      value:
+        text: >-
+          Historically, the global coffee value chain has been strongly shaped
+          by demand: most coffee is produced in the Global South and consumed in
+          the Global North. For a long time, Arabica dominated thanks to its
+          preferred taste. About 150 years ago, however, a massive outbreak of
+          coffee leaf rust caused severe damage to Arabica crops, forcing the
+          industry to look for a resilient alternative. It found one in Robusta.
+          Since then, Robusta has become firmly established and now accounts for
+          around 40% of global coffee consumption. With climate change creating
+          new challenges for coffee production, Excelsa is increasingly coming
+          into focus. It is more heat- and drought-resistant, delivers high
+          yields, and is already being cultivated on a small scale. This means
+          Excelsa could play a key role in sustainably securing coffee
+          production under changing climate conditions.
+    - discriminant: subheading
+      value:
+        text: Why is Excelsa considered climate-resilient?
+    - discriminant: paragraph
+      value:
+        text: >-
+          Excelsa can grow at higher temperatures and lower humidity than
+          Arabica and Robusta, and it is less susceptible to pests and disease.
+          When grown alongside Robusta or Arabica, a climate shock often affects
+          only one of the species, since they have different growing cycles and
+          harvest times. Excelsa also delivers higher and more reliable yields,
+          giving farmers a more stable and predictable income.
+    - discriminant: subheading
+      value:
+        text: What does Excelsa coffee taste like?
+    - discriminant: paragraph
+      value:
+        text: >-
+          Excelsa has a distinct flavor compared to Arabica and Robusta. It
+          often has a pronounced sweetness reminiscent of maple syrup, along
+          with lactic, fermented notes similar to yogurt or kefir. Other flavor
+          notes can include blood orange and chocolate.
+    - discriminant: subheading
+      value:
+        text: How does HyCoffee gain access to Excelsa coffee?
+    - discriminant: paragraph
+      value:
+        text: >-
+          We work in central Uganda with the Uganda Coffee Farmers Alliance and
+          partner with several coffee cooperatives that already grow Excelsa. At
+          first, the quality of Excelsa didn't meet specialty coffee customers’
+          expectations, since there was little knowledge about optimal
+          cultivation and processing methods, and no demand for a high-quality
+          product. HyCoffee is the commercial partner of a research project
+          assessing and implementing optimal cultivation and processing methods
+          to develop a product that appeals to the European market. Farmers
+          receive training, harvest workers’ support, as well as drying
+          tarpaulins, solar dryers, and fermentation tanks to improve coffee
+          processing. We also work with selected "champion farmers" who
+          experiment with anaerobic fermentation. The scientific research allows
+          the resulting knowledge to be systematically documented. These
+          findings are published and can later be applied to other regions of
+          the world as well. HyCoffee provides market access in Europe and pays
+          cooperatives prices that are 200% above the market price for Excelsa,
+          plus an additional profit share for anaerobic coffees.
+    - discriminant: subheading
+      value:
+        text: What is the difference between Liberica and Excelsa?
+    - discriminant: paragraph
+      value:
+        text: >-
+          Until recently, Excelsa (Coffea dewevrei) was thought to be merely a
+          variety of Liberica (Coffea liberica). In August 2025, however, a
+          scientific publication classified Excelsa as a distinct species (Davis
+          et al., 2025). This makes sense, as its flavor differs markedly from
+          Liberica, even though the trees look similar.
+
+          On the farms we work with, Excelsa is certainly present. It's possible
+          that some Liberica trees are mixed in as well, since both plants are
+          known locally by the same name, "Kisansa," and are difficult to
+          distinguish. Based on the flavor profiles, though, we believe that the
+          vast majority of the coffee we buy is indeed Excelsa.
+    - discriminant: subheading
+      value:
+        text: Will Excelsa save the coffee sector from climate change?
+    - discriminant: paragraph
+      value:
+        text: >-
+          Excelsa is not a silver bullet that will single-handedly protect the
+          coffee sector from the effects of climate change. But alternative,
+          more resilient coffee species are an important building block on the
+          path toward a sustainable future for coffee farming. One advantage of
+          Excelsa is that it is already being grown by some farmers today. Other
+          species, such as Stenophylla, also show promise but are not yet
+          cultivated commercially to any significant extent. If we succeed in
+          preserving these species, they could in the future be crossbred with
+          Arabica or Robusta to develop more resilient varieties.
+
+          Of course, there are other ways to adapt coffee farming to climate
+          change as well, such as climate-resilient growing systems like
+          agroforestry or regenerative agriculture, areas in which we are also
+          investing. Our coffees come either from climate-resilient species,
+          from cultivated resilient varieties, or from coffee grown using
+          climate-resilient farming systems. In the long run, it will take a
+          combination of all these approaches for the coffee sector to
+          successfully adapt to the impacts of climate change.
 readingTime: 6
 heroImage: >-
   ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/heroImage.jpg
