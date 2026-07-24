@@ -262,6 +262,10 @@ contentEn:
           While there is currently barely an established market, Excelsa is
           already grown in several regions around the world. In Uganda, where
           the species is native, it has been cultivated for generations.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentEn/blocks/2/value/image.JPG
     - discriminant: subheading
       value:
         text: Why is Excelsa coffee grown in Uganda?
