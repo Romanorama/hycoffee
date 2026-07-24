@@ -133,6 +133,10 @@ contentDe:
           Damit könnte Excelsa eine entscheidende Rolle dabei spielen, die
           Kaffeeproduktion auch unter veränderten Klimabedingungen nachhaltig zu
           sichern.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentDe/blocks/12/value/image.JPG
     - discriminant: subheading
       value:
         text: Warum gilt Excelsa als klimaresilient?
@@ -186,7 +190,7 @@ contentDe:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentDe/blocks/18/value/image.JPG
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentDe/blocks/19/value/image.JPG
     - discriminant: subheading
       value:
         text: Was ist der Unterschied zwischen Liberica und Excelsa?
