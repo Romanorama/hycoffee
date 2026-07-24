@@ -30,6 +30,10 @@ contentDe:
           Einen etablierten Markt gibt es bisher kaum, dennoch wird Excelsa in
           einigen Regionen angebaut. In Uganda, wo die Kaffeeart heimisch ist,
           geschieht das schon seit mehreren Generationen.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentDe/blocks/2/value/image.JPG
     - discriminant: subheading
       value:
         text: 'Warum wird Excelsa-Kaffee in Uganda angebaut? '
