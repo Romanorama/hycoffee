@@ -356,6 +356,10 @@ contentEn:
           yields, and is already being cultivated on a small scale. This means
           Excelsa could play a key role in sustainably securing coffee
           production under changing climate conditions.
+    - discriminant: image
+      value:
+        image: >-
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentEn/blocks/12/value/image.JPG
     - discriminant: subheading
       value:
         text: Why is Excelsa considered climate-resilient?
@@ -404,7 +408,7 @@ contentEn:
     - discriminant: image
       value:
         image: >-
-          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentEn/blocks/18/value/image.JPG
+          ../../assets/images/cms/wissen/was-ist-excelsa-ein-interview-mit-sophie-von-loeben/contentEn/blocks/19/value/image.JPG
     - discriminant: subheading
       value:
         text: What is the difference between Liberica and Excelsa?
