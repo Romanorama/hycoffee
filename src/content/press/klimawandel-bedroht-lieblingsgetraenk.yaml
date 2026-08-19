@@ -1,5 +1,7 @@
 title: Focus - Klimawandel bedroht Lieblingsgetränk
 outlet: Focus
+logoImage: >-
+  ../../assets/images/cms/press/klimawandel-bedroht-lieblingsgetraenk/logoImage.jpg
 featureImage: >-
   ../../assets/images/cms/press/klimawandel-bedroht-lieblingsgetraenk/featureImage.png
 contentDe:
@@ -12,6 +14,6 @@ contentEn:
   excerpt: >-
     Focus reports on new coffee species and how HyCoffee is opening the European
     market for Excelsa.
-readingTime: 2
+readingTime: 3
 externalLink: >-
   https://www.focus.de/earth/report/klimawandel-bedroht-lieblingsgetraenk-mit-laengst-vergessenen-bohnen-will-deutsche-forscherin-unseren-kaffee-retten_94a24574-5356-4976-a70c-189fc670cbee.html
