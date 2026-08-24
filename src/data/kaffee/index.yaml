@@ -56,3 +56,5 @@ contentEn:
   soldOutPopupPrimaryLabel: Notify me
   soldOutPopupPrimaryHref: mailto:info@hycoffee.de?subject=Sample%20Box%20Waitlist
 samplesSoldOut: false
+sampleAmountOne: 50g
+sampleAmountTwo: ''

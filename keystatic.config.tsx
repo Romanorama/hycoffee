@@ -660,6 +660,18 @@ export default config({
             'Wenn aktiviert: alle "Add Sample"-Buttons werden zu "Sold out" und das Popup erscheint beim Klick.',
           defaultValue: false,
         }),
+        sampleAmountOne: fields.text({
+          label: 'Sample-Menge 1',
+          defaultValue: '50g',
+          description:
+            'Erste Menge im Anfrage-Popup, z.B. "50g". Gilt für die deutsche und die englische Seite.',
+        }),
+        sampleAmountTwo: fields.text({
+          label: 'Sample-Menge 2 (optional)',
+          defaultValue: '',
+          description:
+            'Zweite wählbare Menge, z.B. "100g". Leer lassen, wenn nur eine Menge angeboten wird – dann ist Menge 1 fix gesetzt.',
+        }),
       },
     }),
 

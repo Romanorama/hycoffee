@@ -21,6 +21,10 @@ const samples = allSamples
 
 const samplesSoldOut = page.samplesSoldOut;
 const pageContent = page.contentEn;
+const sampleAmounts = [page.sampleAmountOne, page.sampleAmountTwo]
+  .map((value) => (value ?? '').trim())
+  .filter(Boolean);
+const sampleAmountOptions = sampleAmounts.length ? sampleAmounts : ['50g'];
 const fallbackPageContent = page.contentDe;
 const pageHeading = pageContent.pageHeading || fallbackPageContent.pageHeading;
 const pageIntro = pageContent.pageIntro || fallbackPageContent.pageIntro;
@@ -53,6 +57,7 @@ const soldOutPopup = {
     data-checkout-empty-label={contentLabel('checkoutEmptyLabel')}
     data-checkout-single-label={contentLabel('checkoutSingleLabel')}
     data-checkout-multiple-label={contentLabel('checkoutMultipleLabel')}
+    data-sample-amounts={sampleAmountOptions.join('|')}
   >
     <!-- Yellow offer layout v2: no image, table anchored at bottom -->
     <section class="shop-offer-alt" aria-labelledby="shop-offer-title">
@@ -530,23 +535,105 @@ const soldOutPopup = {
     gap: 12px;
   }
 
-  .sample-request-selection-card {
-    display: grid;
-    grid-template-columns: 1fr 140px 160px;
-    gap: 10px;
-    align-items: end;
-    padding: 12px;
+  .sample-request-selection-list :global(.sample-request-selection-card) {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px;
     background: rgba(255, 255, 255, 0.38);
     border: 1px solid rgba(36, 33, 25, 0.24);
     border-radius: var(--radius-media);
   }
 
-  .sample-request-selection-name {
-    align-self: center;
+  .sample-request-selection-list :global(.sample-request-selection-name) {
     font-family: var(--font-heading);
     font-size: var(--type-copy-fluid);
     line-height: 1.2;
     color: var(--warm-dark-grey);
+  }
+
+  .sample-request-selection-list :global(.sample-request-selection-options) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-family: var(--font-ui);
+    font-size: var(--type-label);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--warm-dark-grey);
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-options) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-option) {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-option input) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-pill),
+  .sample-request-selection-list :global(.sample-request-choice-static) {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    font-family: var(--font-heading);
+    font-size: var(--type-copy-fluid);
+    line-height: 1.15;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--warm-dark-grey);
+    background: var(--white);
+    border: 1px solid var(--warm-dark-grey);
+    border-radius: 999px;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-static) {
+    color: var(--white);
+    background: var(--warm-dark-grey);
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-pill) {
+    color: rgba(36, 33, 25, 0.45);
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(36, 33, 25, 0.28);
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-option:hover .sample-request-choice-pill) {
+    color: rgba(36, 33, 25, 0.75);
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(36, 33, 25, 0.55);
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-option input:checked + .sample-request-choice-pill) {
+    color: var(--white);
+    background: var(--warm-dark-grey);
+    border-color: var(--warm-dark-grey);
+  }
+
+  .sample-request-selection-list :global(.sample-request-choice-option input:focus-visible + .sample-request-choice-pill) {
+    box-shadow: 0 0 0 2px rgba(36, 33, 25, 0.28);
   }
 
   .sample-request-form {
@@ -594,15 +681,16 @@ const soldOutPopup = {
     appearance: auto;
   }
 
+
   .sample-request-field textarea {
     resize: vertical;
     min-height: 72px;
   }
 
   @media (max-width: 560px) {
-    .sample-request-selection-card {
-      grid-template-columns: 1fr;
-      align-items: stretch;
+    .sample-request-selection-list :global(.sample-request-selection-options) {
+      flex-direction: column;
+      gap: 12px;
     }
   }
 
@@ -1327,6 +1415,11 @@ const soldOutPopup = {
     const submitBtn = requestPopup.querySelector('[data-sample-request-submit]');
     const checkoutBtn = document.querySelector('[data-sample-checkout]');
     const checkoutCount = document.querySelector('.checkout-count');
+    const shopRoot = document.querySelector('.shop');
+    const amountOptions = (shopRoot?.dataset.sampleAmounts || '50g')
+      .split('|')
+      .map(value => value.trim())
+      .filter(Boolean);
 
     const cart = new Map();
     let lastFocused = null;
@@ -1377,10 +1470,19 @@ const soldOutPopup = {
       syncCheckout();
     }
 
-    function createOption(value, label) {
-      const option = document.createElement('option');
-      option.value = value;
-      option.textContent = label;
+    function createChoicePill(inputName, value, label, datasetKey, slug) {
+      const option = document.createElement('label');
+      option.className = 'sample-request-choice-option';
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = inputName;
+      input.value = value;
+      input.required = true;
+      input.dataset[datasetKey] = slug;
+      const pill = document.createElement('span');
+      pill.className = 'sample-request-choice-pill';
+      pill.textContent = label;
+      option.append(input, pill);
       return option;
     }
 
@@ -1395,46 +1497,68 @@ const soldOutPopup = {
         title.className = 'sample-request-selection-name';
         title.textContent = name;
 
-        const amountField = document.createElement('label');
-        amountField.className = 'sample-request-field';
-        const amountLabel = document.createElement('span');
-        amountLabel.textContent = 'Amount *';
-        const amountSelect = document.createElement('select');
-        amountSelect.name = `sampleAmount_${slug}`;
-        amountSelect.required = true;
-        amountSelect.dataset.sampleAmount = slug;
-        amountSelect.append(
-          createOption('', 'Please select'),
-          createOption('50g', '50g'),
-          createOption('100g', '100g'),
-        );
-        amountField.append(amountLabel, amountSelect);
+        const options = document.createElement('div');
+        options.className = 'sample-request-selection-options';
 
-        const typeField = document.createElement('label');
-        typeField.className = 'sample-request-field';
+        const amountGroup = document.createElement('div');
+        amountGroup.className = 'sample-request-choice';
+        const amountLabel = document.createElement('span');
+        amountLabel.textContent = amountOptions.length > 1 ? 'Amount *' : 'Amount';
+        amountGroup.append(amountLabel);
+
+        if (amountOptions.length > 1) {
+          const amountChoices = document.createElement('div');
+          amountChoices.className = 'sample-request-choice-options';
+          amountOptions.forEach(amount => {
+            amountChoices.append(
+              createChoicePill(`sampleAmount_${slug}`, amount, amount, 'sampleAmount', slug),
+            );
+          });
+          amountGroup.append(amountChoices);
+        } else {
+          const amountValue = document.createElement('span');
+          amountValue.className = 'sample-request-choice-static';
+          amountValue.textContent = amountOptions[0];
+          const amountInput = document.createElement('input');
+          amountInput.type = 'hidden';
+          amountInput.name = `sampleAmount_${slug}`;
+          amountInput.value = amountOptions[0];
+          amountInput.dataset.sampleAmount = slug;
+          amountGroup.append(amountValue, amountInput);
+        }
+
+        const typeGroup = document.createElement('div');
+        typeGroup.className = 'sample-request-choice';
         const typeLabel = document.createElement('span');
         typeLabel.textContent = 'Coffee type *';
-        const typeSelect = document.createElement('select');
-        typeSelect.name = `coffeeType_${slug}`;
-        typeSelect.required = true;
-        typeSelect.dataset.coffeeType = slug;
-        typeSelect.append(
-          createOption('', 'Please select'),
-          createOption('Green coffee', 'Green coffee'),
-          createOption('Roasted', 'Roasted'),
+        const typeOptions = document.createElement('div');
+        typeOptions.className = 'sample-request-choice-options';
+        typeOptions.append(
+          createChoicePill(`coffeeType_${slug}`, 'Green coffee', 'Green coffee', 'coffeeType', slug),
+          createChoicePill(`coffeeType_${slug}`, 'Roasted', 'Roasted', 'coffeeType', slug),
         );
-        typeField.append(typeLabel, typeSelect);
+        typeGroup.append(typeLabel, typeOptions);
 
-        card.append(title, amountField, typeField);
+        options.append(amountGroup, typeGroup);
+        card.append(title, options);
         selectionEl.append(card);
       });
+    }
+
+    function selectedFieldValue(attribute, slug) {
+      if (!form) return '';
+      const escaped = CSS.escape(slug);
+      const checked = form.querySelector(`[${attribute}="${escaped}"]:checked`);
+      if (checked) return checked.value;
+      const hidden = form.querySelector(`input[type="hidden"][${attribute}="${escaped}"]`);
+      return hidden ? hidden.value : '';
     }
 
     function syncSelectedSamplesInput() {
       if (!selectedInput) return;
       const selections = Array.from(cart.entries()).map(([slug, name]) => {
-        const amount = form?.querySelector(`[data-sample-amount="${CSS.escape(slug)}"]`)?.value || '';
-        const coffeeType = form?.querySelector(`[data-coffee-type="${CSS.escape(slug)}"]`)?.value || '';
+        const amount = selectedFieldValue('data-sample-amount', slug);
+        const coffeeType = selectedFieldValue('data-coffee-type', slug);
         return `${name} (${slug}): ${amount || 'no amount selected'}, ${coffeeType || 'no coffee type selected'}`;
       });
       selectedInput.value = selections.join('\n');
@@ -1492,7 +1616,7 @@ const soldOutPopup = {
 
     if (form) {
       form.addEventListener('change', event => {
-        if (!(event.target instanceof HTMLSelectElement)) return;
+        if (!(event.target instanceof HTMLElement)) return;
         if (!event.target.dataset.sampleAmount && !event.target.dataset.coffeeType) return;
         syncSelectedSamplesInput();
       });
