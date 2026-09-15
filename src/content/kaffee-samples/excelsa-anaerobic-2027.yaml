@@ -3,10 +3,10 @@ species: excelsa
 country: Uganda
 process: 72h Anaerobic
 price: TBC
-availability: 20x60kg
-arrival: Mai 2027
+availability: 30x60kg
+arrival: April 27'
 variety: 'Excelsa '
-harvest: 2026/2027
+harvest: 2026/27
 region: Zirobwe
 altitude: '1100'
 flavourNotes: 'TBC - from 2026: umami, orange, chocolate, whiskey'
@@ -39,7 +39,7 @@ contentDe:
     Produktion und eine resilientere Zukunft.
 contentEn:
   intro: >-
-    Pre-order for Q2 2027 are open now.
+    Pre-orders for Q2 2027 are open now.
 
 
     Excelsa (Coffea dewevrei) is native to Uganda and has traditionally been
@@ -66,4 +66,4 @@ contentEn:
     incomes, more diversified production, and a more resilient future.
 heroImage: ../../assets/images/cms/kaffee/excelsa-anaerobic-2027/heroImage.JPG
 available: true
-sortOrder: 0
+sortOrder: 6
