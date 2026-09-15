@@ -1,11 +1,11 @@
-name: Excelsa natural 27'
+name: Excelsa natural 27' (Pre-order)
 species: excelsa
 country: 'Uganda '
 score: /
 process: Natural
 price: 10,90€
 availability: 30x60kg
-arrival: April 2027
+arrival: April 27'
 variety: excelsa
 harvest: 2026/27
 region: Zirobwe
@@ -68,4 +68,4 @@ heroImage: ../../assets/images/cms/kaffee/excelsa_natural_2027/heroImage.JPG
 pdfDownload: /downloads/excelsa_natural_2027/pdfDownload.pdf
 pdfDownloadEn: /downloads/excelsa_natural_2027/pdfDownloadEn.pdf
 available: true
-sortOrder: 5
+sortOrder: 4
